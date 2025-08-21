@@ -668,6 +668,14 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.13</version>
+                <configuration>
+                    <excludes>
+<!--                        Auto generated classes -->
+                        <exclude>net/finmath/smartcontract/product/xml/*</exclude>
+                        <exclude>net/finmath/smartcontract/api/*</exclude>
+                        <exclude>net/finmath/smartcontract/model/*</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
