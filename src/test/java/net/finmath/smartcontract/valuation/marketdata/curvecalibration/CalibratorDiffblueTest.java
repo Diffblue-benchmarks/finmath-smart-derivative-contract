@@ -11,6 +11,7 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -45,6 +46,8 @@ class CalibratorDiffblueTest {
 
   @Autowired private Calibrator calibrator;
 
+  @Autowired private List<CalibrationDataItem> list;
+
   /**
    * Test {@link Calibrator#getCalibratedCurves()}.
    *
@@ -58,12 +61,13 @@ class CalibratorDiffblueTest {
   void testGetCalibratedCurves() {
     // Arrange
     ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     // Act and Assert
-    assertNull(
-        new Calibrator(
-                fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
-            .getCalibratedCurves());
+    assertNull(calibrator.getCalibratedCurves());
   }
 
   /**
@@ -79,9 +83,10 @@ class CalibratorDiffblueTest {
   void testCalibrateModel() throws CloneNotSupportedException {
     // Arrange
     ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -131,7 +136,6 @@ class CalibratorDiffblueTest {
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     Spec spec2 =
         new Spec(
@@ -139,11 +143,11 @@ class CalibratorDiffblueTest {
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec2, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -193,11 +197,11 @@ class CalibratorDiffblueTest {
             "ESTR",
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -247,11 +251,11 @@ class CalibratorDiffblueTest {
             "Euribor1M",
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -300,11 +304,11 @@ class CalibratorDiffblueTest {
             "Euribor3M",
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -353,7 +357,6 @@ class CalibratorDiffblueTest {
             "Euribor1M",
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     Spec spec2 =
         new Spec(
@@ -361,11 +364,11 @@ class CalibratorDiffblueTest {
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec2, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -414,7 +417,6 @@ class CalibratorDiffblueTest {
             "Euribor3M",
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     Spec spec2 =
         new Spec(
@@ -422,11 +424,11 @@ class CalibratorDiffblueTest {
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS,
             Calibrator.DISCOUNT_EUR_OIS);
-
     fixings.add(new CalibrationDataItem(spec2, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Calibrator calibrator =
-        new Calibrator(
-            fixings, new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -450,6 +452,181 @@ class CalibratorDiffblueTest {
     assertTrue(getResult3 instanceof ForwardCurveWithFixings);
     assertArrayEquals(new double[] {}, getResult2.getParameter(), 0.0);
     assertArrayEquals(new double[] {}, getResult3.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult2).getTimes(), 0.0);
+    assertArrayEquals(
+        new double[] {0.0d}, ((DiscountCurveInterpolation) getResult).getTimes(), 0.0);
+  }
+
+  /**
+   * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
+   *
+   * <p>Method under test: {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
+   */
+  @Test
+  @DisplayName("Test calibrateModel(Stream, CalibrationContext)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Optional Calibrator.calibrateModel(Stream, CalibrationContext)"})
+  void testCalibrateModel8() throws CloneNotSupportedException {
+    // Arrange
+    ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
+    Spec spec =
+        new Spec(
+            Calibrator.DISCOUNT_EUR_OIS,
+            "Euribor6M",
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS);
+    fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
+
+    // Act and Assert
+    AnalyticModel calibratedModel =
+        calibrator
+            .calibrateModel(
+                providers,
+                new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
+            .get()
+            .getCalibratedModel();
+    assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
+    Map<String, Curve> curves = calibratedModel.getCurves();
+    assertEquals(5, curves.size());
+    Curve getResult = curves.get(Calibrator.DISCOUNT_EUR_OIS);
+    assertTrue(getResult instanceof DiscountCurveInterpolation);
+    Curve getResult2 = curves.get("forward-EUR-1M");
+    assertTrue(getResult2 instanceof ForwardCurveInterpolation);
+    Curve getResult3 = curves.get("forward-EUR-3M");
+    assertTrue(getResult3 instanceof ForwardCurveInterpolation);
+    assertArrayEquals(new double[] {}, getResult2.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult3.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult2).getTimes(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult3).getTimes(), 0.0);
+    assertArrayEquals(
+        new double[] {0.0d}, ((DiscountCurveInterpolation) getResult).getTimes(), 0.0);
+  }
+
+  /**
+   * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
+   *
+   * <p>Method under test: {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
+   */
+  @Test
+  @DisplayName("Test calibrateModel(Stream, CalibrationContext)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Optional Calibrator.calibrateModel(Stream, CalibrationContext)"})
+  void testCalibrateModel9() throws CloneNotSupportedException {
+    // Arrange
+    ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
+    Spec spec =
+        new Spec(
+            Calibrator.DISCOUNT_EUR_OIS,
+            "Euribor6M",
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS);
+    fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    Spec spec2 =
+        new Spec(
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS);
+    fixings.add(new CalibrationDataItem(spec2, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
+
+    // Act and Assert
+    AnalyticModel calibratedModel =
+        calibrator
+            .calibrateModel(
+                providers,
+                new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
+            .get()
+            .getCalibratedModel();
+    assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
+    Map<String, Curve> curves = calibratedModel.getCurves();
+    assertEquals(5, curves.size());
+    Curve getResult = curves.get(Calibrator.DISCOUNT_EUR_OIS);
+    assertTrue(getResult instanceof DiscountCurveInterpolation);
+    Curve getResult2 = curves.get("forward-EUR-1M");
+    assertTrue(getResult2 instanceof ForwardCurveInterpolation);
+    Curve getResult3 = curves.get("forward-EUR-3M");
+    assertTrue(getResult3 instanceof ForwardCurveInterpolation);
+    assertArrayEquals(new double[] {}, getResult2.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult3.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult2).getTimes(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult3).getTimes(), 0.0);
+    assertArrayEquals(
+        new double[] {0.0d}, ((DiscountCurveInterpolation) getResult).getTimes(), 0.0);
+  }
+
+  /**
+   * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
+   *
+   * <p>Method under test: {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
+   */
+  @Test
+  @DisplayName("Test calibrateModel(Stream, CalibrationContext)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Optional Calibrator.calibrateModel(Stream, CalibrationContext)"})
+  void testCalibrateModel10() throws CloneNotSupportedException {
+    // Arrange
+    ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
+    Spec spec =
+        new Spec(
+            Calibrator.DISCOUNT_EUR_OIS,
+            "Euribor1M",
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS);
+    fixings.add(new CalibrationDataItem(spec, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    Spec spec2 =
+        new Spec(
+            Calibrator.DISCOUNT_EUR_OIS,
+            "Euribor1M",
+            Calibrator.DISCOUNT_EUR_OIS,
+            Calibrator.DISCOUNT_EUR_OIS);
+    fixings.add(new CalibrationDataItem(spec2, 1.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
+
+    // Act and Assert
+    AnalyticModel calibratedModel =
+        calibrator
+            .calibrateModel(
+                providers,
+                new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
+            .get()
+            .getCalibratedModel();
+    assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
+    Map<String, Curve> curves = calibratedModel.getCurves();
+    assertEquals(5, curves.size());
+    Curve getResult = curves.get(Calibrator.DISCOUNT_EUR_OIS);
+    assertTrue(getResult instanceof DiscountCurveInterpolation);
+    Curve getResult2 = curves.get("forward-EUR-3M");
+    assertTrue(getResult2 instanceof ForwardCurveInterpolation);
+    Curve getResult3 = curves.get("forward-EUR-1M");
+    assertTrue(getResult3 instanceof ForwardCurveWithFixings);
+    assertArrayEquals(new double[] {}, getResult3.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult2.getParameter(), 0.0);
     assertArrayEquals(new double[] {}, getResult.getParameter(), 0.0);
     assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult2).getTimes(), 0.0);
     assertArrayEquals(

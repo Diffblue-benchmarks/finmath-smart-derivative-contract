@@ -58,14 +58,14 @@ class ValuationControllerDiffblueTest {
     when(marginRequest.getMarketDataStart()).thenReturn("Market Data Start");
     when(marginRequest.getTradeData()).thenReturn("Trade Data");
     when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
-    marginRequest.marketDataStart("Market Data Start");
+    marginRequest.marketDataStart("margin");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
     verify(marginRequest).getMarketDataEnd();
     verify(marginRequest).getMarketDataStart();
     verify(marginRequest).getTradeData();
-    verify(marginRequest).marketDataStart("Market Data Start");
+    verify(marginRequest).marketDataStart("margin");
   }
 
   /**
@@ -257,6 +257,7 @@ class ValuationControllerDiffblueTest {
     DataInputStream dataInputStream = mock(DataInputStream.class);
     when(dataInputStream.readAllBytes())
         .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+
     MultipartFile tradeData = mock(MultipartFile.class);
     when(tradeData.getInputStream()).thenReturn(dataInputStream);
 
@@ -283,13 +284,12 @@ class ValuationControllerDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenByteArrayInputStreamWithAxaxaxaxBytesIsUtf8() throws IOException {
-    // Arrange, Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationController.testProductValue(
-                new MockMultipartFile(
-                    "Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")))));
+    // Arrange
+    MockMultipartFile tradeData =
+        new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.testProductValue(tradeData));
   }
 
   /**

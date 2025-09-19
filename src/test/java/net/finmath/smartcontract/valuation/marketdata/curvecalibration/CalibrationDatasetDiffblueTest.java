@@ -59,7 +59,6 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     curveDataPointSet.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
@@ -79,23 +78,23 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return CalibrationDataItems is {@link LinkedHashSet#LinkedHashSet()}.
+   *   <li>Then return CalibrationDataItems is {@link HashSet#HashSet()}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
   @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is LinkedHashSet()")
+      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is HashSet()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsLinkedHashSet() {
+  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsHashSet2() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
-    LinkedHashSet<CalibrationDataItem> curveDataPointSet = new LinkedHashSet<>();
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
@@ -115,22 +114,21 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return FixingDataItems is {@link LinkedHashSet#LinkedHashSet()}.
+   *   <li>Then return DataPoints is {@link LinkedHashSet#LinkedHashSet()}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
   @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems is LinkedHashSet()")
+      "Test new CalibrationDataset(Set, LocalDateTime); then return DataPoints is LinkedHashSet()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnFixingDataItemsIsLinkedHashSet() {
+  void testNewCalibrationDataset_thenReturnDataPointsIsLinkedHashSet() {
     // Arrange
     LinkedHashSet<CalibrationDataItem> curveDataPointSet = new LinkedHashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Fixing", "Maturity");
-
     curveDataPointSet.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
@@ -143,6 +141,98 @@ class CalibrationDatasetDiffblueTest {
     assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getFixingDataItems());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return FixingDataItems size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName(
+      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsOne() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec =
+        new Spec(
+            "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "Curve Name",
+            "Fixing",
+            "Maturity");
+    curveDataPointSet.add(
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    curveDataPointSet.add(
+        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(1, actualCalibrationDataset.getFixingDataItems().size());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return FixingDataItems size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName(
+      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsTwo() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
+
+    Spec spec = mock(Spec.class);
+    when(spec.getProductName()).thenReturn("Fixing");
+    CalibrationDataItem calibrationDataItem3 =
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem3);
+    curveDataPointSet.add(calibrationDataItem2);
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(calibrationDataItem2).getDate();
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(spec, atLeast(1)).getProductName();
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(2, actualCalibrationDataset.getFixingDataItems().size());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 
@@ -164,12 +254,11 @@ class CalibrationDatasetDiffblueTest {
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
   void testNewCalibrationDataset_whenHashSet_thenReturnDataPointsEmpty() {
     // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
     CalibrationDataset actualCalibrationDataset =
-        new CalibrationDataset(curveDataPointSet, scenarioDate);
+        new CalibrationDataset(new HashSet<>(), scenarioDate);
 
     // Assert
     assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
@@ -192,14 +281,15 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     curveDataPointSet.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
 
     // Act
-    CalibrationDataset actualScaled =
-        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()).getScaled(10.0d);
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
 
     // Assert
     LocalDateTime date = actualScaled.getDate();
@@ -233,17 +323,20 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
     CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
     when(calibrationDataItem2.getClonedScaled(anyDouble())).thenReturn(calibrationDataItem);
     when(calibrationDataItem2.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem2);
+
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
 
     // Act
-    CalibrationDataset actualScaled =
-        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()).getScaled(10.0d);
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
 
     // Assert
     verify(calibrationDataItem2).getClonedScaled(10.0d);
@@ -306,18 +399,19 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     when(calibrationDataItem.getClonedScaled(anyDouble()))
         .thenReturn(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
 
     // Act
-    CalibrationDataset actualScaled =
-        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()).getScaled(10.0d);
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
 
     // Assert
     verify(calibrationDataItem).getClonedScaled(10.0d);
@@ -351,18 +445,19 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     Spec spec = new Spec("Key", "Curve Name", "Fixing", "Maturity");
-
     when(calibrationDataItem.getClonedScaled(anyDouble()))
         .thenReturn(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
 
     // Act
-    CalibrationDataset actualScaled =
-        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()).getScaled(10.0d);
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
 
     // Assert
     verify(calibrationDataItem).getClonedScaled(10.0d);
@@ -400,9 +495,8 @@ class CalibrationDatasetDiffblueTest {
   })
   void testGettersAndSetters() {
     // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     CalibrationDataset calibrationDataset =
-        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act
     Set<CalibrationDataItem> actualCalibrationDataItems =
@@ -430,7 +524,6 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Fixing", "Maturity");
-
     newFixingDataItems.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -464,11 +557,9 @@ class CalibrationDatasetDiffblueTest {
             "Curve Name",
             "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
             "Maturity");
-
     newFixingDataItems.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
     Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     newFixingDataItems.add(
         new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -569,7 +660,6 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     newFixingDataItems.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -658,11 +748,11 @@ class CalibrationDatasetDiffblueTest {
 
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
     curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay()));
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act
-    MarketDataList actualToMarketDataListResult =
-        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-            .toMarketDataList();
+    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
 
     // Assert
     List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
@@ -694,19 +784,20 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenReturn(10.0d);
+
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
     when(calibrationDataItem.getDateTime()).thenReturn(ofResult.atStartOfDay());
-    when(calibrationDataItem.getSpec())
-        .thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    when(calibrationDataItem.getSpec()).thenReturn(spec);
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act
-    MarketDataList actualToMarketDataListResult =
-        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-            .toMarketDataList();
+    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
 
     // Assert
     verify(calibrationDataItem).getDateTime();
@@ -744,16 +835,17 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenReturn(10.0d);
-    when(calibrationDataItem.getSpec())
-        .thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    when(calibrationDataItem.getSpec()).thenReturn(spec);
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act
-    new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-        .serializeToJson();
+    calibrationDataset.serializeToJson();
 
     // Assert
     verify(calibrationDataItem, atLeast(1)).getProductName();
@@ -781,19 +873,17 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenThrow(new RuntimeException());
-    when(calibrationDataItem.getSpec())
-        .thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    when(calibrationDataItem.getSpec()).thenReturn(spec);
     when(calibrationDataItem.getProductName()).thenReturn("Product Name");
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () ->
-            new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-                .serializeToJson());
+    assertThrows(RuntimeException.class, () -> calibrationDataset.serializeToJson());
     verify(calibrationDataItem, atLeast(1)).getProductName();
     verify(calibrationDataItem).getQuote();
     verify(calibrationDataItem, atLeast(1)).getSpec();
@@ -823,104 +913,13 @@ class CalibrationDatasetDiffblueTest {
 
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () ->
-            new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-                .serializeToJson());
+    assertThrows(RuntimeException.class, () -> calibrationDataset.serializeToJson());
     verify(calibrationDataItem, atLeast(1)).getProductName();
     verify(calibrationDataItem).getSpec();
-  }
-
-  /**
-   * Test {@link CalibrationDataset#serializeToJson()}.
-   *
-   * <ul>
-   *   <li>Given {@link Spec} {@link Spec#getCurveName()} throw {@link
-   *       RuntimeException#RuntimeException()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#serializeToJson()}
-   */
-  @Test
-  @DisplayName("Test serializeToJson(); given Spec getCurveName() throw RuntimeException()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
-  void testSerializeToJson_givenSpecGetCurveNameThrowRuntimeException() {
-    // Arrange
-    Spec spec = mock(Spec.class);
-    when(spec.getCurveName()).thenThrow(new RuntimeException());
-    when(spec.getProductName()).thenReturn("Product Name");
-    CalibrationDataItem calibrationDataItem =
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    curveDataPointSet.add(calibrationDataItem);
-
-    // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () ->
-            new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-                .serializeToJson());
-    verify(spec).getCurveName();
-    verify(spec, atLeast(1)).getProductName();
-  }
-
-  /**
-   * Test {@link CalibrationDataset#serializeToJson()}.
-   *
-   * <ul>
-   *   <li>Then calls {@link CalibrationDataItem#getDaysToMaturity()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#serializeToJson()}
-   */
-  @Test
-  @DisplayName("Test serializeToJson(); then calls getDaysToMaturity()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
-  void testSerializeToJson_thenCallsGetDaysToMaturity() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
-    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
-    when(calibrationDataItem.getSpec())
-        .thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
-    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
-    curveDataPointSet.add(calibrationDataItem);
-    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
-    when(calibrationDataItem2.getDaysToMaturity()).thenReturn(1);
-    when(calibrationDataItem2.getQuote()).thenReturn(0.5d);
-    Spec spec = mock(Spec.class);
-    when(spec.getCurveName()).thenReturn("Curve Name");
-    when(spec.getMaturity()).thenReturn("Maturity");
-    when(spec.getProductName()).thenReturn("Product Name");
-    when(calibrationDataItem2.getSpec()).thenReturn(spec);
-    when(calibrationDataItem2.getProductName()).thenReturn("Product Name");
-    curveDataPointSet.add(calibrationDataItem2);
-
-    // Act
-    new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-        .serializeToJson();
-
-    // Assert
-    verify(calibrationDataItem).getDaysToMaturity();
-    verify(calibrationDataItem2).getDaysToMaturity();
-    verify(calibrationDataItem, atLeast(1)).getProductName();
-    verify(calibrationDataItem2, atLeast(1)).getProductName();
-    verify(calibrationDataItem).getQuote();
-    verify(calibrationDataItem2).getQuote();
-    verify(calibrationDataItem2, atLeast(1)).getSpec();
-    verify(calibrationDataItem, atLeast(1)).getSpec();
-    verify(spec, atLeast(1)).getCurveName();
-    verify(spec).getMaturity();
-    verify(spec, atLeast(1)).getProductName();
   }
 
   /**
@@ -992,15 +991,12 @@ class CalibrationDatasetDiffblueTest {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     curveDataPointSet.add(
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
-    assertEquals(
-        1,
-        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())
-            .getDataPoints()
-            .size());
+    assertEquals(1, calibrationDataset.getDataPoints().size());
   }
 }

@@ -46,8 +46,10 @@ class PlainSwapEditorControllerDiffblueTest {
     // Arrange
     ValuationConfig valuationConfig1 = new ValuationConfig();
     valuationConfig1.setMarketDataProviderToTemplate(new HashMap<>());
+
     Resource resource = mock(Resource.class);
     when(resource.getInputStream()).thenThrow(new IOException());
+
     ResourceLoader resourceLoader = mock(ResourceLoader.class);
     when(resourceLoader.getResource(Mockito.<String>any())).thenReturn(resource);
     DatabaseConnector databaseConnector =
@@ -57,6 +59,7 @@ class PlainSwapEditorControllerDiffblueTest {
         new ResourceGovernor(new AnnotationConfigReactiveWebApplicationContext());
     JsonMapper objectMapper = JsonMapper.builder().findAndAddModules().build();
     ValuationConfig valuationConfig = new ValuationConfig();
+
     PlainSwapEditorController plainSwapEditorController =
         new PlainSwapEditorController(
             databaseConnector,
@@ -97,8 +100,10 @@ class PlainSwapEditorControllerDiffblueTest {
     // Arrange
     ValuationConfig valuationConfig1 = new ValuationConfig();
     valuationConfig1.setMarketDataProviderToTemplate(new HashMap<>());
+
     Resource resource = mock(Resource.class);
     when(resource.getInputStream()).thenThrow(new IOException());
+
     ResourceLoader resourceLoader = mock(ResourceLoader.class);
     when(resourceLoader.getResource(Mockito.<String>any())).thenReturn(resource);
     DatabaseConnector databaseConnector =
@@ -108,6 +113,7 @@ class PlainSwapEditorControllerDiffblueTest {
         new ResourceGovernor(new AnnotationConfigReactiveWebApplicationContext());
     JsonMapper objectMapper = JsonMapper.builder().findAndAddModules().build();
     ValuationConfig valuationConfig = new ValuationConfig();
+
     PlainSwapEditorController plainSwapEditorController =
         new PlainSwapEditorController(
             databaseConnector,

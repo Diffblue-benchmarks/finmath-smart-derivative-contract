@@ -61,20 +61,18 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     stringBigDecimalMap.put("foo", new BigDecimal("2.3"));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
-    LocalDateTime marginPeriodStart = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
     Map<String, BigDecimal> actualMargin =
         smartDerivativeContractSettlementOracle.getMargin(
-            marginPeriodStart, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(2, actualMargin.size());
-    BigDecimal expectedGetResult = new BigDecimal("0.0");
     BigDecimal getResult = actualMargin.get("foo");
-    assertEquals(expectedGetResult, getResult);
+    assertEquals(new BigDecimal("0.0"), getResult);
     assertSame(getResult, actualMargin.get("42"));
   }
 
@@ -104,19 +102,17 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     stringBigDecimalMap.put("foo", new BigDecimal("2.3"));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
-    LocalDateTime marginPeriodStart = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
     Map<String, BigDecimal> actualMargin =
         smartDerivativeContractSettlementOracle.getMargin(
-            marginPeriodStart, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(1, actualMargin.size());
-    BigDecimal expectedGetResult = new BigDecimal("0.0");
-    assertEquals(expectedGetResult, actualMargin.get("foo"));
+    assertEquals(new BigDecimal("0.0"), actualMargin.get("foo"));
   }
 
   /**
@@ -140,12 +136,11 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     // Arrange
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(new HashMap<>());
-    LocalDateTime marginPeriodStart = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
     Map<String, BigDecimal> actualMargin =
         smartDerivativeContractSettlementOracle.getMargin(
-            marginPeriodStart, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     verify(valuationOracle, atLeast(1))

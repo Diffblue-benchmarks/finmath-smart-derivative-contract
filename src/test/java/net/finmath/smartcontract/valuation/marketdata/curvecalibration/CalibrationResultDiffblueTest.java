@@ -55,20 +55,21 @@ class CalibrationResultDiffblueTest {
 
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    CalibrationSpec calibrationSpec =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
 
-    // Act and Assert
-    AnalyticModel calibratedModel =
-        new CalibrationResult(
-                c,
-                new CalibrationSpec(
-                    "Type",
-                    new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-                    "Forward Curve Receiver Name",
-                    10.0d,
-                    "3",
-                    "Calibration Curve Name",
-                    10.0d))
-            .getCalibratedModel();
+    // Act
+    CalibrationResult actualCalibrationResult = new CalibrationResult(c, calibrationSpec);
+
+    // Assert
+    AnalyticModel calibratedModel = actualCalibrationResult.getCalibratedModel();
     assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
     assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
     assertTrue(calibratedModel.getCurves().isEmpty());
@@ -121,20 +122,20 @@ class CalibrationResultDiffblueTest {
       throws CloneNotSupportedException, SolverException {
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    CalibrationSpec calibrationSpec =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
+
+    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
 
     // Act
-    AnalyticModel actualCalibratedModel =
-        new CalibrationResult(
-                c,
-                new CalibrationSpec(
-                    "Type",
-                    new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-                    "Forward Curve Receiver Name",
-                    10.0d,
-                    "3",
-                    "Calibration Curve Name",
-                    10.0d))
-            .getCalibratedModel();
+    AnalyticModel actualCalibratedModel = calibrationResult.getCalibratedModel();
 
     // Assert
     assertTrue(actualCalibratedModel instanceof AnalyticModelFromCurvesAndVols);
@@ -161,24 +162,25 @@ class CalibrationResultDiffblueTest {
     // Arrange
     AnalyticProduct analyticProduct = mock(AnalyticProduct.class);
     when(analyticProduct.getValue(anyDouble(), Mockito.<AnalyticModel>any())).thenReturn(10.0d);
+
     CalibratedCurves c = mock(CalibratedCurves.class);
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
     when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
         .thenReturn(analyticProduct);
+    CalibrationSpec calibrationSpec =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
+
+    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
 
     // Act
-    double actualSumOfSquaredErrors =
-        new CalibrationResult(
-                c,
-                new CalibrationSpec(
-                    "Type",
-                    new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-                    "Forward Curve Receiver Name",
-                    10.0d,
-                    "3",
-                    "Calibration Curve Name",
-                    10.0d))
-            .getSumOfSquaredErrors();
+    double actualSumOfSquaredErrors = calibrationResult.getSumOfSquaredErrors();
 
     // Assert
     verify(c).getCalibrationProductForSpec(isA(CalibrationSpec.class));
@@ -205,6 +207,7 @@ class CalibrationResultDiffblueTest {
     // Arrange
     AnalyticProduct analyticProduct = mock(AnalyticProduct.class);
     when(analyticProduct.getValue(anyDouble(), Mockito.<AnalyticModel>any())).thenReturn(10.0d);
+
     CalibratedCurves c = mock(CalibratedCurves.class);
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
     when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
@@ -212,27 +215,27 @@ class CalibrationResultDiffblueTest {
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
             "Type",
-            new double[] {2.0d, 10.0d, 2.0d, 10.0d},
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
             "Forward Curve Receiver Name",
-            2.0d,
+            10.0d,
             "3",
             "Calibration Curve Name",
-            2.0d);
+            10.0d);
+    CalibrationSpec calibrationSpec2 =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
+
+    CalibrationResult calibrationResult =
+        new CalibrationResult(c, calibrationSpec, calibrationSpec2);
 
     // Act
-    double actualSumOfSquaredErrors =
-        new CalibrationResult(
-                c,
-                calibrationSpec,
-                new CalibrationSpec(
-                    "Type",
-                    new double[] {2.0d, 10.0d, 2.0d, 10.0d},
-                    "Forward Curve Receiver Name",
-                    2.0d,
-                    "3",
-                    "Calibration Curve Name",
-                    2.0d))
-            .getSumOfSquaredErrors();
+    double actualSumOfSquaredErrors = calibrationResult.getSumOfSquaredErrors();
 
     // Assert
     verify(c, atLeast(1)).getCalibrationProductForSpec(Mockito.<CalibrationSpec>any());
@@ -255,8 +258,11 @@ class CalibrationResultDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"double CalibrationResult.getSumOfSquaredErrors()"})
-  void testGetSumOfSquaredErrors_thenReturnZero() {
+  void testGetSumOfSquaredErrors_thenReturnZero()
+      throws CloneNotSupportedException, SolverException {
     // Arrange, Act and Assert
-    assertEquals(0.0d, new CalibrationResult(mock(CalibratedCurves.class)).getSumOfSquaredErrors());
+    assertEquals(
+        0.0d,
+        new CalibrationResult(new CalibratedCurves(new ArrayList<>())).getSumOfSquaredErrors());
   }
 }

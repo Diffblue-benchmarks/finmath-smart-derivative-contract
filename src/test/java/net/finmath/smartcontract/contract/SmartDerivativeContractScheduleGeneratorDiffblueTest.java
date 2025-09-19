@@ -60,13 +60,12 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     LocalDateTime actualAccountAccessAllowedStart =
         actualEventTimesImpl.getAccountAccessAllowedStart();
     LocalDateTime actualMarginCheckTime = actualEventTimesImpl.getMarginCheckTime();
-    LocalDateTime actualSettementTime = actualEventTimesImpl.getSettementTime();
 
     // Assert
     assertEquals(1000000000L, actualAccountAccessAllowedPeriod.toNanos());
     assertSame(accountAccessAllowedStart, actualAccountAccessAllowedStart);
     assertSame(marginCheckTime, actualMarginCheckTime);
-    assertSame(settementTime, actualSettementTime);
+    assertSame(settementTime, actualEventTimesImpl.getSettementTime());
     assertSame(accountAccessAllowedPeriod, actualAccountAccessAllowedPeriod);
   }
 
@@ -91,20 +90,27 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
       testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedDuration() {
     // Arrange
     LocalDate startDate = LocalDate.of(1970, 1, 1);
-    LocalDate maturity = LocalDate.of(1970, 1, 1);
 
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar", startDate, maturity, LocalTime.MIDNIGHT, Duration.ofSeconds(1L));
+            "Calendar",
+            startDate,
+            LocalDate.of(1970, 1, 1),
+            LocalTime.MIDNIGHT,
+            Duration.ofSeconds(1L));
     List<EventTimes> actualEventTimes = actualScheduleForBusinessDays.getEventTimes();
 
     // Assert
     List<EventTimes> eventTimes = actualScheduleForBusinessDays.getEventTimes();
     assertEquals(1, eventTimes.size());
-    assertTrue(eventTimes.get(0) instanceof EventTimesImpl);
+    EventTimes getResult = eventTimes.get(0);
+    assertTrue(getResult instanceof EventTimesImpl);
     assertTrue(actualScheduleForBusinessDays instanceof SimpleSchedule);
     assertSame(eventTimes, actualEventTimes);
+    assertSame(startDate, getResult.getAccountAccessAllowedStart().toLocalDate());
+    assertSame(startDate, getResult.getMarginCheckTime().toLocalDate());
+    assertSame(startDate, getResult.getSettementTime().toLocalDate());
   }
 
   /**
@@ -127,14 +133,16 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   void
       testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedDuration2() {
     // Arrange
-    LocalDate startDate = LocalDate.of(1970, 1, 1);
-    LocalDate maturity = LocalDate.ofEpochDay(1L);
     Duration accountAccessAllowedDuration = Duration.ofSeconds(1L);
 
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar", startDate, maturity, LocalTime.MIDNIGHT, accountAccessAllowedDuration);
+            "Calendar",
+            LocalDate.of(1970, 1, 1),
+            LocalDate.ofEpochDay(1L),
+            LocalTime.MIDNIGHT,
+            accountAccessAllowedDuration);
     List<EventTimes> actualEventTimes = actualScheduleForBusinessDays.getEventTimes();
 
     // Assert
@@ -147,6 +155,50 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     assertSame(eventTimes, actualEventTimes);
     assertSame(accountAccessAllowedDuration, getResult.getAccountAccessAllowedPeriod());
     assertSame(LocalTime.MIN, getResult.getSettementTime().toLocalTime());
+  }
+
+  /**
+   * Test {@link SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String,
+   * LocalDate, LocalDate, LocalTime, Duration)} with {@code calendar}, {@code startDate}, {@code
+   * maturity}, {@code settlementTime}, {@code accountAccessAllowedDuration}.
+   *
+   * <p>Method under test: {@link
+   * SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String, LocalDate,
+   * LocalDate, LocalTime, Duration)}
+   */
+  @Test
+  @DisplayName(
+      "Test getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, Duration) with 'calendar', 'startDate', 'maturity', 'settlementTime', 'accountAccessAllowedDuration'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "SmartDerivativeContractSchedule SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, Duration)"
+  })
+  void
+      testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedDuration3() {
+    // Arrange
+    LocalDate startDate = LocalDate.ofEpochDay(-1L);
+
+    // Act
+    SmartDerivativeContractSchedule actualScheduleForBusinessDays =
+        SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
+            "Calendar",
+            startDate,
+            LocalDate.of(1970, 1, 1),
+            LocalTime.MIDNIGHT,
+            Duration.ofSeconds(1L));
+    List<EventTimes> actualEventTimes = actualScheduleForBusinessDays.getEventTimes();
+
+    // Assert
+    List<EventTimes> eventTimes = actualScheduleForBusinessDays.getEventTimes();
+    assertEquals(1, eventTimes.size());
+    EventTimes getResult = eventTimes.get(0);
+    assertTrue(getResult instanceof EventTimesImpl);
+    assertTrue(actualScheduleForBusinessDays instanceof SimpleSchedule);
+    assertSame(eventTimes, actualEventTimes);
+    assertSame(startDate, getResult.getAccountAccessAllowedStart().toLocalDate());
+    assertSame(startDate, getResult.getMarginCheckTime().toLocalDate());
+    assertSame(startDate, getResult.getSettementTime().toLocalDate());
   }
 
   /**
@@ -169,16 +221,12 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   })
   void
       testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedStartTimeAccountAccessAllowedDurationMarginCheckTime() {
-    // Arrange
-    LocalDate startDate = LocalDate.of(1970, 1, 1);
-    LocalDate maturity = LocalDate.of(1970, 1, 1);
-
-    // Act
+    // Arrange and Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
             "Calendar",
-            startDate,
-            maturity,
+            LocalDate.of(1970, 1, 1),
+            LocalDate.of(1970, 1, 1),
             LocalTime.MIDNIGHT,
             LocalTime.MIDNIGHT,
             Duration.ofSeconds(1L),
@@ -214,16 +262,14 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   void
       testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedStartTimeAccountAccessAllowedDurationMarginCheckTime2() {
     // Arrange
-    LocalDate startDate = LocalDate.of(1970, 1, 1);
-    LocalDate maturity = LocalDate.ofEpochDay(1L);
     Duration accountAccessAllowedDuration = Duration.ofSeconds(1L);
 
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
             "Calendar",
-            startDate,
-            maturity,
+            LocalDate.of(1970, 1, 1),
+            LocalDate.ofEpochDay(1L),
             LocalTime.MIDNIGHT,
             LocalTime.MIDNIGHT,
             accountAccessAllowedDuration,

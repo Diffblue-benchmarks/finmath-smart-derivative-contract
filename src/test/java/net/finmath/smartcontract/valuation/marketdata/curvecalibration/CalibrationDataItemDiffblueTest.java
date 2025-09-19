@@ -49,7 +49,6 @@ class CalibrationDataItemDiffblueTest {
   void testGettersAndSetters() {
     // Arrange
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     LocalDateTime dateTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
@@ -267,18 +266,15 @@ class CalibrationDataItemDiffblueTest {
   void testEqualsAndHashCode_whenOtherIsEqual_thenReturnEqual() {
     // Arrange
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem =
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
     Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem2 =
         new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
     assertEquals(calibrationDataItem, calibrationDataItem2);
-    int expectedHashCodeResult = calibrationDataItem.hashCode();
-    assertEquals(expectedHashCodeResult, calibrationDataItem2.hashCode());
+    assertEquals(calibrationDataItem.hashCode(), calibrationDataItem2.hashCode());
   }
 
   /**
@@ -307,7 +303,6 @@ class CalibrationDataItemDiffblueTest {
   void testEqualsAndHashCode_whenOtherIsSame_thenReturnEqual() {
     // Arrange
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem =
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
 
@@ -338,7 +333,6 @@ class CalibrationDataItemDiffblueTest {
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
     Spec spec = new Spec(null, "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem =
         new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
     Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
@@ -370,7 +364,6 @@ class CalibrationDataItemDiffblueTest {
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
     // Arrange
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem =
         new CalibrationDataItem(spec, null, LocalDate.of(1970, 1, 1).atStartOfDay());
     Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
@@ -402,7 +395,6 @@ class CalibrationDataItemDiffblueTest {
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual3() {
     // Arrange
     Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
     CalibrationDataItem calibrationDataItem =
         new CalibrationDataItem(spec, 10.0d, LocalDate.now().atStartOfDay());
     Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
@@ -495,8 +487,7 @@ class CalibrationDataItemDiffblueTest {
 
     // Act and Assert
     assertEquals(spec, spec2);
-    int expectedHashCodeResult = spec.hashCode();
-    assertEquals(expectedHashCodeResult, spec2.hashCode());
+    assertEquals(spec.hashCode(), spec2.hashCode());
   }
 
   /**

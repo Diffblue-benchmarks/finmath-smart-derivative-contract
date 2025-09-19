@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import net.finmath.smartcontract.model.ValueResult;
-import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -50,10 +49,9 @@ class ConditionalSettlementCalculatorDiffblueTest {
     // Arrange and Act
     ConditionalSettlementCalculator actualConditionalSettlementCalculator =
         new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    ValueResult actualApplyResult =
-        actualConditionalSettlementCalculator.apply(
-            new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset actualmarketdata =
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
+    ValueResult actualApplyResult = actualConditionalSettlementCalculator.apply(actualmarketdata);
 
     // Assert
     assertNull(actualApplyResult.getCurrency());
@@ -109,6 +107,7 @@ class ConditionalSettlementCalculatorDiffblueTest {
     // Arrange
     ConditionalSettlementCalculator conditionalSettlementCalculator =
         new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+
     CalibrationDataset actualmarketdata = mock(CalibrationDataset.class);
     when(actualmarketdata.serializeToJson()).thenReturn("Serialize To Json");
 
@@ -142,12 +141,11 @@ class ConditionalSettlementCalculatorDiffblueTest {
     // Arrange
     ConditionalSettlementCalculator conditionalSettlementCalculator =
         new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataset actualmarketdata =
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act
-    ValueResult actualApplyResult =
-        conditionalSettlementCalculator.apply(
-            new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValueResult actualApplyResult = conditionalSettlementCalculator.apply(actualmarketdata);
 
     // Assert
     assertNull(actualApplyResult.getCurrency());

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -71,9 +72,12 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.<init>(JSONObject, String, List)"})
   void testNewReactiveMarketDataUpdater_whenArrayList() {
-    // Arrange, Act and Assert
-    assertFalse(
-        new ReactiveMarketDataUpdater(jSONObject, "Position", new ArrayList<>()).requestSent);
+    // Arrange and Act
+    ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(jSONObject, "Position", new ArrayList<>());
+
+    // Assert
+    assertFalse(actualReactiveMarketDataUpdater.requestSent);
   }
 
   /**
@@ -97,8 +101,12 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     ArrayList<Spec> itemList = new ArrayList<>();
     itemList.add(spec);
 
-    // Act and Assert
-    assertFalse(new ReactiveMarketDataUpdater(jSONObject, "Position", itemList).requestSent);
+    // Act
+    ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(jSONObject, "Position", itemList);
+
+    // Assert
+    assertFalse(actualReactiveMarketDataUpdater.requestSent);
   }
 
   /**
@@ -123,8 +131,77 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     itemList.add(spec);
     itemList.add(spec);
 
-    // Act and Assert
-    assertFalse(new ReactiveMarketDataUpdater(jSONObject, "Position", itemList).requestSent);
+    // Act
+    ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(jSONObject, "Position", itemList);
+
+    // Assert
+    assertFalse(actualReactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}.
+   *
+   * <ul>
+   *   <li>Given {@link JSONObject} {@link JSONObject#getString(String)} return a string.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}
+   */
+  @Test
+  @DisplayName(
+      "Test onConnected(WebSocket, Map); given JSONObject getString(String) return a string; then calls sendText(String)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onConnected(WebSocket, Map)"})
+  void testOnConnected_givenJSONObjectGetStringReturnAString_thenCallsSendText() throws Exception {
+    // Arrange
+    when(jSONObject.getString(Mockito.<String>any()))
+        .thenReturn(
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
+                + "\"},\"NameType\":\"AuthnToken\"}}");
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onConnected(websocket, new HashMap<>());
+
+    // Assert
+    verify(websocket, atLeast(1)).sendText(Mockito.<String>any());
+    verify(jSONObject, atLeast(1)).getString("access_token");
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}.
+   *
+   * <ul>
+   *   <li>Given {@link JSONObject} {@link JSONObject#getString(String)} return {@code String}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}
+   */
+  @Test
+  @DisplayName(
+      "Test onConnected(WebSocket, Map); given JSONObject getString(String) return 'String'; then calls sendText(String)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onConnected(WebSocket, Map)"})
+  void testOnConnected_givenJSONObjectGetStringReturnString_thenCallsSendText() throws Exception {
+    // Arrange
+    when(jSONObject.getString(Mockito.<String>any())).thenReturn("String");
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onConnected(websocket, new HashMap<>());
+
+    // Assert
+    verify(websocket, atLeast(1)).sendText(Mockito.<String>any());
+    verify(jSONObject, atLeast(1)).getString("access_token");
   }
 
   /**
@@ -199,7 +276,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
   void testOnTextMessageWithWebsocketMessage() {
     // Arrange and Act
-    reactiveMarketDataUpdater.onTextMessage(null, "");
+    reactiveMarketDataUpdater.onTextMessage(mock(WebSocket.class), "");
 
     // Assert that nothing has changed
     assertFalse(reactiveMarketDataUpdater.requestSent);
@@ -209,26 +286,83 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
    * {@code message}.
    *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage2() {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "Not all who wander are lost");
+
+    // Assert that nothing has changed
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    assertFalse(reactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
+   * {@code message}.
+   *
    * <ul>
-   *   <li>Then {@link ReactiveMarketDataUpdater} {@link ReactiveMarketDataUpdater#requestSent}.
+   *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
   @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; then ReactiveMarketDataUpdater requestSent")
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; then throw IllegalStateException")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_thenReactiveMarketDataUpdaterRequestSent() {
+  void testOnTextMessageWithWebsocketMessage_thenThrowIllegalStateException() {
+    // Arrange
+    when(spec.getKey()).thenThrow(new IllegalStateException());
+
+    // Act and Assert
+    assertThrows(
+        IllegalStateException.class,
+        () -> reactiveMarketDataUpdater.onTextMessage(null, "Not all who wander are lost"));
+    verify(spec).getKey();
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
+   * {@code message}.
+   *
+   * <ul>
+   *   <li>When {@code 42}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '42'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_when42() {
     // Arrange
     when(spec.getKey()).thenReturn("Key");
+
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    reactiveMarketDataUpdater.onTextMessage(websocket, "Not all who wander are lost");
+    reactiveMarketDataUpdater.onTextMessage(websocket, "42");
 
     // Assert
     verify(websocket)
@@ -243,58 +377,35 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * {@code message}.
    *
    * <ul>
-   *   <li>When {@code 42}.
-   *   <li>Then throw {@link IllegalStateException}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '42'; then throw IllegalStateException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_when42_thenThrowIllegalStateException() {
-    // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
-
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class, () -> reactiveMarketDataUpdater.onTextMessage(null, "42"));
-    verify(spec).getKey();
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
-   * {@code message}.
-   *
-   * <ul>
    *   <li>When a string.
-   *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when a string; then throw IllegalStateException")
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when a string")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenAString_thenThrowIllegalStateException() {
+  void testOnTextMessageWithWebsocketMessage_whenAString() {
     // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
+    when(spec.getKey()).thenReturn("Key");
 
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            reactiveMarketDataUpdater.onTextMessage(
-                null,
-                "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-                    + "\"},\"NameType\":\"AuthnToken\"}}"));
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(
+        websocket,
+        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
+            + "\"},\"NameType\":\"AuthnToken\"}}");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
   }
 
   /**
@@ -303,52 +414,63 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    *
    * <ul>
    *   <li>When {@code ...done}.
-   *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '...done'; then throw IllegalStateException")
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '...done'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenDone_thenThrowIllegalStateException() {
+  void testOnTextMessageWithWebsocketMessage_whenDone() {
     // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
+    when(spec.getKey()).thenReturn("Key");
 
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () -> reactiveMarketDataUpdater.onTextMessage(null, "...done"));
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "...done");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
   }
 
   /**
    * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket}, {@code message}.
    * <ul>
    *   <li>When {@code "Key":{"Name":[}.</li>
-   *   <li>Then throw {@link IllegalStateException}.</li>
    * </ul>
    * <p>
    * Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
   @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\"Key\":{\"Name\":['; then throw IllegalStateException")
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\"Key\":{\"Name\":['")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenKeyName_thenThrowIllegalStateException() {
+  void testOnTextMessageWithWebsocketMessage_whenKeyName() {
     // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
+    when(spec.getKey()).thenReturn("Key");
 
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () -> reactiveMarketDataUpdater.onTextMessage(null, "\"Key\":{\"Name\":["));
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "\"Key\":{\"Name\":[");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
   }
 
   /**
@@ -369,13 +491,87 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
   void testOnTextMessageWithWebsocketMessage_whenNotAllWhoWanderAreLost() {
     // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
+    when(spec.getKey()).thenReturn("Key");
 
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () -> reactiveMarketDataUpdater.onTextMessage(null, "Not all who wander are lost"));
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "Not all who wander are lost");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
+   * {@code message}.
+   *
+   * <ul>
+   *   <li>When {@code ",}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\",'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_whenQuotationMarkComma() {
+    // Arrange
+    when(spec.getKey()).thenReturn("Key");
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "\",");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
+   * {@code message}.
+   *
+   * <ul>
+   *   <li>When {@code ]}}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when ']}'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_whenRightSquareBracketRightCurlyBracket() {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(websocket, "]}");
+
+    // Assert that nothing has changed
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    assertFalse(reactiveMarketDataUpdater.requestSent);
   }
 
   /**
@@ -433,6 +629,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     ArrayList<MarketDataSetValuesInner> marketDataSetValuesInnerList = new ArrayList<>();
     marketDataSetValuesInnerList.add(marketDataSetValuesInner2);
     marketDataSetValuesInnerList.add(marketDataSetValuesInner);
+
     MarketDataSet transferMessage = mock(MarketDataSet.class);
     when(transferMessage.getValues()).thenReturn(marketDataSetValuesInnerList);
 
@@ -475,6 +672,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
 
     ArrayList<MarketDataSetValuesInner> marketDataSetValuesInnerList = new ArrayList<>();
     marketDataSetValuesInnerList.add(marketDataSetValuesInner);
+
     MarketDataSet transferMessage = mock(MarketDataSet.class);
     when(transferMessage.getValues()).thenReturn(marketDataSetValuesInnerList);
 

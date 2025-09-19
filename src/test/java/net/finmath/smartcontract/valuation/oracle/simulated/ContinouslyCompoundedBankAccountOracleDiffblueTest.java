@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import net.finmath.stochastic.RandomVariable;
 import net.finmath.stochastic.Scalar;
-import net.finmath.time.TenorFromArray;
 import net.finmath.time.TimeDiscretization;
+import net.finmath.time.TimeDiscretizationFromArray;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -38,12 +38,10 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
   @MethodsUnderTest({"void ContinouslyCompoundedBankAccountOracle.<init>()"})
   void testNewContinouslyCompoundedBankAccountOracle() {
     // Arrange and Act
-    ContinouslyCompoundedBankAccountOracle actualContinouslyCompoundedBankAccountOracle =
-        new ContinouslyCompoundedBankAccountOracle();
-    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
     RandomVariable actualValue =
-        actualContinouslyCompoundedBankAccountOracle.getValue(
-            evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay());
+        new ContinouslyCompoundedBankAccountOracle()
+            .getValue(
+                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertTrue(actualValue instanceof Scalar);
@@ -68,7 +66,8 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     assertEquals(1, actualValue.size());
     assertTrue(actualValue.isDeterministic());
     assertEquals(Double.NEGATIVE_INFINITY, actualValue.getFiltrationTime());
-    assertSame(actualValue, actualValue.expectation());
+    RandomVariable actualExpectationResult = actualValue.expectation();
+    assertSame(actualValue, actualExpectationResult);
   }
 
   /**
@@ -85,12 +84,10 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
   @MethodsUnderTest({"void ContinouslyCompoundedBankAccountOracle.<init>(LocalDateTime)"})
   void testNewContinouslyCompoundedBankAccountOracle2() {
     // Arrange and Act
-    ContinouslyCompoundedBankAccountOracle actualContinouslyCompoundedBankAccountOracle =
-        new ContinouslyCompoundedBankAccountOracle(LocalDate.of(1970, 1, 1).atStartOfDay());
-    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
     RandomVariable actualValue =
-        actualContinouslyCompoundedBankAccountOracle.getValue(
-            evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay());
+        new ContinouslyCompoundedBankAccountOracle(LocalDate.of(1970, 1, 1).atStartOfDay())
+            .getValue(
+                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertTrue(actualValue instanceof Scalar);
@@ -118,7 +115,8 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     assertEquals(1.0d, actualValue.getMin());
     assertTrue(actualValue.isDeterministic());
     assertEquals(Double.NEGATIVE_INFINITY, actualValue.getFiltrationTime());
-    assertSame(actualValue, actualValue.expectation());
+    RandomVariable actualExpectationResult = actualValue.expectation();
+    assertSame(actualValue, actualExpectationResult);
   }
 
   /**
@@ -143,10 +141,9 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     ContinouslyCompoundedBankAccountOracle actualContinouslyCompoundedBankAccountOracle =
         new ContinouslyCompoundedBankAccountOracle(
             LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d, 10.0d, 10.0d);
-    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
     RandomVariable actualValue =
         actualContinouslyCompoundedBankAccountOracle.getValue(
-            evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertTrue(actualValue instanceof Scalar);
@@ -160,7 +157,8 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     assertTrue(actualValue.sqrt() instanceof Scalar);
     assertTrue(actualValue.squared() instanceof Scalar);
     assertTrue(actualValue.variance() instanceof Scalar);
-    assertSame(actualValue, actualValue.expectation());
+    RandomVariable actualExpectationResult = actualValue.expectation();
+    assertSame(actualValue, actualExpectationResult);
   }
 
   /**
@@ -181,17 +179,16 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     "void ContinouslyCompoundedBankAccountOracle.<init>(TimeDiscretization, LocalDateTime, double, double)"
   })
   void testNewContinouslyCompoundedBankAccountOracle4() {
-    // Arrange
-    TenorFromArray timeDiscretization = new TenorFromArray(10.0d, 10, 0.5d);
-
-    // Act
+    // Arrange and Act
     ContinouslyCompoundedBankAccountOracle actualContinouslyCompoundedBankAccountOracle =
         new ContinouslyCompoundedBankAccountOracle(
-            timeDiscretization, LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d, 10.0d);
-    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
+            new TimeDiscretizationFromArray(10.0d, 10, 0.5d),
+            LocalDate.of(1970, 1, 1).atStartOfDay(),
+            10.0d,
+            10.0d);
     RandomVariable actualValue =
         actualContinouslyCompoundedBankAccountOracle.getValue(
-            evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertTrue(actualValue instanceof Scalar);
@@ -219,7 +216,8 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     assertEquals(10.0d, actualValue.getMin());
     assertTrue(actualValue.isDeterministic());
     assertEquals(Double.NEGATIVE_INFINITY, actualValue.getFiltrationTime());
-    assertSame(actualValue, actualValue.expectation());
+    RandomVariable actualExpectationResult = actualValue.expectation();
+    assertSame(actualValue, actualExpectationResult);
   }
 
   /**
@@ -248,10 +246,9 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     ContinouslyCompoundedBankAccountOracle actualContinouslyCompoundedBankAccountOracle =
         new ContinouslyCompoundedBankAccountOracle(
             LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d, 3.1536E7d, 10.0d);
-    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
     RandomVariable actualValue =
         actualContinouslyCompoundedBankAccountOracle.getValue(
-            evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay());
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertTrue(actualValue instanceof Scalar);
@@ -265,6 +262,7 @@ class ContinouslyCompoundedBankAccountOracleDiffblueTest {
     assertTrue(actualValue.sqrt() instanceof Scalar);
     assertTrue(actualValue.squared() instanceof Scalar);
     assertTrue(actualValue.variance() instanceof Scalar);
-    assertSame(actualValue, actualValue.expectation());
+    RandomVariable actualExpectationResult = actualValue.expectation();
+    assertSame(actualValue, actualExpectationResult);
   }
 }

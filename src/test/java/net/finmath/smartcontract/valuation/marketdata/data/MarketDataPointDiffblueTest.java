@@ -139,8 +139,7 @@ class MarketDataPointDiffblueTest {
 
     // Act and Assert
     assertEquals(marketDataPoint, marketDataPoint2);
-    int notExpectedHashCodeResult = marketDataPoint.hashCode();
-    assertNotEquals(notExpectedHashCodeResult, marketDataPoint2.hashCode());
+    assertNotEquals(marketDataPoint.hashCode(), marketDataPoint2.hashCode());
   }
 
   /**

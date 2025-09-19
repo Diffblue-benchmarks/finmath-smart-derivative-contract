@@ -39,6 +39,7 @@ class WebSocketConfigDiffblueTest {
   void testRegisterWebSocketHandlers_thenCallsAddHandler() {
     // Arrange
     WebSocketConfig webSocketConfig = new WebSocketConfig();
+
     WebSocketHandlerRegistry registry = mock(WebSocketHandlerRegistry.class);
     when(registry.addHandler(Mockito.<WebSocketHandler>any(), isA(String[].class)))
         .thenReturn(new ServletWebSocketHandlerRegistration());

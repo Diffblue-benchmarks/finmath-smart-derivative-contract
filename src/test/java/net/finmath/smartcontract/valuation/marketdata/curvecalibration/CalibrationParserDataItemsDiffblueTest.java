@@ -104,12 +104,12 @@ class CalibrationParserDataItemsDiffblueTest {
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_thenReturnEmpty() throws JsonProcessingException {
     // Arrange
-    JsonMapper buildResult = JsonMapper.builder().findAndAddModules().build();
+    JsonMapper jsonMapper = JsonMapper.builder().findAndAddModules().build();
 
     // Act
     List<CalibrationDataset> actualScenariosFromJsonString =
         CalibrationParserDataItems.getScenariosFromJsonString(
-            buildResult.writeValueAsString(new HashMap<>()));
+            jsonMapper.writeValueAsString(new HashMap<>()));
 
     // Assert
     assertTrue(actualScenariosFromJsonString.isEmpty());

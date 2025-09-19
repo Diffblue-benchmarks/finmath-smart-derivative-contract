@@ -138,6 +138,7 @@ class MarketDataCheckDiffblueTest {
     // Arrange
     ArrayList<MarketDataPoint> marketDataPointList = new ArrayList<>();
     marketDataPointList.add(new MarketDataPoint());
+
     MarketDataList marketDataList = mock(MarketDataList.class);
     when(marketDataList.getPoints()).thenReturn(marketDataPointList);
 

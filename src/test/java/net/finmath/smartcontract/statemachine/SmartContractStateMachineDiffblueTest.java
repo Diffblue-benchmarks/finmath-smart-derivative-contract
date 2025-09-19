@@ -93,7 +93,6 @@ class SmartContractStateMachineDiffblueTest {
     // Arrange and Act
     Guard<States, Events> actualSettlementCheckResult = smartContractStateMachine.settlementCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
-
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
@@ -101,28 +100,27 @@ class SmartContractStateMachineDiffblueTest {
     AbstractInternalTransition<States, Events> transition =
         new AbstractInternalTransition<>(
             source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
-
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
     ObjectStateMachine<States, Events> stateMachine =
         new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
-
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
+    DefaultStateContext<States, Events> defaultStateContext =
+        new DefaultStateContext<>(
+            Stage.EVENT_NOT_ACCEPTED,
+            message,
+            null,
+            extendedState,
+            transition,
+            stateMachine,
+            source2,
+            target,
+            new Exception());
+    boolean actualEvaluateResult = actualSettlementCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(
-        actualSettlementCheckResult.evaluate(
-            new DefaultStateContext<>(
-                Stage.EVENT_NOT_ACCEPTED,
-                message,
-                null,
-                extendedState,
-                transition,
-                stateMachine,
-                source2,
-                target,
-                new Exception())));
+    assertTrue(actualEvaluateResult);
   }
 
   /**
@@ -139,7 +137,6 @@ class SmartContractStateMachineDiffblueTest {
     // Arrange and Act
     Guard<States, Events> actualPrefundingCheckResult = smartContractStateMachine.prefundingCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
-
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
@@ -147,28 +144,27 @@ class SmartContractStateMachineDiffblueTest {
     AbstractInternalTransition<States, Events> transition =
         new AbstractInternalTransition<>(
             source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
-
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
     ObjectStateMachine<States, Events> stateMachine =
         new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
-
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
+    DefaultStateContext<States, Events> defaultStateContext =
+        new DefaultStateContext<>(
+            Stage.EVENT_NOT_ACCEPTED,
+            message,
+            null,
+            extendedState,
+            transition,
+            stateMachine,
+            source2,
+            target,
+            new Exception());
+    boolean actualEvaluateResult = actualPrefundingCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(
-        actualPrefundingCheckResult.evaluate(
-            new DefaultStateContext<>(
-                Stage.EVENT_NOT_ACCEPTED,
-                message,
-                null,
-                extendedState,
-                transition,
-                stateMachine,
-                source2,
-                target,
-                new Exception())));
+    assertTrue(actualEvaluateResult);
   }
 
   /**
@@ -185,7 +181,6 @@ class SmartContractStateMachineDiffblueTest {
     // Arrange and Act
     Guard<States, Events> actualNotMaturedCheckResult = smartContractStateMachine.notMaturedCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
-
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
@@ -193,28 +188,27 @@ class SmartContractStateMachineDiffblueTest {
     AbstractInternalTransition<States, Events> transition =
         new AbstractInternalTransition<>(
             source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
-
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
     ObjectStateMachine<States, Events> stateMachine =
         new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
-
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
+    DefaultStateContext<States, Events> defaultStateContext =
+        new DefaultStateContext<>(
+            Stage.EVENT_NOT_ACCEPTED,
+            message,
+            null,
+            extendedState,
+            transition,
+            stateMachine,
+            source2,
+            target,
+            new Exception());
+    boolean actualEvaluateResult = actualNotMaturedCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(
-        actualNotMaturedCheckResult.evaluate(
-            new DefaultStateContext<>(
-                Stage.EVENT_NOT_ACCEPTED,
-                message,
-                null,
-                extendedState,
-                transition,
-                stateMachine,
-                source2,
-                target,
-                new Exception())));
+    assertTrue(actualEvaluateResult);
   }
 
   /**
@@ -235,7 +229,6 @@ class SmartContractStateMachineDiffblueTest {
     // Act
     Guard<States, Events> actualNotMaturedCheckResult = smartContractStateMachine.notMaturedCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
-
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
@@ -243,28 +236,27 @@ class SmartContractStateMachineDiffblueTest {
     AbstractInternalTransition<States, Events> transition =
         new AbstractInternalTransition<>(
             source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
-
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
     ObjectStateMachine<States, Events> stateMachine =
         new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
-
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
+    DefaultStateContext<States, Events> defaultStateContext =
+        new DefaultStateContext<>(
+            Stage.EVENT_NOT_ACCEPTED,
+            message,
+            null,
+            extendedState,
+            transition,
+            stateMachine,
+            source2,
+            target,
+            new Exception());
+    boolean actualEvaluateResult = actualNotMaturedCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertFalse(
-        actualNotMaturedCheckResult.evaluate(
-            new DefaultStateContext<>(
-                Stage.EVENT_NOT_ACCEPTED,
-                message,
-                null,
-                extendedState,
-                transition,
-                stateMachine,
-                source2,
-                target,
-                new Exception())));
+    assertFalse(actualEvaluateResult);
   }
 
   /**

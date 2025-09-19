@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
+import net.finmath.marketdata.calibration.CalibratedCurves;
+import net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,19 +22,22 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(new CalibrationContextImpl(LocalDate.now().atStartOfDay(), 10.0d))
-            .getSymbol());
+    LocalDate ofYearDayResult = LocalDate.ofYearDay(2, 2);
+
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -46,20 +51,22 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec2() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(
-                new CalibrationContextImpl(LocalDate.ofYearDay(2, 2).atStartOfDay(), 10.0d))
-            .getSymbol());
+    LocalDate ofYearDayResult = LocalDate.ofYearDay(2, 100);
+
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -73,20 +80,22 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec3() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(
-                new CalibrationContextImpl(LocalDate.ofYearDay(2, 100).atStartOfDay(), 10.0d))
-            .getSymbol());
+    LocalDate ofYearDayResult = LocalDate.ofYearDay(19, 100);
+
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -100,20 +109,22 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec4() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(
-                new CalibrationContextImpl(LocalDate.ofYearDay(19, 100).atStartOfDay(), 10.0d))
-            .getSymbol());
+    LocalDate ofYearDayResult = LocalDate.ofYearDay(2, Integer.SIZE);
+
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -127,21 +138,22 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec5() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(
-                new CalibrationContextImpl(
-                    LocalDate.ofYearDay(2, Integer.SIZE).atStartOfDay(), 10.0d))
-            .getSymbol());
+    LocalDate ofYearDayResult = LocalDate.ofYearDay(19, Integer.SIZE);
+
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -160,19 +172,19 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec_whenLocalDateWith1970AndOneAndOneAtStartOfDay() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
         new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
 
-    // Act and Assert
-    assertEquals(
-        "EUR-Tenor Label42",
-        calibrationSpecProviderDeposit
-            .getCalibrationSpec(
-                new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
-            .getSymbol());
+    // Act
+    CalibrationSpec actualCalibrationSpec =
+        calibrationSpecProviderDeposit.getCalibrationSpec(
+            new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+
+    // Assert
+    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
   }
 }
