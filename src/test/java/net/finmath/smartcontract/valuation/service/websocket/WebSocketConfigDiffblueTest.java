@@ -13,13 +13,26 @@ import jakarta.websocket.server.ServerContainer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.aot.DisabledInAotMode;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.ServletWebSocketHandlerRegistration;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
+@ContextConfiguration(classes = {WebSocketConfig.class})
+@DisabledInAotMode
+@ExtendWith(SpringExtension.class)
 class WebSocketConfigDiffblueTest {
+  @MockBean private ServletServerContainerFactoryBean servletServerContainerFactoryBean;
+
+  @Autowired private WebSocketConfig webSocketConfig;
+
   /**
    * Test {@link WebSocketConfig#registerWebSocketHandlers(WebSocketHandlerRegistry)}.
    *
@@ -85,5 +98,27 @@ class WebSocketConfigDiffblueTest {
     assertTrue(actualCreateWebSocketContainerResult.isSingleton());
     Class<ServerContainer> expectedObjectType = ServerContainer.class;
     assertEquals(expectedObjectType, actualCreateWebSocketContainerResult.getObjectType());
+  }
+
+  /**
+   * Test {@link WebSocketConfig#createWebSocketContainer()}.
+   *
+   * <ul>
+   *   <li>Then return {@link ServletServerContainerFactoryBean}.
+   * </ul>
+   *
+   * <p>Method under test: {@link WebSocketConfig#createWebSocketContainer()}
+   */
+  @Test
+  @DisplayName("Test createWebSocketContainer(); then return ServletServerContainerFactoryBean")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "ServletServerContainerFactoryBean WebSocketConfig.createWebSocketContainer()"
+  })
+  void testCreateWebSocketContainer_thenReturnServletServerContainerFactoryBean() {
+    // Arrange, Act and Assert
+    assertTrue(
+        webSocketConfig.createWebSocketContainer() instanceof ServletServerContainerFactoryBean);
   }
 }

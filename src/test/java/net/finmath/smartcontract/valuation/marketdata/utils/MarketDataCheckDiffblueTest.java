@@ -58,48 +58,38 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
 
-    SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    Settlement value2 = new Settlement();
+    value2.setMarketdata(value);
+    value2.setSettlementTime(new SettlementTime());
 
-    Settlement value3 = new Settlement();
-    value3.setMarketdata(value);
-    value3.setSettlementTime(value2);
+    DataDocument value3 = new DataDocument();
+    value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setFpmlVersion("42");
+    value3.setOnBehalfOf(new OnBehalfOf());
+    value3.setOriginatingEvent(new OriginatingEvent());
 
-    DataDocument value4 = new DataDocument();
-    value4.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setFpmlVersion("42");
-    value4.setOnBehalfOf(new OnBehalfOf());
-    value4.setOriginatingEvent(new OriginatingEvent());
+    Underlying value4 = new Underlying();
+    value4.setDataDocument(value3);
 
-    Underlying value5 = new Underlying();
-    value5.setDataDocument(value4);
+    Underlyings value5 = new Underlyings();
+    value5.setUnderlying(value4);
 
-    Underlyings value6 = new Underlyings();
-    value6.setUnderlying(value5);
-
-    Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
-
-    Valuation value8 = new Valuation();
-    value8.setArtefact(value7);
+    Valuation value6 = new Valuation();
+    value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
     sdc.setDltAddress("42");
     sdc.setDltTradeId("42");
     sdc.setParties(new Parties());
     sdc.setReceiverPartyID("42");
-    sdc.setSettlement(value3);
+    sdc.setSettlement(value2);
     sdc.setSettlementCurrency("42");
     sdc.setTradeType("42");
-    sdc.setUnderlyings(value6);
+    sdc.setUnderlyings(value5);
     sdc.setUniqueTradeIdentifier("42");
-    sdc.setValuation(value8);
+    sdc.setValuation(value6);
 
     // Act
     MarketDataErrors actualCheckMarketDataResult =
@@ -144,48 +134,38 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
 
-    SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    Settlement value2 = new Settlement();
+    value2.setMarketdata(value);
+    value2.setSettlementTime(new SettlementTime());
 
-    Settlement value3 = new Settlement();
-    value3.setMarketdata(value);
-    value3.setSettlementTime(value2);
+    DataDocument value3 = new DataDocument();
+    value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setFpmlVersion("42");
+    value3.setOnBehalfOf(new OnBehalfOf());
+    value3.setOriginatingEvent(new OriginatingEvent());
 
-    DataDocument value4 = new DataDocument();
-    value4.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setFpmlVersion("42");
-    value4.setOnBehalfOf(new OnBehalfOf());
-    value4.setOriginatingEvent(new OriginatingEvent());
+    Underlying value4 = new Underlying();
+    value4.setDataDocument(value3);
 
-    Underlying value5 = new Underlying();
-    value5.setDataDocument(value4);
+    Underlyings value5 = new Underlyings();
+    value5.setUnderlying(value4);
 
-    Underlyings value6 = new Underlyings();
-    value6.setUnderlying(value5);
-
-    Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
-
-    Valuation value8 = new Valuation();
-    value8.setArtefact(value7);
+    Valuation value6 = new Valuation();
+    value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
     sdc.setDltAddress("42");
     sdc.setDltTradeId("42");
     sdc.setParties(new Parties());
     sdc.setReceiverPartyID("42");
-    sdc.setSettlement(value3);
+    sdc.setSettlement(value2);
     sdc.setSettlementCurrency("42");
     sdc.setTradeType("42");
-    sdc.setUnderlyings(value6);
+    sdc.setUnderlyings(value5);
     sdc.setUniqueTradeIdentifier("42");
-    sdc.setValuation(value8);
+    sdc.setValuation(value6);
 
     // Act
     MarketDataErrors actualCheckMarketDataResult =
@@ -223,48 +203,38 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
 
-    SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    Settlement value2 = new Settlement();
+    value2.setMarketdata(value);
+    value2.setSettlementTime(new SettlementTime());
 
-    Settlement value3 = new Settlement();
-    value3.setMarketdata(value);
-    value3.setSettlementTime(value2);
+    DataDocument value3 = new DataDocument();
+    value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
+    value3.setFpmlVersion("42");
+    value3.setOnBehalfOf(new OnBehalfOf());
+    value3.setOriginatingEvent(new OriginatingEvent());
 
-    DataDocument value4 = new DataDocument();
-    value4.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value4.setFpmlVersion("42");
-    value4.setOnBehalfOf(new OnBehalfOf());
-    value4.setOriginatingEvent(new OriginatingEvent());
+    Underlying value4 = new Underlying();
+    value4.setDataDocument(value3);
 
-    Underlying value5 = new Underlying();
-    value5.setDataDocument(value4);
+    Underlyings value5 = new Underlyings();
+    value5.setUnderlying(value4);
 
-    Underlyings value6 = new Underlyings();
-    value6.setUnderlying(value5);
-
-    Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
-
-    Valuation value8 = new Valuation();
-    value8.setArtefact(value7);
+    Valuation value6 = new Valuation();
+    value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
     sdc.setDltAddress("42");
     sdc.setDltTradeId("42");
     sdc.setParties(new Parties());
     sdc.setReceiverPartyID("42");
-    sdc.setSettlement(value3);
+    sdc.setSettlement(value2);
     sdc.setSettlementCurrency("42");
     sdc.setTradeType("42");
-    sdc.setUnderlyings(value6);
+    sdc.setUnderlyings(value5);
     sdc.setUniqueTradeIdentifier("42");
-    sdc.setValuation(value8);
+    sdc.setValuation(value6);
 
     // Act
     MarketDataErrors actualCheckMarketDataResult =

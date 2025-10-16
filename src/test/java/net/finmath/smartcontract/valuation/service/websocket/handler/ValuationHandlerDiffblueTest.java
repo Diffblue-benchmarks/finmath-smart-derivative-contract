@@ -55,11 +55,14 @@ class ValuationHandlerDiffblueTest {
     // Arrange
     HttpHeaders headers = new HttpHeaders();
     HashMap<String, Object> attributes = new HashMap<>();
-    InetSocketAddress localAddress = InetSocketAddress.createUnresolved("foo", 1);
+    InetSocketAddress localAddress = InetSocketAddress.createUnresolved("localhost", 8080);
 
     StandardWebSocketSession delegate =
         new StandardWebSocketSession(
-            headers, attributes, localAddress, InetSocketAddress.createUnresolved("foo", 1));
+            headers,
+            attributes,
+            localAddress,
+            InetSocketAddress.createUnresolved("localhost", 8080));
     WebSocketSessionDecorator session =
         new WebSocketSessionDecorator(new ConcurrentWebSocketSessionDecorator(delegate, 3, 3));
 
@@ -92,11 +95,14 @@ class ValuationHandlerDiffblueTest {
     // Arrange
     HttpHeaders headers = new HttpHeaders();
     HashMap<String, Object> attributes = new HashMap<>();
-    InetSocketAddress localAddress = InetSocketAddress.createUnresolved("foo", 1);
+    InetSocketAddress localAddress = InetSocketAddress.createUnresolved("localhost", 8080);
 
     StandardWebSocketSession delegate =
         new StandardWebSocketSession(
-            headers, attributes, localAddress, InetSocketAddress.createUnresolved("foo", 1));
+            headers,
+            attributes,
+            localAddress,
+            InetSocketAddress.createUnresolved("localhost", 8080));
     WebSocketSessionDecorator session =
         new WebSocketSessionDecorator(new ConcurrentWebSocketSessionDecorator(delegate, 3, 3));
 

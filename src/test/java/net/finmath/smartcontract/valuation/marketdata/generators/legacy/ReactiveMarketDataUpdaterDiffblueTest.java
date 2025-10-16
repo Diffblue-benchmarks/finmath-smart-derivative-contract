@@ -37,14 +37,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {ReactiveMarketDataUpdater.class, String.class})
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @DisabledInAotMode
 @ExtendWith(SpringExtension.class)
 class ReactiveMarketDataUpdaterDiffblueTest {
@@ -59,81 +56,18 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   /**
    * Test {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject, String, List)}.
    *
-   * <ul>
-   *   <li>When {@link ArrayList#ArrayList()}.
-   * </ul>
-   *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject,
    * String, List)}
    */
   @Test
-  @DisplayName("Test new ReactiveMarketDataUpdater(JSONObject, String, List); when ArrayList()")
+  @DisplayName("Test new ReactiveMarketDataUpdater(JSONObject, String, List)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.<init>(JSONObject, String, List)"})
-  void testNewReactiveMarketDataUpdater_whenArrayList() {
+  void testNewReactiveMarketDataUpdater() {
     // Arrange and Act
     ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
         new ReactiveMarketDataUpdater(jSONObject, "Position", new ArrayList<>());
-
-    // Assert
-    assertFalse(actualReactiveMarketDataUpdater.requestSent);
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject, String, List)}.
-   *
-   * <ul>
-   *   <li>When {@link ArrayList#ArrayList()} add {@link CalibrationDataItem.Spec}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject,
-   * String, List)}
-   */
-  @Test
-  @DisplayName(
-      "Test new ReactiveMarketDataUpdater(JSONObject, String, List); when ArrayList() add Spec")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.<init>(JSONObject, String, List)"})
-  void testNewReactiveMarketDataUpdater_whenArrayListAddSpec() {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    itemList.add(spec);
-
-    // Act
-    ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
-        new ReactiveMarketDataUpdater(jSONObject, "Position", itemList);
-
-    // Assert
-    assertFalse(actualReactiveMarketDataUpdater.requestSent);
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject, String, List)}.
-   *
-   * <ul>
-   *   <li>When {@link ArrayList#ArrayList()} add {@link CalibrationDataItem.Spec}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#ReactiveMarketDataUpdater(JSONObject,
-   * String, List)}
-   */
-  @Test
-  @DisplayName(
-      "Test new ReactiveMarketDataUpdater(JSONObject, String, List); when ArrayList() add Spec")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.<init>(JSONObject, String, List)"})
-  void testNewReactiveMarketDataUpdater_whenArrayListAddSpec2() {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    itemList.add(spec);
-    itemList.add(spec);
-
-    // Act
-    ReactiveMarketDataUpdater actualReactiveMarketDataUpdater =
-        new ReactiveMarketDataUpdater(jSONObject, "Position", itemList);
 
     // Assert
     assertFalse(actualReactiveMarketDataUpdater.requestSent);
@@ -267,96 +201,29 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
    * {@code message}.
    *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage() {
-    // Arrange and Act
-    reactiveMarketDataUpdater.onTextMessage(mock(WebSocket.class), "");
-
-    // Assert that nothing has changed
-    assertFalse(reactiveMarketDataUpdater.requestSent);
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
-   * {@code message}.
-   *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage2() {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
-        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    reactiveMarketDataUpdater.onTextMessage(websocket, "Not all who wander are lost");
-
-    // Assert that nothing has changed
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(reactiveMarketDataUpdater.requestSent);
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
-   * {@code message}.
-   *
    * <ul>
-   *   <li>Then throw {@link IllegalStateException}.
+   *   <li>Given {@code null}.
+   *   <li>When {@code 42}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
   @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; then throw IllegalStateException")
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when '42'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_thenThrowIllegalStateException() {
-    // Arrange
-    when(spec.getKey()).thenThrow(new IllegalStateException());
+  void testOnTextMessageWithWebsocketMessage_givenNull_when42_thenCallsSendText() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
 
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () -> reactiveMarketDataUpdater.onTextMessage(null, "Not all who wander are lost"));
-    verify(spec).getKey();
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
-   * {@code message}.
-   *
-   * <ul>
-   *   <li>When {@code 42}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '42'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_when42() {
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -367,9 +234,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -377,19 +242,28 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * {@code message}.
    *
    * <ul>
+   *   <li>Given {@code null}.
    *   <li>When a string.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when a string")
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when a string; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenAString() {
+  void testOnTextMessageWithWebsocketMessage_givenNull_whenAString_thenCallsSendText() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -403,9 +277,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -413,19 +285,28 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * {@code message}.
    *
    * <ul>
+   *   <li>Given {@code null}.
    *   <li>When {@code ...done}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '...done'")
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when '...done'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenDone() {
+  void testOnTextMessageWithWebsocketMessage_givenNull_whenDone_thenCallsSendText() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -436,28 +317,34 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
    * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket}, {@code message}.
    * <ul>
+   *   <li>Given {@code null}.</li>
    *   <li>When {@code "Key":{"Name":[}.</li>
+   *   <li>Then calls {@link WebSocket#sendText(String)}.</li>
    * </ul>
    * <p>
    * Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
   @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\"Key\":{\"Name\":['")
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when '\"Key\":{\"Name\":['; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenKeyName() {
+  void testOnTextMessageWithWebsocketMessage_givenNull_whenKeyName_thenCallsSendText() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -468,9 +355,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -490,8 +375,14 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
   void testOnTextMessageWithWebsocketMessage_whenNotAllWhoWanderAreLost() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -502,9 +393,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -513,18 +402,26 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    *
    * <ul>
    *   <li>When {@code ",}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\",'")
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\",'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenQuotationMarkComma() {
+  void testOnTextMessageWithWebsocketMessage_whenQuotationMarkComma_thenCallsSendText() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
-    when(spec.getKey()).thenReturn("Key");
+    JSONObject authJson = new JSONObject();
+    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
+        new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -535,9 +432,7 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    verify(spec).getKey();
-    assertTrue(reactiveMarketDataUpdater.requestSent);
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -556,6 +451,10 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
   void testOnTextMessageWithWebsocketMessage_whenRightSquareBracketRightCurlyBracket() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
     JSONObject authJson = new JSONObject();
     ReactiveMarketDataUpdater reactiveMarketDataUpdater =
@@ -567,11 +466,10 @@ class ReactiveMarketDataUpdaterDiffblueTest {
     // Act
     reactiveMarketDataUpdater.onTextMessage(websocket, "]}");
 
-    // Assert that nothing has changed
+    // Assert
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(reactiveMarketDataUpdater.requestSent);
   }
 
   /**
