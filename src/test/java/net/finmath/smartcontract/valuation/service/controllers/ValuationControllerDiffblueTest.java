@@ -58,14 +58,14 @@ class ValuationControllerDiffblueTest {
     when(marginRequest.getMarketDataStart()).thenReturn("Market Data Start");
     when(marginRequest.getTradeData()).thenReturn("Trade Data");
     when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
-    marginRequest.marketDataStart("margin");
+    marginRequest.marketDataStart("Market Data Start");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
     verify(marginRequest).getMarketDataEnd();
     verify(marginRequest).getMarketDataStart();
     verify(marginRequest).getTradeData();
-    verify(marginRequest).marketDataStart("margin");
+    verify(marginRequest).marketDataStart("Market Data Start");
   }
 
   /**
@@ -253,7 +253,13 @@ class ValuationControllerDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_thenCallsReadAllBytes() throws IOException {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
+    ValuationController valuationController = new ValuationController();
+
     DataInputStream dataInputStream = mock(DataInputStream.class);
     when(dataInputStream.readAllBytes())
         .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
@@ -284,7 +290,12 @@ class ValuationControllerDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenByteArrayInputStreamWithAxaxaxaxBytesIsUtf8() throws IOException {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
+    ValuationController valuationController = new ValuationController();
     MockMultipartFile tradeData =
         new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
 
@@ -307,8 +318,12 @@ class ValuationControllerDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenNull() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange, Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.testProductValue(null));
+    assertThrows(SDCException.class, () -> new ValuationController().testProductValue(null));
   }
 
   /**

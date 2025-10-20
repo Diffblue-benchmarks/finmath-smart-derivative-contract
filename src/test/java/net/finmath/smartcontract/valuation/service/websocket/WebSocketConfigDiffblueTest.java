@@ -50,6 +50,10 @@ class WebSocketConfigDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void WebSocketConfig.registerWebSocketHandlers(WebSocketHandlerRegistry)"})
   void testRegisterWebSocketHandlers_thenCallsAddHandler() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange
     WebSocketConfig webSocketConfig = new WebSocketConfig();
 
