@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5CiTduh5rbPa5zr16UjYtEnLhpF","object":"chat.completion","created":1761047552,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EquityDerivativeContract\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":278,"completion_tokens":7,"total_tokens":285}}

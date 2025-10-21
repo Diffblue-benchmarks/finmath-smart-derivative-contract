@@ -71,17 +71,17 @@ class RefinitivConfigDiffblueTest {
     RefinitivConfig refinitivConfig = new RefinitivConfig();
 
     // Act
-    refinitivConfig.setAuthUrl("https://example.org/example");
-    refinitivConfig.setClientId("42");
-    refinitivConfig.setHostName("Host Name");
-    refinitivConfig.setPassword("iloveyou");
+    refinitivConfig.setAuthUrl("\"https://api.refinitiv.com/auth/v1/token\"");
+    refinitivConfig.setClientId("\"refinitiv-client-1234567890\"");
+    refinitivConfig.setHostName("\"refinitiv-data-platform.eikon.com\"");
+    refinitivConfig.setPassword("\"RefinitivSecurePassword123!\"");
     refinitivConfig.setPort(8080);
-    refinitivConfig.setProxyHost("localhost");
-    refinitivConfig.setProxyPassword("iloveyou");
+    refinitivConfig.setProxyHost("\"proxy.finmath.net\"");
+    refinitivConfig.setProxyPassword("\"SecureProxyPassword123!\"");
     refinitivConfig.setProxyPort(8080);
-    refinitivConfig.setProxyUser("Proxy User");
-    refinitivConfig.setUseProxy("Use Proxy");
-    refinitivConfig.setUser("User");
+    refinitivConfig.setProxyUser("\"proxyUser123\"");
+    refinitivConfig.setUseProxy("\"true\"");
+    refinitivConfig.setUser("\"JohnDoe_RefinitivUser\"");
     String actualAuthUrl = refinitivConfig.getAuthUrl();
     String actualClientId = refinitivConfig.getClientId();
     String actualHostName = refinitivConfig.getHostName();
@@ -94,15 +94,15 @@ class RefinitivConfigDiffblueTest {
     String actualUseProxy = refinitivConfig.getUseProxy();
 
     // Assert
-    assertEquals("42", actualClientId);
-    assertEquals("Host Name", actualHostName);
-    assertEquals("Proxy User", actualProxyUser);
-    assertEquals("Use Proxy", actualUseProxy);
-    assertEquals("User", refinitivConfig.getUser());
-    assertEquals("https://example.org/example", actualAuthUrl);
-    assertEquals("iloveyou", actualPassword);
-    assertEquals("iloveyou", actualProxyPassword);
-    assertEquals("localhost", actualProxyHost);
+    assertEquals("\"JohnDoe_RefinitivUser\"", refinitivConfig.getUser());
+    assertEquals("\"RefinitivSecurePassword123!\"", actualPassword);
+    assertEquals("\"SecureProxyPassword123!\"", actualProxyPassword);
+    assertEquals("\"https://api.refinitiv.com/auth/v1/token\"", actualAuthUrl);
+    assertEquals("\"proxy.finmath.net\"", actualProxyHost);
+    assertEquals("\"proxyUser123\"", actualProxyUser);
+    assertEquals("\"refinitiv-client-1234567890\"", actualClientId);
+    assertEquals("\"refinitiv-data-platform.eikon.com\"", actualHostName);
+    assertEquals("\"true\"", actualUseProxy);
     assertEquals(8080, actualPort);
     assertEquals(8080, actualProxyPort);
   }

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5MCyS4HU4o7trcaYZqgQcG5OY3W","object":"chat.completion","created":1761048140,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"CN=Test User, OU=Development, O=My Company, L=San Francisco, ST=California, C=US\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":223,"completion_tokens":28,"total_tokens":251}}

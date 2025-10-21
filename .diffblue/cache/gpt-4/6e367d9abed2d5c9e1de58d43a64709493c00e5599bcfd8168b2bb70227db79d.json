@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5AntRqOuT1PwrmkbkB4cQf5lTSB","object":"chat.completion","created":1761047433,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Bloomberg Market Data Provider\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":280,"completion_tokens":6,"total_tokens":286}}

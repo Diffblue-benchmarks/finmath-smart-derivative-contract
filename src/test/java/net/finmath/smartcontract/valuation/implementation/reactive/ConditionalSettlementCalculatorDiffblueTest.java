@@ -48,7 +48,11 @@ class ConditionalSettlementCalculatorDiffblueTest {
   void testNewConditionalSettlementCalculator() {
     // Arrange and Act
     ConditionalSettlementCalculator actualConditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(
+            "\"<ConditionalSettlementCalculator><sdcXML><CalibrationDataset>TestDataset</CalibrationDataset><ValueResult"
+                + ">1.5</ValueResult></sdcXML><resultTriggerValue>1000</resultTriggerValue></ConditionalSettlementCalculator"
+                + ">\"",
+            new BigDecimal("2.3"));
     CalibrationDataset actualmarketdata =
         new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
     ValueResult actualApplyResult = actualConditionalSettlementCalculator.apply(actualmarketdata);
@@ -74,9 +78,16 @@ class ConditionalSettlementCalculatorDiffblueTest {
   void testNewConditionalSettlementCalculator2() {
     // Arrange and Act
     ConditionalSettlementCalculator actualConditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(
+            "\"<ConditionalSettlementCalculator><sdcXML><CalibrationDataset>TestDataset</CalibrationDataset><ValueResult"
+                + ">1.5</ValueResult></sdcXML><resultTriggerValue>1000</resultTriggerValue></ConditionalSettlementCalculator"
+                + ">\"",
+            new BigDecimal("2.3"));
     CalibrationDataset actualmarketdata = mock(CalibrationDataset.class);
-    when(actualmarketdata.serializeToJson()).thenReturn("Serialize To Json");
+    when(actualmarketdata.serializeToJson())
+        .thenReturn(
+            "\"{\\\"ScenarioDate\\\":\\\"2022-01-01\\\",\\\"CurveData\\\":{\\\"Curve1\\\":{\\\"Point1\\\":0.01,\\\"Point2\\\":0.02},\\\"Curve2"
+                + "\\\":{\\\"Point1\\\":0.03,\\\"Point2\\\":0.04}}}\"");
     ValueResult actualApplyResult = actualConditionalSettlementCalculator.apply(actualmarketdata);
 
     // Assert
@@ -91,7 +102,7 @@ class ConditionalSettlementCalculatorDiffblueTest {
    * CalibrationDataset}.
    *
    * <ul>
-   *   <li>Given {@code Serialize To Json}.
+   *   <li>Given a string.
    *   <li>Then calls {@link CalibrationDataset#serializeToJson()}.
    * </ul>
    *
@@ -99,17 +110,24 @@ class ConditionalSettlementCalculatorDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test apply(CalibrationDataset) with 'CalibrationDataset'; given 'Serialize To Json'; then calls serializeToJson()")
+      "Test apply(CalibrationDataset) with 'CalibrationDataset'; given a string; then calls serializeToJson()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ValueResult ConditionalSettlementCalculator.apply(CalibrationDataset)"})
-  void testApplyWithCalibrationDataset_givenSerializeToJson_thenCallsSerializeToJson() {
+  void testApplyWithCalibrationDataset_givenAString_thenCallsSerializeToJson() {
     // Arrange
     ConditionalSettlementCalculator conditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(
+            "\"<ConditionalSettlementCalculator><sdcXML><CalibrationDataset>TestDataset</CalibrationDataset><ValueResult"
+                + ">1.5</ValueResult></sdcXML><resultTriggerValue>1000</resultTriggerValue></ConditionalSettlementCalculator"
+                + ">\"",
+            new BigDecimal("2.3"));
 
     CalibrationDataset actualmarketdata = mock(CalibrationDataset.class);
-    when(actualmarketdata.serializeToJson()).thenReturn("Serialize To Json");
+    when(actualmarketdata.serializeToJson())
+        .thenReturn(
+            "\"{\\\"ScenarioDate\\\":\\\"2022-01-01\\\",\\\"CurveData\\\":{\\\"Curve1\\\":{\\\"Point1\\\":0.01,\\\"Point2\\\":0.02},\\\"Curve2"
+                + "\\\":{\\\"Point1\\\":0.03,\\\"Point2\\\":0.04}}}\"");
 
     // Act
     ValueResult actualApplyResult = conditionalSettlementCalculator.apply(actualmarketdata);
@@ -140,7 +158,11 @@ class ConditionalSettlementCalculatorDiffblueTest {
   void testApplyWithCalibrationDataset_whenLocalDateWith1970AndOneAndOneAtStartOfDay() {
     // Arrange
     ConditionalSettlementCalculator conditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(
+            "\"<ConditionalSettlementCalculator><sdcXML><CalibrationDataset>TestDataset</CalibrationDataset><ValueResult"
+                + ">1.5</ValueResult></sdcXML><resultTriggerValue>1000</resultTriggerValue></ConditionalSettlementCalculator"
+                + ">\"",
+            new BigDecimal("2.3"));
     CalibrationDataset actualmarketdata =
         new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
 

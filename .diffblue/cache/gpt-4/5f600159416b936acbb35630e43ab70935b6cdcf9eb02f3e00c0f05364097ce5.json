@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4nMok3qru3d4e7yxyvCn7ZcNR96","object":"chat.completion","created":1761045980,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"InterestRateSwapCurve_USD_2022\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":243,"completion_tokens":11,"total_tokens":254}}

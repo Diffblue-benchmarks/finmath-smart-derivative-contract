@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
@@ -38,50 +39,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
    * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code 42} is {@link BigDecimal#BigDecimal(String)} with
-   *       {@code 2.3}.
-   *   <li>Then return size is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime,
-   * LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() '42' is BigDecimal(String) with '2.3'; then return size is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
-  })
-  void testGetMargin_givenHashMap42IsBigDecimalWith23_thenReturnSizeIsTwo() {
-    // Arrange
-    HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
-    stringBigDecimalMap.put("42", new BigDecimal("2.3"));
-    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
-    when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
-        .thenReturn(stringBigDecimalMap);
-
-    // Act
-    Map<String, BigDecimal> actualMargin =
-        smartDerivativeContractSettlementOracle.getMargin(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(valuationOracle, atLeast(1))
-        .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
-    assertEquals(2, actualMargin.size());
-    BigDecimal getResult = actualMargin.get("42");
-    assertEquals(new BigDecimal("0.0"), getResult);
-    assertSame(getResult, actualMargin.get("Key"));
-  }
-
-  /**
-   * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code Key} is {@link BigDecimal#BigDecimal(String)} with
-   *       {@code 2.3}.
+   *   <li>Given {@link HashMap#HashMap()} All is {@link HashMap#HashMap()}.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -90,16 +48,17 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() 'Key' is BigDecimal(String) with '2.3'; then return size is one")
+      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() All is HashMap(); then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
   })
-  void testGetMargin_givenHashMapKeyIsBigDecimalWith23_thenReturnSizeIsOne() {
+  void testGetMargin_givenHashMapAllIsHashMap_thenReturnSizeIsOne() {
     // Arrange
     HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
-    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
+    stringBigDecimalMap.putAll(new HashMap<>());
+    stringBigDecimalMap.put("\"testKey\"", BigDecimal.valueOf(42L));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
 
@@ -112,13 +71,14 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(1, actualMargin.size());
-    assertEquals(new BigDecimal("0.0"), actualMargin.get("Key"));
+    assertEquals(new BigDecimal("0"), actualMargin.get("\"testKey\""));
   }
 
   /**
    * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
    *
    * <ul>
+   *   <li>Given {@link SmartDerivativeContractSettlementOracle}.
    *   <li>Then return Empty.
    * </ul>
    *
@@ -126,13 +86,14 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
    * LocalDateTime)}
    */
   @Test
-  @DisplayName("Test getMargin(LocalDateTime, LocalDateTime); then return Empty")
+  @DisplayName(
+      "Test getMargin(LocalDateTime, LocalDateTime); given SmartDerivativeContractSettlementOracle; then return Empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
   })
-  void testGetMargin_thenReturnEmpty() {
+  void testGetMargin_givenSmartDerivativeContractSettlementOracle_thenReturnEmpty() {
     // Arrange
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(new HashMap<>());
@@ -146,5 +107,47 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertTrue(actualMargin.isEmpty());
+  }
+
+  /**
+   * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime,
+   * LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getMargin(LocalDateTime, LocalDateTime); then return size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
+  })
+  void testGetMargin_thenReturnSizeIsTwo() {
+    // Arrange
+    HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
+    stringBigDecimalMap.putIfAbsent("\"employeeID\"", BigDecimal.valueOf(42L));
+    stringBigDecimalMap.put("\"testKey\"", BigDecimal.valueOf(42L));
+
+    ValuationOracle derivativeValuationOracle = mock(ValuationOracle.class);
+    when(derivativeValuationOracle.getValues(
+            Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
+        .thenReturn(stringBigDecimalMap);
+
+    // Act
+    Map<String, BigDecimal> actualMargin =
+        new SmartDerivativeContractSettlementOracle(derivativeValuationOracle)
+            .getMargin(
+                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Assert
+    verify(derivativeValuationOracle, atLeast(1))
+        .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
+    assertEquals(2, actualMargin.size());
+    assertEquals(new BigDecimal("0"), actualMargin.get("\"employeeID\""));
+    assertSame(BigDecimal.ZERO, actualMargin.get("\"testKey\""));
   }
 }

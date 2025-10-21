@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4tJrHoY6LEwEomXrjCxsAC45J6J","object":"chat.completion","created":1761046349,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"http://www.fpml.org/coding-scheme/originating-event\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":423,"completion_tokens":15,"total_tokens":438}}

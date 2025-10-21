@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5CIlciMJ169bgsvGidI3FwVEqRk","object":"chat.completion","created":1761047526,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"employee.address.street\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":235,"completion_tokens":5,"total_tokens":240}}

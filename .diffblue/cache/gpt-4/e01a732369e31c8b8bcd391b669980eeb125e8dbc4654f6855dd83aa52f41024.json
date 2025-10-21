@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5JnWTPt7ZUGAaKj9kXOj7zX8lKB","object":"chat.completion","created":1761047991,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"TLSv1.2\", \"TLSv1.3\", \"SSLv3\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":228,"completion_tokens":19,"total_tokens":247}}

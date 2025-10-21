@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4e9J8AGalcYnzL6O9WDePoMs6PL","object":"chat.completion","created":1761045409,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Interest Rate (%) over Time (Years)\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":244,"completion_tokens":9,"total_tokens":253}}

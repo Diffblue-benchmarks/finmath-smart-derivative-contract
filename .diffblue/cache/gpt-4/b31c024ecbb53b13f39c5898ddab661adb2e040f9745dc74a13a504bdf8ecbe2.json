@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4kZ19krNzKVDeAPaJGzw5GxViVG","object":"chat.completion","created":1761045807,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"INVALID_ENUM_CONSTANT\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":231,"completion_tokens":5,"total_tokens":236}}

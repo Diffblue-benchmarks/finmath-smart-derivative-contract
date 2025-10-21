@@ -66,7 +66,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("42");
+    value3.setFpmlVersion("\"FpML-5-10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -80,15 +80,15 @@ class MarketDataCheckDiffblueTest {
     value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
+    sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
     sdc.setSettlement(value2);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency("\"USD\"");
+    sdc.setTradeType("\"SDCNoPrefunding\"");
     sdc.setUnderlyings(value5);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier("\"UTI-1234567890-XYZ\"");
     sdc.setValuation(value6);
 
     // Act
@@ -142,7 +142,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("42");
+    value3.setFpmlVersion("\"FpML-5-10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -156,15 +156,15 @@ class MarketDataCheckDiffblueTest {
     value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
+    sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
     sdc.setSettlement(value2);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency("\"USD\"");
+    sdc.setTradeType("\"SDCNoPrefunding\"");
     sdc.setUnderlyings(value5);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier("\"UTI-1234567890-XYZ\"");
     sdc.setValuation(value6);
 
     // Act
@@ -211,7 +211,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("42");
+    value3.setFpmlVersion("\"FpML-5-10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -225,15 +225,15 @@ class MarketDataCheckDiffblueTest {
     value6.setArtefact(new Artefact());
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
+    sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
     sdc.setSettlement(value2);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency("\"USD\"");
+    sdc.setTradeType("\"SDCNoPrefunding\"");
     sdc.setUnderlyings(value5);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier("\"UTI-1234567890-XYZ\"");
     sdc.setValuation(value6);
 
     // Act

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4ltB3ROVlGyEJFw4HSiI4vM1yVO","object":"chat.completion","created":1761045889,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EURUSD,1.1800,1.1802,2022-09-15T10:15:30Z\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":335,"completion_tokens":28,"total_tokens":363}}

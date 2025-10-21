@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT587EpMyw5mBnohp649SVKPD1yoO","object":"chat.completion","created":1761047267,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"SELECT authority FROM authorities WHERE username = ?\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":232,"completion_tokens":10,"total_tokens":242}}

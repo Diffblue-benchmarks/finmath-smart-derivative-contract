@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4qczQ0kMwGVBM9xO1Uv6Sitrafx","object":"chat.completion","created":1761046182,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Test StaticApplicationContext Display Name\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":220,"completion_tokens":7,"total_tokens":227}}

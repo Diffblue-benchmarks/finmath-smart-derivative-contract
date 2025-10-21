@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4pRPHByV8cGOFhQ1bMMpqirxfNv","object":"chat.completion","created":1761046109,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"reactiveWebServerApplicationContext-1\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":229,"completion_tokens":9,"total_tokens":238}}

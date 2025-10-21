@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5HzHOS5hZCNsCRIcswRRw1Z07uH","object":"chat.completion","created":1761047879,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"sftp://username:password@localhost:22/path/to/directory\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":306,"completion_tokens":15,"total_tokens":321}}

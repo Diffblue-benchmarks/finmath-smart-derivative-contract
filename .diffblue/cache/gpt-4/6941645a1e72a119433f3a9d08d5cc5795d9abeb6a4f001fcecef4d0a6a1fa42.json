@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4uSvGSB8CWK1vtYWFkHzP50I2rU","object":"chat.completion","created":1761046420,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"USD_LIBOR_3M_DISCOUNT_CURVE\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":265,"completion_tokens":12,"total_tokens":277}}

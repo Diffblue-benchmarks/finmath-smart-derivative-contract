@@ -59,14 +59,15 @@ class ValuationConfigDiffblueTest {
     ValuationConfig valuationConfig = new ValuationConfig();
 
     // Act
-    valuationConfig.setFpmlSchemaPath("Fpml Schema Path");
-    valuationConfig.setInternalMarketDataProvider("Internal Market Data Provider");
+    valuationConfig.setFpmlSchemaPath(
+        "\"/usr/local/finmath/fpml/schema/financial-product-markup-language-v5-10.xsd\"");
+    valuationConfig.setInternalMarketDataProvider("\"BloombergMarketDataProvider\"");
     valuationConfig.setLiveMarketData(true);
-    valuationConfig.setLiveMarketDataProvider("Live Market Data Provider");
+    valuationConfig.setLiveMarketDataProvider("\"BloombergMarketDataProvider\"");
     HashMap<String, String> marketDataProviderToTemplate = new HashMap<>();
     valuationConfig.setMarketDataProviderToTemplate(marketDataProviderToTemplate);
-    valuationConfig.setProductFixingType("Product Fixing Type");
-    valuationConfig.setSettlementCurrency("GBP");
+    valuationConfig.setProductFixingType("\"EquityOptionPhysicalDelivery\"");
+    valuationConfig.setSettlementCurrency("\"USD\"");
     String actualFpmlSchemaPath = valuationConfig.getFpmlSchemaPath();
     String actualInternalMarketDataProvider = valuationConfig.getInternalMarketDataProvider();
     String actualLiveMarketDataProvider = valuationConfig.getLiveMarketDataProvider();
@@ -77,11 +78,13 @@ class ValuationConfigDiffblueTest {
     boolean actualIsLiveMarketDataResult = valuationConfig.isLiveMarketData();
 
     // Assert
-    assertEquals("Fpml Schema Path", actualFpmlSchemaPath);
-    assertEquals("GBP", actualSettlementCurrency);
-    assertEquals("Internal Market Data Provider", actualInternalMarketDataProvider);
-    assertEquals("Live Market Data Provider", actualLiveMarketDataProvider);
-    assertEquals("Product Fixing Type", actualProductFixingType);
+    assertEquals(
+        "\"/usr/local/finmath/fpml/schema/financial-product-markup-language-v5-10.xsd\"",
+        actualFpmlSchemaPath);
+    assertEquals("\"BloombergMarketDataProvider\"", actualInternalMarketDataProvider);
+    assertEquals("\"BloombergMarketDataProvider\"", actualLiveMarketDataProvider);
+    assertEquals("\"EquityOptionPhysicalDelivery\"", actualProductFixingType);
+    assertEquals("\"USD\"", actualSettlementCurrency);
     assertTrue(actualMarketDataProviderToTemplate.isEmpty());
     assertTrue(actualIsLiveMarketDataResult);
     assertSame(marketDataProviderToTemplate, actualMarketDataProviderToTemplate);

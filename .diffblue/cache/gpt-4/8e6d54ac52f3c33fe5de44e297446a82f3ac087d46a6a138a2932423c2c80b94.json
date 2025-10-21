@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4uJcT5wKsLlc075rEvLSbZ3zeLy","object":"chat.completion","created":1761046411,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EURIBOR3M_VOLATILITY_SURFACE\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":284,"completion_tokens":11,"total_tokens":295}}

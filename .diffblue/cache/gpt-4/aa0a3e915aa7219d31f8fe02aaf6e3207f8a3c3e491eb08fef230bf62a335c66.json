@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4tC083Q7KQqEa4J3wGubI52Cr0g","object":"chat.completion","created":1761046342,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"SDCNoPrefunding\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":2195,"completion_tokens":7,"total_tokens":2202}}

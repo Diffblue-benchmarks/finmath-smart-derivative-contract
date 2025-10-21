@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4oZGcJ47cxm0Aw7kUC0OVTj7mA6","object":"chat.completion","created":1761046055,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"This is a test string for InMemoryResource method in Spring Security Util package.\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":220,"completion_tokens":16,"total_tokens":236}}

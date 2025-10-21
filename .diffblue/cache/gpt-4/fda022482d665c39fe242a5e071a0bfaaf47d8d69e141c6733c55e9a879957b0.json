@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4uIxCgX4Pugp8BX5bCbkknjwA1T","object":"chat.completion","created":1761046410,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EUR-OIS-DiscountCurve\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":283,"completion_tokens":8,"total_tokens":291}}

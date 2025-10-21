@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4nmjvV5vxT2ZC2mAPh66cORRMcE","object":"chat.completion","created":1761046006,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"org.springframework.boot.test,org.springframework.boot.web\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":241,"completion_tokens":11,"total_tokens":252}}

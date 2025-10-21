@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5KBxcQE3AqqiZyN0v2FB4zW338Y","object":"chat.completion","created":1761048015,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"/home/user/project/springboot/actuate/endpoint/web\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":232,"completion_tokens":14,"total_tokens":246}}

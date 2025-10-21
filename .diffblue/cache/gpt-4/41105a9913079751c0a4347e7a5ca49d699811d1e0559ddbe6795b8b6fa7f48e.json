@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4s75DIQr57rIbZBACqFBA1iHvP9","object":"chat.completion","created":1761046275,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"ws://localhost:8080/finmath/marketdata\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":261,"completion_tokens":14,"total_tokens":275}}

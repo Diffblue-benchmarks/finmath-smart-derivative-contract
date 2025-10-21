@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4su0auCjGY5hsQUq8n5crlHAtE9","object":"chat.completion","created":1761046324,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EUR/USD\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":283,"completion_tokens":5,"total_tokens":288}}

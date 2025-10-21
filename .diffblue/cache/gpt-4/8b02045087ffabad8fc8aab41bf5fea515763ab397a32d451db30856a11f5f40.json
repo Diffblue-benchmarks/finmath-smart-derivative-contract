@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4jgZjJIffvO7NvUYZira9IopIDt","object":"chat.completion","created":1761045752,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"hasRole('ADMIN') and hasIpAddress('192.168.1.1')\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":222,"completion_tokens":18,"total_tokens":240}}

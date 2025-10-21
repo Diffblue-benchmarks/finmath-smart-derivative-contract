@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4uR53oFqO60Sva8ycbioXQ3VKyi","object":"chat.completion","created":1761046419,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EUR-OIS-FORWARD-CURVE\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":265,"completion_tokens":11,"total_tokens":276}}

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4tLSd1nSRtA7cjk0TzT6POKdkjG","object":"chat.completion","created":1761046351,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"http://www.fpml.org/coding-scheme/credit-default-swap-event\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":17,"total_tokens":450}}

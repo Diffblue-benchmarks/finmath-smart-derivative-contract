@@ -46,7 +46,7 @@ class MarketDataPointDiffblueTest {
   void testGettersAndSetters() {
     // Arrange and Act
     MarketDataPoint actualMarketDataPoint = new MarketDataPoint();
-    actualMarketDataPoint.setId("42");
+    actualMarketDataPoint.setId("\"MDP_2022Q1_EURUSD_FXRate\"");
     LocalDateTime timeStamp = LocalDate.of(1970, 1, 1).atStartOfDay();
     actualMarketDataPoint.setTimeStamp(timeStamp);
     actualMarketDataPoint.setValue(10.0d);
@@ -55,9 +55,10 @@ class MarketDataPointDiffblueTest {
     LocalDateTime actualTimeStamp = actualMarketDataPoint.getTimeStamp();
 
     // Assert
-    assertEquals("42", actualId);
     assertEquals(
-        "MarketDataPoint{timeStamp=1970-01-01T00:00, id='42', value=10.0}", actualToStringResult);
+        "MarketDataPoint{timeStamp=1970-01-01T00:00, id='\"MDP_2022Q1_EURUSD_FXRate\"', value=10.0}",
+        actualToStringResult);
+    assertEquals("\"MDP_2022Q1_EURUSD_FXRate\"", actualId);
     assertEquals(10.0d, actualMarketDataPoint.getValue().doubleValue());
     assertSame(timeStamp, actualTimeStamp);
   }
@@ -66,7 +67,7 @@ class MarketDataPointDiffblueTest {
    * Test getters and setters.
    *
    * <ul>
-   *   <li>When {@code 42}.
+   *   <li>When {@code "EURUSD_FX_SPOT_RATE"}.
    * </ul>
    *
    * <p>Methods under test:
@@ -83,7 +84,7 @@ class MarketDataPointDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters; when '42'")
+  @DisplayName("Test getters and setters; when '\"EURUSD_FX_SPOT_RATE\"'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
@@ -97,11 +98,12 @@ class MarketDataPointDiffblueTest {
     "void MarketDataPoint.setValue(Double)",
     "String MarketDataPoint.toString()"
   })
-  void testGettersAndSetters_when42() {
+  void testGettersAndSetters_whenEurusdFxSpotRate() {
     // Arrange and Act
     MarketDataPoint actualMarketDataPoint =
-        new MarketDataPoint("42", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
-    actualMarketDataPoint.setId("42");
+        new MarketDataPoint(
+            "\"EURUSD_FX_SPOT_RATE\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+    actualMarketDataPoint.setId("\"MDP_2022Q1_EURUSD_FXRate\"");
     LocalDateTime timeStamp = LocalDate.of(1970, 1, 1).atStartOfDay();
     actualMarketDataPoint.setTimeStamp(timeStamp);
     actualMarketDataPoint.setValue(10.0d);
@@ -110,9 +112,10 @@ class MarketDataPointDiffblueTest {
     LocalDateTime actualTimeStamp = actualMarketDataPoint.getTimeStamp();
 
     // Assert
-    assertEquals("42", actualId);
     assertEquals(
-        "MarketDataPoint{timeStamp=1970-01-01T00:00, id='42', value=10.0}", actualToStringResult);
+        "MarketDataPoint{timeStamp=1970-01-01T00:00, id='\"MDP_2022Q1_EURUSD_FXRate\"', value=10.0}",
+        actualToStringResult);
+    assertEquals("\"MDP_2022Q1_EURUSD_FXRate\"", actualId);
     assertEquals(10.0d, actualMarketDataPoint.getValue().doubleValue());
     assertSame(timeStamp, actualTimeStamp);
   }
@@ -185,7 +188,8 @@ class MarketDataPointDiffblueTest {
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
     MarketDataPoint marketDataPoint =
-        new MarketDataPoint("42", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+        new MarketDataPoint(
+            "\"EURUSD_FX_SPOT_RATE\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
     assertNotEquals(marketDataPoint, new MarketDataPoint());
@@ -209,7 +213,7 @@ class MarketDataPointDiffblueTest {
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
     // Arrange
     MarketDataPoint marketDataPoint = new MarketDataPoint();
-    marketDataPoint.setId("42");
+    marketDataPoint.setId("\"MDP_2022Q1_EURUSD_FXRate\"");
 
     // Act and Assert
     assertNotEquals(marketDataPoint, new MarketDataPoint());

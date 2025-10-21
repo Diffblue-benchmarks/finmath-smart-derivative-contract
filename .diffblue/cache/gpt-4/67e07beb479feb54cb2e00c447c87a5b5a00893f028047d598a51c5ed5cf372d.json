@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT5AUG8LNWGJdpi6fOxDtGtpCBxjA","object":"chat.completion","created":1761047414,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Interest Rate Swap\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":280,"completion_tokens":5,"total_tokens":285}}

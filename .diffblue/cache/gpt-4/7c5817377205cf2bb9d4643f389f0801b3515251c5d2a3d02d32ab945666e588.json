@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CT4j45j5cTP3VFnCO6PA3c20BVrhZ","object":"chat.completion","created":1761045714,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"USD-EUR-FX-Spot-Settlement-2023-05-15\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":232,"completion_tokens":19,"total_tokens":251}}
