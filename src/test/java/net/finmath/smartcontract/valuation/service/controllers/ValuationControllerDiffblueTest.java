@@ -3,14 +3,15 @@ package net.finmath.smartcontract.valuation.service.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import net.finmath.smartcontract.model.ExceptionId;
 import net.finmath.smartcontract.model.MarginRequest;
@@ -34,22 +35,21 @@ import org.springframework.web.multipart.MultipartFile;
 @ContextConfiguration(classes = {ValuationController.class})
 @ExtendWith(SpringExtension.class)
 class ValuationControllerDiffblueTest {
-  @Autowired private ValuationController valuationController;
+  @Autowired
+  private ValuationController valuationController;
 
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
-   *
    * <ul>
-   *   <li>Given {@code Market Data End}.
-   *   <li>Then calls {@link MarginRequest#getMarketDataEnd()}.
+   *   <li>Given {@code Market Data End}.</li>
+   *   <li>Then calls {@link MarginRequest#getMarketDataEnd()}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
   @DisplayName("Test margin(MarginRequest); given 'Market Data End'; then calls getMarketDataEnd()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
   void testMargin_givenMarketDataEnd_thenCallsGetMarketDataEnd() {
     // Arrange
@@ -58,31 +58,28 @@ class ValuationControllerDiffblueTest {
     when(marginRequest.getMarketDataStart()).thenReturn("Market Data Start");
     when(marginRequest.getTradeData()).thenReturn("Trade Data");
     when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
-    marginRequest.marketDataStart("margin");
+    marginRequest.marketDataStart("Market Data Start");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
     verify(marginRequest).getMarketDataEnd();
     verify(marginRequest).getMarketDataStart();
     verify(marginRequest).getTradeData();
-    verify(marginRequest).marketDataStart("margin");
+    verify(marginRequest).marketDataStart(eq("Market Data Start"));
   }
 
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
-   *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) marketDataStart {@code Responded}.
+   *   <li>Given {@code Responded}.</li>
+   *   <li>When {@link MarginRequest} (default constructor) marketDataStart {@code Responded}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
-  @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) marketDataStart 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) marketDataStart 'Responded'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
   void testMargin_givenResponded_whenMarginRequestMarketDataStartResponded() {
     // Arrange
@@ -95,19 +92,16 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
-   *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) tradeData {@code Responded}.
+   *   <li>Given {@code Responded}.</li>
+   *   <li>When {@link MarginRequest} (default constructor) tradeData {@code Responded}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
-  @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) tradeData 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) tradeData 'Responded'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
   void testMargin_givenResponded_whenMarginRequestTradeDataResponded() {
     // Arrange
@@ -120,17 +114,15 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
-   *
    * <ul>
-   *   <li>When {@link MarginRequest} (default constructor).
+   *   <li>When {@link MarginRequest} (default constructor).</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
   @DisplayName("Test margin(MarginRequest); when MarginRequest (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
   void testMargin_whenMarginRequest() {
     // Arrange, Act and Assert
@@ -139,19 +131,16 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#value(ValueRequest)}.
-   *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link ValueRequest} (default constructor) tradeData {@code Responded}.
+   *   <li>Given {@code Responded}.</li>
+   *   <li>When {@link ValueRequest} (default constructor) tradeData {@code Responded}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
-  @DisplayName(
-      "Test value(ValueRequest); given 'Responded'; when ValueRequest (default constructor) tradeData 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test value(ValueRequest); given 'Responded'; when ValueRequest (default constructor) tradeData 'Responded'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
   void testValue_givenResponded_whenValueRequestTradeDataResponded() {
     // Arrange
@@ -164,17 +153,15 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#value(ValueRequest)}.
-   *
    * <ul>
-   *   <li>When {@code null}.
+   *   <li>When {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
   @DisplayName("Test value(ValueRequest); when 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
   void testValue_whenNull() {
     // Arrange, Act and Assert
@@ -183,17 +170,15 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#value(ValueRequest)}.
-   *
    * <ul>
-   *   <li>When {@link ValueRequest} (default constructor).
+   *   <li>When {@link ValueRequest} (default constructor).</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
   @DisplayName("Test value(ValueRequest); when ValueRequest (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
   void testValue_whenValueRequest() {
     // Arrange, Act and Assert
@@ -202,17 +187,15 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#valueAtTime(ValueRequest)}.
-   *
    * <ul>
-   *   <li>When {@code null}.
+   *   <li>When {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
    */
   @Test
   @DisplayName("Test valueAtTime(ValueRequest); when 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
   void testValueAtTime_whenNull() {
     // Arrange, Act and Assert
@@ -221,17 +204,15 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#valueAtTime(ValueRequest)}.
-   *
    * <ul>
-   *   <li>When {@link ValueRequest} (default constructor).
+   *   <li>When {@link ValueRequest} (default constructor).</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   * <p>
+   * Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
    */
   @Test
   @DisplayName("Test valueAtTime(ValueRequest); when ValueRequest (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
   void testValueAtTime_whenValueRequest() {
     // Arrange, Act and Assert
@@ -240,25 +221,21 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#testProductValue(MultipartFile)}.
-   *
    * <ul>
-   *   <li>Then calls {@link DataInputStream#readAllBytes()}.
+   *   <li>Then calls {@link InputStream#readAllBytes()}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#testProductValue(MultipartFile)}
+   * <p>
+   * Method under test: {@link ValuationController#testProductValue(MultipartFile)}
    */
   @Test
   @DisplayName("Test testProductValue(MultipartFile); then calls readAllBytes()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_thenCallsReadAllBytes() throws IOException {
     // Arrange
     DataInputStream dataInputStream = mock(DataInputStream.class);
-    when(dataInputStream.readAllBytes())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
-
-    MultipartFile tradeData = mock(MultipartFile.class);
+    when(dataInputStream.readAllBytes()).thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+    MockMultipartFile tradeData = mock(MockMultipartFile.class);
     when(tradeData.getInputStream()).thenReturn(dataInputStream);
 
     // Act and Assert
@@ -269,42 +246,33 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#testProductValue(MultipartFile)}.
-   *
    * <ul>
-   *   <li>When {@link ByteArrayInputStream#ByteArrayInputStream(byte[])} with {@code AXAXAXAX}
-   *       Bytes is {@code UTF-8}.
+   *   <li>When {@link ByteArrayInputStream#ByteArrayInputStream(byte[])} with {@code AXAXAXAX} Bytes is {@code UTF-8}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#testProductValue(MultipartFile)}
+   * <p>
+   * Method under test: {@link ValuationController#testProductValue(MultipartFile)}
    */
   @Test
-  @DisplayName(
-      "Test testProductValue(MultipartFile); when ByteArrayInputStream(byte[]) with 'AXAXAXAX' Bytes is 'UTF-8'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test testProductValue(MultipartFile); when ByteArrayInputStream(byte[]) with 'AXAXAXAX' Bytes is 'UTF-8'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenByteArrayInputStreamWithAxaxaxaxBytesIsUtf8() throws IOException {
-    // Arrange
-    MockMultipartFile tradeData =
-        new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
-
-    // Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.testProductValue(tradeData));
+    // Arrange, Act and Assert
+    assertThrows(SDCException.class, () -> valuationController
+        .testProductValue(new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")))));
   }
 
   /**
    * Test {@link ValuationController#testProductValue(MultipartFile)}.
-   *
    * <ul>
-   *   <li>When {@code null}.
+   *   <li>When {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#testProductValue(MultipartFile)}
+   * <p>
+   * Method under test: {@link ValuationController#testProductValue(MultipartFile)}
    */
   @Test
   @DisplayName("Test testProductValue(MultipartFile); when 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenNull() {
     // Arrange, Act and Assert
@@ -313,13 +281,12 @@ class ValuationControllerDiffblueTest {
 
   /**
    * Test {@link ValuationController#test()}.
-   *
-   * <p>Method under test: {@link ValuationController#test()}
+   * <p>
+   * Method under test: {@link ValuationController#test()}
    */
   @Test
   @DisplayName("Test test()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"ResponseEntity ValuationController.test()"})
   void testTest() {
     // Arrange and Act

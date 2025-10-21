@@ -3,7 +3,6 @@ package net.finmath.smartcontract.settlement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,9 +19,8 @@ import org.junit.jupiter.api.Test;
 class SettlementDiffblueTest {
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>default or parameterless constructor of {@link Settlement}
    *   <li>{@link Settlement#setCurrency(String)}
@@ -53,35 +51,19 @@ class SettlementDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void Settlement.<init>()",
-    "String Settlement.getCurrency()",
-    "List Settlement.getMarginLimits()",
-    "BigDecimal Settlement.getMarginValue()",
-    "MarketDataList Settlement.getMarketData()",
-    "List Settlement.getSettlementInfos()",
-    "BigDecimal Settlement.getSettlementNPV()",
-    "BigDecimal Settlement.getSettlementNPVNext()",
-    "BigDecimal Settlement.getSettlementNPVPrevious()",
-    "ZonedDateTime Settlement.getSettlementTime()",
-    "ZonedDateTime Settlement.getSettlementTimeNext()",
-    "SettlementType Settlement.getSettlementType()",
-    "String Settlement.getTradeId()",
-    "void Settlement.setCurrency(String)",
-    "void Settlement.setMarginLimits(List)",
-    "void Settlement.setMarginValue(BigDecimal)",
-    "void Settlement.setMarketData(MarketDataList)",
-    "void Settlement.setSettlementInfos(List)",
-    "void Settlement.setSettlementNPV(BigDecimal)",
-    "void Settlement.setSettlementNPVNext(BigDecimal)",
-    "void Settlement.setSettlementNPVPrevious(BigDecimal)",
-    "void Settlement.setSettlementTime(ZonedDateTime)",
-    "void Settlement.setSettlementTimeNext(ZonedDateTime)",
-    "void Settlement.setSettlementType(SettlementType)",
-    "void Settlement.setTradeId(String)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void Settlement.<init>()", "String Settlement.getCurrency()", "List Settlement.getMarginLimits()",
+      "BigDecimal Settlement.getMarginValue()", "MarketDataList Settlement.getMarketData()",
+      "List Settlement.getSettlementInfos()", "BigDecimal Settlement.getSettlementNPV()",
+      "BigDecimal Settlement.getSettlementNPVNext()", "BigDecimal Settlement.getSettlementNPVPrevious()",
+      "ZonedDateTime Settlement.getSettlementTime()", "ZonedDateTime Settlement.getSettlementTimeNext()",
+      "SettlementType Settlement.getSettlementType()", "String Settlement.getTradeId()",
+      "void Settlement.setCurrency(String)", "void Settlement.setMarginLimits(List)",
+      "void Settlement.setMarginValue(BigDecimal)", "void Settlement.setMarketData(MarketDataList)",
+      "void Settlement.setSettlementInfos(List)", "void Settlement.setSettlementNPV(BigDecimal)",
+      "void Settlement.setSettlementNPVNext(BigDecimal)", "void Settlement.setSettlementNPVPrevious(BigDecimal)",
+      "void Settlement.setSettlementTime(ZonedDateTime)", "void Settlement.setSettlementTimeNext(ZonedDateTime)",
+      "void Settlement.setSettlementType(SettlementType)", "void Settlement.setTradeId(String)"})
   void testGettersAndSetters() {
     // Arrange and Act
     Settlement actualSettlement = new Settlement();
@@ -102,8 +84,7 @@ class SettlementDiffblueTest {
     actualSettlement.setSettlementNPVPrevious(settlementNPVPrevious);
     ZonedDateTime settlementTime = LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTime(settlementTime);
-    ZonedDateTime settlementTimeNext =
-        LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
+    ZonedDateTime settlementTimeNext = LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTimeNext(settlementTimeNext);
     actualSettlement.setSettlementType(SettlementType.INITIAL);
     actualSettlement.setTradeId("42");

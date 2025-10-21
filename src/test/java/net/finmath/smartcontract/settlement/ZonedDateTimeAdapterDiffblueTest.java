@@ -1,7 +1,6 @@
 package net.finmath.smartcontract.settlement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -17,23 +16,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {ZonedDateTimeAdapter.class})
 @ExtendWith(SpringExtension.class)
 class ZonedDateTimeAdapterDiffblueTest {
-  @Autowired private ZonedDateTimeAdapter zonedDateTimeAdapter;
+  @Autowired
+  private ZonedDateTimeAdapter zonedDateTimeAdapter;
 
   /**
    * Test {@link ZonedDateTimeAdapter#marshal(ZonedDateTime)} with {@code ZonedDateTime}.
-   *
-   * <p>Method under test: {@link ZonedDateTimeAdapter#marshal(ZonedDateTime)}
+   * <p>
+   * Method under test: {@link ZonedDateTimeAdapter#marshal(ZonedDateTime)}
    */
   @Test
   @DisplayName("Test marshal(ZonedDateTime) with 'ZonedDateTime'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"java.lang.String ZonedDateTimeAdapter.marshal(ZonedDateTime)"})
   void testMarshalWithZonedDateTime() {
     // Arrange, Act and Assert
-    assertEquals(
-        "19700101-000000",
-        zonedDateTimeAdapter.marshal(
-            LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC)));
+    assertEquals("19700101-000000",
+        zonedDateTimeAdapter.marshal(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC)));
   }
 }

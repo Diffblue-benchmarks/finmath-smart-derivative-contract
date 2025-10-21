@@ -3,7 +3,6 @@ package net.finmath.smartcontract.valuation.service.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +13,8 @@ import org.junit.jupiter.api.Test;
 class ValuationConfigDiffblueTest {
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>{@link ValuationConfig#setFpmlSchemaPath(String)}
    *   <li>{@link ValuationConfig#setInternalMarketDataProvider(String)}
@@ -36,24 +34,15 @@ class ValuationConfigDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "String ValuationConfig.getFpmlSchemaPath()",
-    "String ValuationConfig.getInternalMarketDataProvider()",
-    "String ValuationConfig.getLiveMarketDataProvider()",
-    "Map ValuationConfig.getMarketDataProviderToTemplate()",
-    "String ValuationConfig.getProductFixingType()",
-    "String ValuationConfig.getSettlementCurrency()",
-    "boolean ValuationConfig.isLiveMarketData()",
-    "void ValuationConfig.setFpmlSchemaPath(String)",
-    "void ValuationConfig.setInternalMarketDataProvider(String)",
-    "void ValuationConfig.setLiveMarketData(boolean)",
-    "void ValuationConfig.setLiveMarketDataProvider(String)",
-    "void ValuationConfig.setMarketDataProviderToTemplate(Map)",
-    "void ValuationConfig.setProductFixingType(String)",
-    "void ValuationConfig.setSettlementCurrency(String)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"String ValuationConfig.getFpmlSchemaPath()",
+      "String ValuationConfig.getInternalMarketDataProvider()", "String ValuationConfig.getLiveMarketDataProvider()",
+      "Map ValuationConfig.getMarketDataProviderToTemplate()", "String ValuationConfig.getProductFixingType()",
+      "String ValuationConfig.getSettlementCurrency()", "boolean ValuationConfig.isLiveMarketData()",
+      "void ValuationConfig.setFpmlSchemaPath(String)", "void ValuationConfig.setInternalMarketDataProvider(String)",
+      "void ValuationConfig.setLiveMarketData(boolean)", "void ValuationConfig.setLiveMarketDataProvider(String)",
+      "void ValuationConfig.setMarketDataProviderToTemplate(Map)", "void ValuationConfig.setProductFixingType(String)",
+      "void ValuationConfig.setSettlementCurrency(String)"})
   void testGettersAndSetters() {
     // Arrange
     ValuationConfig valuationConfig = new ValuationConfig();
@@ -70,8 +59,7 @@ class ValuationConfigDiffblueTest {
     String actualFpmlSchemaPath = valuationConfig.getFpmlSchemaPath();
     String actualInternalMarketDataProvider = valuationConfig.getInternalMarketDataProvider();
     String actualLiveMarketDataProvider = valuationConfig.getLiveMarketDataProvider();
-    Map<String, String> actualMarketDataProviderToTemplate =
-        valuationConfig.getMarketDataProviderToTemplate();
+    Map<String, String> actualMarketDataProviderToTemplate = valuationConfig.getMarketDataProviderToTemplate();
     String actualProductFixingType = valuationConfig.getProductFixingType();
     String actualSettlementCurrency = valuationConfig.getSettlementCurrency();
     boolean actualIsLiveMarketDataResult = valuationConfig.isLiveMarketData();

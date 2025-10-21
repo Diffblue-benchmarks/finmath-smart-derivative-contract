@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +33,17 @@ import org.junit.jupiter.api.Test;
 class MarketDataCheckDiffblueTest {
   /**
    * Test {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}.
-   *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()}.
-   *   <li>Then return MissingDataPoints size is one.
+   *   <li>Given {@link ArrayList#ArrayList()}.</li>
+   *   <li>Then return MissingDataPoints size is one.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList,
-   * Smartderivativecontract)}
+   * <p>
+   * Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}
    */
   @Test
-  @DisplayName(
-      "Test checkMarketData(MarketDataList, Smartderivativecontract); given ArrayList(); then return MissingDataPoints size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"
-  })
+  @DisplayName("Test checkMarketData(MarketDataList, Smartderivativecontract); given ArrayList(); then return MissingDataPoints size is one")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"})
   void testCheckMarketData_givenArrayList_thenReturnMissingDataPointsSizeIsOne() {
     // Arrange
     MarketDataList marketDataList = mock(MarketDataList.class);
@@ -102,43 +95,33 @@ class MarketDataCheckDiffblueTest {
     sdc.setValuation(value8);
 
     // Act
-    MarketDataErrors actualCheckMarketDataResult =
-        MarketDataCheck.checkMarketData(marketDataList, sdc);
+    MarketDataErrors actualCheckMarketDataResult = MarketDataCheck.checkMarketData(marketDataList, sdc);
 
     // Assert
     verify(marketDataList).getPoints();
     List<String> missingDataPoints = actualCheckMarketDataResult.getMissingDataPoints();
     assertEquals(1, missingDataPoints.size());
     assertEquals("all, no data provided", missingDataPoints.get(0));
-    assertEquals(
-        "error in marketData service - no data generated",
-        actualCheckMarketDataResult.getErrorMessage());
+    assertEquals("error in marketData service - no data generated", actualCheckMarketDataResult.getErrorMessage());
     assertTrue(actualCheckMarketDataResult.hasErrors());
   }
 
   /**
    * Test {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}.
-   *
    * <ul>
-   *   <li>Then return ErrorMessage is {@code null}.
+   *   <li>Then return ErrorMessage is {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList,
-   * Smartderivativecontract)}
+   * <p>
+   * Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}
    */
   @Test
-  @DisplayName(
-      "Test checkMarketData(MarketDataList, Smartderivativecontract); then return ErrorMessage is 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"
-  })
+  @DisplayName("Test checkMarketData(MarketDataList, Smartderivativecontract); then return ErrorMessage is 'null'")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"})
   void testCheckMarketData_thenReturnErrorMessageIsNull() {
     // Arrange
     ArrayList<MarketDataPoint> marketDataPointList = new ArrayList<>();
     marketDataPointList.add(new MarketDataPoint());
-
     MarketDataList marketDataList = mock(MarketDataList.class);
     when(marketDataList.getPoints()).thenReturn(marketDataPointList);
 
@@ -188,8 +171,7 @@ class MarketDataCheckDiffblueTest {
     sdc.setValuation(value8);
 
     // Act
-    MarketDataErrors actualCheckMarketDataResult =
-        MarketDataCheck.checkMarketData(marketDataList, sdc);
+    MarketDataErrors actualCheckMarketDataResult = MarketDataCheck.checkMarketData(marketDataList, sdc);
 
     // Assert
     verify(marketDataList).getPoints();
@@ -200,23 +182,17 @@ class MarketDataCheckDiffblueTest {
 
   /**
    * Test {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}.
-   *
    * <ul>
-   *   <li>When {@link MarketDataList} (default constructor).
-   *   <li>Then return MissingDataPoints size is one.
+   *   <li>When {@link MarketDataList} (default constructor).</li>
+   *   <li>Then return MissingDataPoints size is one.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList,
-   * Smartderivativecontract)}
+   * <p>
+   * Method under test: {@link MarketDataCheck#checkMarketData(MarketDataList, Smartderivativecontract)}
    */
   @Test
-  @DisplayName(
-      "Test checkMarketData(MarketDataList, Smartderivativecontract); when MarketDataList (default constructor); then return MissingDataPoints size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"
-  })
+  @DisplayName("Test checkMarketData(MarketDataList, Smartderivativecontract); when MarketDataList (default constructor); then return MissingDataPoints size is one")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"MarketDataErrors MarketDataCheck.checkMarketData(MarketDataList, Smartderivativecontract)"})
   void testCheckMarketData_whenMarketDataList_thenReturnMissingDataPointsSizeIsOne() {
     // Arrange
     MarketDataList marketDataList = new MarketDataList();
@@ -267,16 +243,13 @@ class MarketDataCheckDiffblueTest {
     sdc.setValuation(value8);
 
     // Act
-    MarketDataErrors actualCheckMarketDataResult =
-        MarketDataCheck.checkMarketData(marketDataList, sdc);
+    MarketDataErrors actualCheckMarketDataResult = MarketDataCheck.checkMarketData(marketDataList, sdc);
 
     // Assert
     List<String> missingDataPoints = actualCheckMarketDataResult.getMissingDataPoints();
     assertEquals(1, missingDataPoints.size());
     assertEquals("all, no data provided", missingDataPoints.get(0));
-    assertEquals(
-        "error in marketData service - no data generated",
-        actualCheckMarketDataResult.getErrorMessage());
+    assertEquals("error in marketData service - no data generated", actualCheckMarketDataResult.getErrorMessage());
     assertTrue(actualCheckMarketDataResult.hasErrors());
   }
 }

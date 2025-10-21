@@ -9,7 +9,6 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -40,18 +39,15 @@ import org.mockito.Mockito;
 class ValuationOraclePlainSwapDiffblueTest {
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}.
-   *
    * <ul>
-   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
    */
   @Test
-  @DisplayName(
-      "Test new ValuationOraclePlainSwap(Map, List); given LocalDate with '1970' and one and one atStartOfDay")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test new ValuationOraclePlainSwap(Map, List); given LocalDate with '1970' and one and one atStartOfDay")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List)"})
   void testNewValuationOraclePlainSwap_givenLocalDateWith1970AndOneAndOneAtStartOfDay() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -62,32 +58,24 @@ class ValuationOraclePlainSwapDiffblueTest {
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, scenarioList)).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}.
-   *
    * <ul>
-   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
    */
   @Test
-  @DisplayName(
-      "Test new ValuationOraclePlainSwap(Map, List); given LocalDate with '1970' and one and one atStartOfDay")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test new ValuationOraclePlainSwap(Map, List); given LocalDate with '1970' and one and one atStartOfDay")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List)"})
   void testNewValuationOraclePlainSwap_givenLocalDateWith1970AndOneAndOneAtStartOfDay2() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -98,35 +86,26 @@ class ValuationOraclePlainSwapDiffblueTest {
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-    CalibrationDataset calibrationDataset2 =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset2);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet2 = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet2, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, scenarioList)).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}.
-   *
    * <ul>
-   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
    */
   @Test
-  @DisplayName(
-      "Test new ValuationOraclePlainSwap(Map, List, int); given LocalDate with '1970' and one and one atStartOfDay")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test new ValuationOraclePlainSwap(Map, List, int); given LocalDate with '1970' and one and one atStartOfDay")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List, int)"})
   void testNewValuationOraclePlainSwap_givenLocalDateWith1970AndOneAndOneAtStartOfDay3() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -137,32 +116,24 @@ class ValuationOraclePlainSwapDiffblueTest {
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList, 1);
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, scenarioList, 1)).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}.
-   *
    * <ul>
-   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
    */
   @Test
-  @DisplayName(
-      "Test new ValuationOraclePlainSwap(Map, List, int); given LocalDate with '1970' and one and one atStartOfDay")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test new ValuationOraclePlainSwap(Map, List, int); given LocalDate with '1970' and one and one atStartOfDay")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List, int)"})
   void testNewValuationOraclePlainSwap_givenLocalDateWith1970AndOneAndOneAtStartOfDay4() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -173,34 +144,26 @@ class ValuationOraclePlainSwapDiffblueTest {
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-    CalibrationDataset calibrationDataset2 =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset2);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet2 = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet2, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList, 1);
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, scenarioList, 1)).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}.
-   *
    * <ul>
-   *   <li>When {@link ArrayList#ArrayList()}.
+   *   <li>When {@link ArrayList#ArrayList()}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List)}
    */
   @Test
   @DisplayName("Test new ValuationOraclePlainSwap(Map, List); when ArrayList()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List)"})
   void testNewValuationOraclePlainSwap_whenArrayList() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -210,27 +173,21 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, new ArrayList<>());
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, new ArrayList<>())).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}.
-   *
    * <ul>
-   *   <li>When {@link ArrayList#ArrayList()}.
+   *   <li>When {@link ArrayList#ArrayList()}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#ValuationOraclePlainSwap(Map, List, int)}
    */
   @Test
   @DisplayName("Test new ValuationOraclePlainSwap(Map, List, int); when ArrayList()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void ValuationOraclePlainSwap.<init>(Map, List, int)"})
   void testNewValuationOraclePlainSwap_whenArrayList2() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -240,60 +197,44 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
 
-    // Act
-    ValuationOraclePlainSwap actualValuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, new ArrayList<>(), 1);
-
-    // Assert
-    assertNull(actualValuationOraclePlainSwap.getValues(null, null));
+    // Act and Assert
+    assertNull((new ValuationOraclePlainSwap(products, new ArrayList<>(), 1)).getValues(null, null));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"})
   void testGetAmount() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
+    products.put("forward-EUR-OIS", new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3"));
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, scenarioList);
+    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getAmount(evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"})
   void testGetAmount2() {
     // Arrange
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
@@ -303,97 +244,39 @@ class ValuationOraclePlainSwapDiffblueTest {
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getAmount(evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay()));
     verify(calibrationDataset).getDataPoints();
     verify(calibrationDataset).getDate();
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"})
   void testGetAmount3() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
-  void testGetAmount4() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
+        .thenReturn(new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name",
+            10.0d, "3", "Calibration Curve Name", 10.0d));
+    CalibrationSpecProvider calibrationSpecProvider2 = mock(CalibrationSpecProvider.class);
+    when(calibrationSpecProvider2.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    calibrationSpecProviderList.add(calibrationSpecProvider2);
     calibrationSpecProviderList.add(calibrationSpecProvider);
     Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
     when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
@@ -403,53 +286,41 @@ class ValuationOraclePlainSwapDiffblueTest {
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getAmount(evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay()));
     verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
     verify(calibrationDataset, atLeast(1)).getDataPoints();
     verify(calibrationDataset).getDate();
     verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
+    verify(calibrationSpecProvider2).getCalibrationSpec(isA(CalibrationContext.class));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
+   * <ul>
+   *   <li>Then calls {@link CalibrationDataset#getDataAsCalibrationDataPointStream(CalibrationParser)}.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
    */
   @Test
-  @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
-  void testGetAmount5() {
+  @DisplayName("Test getAmount(LocalDateTime, LocalDateTime); then calls getDataAsCalibrationDataPointStream(CalibrationParser)")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"})
+  void testGetAmount_thenCallsGetDataAsCalibrationDataPointStream() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
+        .thenReturn(new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name",
+            10.0d, "3", "Calibration Curve Name", 10.0d));
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     calibrationSpecProviderList.add(calibrationSpecProvider);
     Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
     when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
@@ -459,71 +330,12 @@ class ValuationOraclePlainSwapDiffblueTest {
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
-  void testGetAmount6() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getAmount(evaluationTime, LocalDate.of(1970, 1, 1).atStartOfDay()));
     verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
     verify(calibrationDataset, atLeast(1)).getDataPoints();
     verify(calibrationDataset).getDate();
@@ -533,539 +345,198 @@ class ValuationOraclePlainSwapDiffblueTest {
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue() {
     // Arrange
+    HashMap<String, AnalyticProduct> products = new HashMap<>();
+    products.put("forward-EUR-OIS", new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3"));
+
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertNull(
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue2() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
+    products.put("forward-EUR-OIS", new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS"));
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue3() {
     // Arrange
-    HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS");
-    products.put("discount-EUR-OIS", cashflow);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
     scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertNull(
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue4() {
     // Arrange
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("EURESTSD", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataPoints();
-    verify(calibrationDataset).getDate();
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue5() {
     // Arrange
-    HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
-    Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
-    calibrationDataItemSet.add(
-        new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("EUREST1D", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
 
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(calibrationDataItemSet);
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
-    // Act
-    BigDecimal actualValue =
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertNull(actualValue);
+    // Act and Assert
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue6() {
     // Arrange
-    HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
-    Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
-    calibrationDataItemSet.add(
-        new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "Fixing", "discount-EUR-OIS");
 
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(calibrationDataItemSet);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
-    // Act
-    BigDecimal actualValue =
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertNull(actualValue);
+    // Act and Assert
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue7() {
     // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "Deposit", "discount-EUR-OIS");
 
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue8() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue9() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue10() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Given {@link CalibrationDataset} {@link CalibrationDataset#getDataPoints()} return {@link
-   *       HashSet#HashSet()}.
-   *   <li>Then return {@code null}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test getValue(LocalDateTime, LocalDateTime); given CalibrationDataset getDataPoints() return HashSet(); then return 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue_givenCalibrationDatasetGetDataPointsReturnHashSet_thenReturnNull() {
-    // Arrange
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act
-    BigDecimal actualValue =
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertNull(actualValue);
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues() {
-    // Arrange
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertTrue(
-        valuationOraclePlainSwap
-            .getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay())
-            .isEmpty());
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues2() {
-    // Arrange
-    HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues3() {
     // Arrange
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints())
@@ -1074,426 +545,365 @@ class ValuationOraclePlainSwapDiffblueTest {
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
     verify(calibrationDataset).getDataPoints();
     verify(calibrationDataset).getDate();
   }
 
   /**
+   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
+   * <ul>
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
+   *   <li>Then return {@code null}.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValue(LocalDateTime, LocalDateTime); given LocalDate with '1970' and one and one atStartOfDay; then return 'null'")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
+  void testGetValue_givenLocalDateWith1970AndOneAndOneAtStartOfDay_thenReturnNull() {
+    // Arrange
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertNull(valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
+   * <ul>
+   *   <li>Then calls {@link CalibrationSpecProvider#getCalibrationSpec(CalibrationContext)}.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValue(LocalDateTime, LocalDateTime); then calls getCalibrationSpec(CalibrationContext)")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
+  void testGetValue_thenCallsGetCalibrationSpec() {
+    // Arrange
+    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
+        .thenReturn(new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name",
+            10.0d, "3", "Calibration Curve Name", 10.0d));
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    calibrationSpecProviderList.add(calibrationSpecProvider);
+    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
+    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
+    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
+    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
+    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
+        .thenReturn(streamResult);
+    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
+    verify(calibrationDataset, atLeast(1)).getDataPoints();
+    verify(calibrationDataset).getDate();
+    verify(calibrationDataset).getFixingDataItems();
+    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
+   * <ul>
+   *   <li>Then calls {@link CalibrationDataset#getDataAsCalibrationDataPointStream(CalibrationParser)}.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValue(LocalDateTime, LocalDateTime); then calls getDataAsCalibrationDataPointStream(CalibrationParser)")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
+  void testGetValue_thenCallsGetDataAsCalibrationDataPointStream() {
+    // Arrange
+    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
+    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
+    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
+    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
+        .thenReturn(streamResult);
+    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    BigDecimal actualValue = valuationOraclePlainSwap.getValue(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Assert
+    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
+    verify(calibrationDataset, atLeast(1)).getDataPoints();
+    verify(calibrationDataset).getDate();
+    verify(calibrationDataset).getFixingDataItems();
+    assertNull(actualValue);
+  }
+
+  /**
    * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
+  void testGetValues() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
+  void testGetValues2() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("EURESTSD", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
+  void testGetValues3() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("EUREST1D", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
   void testGetValues4() {
     // Arrange
-    HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
-    Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
-    calibrationDataItemSet.add(
-        new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "Fixing", "discount-EUR-OIS");
 
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(calibrationDataItemSet);
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
-    // Act
-    Map<String, BigDecimal> actualValues =
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertTrue(actualValues.isEmpty());
+    // Act and Assert
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
   void testGetValues5() {
     // Arrange
-    HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
-    Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
-    calibrationDataItemSet.add(
-        new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec = new Spec("discount-EUR-OIS", "discount-EUR-OIS", "Deposit", "discount-EUR-OIS");
 
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(calibrationDataItemSet);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    curveDataPointSet.add(new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act
-    Map<String, BigDecimal> actualValues =
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertTrue(actualValues.isEmpty());
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues6() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues7() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues8() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues9() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
    * <ul>
-   *   <li>Given {@link CalibrationDataset} {@link CalibrationDataset#getDataPoints()} return {@link
-   *       HashSet#HashSet()}.
-   *   <li>Then return Empty.
+   *   <li>Given {@link LocalDate} with {@code 1970} and one and one atStartOfDay.</li>
+   *   <li>Then return Empty.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
    */
   @Test
-  @DisplayName(
-      "Test getValues(LocalDateTime, LocalDateTime); given CalibrationDataset getDataPoints() return HashSet(); then return Empty")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test getValues(LocalDateTime, LocalDateTime); given LocalDate with '1970' and one and one atStartOfDay; then return Empty")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues_givenCalibrationDatasetGetDataPointsReturnHashSet_thenReturnEmpty() {
+  void testGetValues_givenLocalDateWith1970AndOneAndOneAtStartOfDay_thenReturnEmpty() {
     // Arrange
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
-    // Act
-    Map<String, BigDecimal> actualValues =
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    assertTrue(actualValues.isEmpty());
+    // Act and Assert
+    assertTrue(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()).isEmpty());
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
    * <ul>
-   *   <li>Then return {@code null}.
+   *   <li>Then return {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValues(LocalDateTime, LocalDateTime); then return 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
   void testGetValues_thenReturnNull() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, new ArrayList<>());
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, new ArrayList<>());
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act and Assert
-    assertNull(
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    assertNull(valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 
   /**
    * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
    * <ul>
-   *   <li>Then return size is one.
+   *   <li>Then return size is one.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
    */
   @Test
   @DisplayName("Test getValues(LocalDateTime, LocalDateTime); then return size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
   void testGetValues_thenReturnSizeIsOne() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS");
-    products.put("discount-EUR-OIS", cashflow);
+    products.put("forward-EUR-OIS", new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS"));
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
-    Map<String, BigDecimal> actualValues =
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
+    Map<String, BigDecimal> actualValues = valuationOraclePlainSwap.getValues(evaluationDate,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Assert
     assertEquals(1, actualValues.size());
-    assertEquals(new BigDecimal("0.00"), actualValues.get("discount-EUR-OIS"));
+    BigDecimal expectedGetResult = new BigDecimal("0.00");
+    assertEquals(expectedGetResult, actualValues.get("forward-EUR-OIS"));
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
+   * <ul>
+   *   <li>Then throw {@link SDCException}.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValues(LocalDateTime, LocalDateTime); then throw SDCException")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
+  void testGetValues_thenThrowSDCException() {
+    // Arrange
+    HashMap<String, AnalyticProduct> products = new HashMap<>();
+    products.put("forward-EUR-OIS", new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3"));
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    scenarioList.add(new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    ValuationOraclePlainSwap valuationOraclePlainSwap = new ValuationOraclePlainSwap(products, scenarioList);
+    LocalDateTime evaluationDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act and Assert
+    assertThrows(SDCException.class,
+        () -> valuationOraclePlainSwap.getValues(evaluationDate, LocalDate.of(1970, 1, 1).atStartOfDay()));
   }
 }

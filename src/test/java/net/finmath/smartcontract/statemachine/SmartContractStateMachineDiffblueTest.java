@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,32 +33,28 @@ import org.springframework.statemachine.support.DefaultStateContext;
 import org.springframework.statemachine.transition.AbstractInternalTransition;
 import org.springframework.statemachine.transition.Transition;
 import org.springframework.statemachine.trigger.EventTrigger;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 
 @ContextConfiguration(classes = {SmartContractStateMachine.class})
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 class SmartContractStateMachineDiffblueTest {
-  @Autowired private SmartContractStateMachine smartContractStateMachine;
+  @Autowired
+  private SmartContractStateMachine smartContractStateMachine;
 
   /**
    * Test {@link SmartContractStateMachine#buildMachine()}.
-   *
-   * <p>Method under test: {@link SmartContractStateMachine#buildMachine()}
+   * <p>
+   * Method under test: {@link SmartContractStateMachine#buildMachine()}
    */
   @Test
   @DisplayName("Test buildMachine()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"StateMachine SmartContractStateMachine.buildMachine()"})
   void testBuildMachine() throws Exception {
     // Arrange and Act
-    StateMachine<States, Events> actualBuildMachineResult =
-        smartContractStateMachine.buildMachine();
+    StateMachine<States, Events> actualBuildMachineResult = smartContractStateMachine.buildMachine();
 
     // Assert
     Collection<Transition<States, Events>> transitions = actualBuildMachineResult.getTransitions();
@@ -81,189 +76,122 @@ class SmartContractStateMachineDiffblueTest {
 
   /**
    * Test {@link SmartContractStateMachine#settlementCheck()}.
-   *
-   * <p>Method under test: {@link SmartContractStateMachine#settlementCheck()}
+   * <p>
+   * Method under test: {@link SmartContractStateMachine#settlementCheck()}
    */
   @Test
   @DisplayName("Test settlementCheck()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Guard SmartContractStateMachine.settlementCheck()"})
   void testSettlementCheck() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange and Act
-    Guard<States, Events> actualSettlementCheckResult = smartContractStateMachine.settlementCheck();
+    Guard<States, Events> actualSettlementCheckResult = (new SmartContractStateMachine()).settlementCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
+
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
     Function<StateContext<States, Events>, Mono<Boolean>> guard = mock(Function.class);
-    AbstractInternalTransition<States, Events> transition =
-        new AbstractInternalTransition<>(
-            source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+    AbstractInternalTransition<States, Events> transition = new AbstractInternalTransition<>(source, actions,
+        Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
-    ObjectStateMachine<States, Events> stateMachine =
-        new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
+    ObjectStateMachine<States, Events> stateMachine = new ObjectStateMachine<>(states, transitions,
+        new EnumState<>(States.INCEPTION));
+
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
-    DefaultStateContext<States, Events> defaultStateContext =
-        new DefaultStateContext<>(
-            Stage.EVENT_NOT_ACCEPTED,
-            message,
-            null,
-            extendedState,
-            transition,
-            stateMachine,
-            source2,
-            target,
-            new Exception());
-    boolean actualEvaluateResult = actualSettlementCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(actualEvaluateResult);
+    assertTrue(actualSettlementCheckResult.evaluate(new DefaultStateContext<>(Stage.EVENT_NOT_ACCEPTED, message, null,
+        extendedState, transition, stateMachine, source2, target, new Exception("foo"))));
   }
 
   /**
    * Test {@link SmartContractStateMachine#prefundingCheck()}.
-   *
-   * <p>Method under test: {@link SmartContractStateMachine#prefundingCheck()}
+   * <p>
+   * Method under test: {@link SmartContractStateMachine#prefundingCheck()}
    */
   @Test
   @DisplayName("Test prefundingCheck()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Guard SmartContractStateMachine.prefundingCheck()"})
   void testPrefundingCheck() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange and Act
-    Guard<States, Events> actualPrefundingCheckResult = smartContractStateMachine.prefundingCheck();
+    Guard<States, Events> actualPrefundingCheckResult = (new SmartContractStateMachine()).prefundingCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
+
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
     Function<StateContext<States, Events>, Mono<Boolean>> guard = mock(Function.class);
-    AbstractInternalTransition<States, Events> transition =
-        new AbstractInternalTransition<>(
-            source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+    AbstractInternalTransition<States, Events> transition = new AbstractInternalTransition<>(source, actions,
+        Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
-    ObjectStateMachine<States, Events> stateMachine =
-        new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
+    ObjectStateMachine<States, Events> stateMachine = new ObjectStateMachine<>(states, transitions,
+        new EnumState<>(States.INCEPTION));
+
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
-    DefaultStateContext<States, Events> defaultStateContext =
-        new DefaultStateContext<>(
-            Stage.EVENT_NOT_ACCEPTED,
-            message,
-            null,
-            extendedState,
-            transition,
-            stateMachine,
-            source2,
-            target,
-            new Exception());
-    boolean actualEvaluateResult = actualPrefundingCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(actualEvaluateResult);
+    assertTrue(actualPrefundingCheckResult.evaluate(new DefaultStateContext<>(Stage.EVENT_NOT_ACCEPTED, message, null,
+        extendedState, transition, stateMachine, source2, target, new Exception("foo"))));
   }
 
   /**
    * Test {@link SmartContractStateMachine#notMaturedCheck()}.
-   *
-   * <p>Method under test: {@link SmartContractStateMachine#notMaturedCheck()}
+   * <p>
+   * Method under test: {@link SmartContractStateMachine#notMaturedCheck()}
    */
   @Test
   @DisplayName("Test notMaturedCheck()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Guard SmartContractStateMachine.notMaturedCheck()"})
   void testNotMaturedCheck() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+    //   Run dcover create --keep-partial-tests to gain insights into why
+    //   a non-Spring test was created.
+
     // Arrange and Act
-    Guard<States, Events> actualNotMaturedCheckResult = smartContractStateMachine.notMaturedCheck();
+    Guard<States, Events> actualNotMaturedCheckResult = (new SmartContractStateMachine()).notMaturedCheck();
     GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
+
     DefaultExtendedState extendedState = new DefaultExtendedState();
     EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
     ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
     Function<StateContext<States, Events>, Mono<Boolean>> guard = mock(Function.class);
-    AbstractInternalTransition<States, Events> transition =
-        new AbstractInternalTransition<>(
-            source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+    AbstractInternalTransition<States, Events> transition = new AbstractInternalTransition<>(source, actions,
+        Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
+
     ArrayList<State<States, Events>> states = new ArrayList<>();
     ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
-    ObjectStateMachine<States, Events> stateMachine =
-        new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
+    ObjectStateMachine<States, Events> stateMachine = new ObjectStateMachine<>(states, transitions,
+        new EnumState<>(States.INCEPTION));
+
     EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
     EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
-    DefaultStateContext<States, Events> defaultStateContext =
-        new DefaultStateContext<>(
-            Stage.EVENT_NOT_ACCEPTED,
-            message,
-            null,
-            extendedState,
-            transition,
-            stateMachine,
-            source2,
-            target,
-            new Exception());
-    boolean actualEvaluateResult = actualNotMaturedCheckResult.evaluate(defaultStateContext);
 
     // Assert
-    assertTrue(actualEvaluateResult);
-  }
-
-  /**
-   * Test {@link SmartContractStateMachine#notMaturedCheck()}.
-   *
-   * <p>Method under test: {@link SmartContractStateMachine#notMaturedCheck()}
-   */
-  @Test
-  @DisplayName("Test notMaturedCheck()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Guard SmartContractStateMachine.notMaturedCheck()"})
-  void testNotMaturedCheck2() {
-    // Arrange
-    SmartContractStateMachine smartContractStateMachine = new SmartContractStateMachine();
-    smartContractStateMachine.setMatured(true);
-
-    // Act
-    Guard<States, Events> actualNotMaturedCheckResult = smartContractStateMachine.notMaturedCheck();
-    GenericMessage<Events> message = new GenericMessage<>(Events.INCEPT, new HashMap<>());
-    DefaultExtendedState extendedState = new DefaultExtendedState();
-    EnumState<States, Events> source = new EnumState<>(States.INCEPTION);
-    ArrayList<Function<StateContext<States, Events>, Mono<Void>>> actions = new ArrayList<>();
-    Function<StateContext<States, Events>, Mono<Boolean>> guard = mock(Function.class);
-    AbstractInternalTransition<States, Events> transition =
-        new AbstractInternalTransition<>(
-            source, actions, Events.INCEPT, guard, new EventTrigger<>(Events.INCEPT));
-    ArrayList<State<States, Events>> states = new ArrayList<>();
-    ArrayList<Transition<States, Events>> transitions = new ArrayList<>();
-    ObjectStateMachine<States, Events> stateMachine =
-        new ObjectStateMachine<>(states, transitions, new EnumState<>(States.INCEPTION));
-    EnumState<States, Events> source2 = new EnumState<>(States.INCEPTION);
-    EnumState<States, Events> target = new EnumState<>(States.INCEPTION);
-    DefaultStateContext<States, Events> defaultStateContext =
-        new DefaultStateContext<>(
-            Stage.EVENT_NOT_ACCEPTED,
-            message,
-            null,
-            extendedState,
-            transition,
-            stateMachine,
-            source2,
-            target,
-            new Exception());
-    boolean actualEvaluateResult = actualNotMaturedCheckResult.evaluate(defaultStateContext);
-
-    // Assert
-    assertFalse(actualEvaluateResult);
+    assertTrue(actualNotMaturedCheckResult.evaluate(new DefaultStateContext<>(Stage.EVENT_NOT_ACCEPTED, message, null,
+        extendedState, transition, stateMachine, source2, target, new Exception("foo"))));
   }
 
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>default or parameterless constructor of {@link SmartContractStateMachine}
    *   <li>{@link SmartContractStateMachine#setMatured(boolean)}
@@ -276,26 +204,19 @@ class SmartContractStateMachineDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void SmartContractStateMachine.<init>()",
-    "boolean SmartContractStateMachine.isMatured()",
-    "boolean SmartContractStateMachine.isPrefunded()",
-    "boolean SmartContractStateMachine.isSettlementSuccessful()",
-    "SmartContractStateMachine SmartContractStateMachine.setMatured(boolean)",
-    "SmartContractStateMachine SmartContractStateMachine.setPrefunded(boolean)",
-    "SmartContractStateMachine SmartContractStateMachine.setSettlementSuccessful(boolean)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void SmartContractStateMachine.<init>()", "boolean SmartContractStateMachine.isMatured()",
+      "boolean SmartContractStateMachine.isPrefunded()", "boolean SmartContractStateMachine.isSettlementSuccessful()",
+      "SmartContractStateMachine SmartContractStateMachine.setMatured(boolean)",
+      "SmartContractStateMachine SmartContractStateMachine.setPrefunded(boolean)",
+      "SmartContractStateMachine SmartContractStateMachine.setSettlementSuccessful(boolean)"})
   void testGettersAndSetters() {
     // Arrange and Act
     SmartContractStateMachine actualSmartContractStateMachine = new SmartContractStateMachine();
-    SmartContractStateMachine actualSetMaturedResult =
-        actualSmartContractStateMachine.setMatured(true);
-    SmartContractStateMachine actualSetPrefundedResult =
-        actualSmartContractStateMachine.setPrefunded(true);
-    SmartContractStateMachine actualSetSettlementSuccessfulResult =
-        actualSmartContractStateMachine.setSettlementSuccessful(true);
+    SmartContractStateMachine actualSetMaturedResult = actualSmartContractStateMachine.setMatured(true);
+    SmartContractStateMachine actualSetPrefundedResult = actualSmartContractStateMachine.setPrefunded(true);
+    SmartContractStateMachine actualSetSettlementSuccessfulResult = actualSmartContractStateMachine
+        .setSettlementSuccessful(true);
     boolean actualIsMaturedResult = actualSmartContractStateMachine.isMatured();
     boolean actualIsPrefundedResult = actualSmartContractStateMachine.isPrefunded();
 

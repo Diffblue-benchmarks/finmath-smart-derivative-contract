@@ -3,7 +3,6 @@ package net.finmath.smartcontract.valuation.marketdata.generators;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
@@ -26,25 +25,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {MarketDataGeneratorScenarioList.class})
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class MarketDataGeneratorScenarioListDiffblueTest {
-  @Autowired private MarketDataGeneratorScenarioList marketDataGeneratorScenarioList;
+  @Autowired
+  private MarketDataGeneratorScenarioList marketDataGeneratorScenarioList;
 
   /**
    * Test {@link MarketDataGeneratorScenarioList#asObservable()}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorScenarioList#asObservable()}
+   * <p>
+   * Method under test: {@link MarketDataGeneratorScenarioList#asObservable()}
    */
   @Test
   @DisplayName("Test asObservable()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Observable MarketDataGeneratorScenarioList.asObservable()"})
   void testAsObservable() {
     // Arrange and Act
-    Observable<MarketDataList> actualAsObservableResult =
-        marketDataGeneratorScenarioList.asObservable();
+    Observable<MarketDataList> actualAsObservableResult = marketDataGeneratorScenarioList.asObservable();
 
     // Assert
     assertTrue(actualAsObservableResult instanceof ObservableCreate);
@@ -66,37 +64,33 @@ class MarketDataGeneratorScenarioListDiffblueTest {
 
   /**
    * Test {@link MarketDataGeneratorScenarioList#getMarketDataString(String)}.
-   *
    * <ul>
-   *   <li>When {@code foo.txt}.
-   *   <li>Then throw {@link SDCException}.
+   *   <li>When {@code foo.txt}.</li>
+   *   <li>Then throw {@link SDCException}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorScenarioList#getMarketDataString(String)}
+   * <p>
+   * Method under test: {@link MarketDataGeneratorScenarioList#getMarketDataString(String)}
    */
   @Test
   @DisplayName("Test getMarketDataString(String); when 'foo.txt'; then throw SDCException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"String MarketDataGeneratorScenarioList.getMarketDataString(String)"})
   void testGetMarketDataString_whenFooTxt_thenThrowSDCException() {
     // Arrange, Act and Assert
-    assertThrows(
-        SDCException.class, () -> marketDataGeneratorScenarioList.getMarketDataString("foo.txt"));
+    assertThrows(SDCException.class, () -> marketDataGeneratorScenarioList.getMarketDataString("foo.txt"));
   }
 
   /**
    * Test {@link MarketDataGeneratorScenarioList#getCounter()}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorScenarioList#getCounter()}
+   * <p>
+   * Method under test: {@link MarketDataGeneratorScenarioList#getCounter()}
    */
   @Test
   @DisplayName("Test getCounter()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"int MarketDataGeneratorScenarioList.getCounter()"})
   void testGetCounter() {
     // Arrange, Act and Assert
-    assertEquals(0, new MarketDataGeneratorScenarioList().getCounter());
+    assertEquals(0, (new MarketDataGeneratorScenarioList()).getCounter());
   }
 }

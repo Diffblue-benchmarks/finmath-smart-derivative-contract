@@ -2,7 +2,6 @@ package net.finmath.smartcontract.settlement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
@@ -16,23 +15,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {BigDecimalAdapter.class})
 @ExtendWith(SpringExtension.class)
 class BigDecimalAdapterDiffblueTest {
-  @Autowired private BigDecimalAdapter bigDecimalAdapter;
+  @Autowired
+  private BigDecimalAdapter bigDecimalAdapter;
 
   /**
    * Test {@link BigDecimalAdapter#marshal(BigDecimal)} with {@code BigDecimal}.
-   *
    * <ul>
-   *   <li>When {@link BigDecimal#BigDecimal(String)} with {@code 2.3}.
-   *   <li>Then return {@code 2.3}.
+   *   <li>When {@link BigDecimal#BigDecimal(String)} with {@code 2.3}.</li>
+   *   <li>Then return {@code 2.3}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link BigDecimalAdapter#marshal(BigDecimal)}
+   * <p>
+   * Method under test: {@link BigDecimalAdapter#marshal(BigDecimal)}
    */
   @Test
-  @DisplayName(
-      "Test marshal(BigDecimal) with 'BigDecimal'; when BigDecimal(String) with '2.3'; then return '2.3'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test marshal(BigDecimal) with 'BigDecimal'; when BigDecimal(String) with '2.3'; then return '2.3'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"String BigDecimalAdapter.marshal(BigDecimal)"})
   void testMarshalWithBigDecimal_whenBigDecimalWith23_thenReturn23() throws Exception {
     // Arrange, Act and Assert
@@ -41,18 +38,16 @@ class BigDecimalAdapterDiffblueTest {
 
   /**
    * Test {@link BigDecimalAdapter#marshal(BigDecimal)} with {@code BigDecimal}.
-   *
    * <ul>
-   *   <li>When {@code null}.
-   *   <li>Then return {@code null}.
+   *   <li>When {@code null}.</li>
+   *   <li>Then return {@code null}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link BigDecimalAdapter#marshal(BigDecimal)}
+   * <p>
+   * Method under test: {@link BigDecimalAdapter#marshal(BigDecimal)}
    */
   @Test
   @DisplayName("Test marshal(BigDecimal) with 'BigDecimal'; when 'null'; then return 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"String BigDecimalAdapter.marshal(BigDecimal)"})
   void testMarshalWithBigDecimal_whenNull_thenReturnNull() throws Exception {
     // Arrange, Act and Assert
@@ -61,19 +56,16 @@ class BigDecimalAdapterDiffblueTest {
 
   /**
    * Test {@link BigDecimalAdapter#unmarshal(String)} with {@code String}.
-   *
    * <ul>
-   *   <li>When {@code 2.3}.
-   *   <li>Then return {@link BigDecimal#BigDecimal(String)} with {@code 2.3}.
+   *   <li>When {@code 2.3}.</li>
+   *   <li>Then return {@link BigDecimal#BigDecimal(String)} with {@code 2.3}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link BigDecimalAdapter#unmarshal(String)}
+   * <p>
+   * Method under test: {@link BigDecimalAdapter#unmarshal(String)}
    */
   @Test
-  @DisplayName(
-      "Test unmarshal(String) with 'String'; when '2.3'; then return BigDecimal(String) with '2.3'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test unmarshal(String) with 'String'; when '2.3'; then return BigDecimal(String) with '2.3'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"BigDecimal BigDecimalAdapter.unmarshal(String)"})
   void testUnmarshalWithString_when23_thenReturnBigDecimalWith23() throws Exception {
     // Arrange and Act

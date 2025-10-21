@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import net.finmath.smartcontract.model.InitialSettlementRequest;
 import net.finmath.smartcontract.model.InitialSettlementResult;
@@ -28,26 +27,24 @@ import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {SettlementController.class})
-@DisabledInAotMode
 @ExtendWith(SpringExtension.class)
+@DisabledInAotMode
 class SettlementControllerDiffblueTest {
-  @Autowired private SettlementController settlementController;
+  @Autowired
+  private SettlementController settlementController;
 
-  @MockBean private SettlementService settlementService;
+  @MockBean
+  private SettlementService settlementService;
 
   /**
    * Test {@link SettlementController#generateRegularSettlementResult(RegularSettlementRequest)}.
-   *
-   * <p>Method under test: {@link
-   * SettlementController#generateRegularSettlementResult(RegularSettlementRequest)}
+   * <p>
+   * Method under test: {@link SettlementController#generateRegularSettlementResult(RegularSettlementRequest)}
    */
   @Test
   @DisplayName("Test generateRegularSettlementResult(RegularSettlementRequest)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "ResponseEntity SettlementController.generateRegularSettlementResult(RegularSettlementRequest)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"ResponseEntity SettlementController.generateRegularSettlementResult(RegularSettlementRequest)"})
   void testGenerateRegularSettlementResult() {
     // Arrange
     RegularSettlementResult regularSettlementResult = new RegularSettlementResult();
@@ -55,8 +52,8 @@ class SettlementControllerDiffblueTest {
         .thenReturn(regularSettlementResult);
 
     // Act
-    ResponseEntity<RegularSettlementResult> actualGenerateRegularSettlementResultResult =
-        settlementController.generateRegularSettlementResult(new RegularSettlementRequest());
+    ResponseEntity<RegularSettlementResult> actualGenerateRegularSettlementResultResult = settlementController
+        .generateRegularSettlementResult(new RegularSettlementRequest());
 
     // Assert
     verify(settlementService).generateRegularSettlementResult(isA(RegularSettlementRequest.class));
@@ -71,17 +68,13 @@ class SettlementControllerDiffblueTest {
 
   /**
    * Test {@link SettlementController#generateInitialSettlementResult(InitialSettlementRequest)}.
-   *
-   * <p>Method under test: {@link
-   * SettlementController#generateInitialSettlementResult(InitialSettlementRequest)}
+   * <p>
+   * Method under test: {@link SettlementController#generateInitialSettlementResult(InitialSettlementRequest)}
    */
   @Test
   @DisplayName("Test generateInitialSettlementResult(InitialSettlementRequest)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "ResponseEntity SettlementController.generateInitialSettlementResult(InitialSettlementRequest)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"ResponseEntity SettlementController.generateInitialSettlementResult(InitialSettlementRequest)"})
   void testGenerateInitialSettlementResult() {
     // Arrange
     InitialSettlementResult initialSettlementResult = new InitialSettlementResult();
@@ -89,8 +82,8 @@ class SettlementControllerDiffblueTest {
         .thenReturn(initialSettlementResult);
 
     // Act
-    ResponseEntity<InitialSettlementResult> actualGenerateInitialSettlementResultResult =
-        settlementController.generateInitialSettlementResult(new InitialSettlementRequest());
+    ResponseEntity<InitialSettlementResult> actualGenerateInitialSettlementResultResult = settlementController
+        .generateInitialSettlementResult(new InitialSettlementRequest());
 
     // Assert
     verify(settlementService).generateInitialSettlementResult(isA(InitialSettlementRequest.class));

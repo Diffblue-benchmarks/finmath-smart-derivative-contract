@@ -1,7 +1,6 @@
 package net.finmath.smartcontract.valuation.service.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -10,9 +9,8 @@ import org.junit.jupiter.api.Test;
 class SDCUserDiffblueTest {
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>default or parameterless constructor of {@link SDCUser}
    *   <li>{@link SDCUser#setPassword(String)}
@@ -25,17 +23,10 @@ class SDCUserDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void SDCUser.<init>()",
-    "String SDCUser.getPassword()",
-    "String SDCUser.getRole()",
-    "String SDCUser.getUsername()",
-    "void SDCUser.setPassword(String)",
-    "void SDCUser.setRole(String)",
-    "void SDCUser.setUsername(String)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void SDCUser.<init>()", "String SDCUser.getPassword()", "String SDCUser.getRole()",
+      "String SDCUser.getUsername()", "void SDCUser.setPassword(String)", "void SDCUser.setRole(String)",
+      "void SDCUser.setUsername(String)"})
   void testGettersAndSetters() {
     // Arrange and Act
     SDCUser actualSdcUser = new SDCUser();

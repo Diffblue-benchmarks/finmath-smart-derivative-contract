@@ -1,7 +1,6 @@
 package net.finmath.smartcontract.product;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import net.finmath.smartcontract.product.SmartDerivativeContractDescriptor.Party;
 import org.junit.jupiter.api.DisplayName;
@@ -11,9 +10,8 @@ import org.junit.jupiter.api.Test;
 class SmartDerivativeContractDescriptorDiffblueTest {
   /**
    * Test Party getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>{@link Party#Party(String, String, String, String)}
    *   <li>{@link Party#toString()}
@@ -25,16 +23,9 @@ class SmartDerivativeContractDescriptorDiffblueTest {
    */
   @Test
   @DisplayName("Test Party getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void Party.<init>(String, String, String, String)",
-    "String Party.getAddress()",
-    "String Party.getHref()",
-    "String Party.getId()",
-    "String Party.getName()",
-    "String Party.toString()"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void Party.<init>(String, String, String, String)", "String Party.getAddress()",
+      "String Party.getHref()", "String Party.getId()", "String Party.getName()", "String Party.toString()"})
   void testPartyGettersAndSetters() {
     // Arrange and Act
     Party actualParty = new Party("42", "Name", "Href", "42 Main St");
@@ -48,7 +39,6 @@ class SmartDerivativeContractDescriptorDiffblueTest {
     assertEquals("42", actualId);
     assertEquals("Href", actualHref);
     assertEquals("Name", actualParty.getName());
-    assertEquals(
-        "Party {id='42', name='Name', href='Href', address='42 Main St'}", actualToStringResult);
+    assertEquals("Party {id='42', name='Name', href='Href', address='42 Main St'}", actualToStringResult);
   }
 }

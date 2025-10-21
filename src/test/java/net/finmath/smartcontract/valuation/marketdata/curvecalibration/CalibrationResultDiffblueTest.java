@@ -11,7 +11,6 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import net.finmath.marketdata.calibration.CalibratedCurves;
@@ -23,31 +22,18 @@ import net.finmath.optimizer.SolverException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class CalibrationResultDiffblueTest {
-  @Mock private CalibratedCurves calibratedCurves;
-
-  @InjectMocks private CalibrationResult calibrationResult;
-
   /**
    * Test {@link CalibrationResult#CalibrationResult(CalibratedCurves, CalibrationSpec[])}.
-   *
-   * <p>Method under test: {@link CalibrationResult#CalibrationResult(CalibratedCurves,
-   * CalibratedCurves.CalibrationSpec[])}
+   * <p>
+   * Method under test: {@link CalibrationResult#CalibrationResult(CalibratedCurves, CalibratedCurves.CalibrationSpec[])}
    */
   @Test
   @DisplayName("Test new CalibrationResult(CalibratedCurves, CalibrationSpec[])")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void CalibrationResult.<init>(CalibratedCurves, CalibratedCurves.CalibrationSpec[])"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void CalibrationResult.<init>(CalibratedCurves, CalibratedCurves.CalibrationSpec[])"})
   void testNewCalibrationResult() throws CloneNotSupportedException, SolverException {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
     //   Run dcover create --keep-partial-tests to gain insights into why
@@ -55,21 +41,12 @@ class CalibrationResultDiffblueTest {
 
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
 
-    // Act
-    CalibrationResult actualCalibrationResult = new CalibrationResult(c, calibrationSpec);
-
-    // Assert
-    AnalyticModel calibratedModel = actualCalibrationResult.getCalibratedModel();
+    // Act and Assert
+    AnalyticModel calibratedModel = (new CalibrationResult(c,
+        new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name", 10.0d, "3",
+            "Calibration Curve Name", 10.0d)))
+        .getCalibratedModel();
     assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
     assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
     assertTrue(calibratedModel.getCurves().isEmpty());
@@ -78,64 +55,26 @@ class CalibrationResultDiffblueTest {
 
   /**
    * Test {@link CalibrationResult#getCalibratedModel()}.
-   *
    * <ul>
-   *   <li>Then return {@link AnalyticModelFromCurvesAndVols#AnalyticModelFromCurvesAndVols()}.
+   *   <li>Then return {@link AnalyticModelFromCurvesAndVols}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getCalibratedModel()}
-   */
-  @Test
-  @DisplayName("Test getCalibratedModel(); then return AnalyticModelFromCurvesAndVols()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
-  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols() {
-    // Arrange
-    AnalyticModelFromCurvesAndVols analyticModelFromCurvesAndVols =
-        new AnalyticModelFromCurvesAndVols();
-    when(calibratedCurves.getModel()).thenReturn(analyticModelFromCurvesAndVols);
-
-    // Act
-    AnalyticModel actualCalibratedModel = calibrationResult.getCalibratedModel();
-
-    // Assert
-    verify(calibratedCurves).getModel();
-    assertSame(analyticModelFromCurvesAndVols, actualCalibratedModel);
-  }
-
-  /**
-   * Test {@link CalibrationResult#getCalibratedModel()}.
-   *
-   * <ul>
-   *   <li>Then return {@link AnalyticModelFromCurvesAndVols}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getCalibratedModel()}
+   * <p>
+   * Method under test: {@link CalibrationResult#getCalibratedModel()}
    */
   @Test
   @DisplayName("Test getCalibratedModel(); then return AnalyticModelFromCurvesAndVols")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
-  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols2()
+  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols()
       throws CloneNotSupportedException, SolverException {
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-
-    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
 
     // Act
-    AnalyticModel actualCalibratedModel = calibrationResult.getCalibratedModel();
+    AnalyticModel actualCalibratedModel = (new CalibrationResult(c,
+        new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name", 10.0d, "3",
+            "Calibration Curve Name", 10.0d)))
+        .getCalibratedModel();
 
     // Assert
     assertTrue(actualCalibratedModel instanceof AnalyticModelFromCurvesAndVols);
@@ -145,42 +84,59 @@ class CalibrationResultDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationResult#getSumOfSquaredErrors()}.
-   *
+   * Test {@link CalibrationResult#getCalibratedModel()}.
    * <ul>
-   *   <li>Then return one hundred.
+   *   <li>Then return {@link AnalyticModelFromCurvesAndVols#AnalyticModelFromCurvesAndVols()}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
+   * <p>
+   * Method under test: {@link CalibrationResult#getCalibratedModel()}
+   */
+  @Test
+  @DisplayName("Test getCalibratedModel(); then return AnalyticModelFromCurvesAndVols()")
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
+  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols2() {
+    // Arrange
+    CalibratedCurves c = mock(CalibratedCurves.class);
+    AnalyticModelFromCurvesAndVols analyticModelFromCurvesAndVols = new AnalyticModelFromCurvesAndVols();
+    when(c.getModel()).thenReturn(analyticModelFromCurvesAndVols);
+
+    // Act
+    AnalyticModel actualCalibratedModel = (new CalibrationResult(c,
+        new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name", 10.0d, "3",
+            "Calibration Curve Name", 10.0d)))
+        .getCalibratedModel();
+
+    // Assert
+    verify(c).getModel();
+    assertSame(analyticModelFromCurvesAndVols, actualCalibratedModel);
+  }
+
+  /**
+   * Test {@link CalibrationResult#getSumOfSquaredErrors()}.
+   * <ul>
+   *   <li>Then return one hundred.</li>
+   * </ul>
+   * <p>
+   * Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
    */
   @Test
   @DisplayName("Test getSumOfSquaredErrors(); then return one hundred")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"double CalibrationResult.getSumOfSquaredErrors()"})
   void testGetSumOfSquaredErrors_thenReturnOneHundred() {
     // Arrange
     AnalyticProduct analyticProduct = mock(AnalyticProduct.class);
     when(analyticProduct.getValue(anyDouble(), Mockito.<AnalyticModel>any())).thenReturn(10.0d);
-
     CalibratedCurves c = mock(CalibratedCurves.class);
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
-    when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
-        .thenReturn(analyticProduct);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-
-    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
+    when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any())).thenReturn(analyticProduct);
 
     // Act
-    double actualSumOfSquaredErrors = calibrationResult.getSumOfSquaredErrors();
+    double actualSumOfSquaredErrors = (new CalibrationResult(c,
+        new CalibrationSpec("Type", new double[]{10.0d, 0.5d, 10.0d, 0.5d}, "Forward Curve Receiver Name", 10.0d, "3",
+            "Calibration Curve Name", 10.0d)))
+        .getSumOfSquaredErrors();
 
     // Assert
     verify(c).getCalibrationProductForSpec(isA(CalibrationSpec.class));
@@ -191,51 +147,31 @@ class CalibrationResultDiffblueTest {
 
   /**
    * Test {@link CalibrationResult#getSumOfSquaredErrors()}.
-   *
    * <ul>
-   *   <li>Then return two hundred.
+   *   <li>Then return two hundred.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
+   * <p>
+   * Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
    */
   @Test
   @DisplayName("Test getSumOfSquaredErrors(); then return two hundred")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"double CalibrationResult.getSumOfSquaredErrors()"})
   void testGetSumOfSquaredErrors_thenReturnTwoHundred() {
     // Arrange
     AnalyticProduct analyticProduct = mock(AnalyticProduct.class);
     when(analyticProduct.getValue(anyDouble(), Mockito.<AnalyticModel>any())).thenReturn(10.0d);
-
     CalibratedCurves c = mock(CalibratedCurves.class);
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
-    when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
-        .thenReturn(analyticProduct);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-    CalibrationSpec calibrationSpec2 =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "3",
-            "Calibration Curve Name",
-            10.0d);
-
-    CalibrationResult calibrationResult =
-        new CalibrationResult(c, calibrationSpec, calibrationSpec2);
+    when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any())).thenReturn(analyticProduct);
+    CalibrationSpec calibrationSpec = new CalibrationSpec("Type", new double[]{2.0d, 10.0d, 2.0d, 10.0d},
+        "Forward Curve Receiver Name", 2.0d, "3", "Calibration Curve Name", 2.0d);
 
     // Act
-    double actualSumOfSquaredErrors = calibrationResult.getSumOfSquaredErrors();
+    double actualSumOfSquaredErrors = (new CalibrationResult(c, calibrationSpec,
+        new CalibrationSpec("Type", new double[]{2.0d, 10.0d, 2.0d, 10.0d}, "Forward Curve Receiver Name", 2.0d, "3",
+            "Calibration Curve Name", 2.0d)))
+        .getSumOfSquaredErrors();
 
     // Assert
     verify(c, atLeast(1)).getCalibrationProductForSpec(Mockito.<CalibrationSpec>any());
@@ -246,23 +182,18 @@ class CalibrationResultDiffblueTest {
 
   /**
    * Test {@link CalibrationResult#getSumOfSquaredErrors()}.
-   *
    * <ul>
-   *   <li>Then return zero.
+   *   <li>Then return zero.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
+   * <p>
+   * Method under test: {@link CalibrationResult#getSumOfSquaredErrors()}
    */
   @Test
   @DisplayName("Test getSumOfSquaredErrors(); then return zero")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"double CalibrationResult.getSumOfSquaredErrors()"})
-  void testGetSumOfSquaredErrors_thenReturnZero()
-      throws CloneNotSupportedException, SolverException {
+  void testGetSumOfSquaredErrors_thenReturnZero() {
     // Arrange, Act and Assert
-    assertEquals(
-        0.0d,
-        new CalibrationResult(new CalibratedCurves(new ArrayList<>())).getSumOfSquaredErrors());
+    assertEquals(0.0d, (new CalibrationResult(mock(CalibratedCurves.class))).getSumOfSquaredErrors());
   }
 }

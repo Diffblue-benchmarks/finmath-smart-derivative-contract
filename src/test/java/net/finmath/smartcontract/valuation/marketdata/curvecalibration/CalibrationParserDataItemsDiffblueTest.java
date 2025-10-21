@@ -2,7 +2,6 @@ package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -23,17 +22,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {CalibrationParserDataItems.class})
 @ExtendWith(SpringExtension.class)
 class CalibrationParserDataItemsDiffblueTest {
-  @Autowired private CalibrationParserDataItems calibrationParserDataItems;
+  @Autowired
+  private CalibrationParserDataItems calibrationParserDataItems;
 
   /**
    * Test {@link CalibrationParserDataItems#parse(Stream)}.
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#parse(Stream)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#parse(Stream)}
    */
   @Test
   @DisplayName("Test parse(Stream)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"Stream CalibrationParserDataItems.parse(Stream)"})
   void testParse() {
     // Arrange
@@ -41,8 +40,7 @@ class CalibrationParserDataItemsDiffblueTest {
     Stream<CalibrationDataItem> datapoints = calibrationDataItemList.stream();
 
     // Act
-    Stream<CalibrationSpecProvider> actualParseResult =
-        calibrationParserDataItems.parse(datapoints);
+    Stream<CalibrationSpecProvider> actualParseResult = calibrationParserDataItems.parse(datapoints);
 
     // Assert
     assertTrue(actualParseResult.limit(5).collect(Collectors.toList()).isEmpty());
@@ -50,66 +48,55 @@ class CalibrationParserDataItemsDiffblueTest {
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonFile(String)}.
-   *
    * <ul>
-   *   <li>When empty string.
-   *   <li>Then throw {@link IllegalArgumentException}.
+   *   <li>When empty string.</li>
+   *   <li>Then throw {@link IllegalArgumentException}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonFile(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonFile(String)}
    */
   @Test
-  @DisplayName(
-      "Test getScenariosFromJsonFile(String); when empty string; then throw IllegalArgumentException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test getScenariosFromJsonFile(String); when empty string; then throw IllegalArgumentException")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonFile(String)"})
-  void testGetScenariosFromJsonFile_whenEmptyString_thenThrowIllegalArgumentException()
-      throws IOException {
+  void testGetScenariosFromJsonFile_whenEmptyString_thenThrowIllegalArgumentException() throws IOException {
     // Arrange, Act and Assert
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> CalibrationParserDataItems.getScenariosFromJsonFile(""));
+    assertThrows(IllegalArgumentException.class, () -> CalibrationParserDataItems.getScenariosFromJsonFile(""));
   }
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromCSVFile(String)}.
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromCSVFile(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromCSVFile(String)}
    */
   @Test
   @DisplayName("Test getScenariosFromCSVFile(String)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromCSVFile(String)"})
   void testGetScenariosFromCSVFile() throws IOException {
     // Arrange, Act and Assert
-    assertThrows(
-        IOException.class, () -> CalibrationParserDataItems.getScenariosFromCSVFile("foo.txt"));
+    assertThrows(IOException.class, () -> CalibrationParserDataItems.getScenariosFromCSVFile("foo.txt"));
   }
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
-   *
    * <ul>
-   *   <li>Then return Empty.
+   *   <li>Then return Empty.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
    */
   @Test
   @DisplayName("Test getScenariosFromJsonString(String); then return Empty")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_thenReturnEmpty() throws JsonProcessingException {
     // Arrange
-    JsonMapper jsonMapper = JsonMapper.builder().findAndAddModules().build();
+    JsonMapper buildResult = JsonMapper.builder().findAndAddModules().build();
 
     // Act
-    List<CalibrationDataset> actualScenariosFromJsonString =
-        CalibrationParserDataItems.getScenariosFromJsonString(
-            jsonMapper.writeValueAsString(new HashMap<>()));
+    List<CalibrationDataset> actualScenariosFromJsonString = CalibrationParserDataItems
+        .getScenariosFromJsonString(buildResult.writeValueAsString(new HashMap<>()));
 
     // Assert
     assertTrue(actualScenariosFromJsonString.isEmpty());
@@ -117,91 +104,73 @@ class CalibrationParserDataItemsDiffblueTest {
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
-   *
    * <ul>
-   *   <li>When {@code 1D}.
-   *   <li>Then throw {@link IllegalArgumentException}.
+   *   <li>When {@code 1D}.</li>
+   *   <li>Then throw {@link IllegalArgumentException}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
    */
   @Test
-  @DisplayName(
-      "Test getScenariosFromJsonString(String); when '1D'; then throw IllegalArgumentException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test getScenariosFromJsonString(String); when '1D'; then throw IllegalArgumentException")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_when1d_thenThrowIllegalArgumentException() {
     // Arrange, Act and Assert
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> CalibrationParserDataItems.getScenariosFromJsonString("1D"));
+    assertThrows(IllegalArgumentException.class, () -> CalibrationParserDataItems.getScenariosFromJsonString("1D"));
   }
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
-   *
    * <ul>
-   *   <li>When {@code 42}.
-   *   <li>Then throw {@link IllegalArgumentException}.
+   *   <li>When {@code 42}.</li>
+   *   <li>Then throw {@link IllegalArgumentException}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
    */
   @Test
-  @DisplayName(
-      "Test getScenariosFromJsonString(String); when '42'; then throw IllegalArgumentException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test getScenariosFromJsonString(String); when '42'; then throw IllegalArgumentException")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_when42_thenThrowIllegalArgumentException() {
     // Arrange, Act and Assert
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> CalibrationParserDataItems.getScenariosFromJsonString("42"));
+    assertThrows(IllegalArgumentException.class, () -> CalibrationParserDataItems.getScenariosFromJsonString("42"));
   }
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
-   *
    * <ul>
-   *   <li>When empty string.
-   *   <li>Then throw {@link IllegalArgumentException}.
+   *   <li>When empty string.</li>
+   *   <li>Then throw {@link IllegalArgumentException}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
    */
   @Test
-  @DisplayName(
-      "Test getScenariosFromJsonString(String); when empty string; then throw IllegalArgumentException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test getScenariosFromJsonString(String); when empty string; then throw IllegalArgumentException")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_whenEmptyString_thenThrowIllegalArgumentException() {
     // Arrange, Act and Assert
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> CalibrationParserDataItems.getScenariosFromJsonString(""));
+    assertThrows(IllegalArgumentException.class, () -> CalibrationParserDataItems.getScenariosFromJsonString(""));
   }
 
   /**
    * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
-   *
    * <ul>
-   *   <li>When {@code Not all who wander are lost}.
+   *   <li>When {@code Not all who wander are lost}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   * <p>
+   * Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
    */
   @Test
   @DisplayName("Test getScenariosFromJsonString(String); when 'Not all who wander are lost'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
   void testGetScenariosFromJsonString_whenNotAllWhoWanderAreLost() {
     // Arrange, Act and Assert
-    assertThrows(
-        IllegalArgumentException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> CalibrationParserDataItems.getScenariosFromJsonString("Not all who wander are lost"));
   }
 }

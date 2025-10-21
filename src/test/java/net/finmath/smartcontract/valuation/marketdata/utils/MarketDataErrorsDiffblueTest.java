@@ -3,7 +3,6 @@ package net.finmath.smartcontract.valuation.marketdata.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,8 @@ import org.junit.jupiter.api.Test;
 class MarketDataErrorsDiffblueTest {
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>{@link MarketDataErrors#MarketDataErrors(boolean)}
    *   <li>{@link MarketDataErrors#setErrorMessage(String)}
@@ -29,17 +27,11 @@ class MarketDataErrorsDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void MarketDataErrors.<init>(boolean)",
-    "String MarketDataErrors.getErrorMessage()",
-    "List MarketDataErrors.getMissingDataPoints()",
-    "boolean MarketDataErrors.hasErrors()",
-    "void MarketDataErrors.setErrorMessage(String)",
-    "void MarketDataErrors.setMissingDataPoints(List)",
-    "String MarketDataErrors.toString()"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"void MarketDataErrors.<init>(boolean)", "String MarketDataErrors.getErrorMessage()",
+      "List MarketDataErrors.getMissingDataPoints()", "boolean MarketDataErrors.hasErrors()",
+      "void MarketDataErrors.setErrorMessage(String)", "void MarketDataErrors.setMissingDataPoints(List)",
+      "String MarketDataErrors.toString()"})
   void testGettersAndSetters() {
     // Arrange and Act
     MarketDataErrors actualMarketDataErrors = new MarketDataErrors(true);
@@ -53,8 +45,7 @@ class MarketDataErrorsDiffblueTest {
 
     // Assert
     assertEquals("An error occurred", actualErrorMessage);
-    assertEquals(
-        "MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='An error occurred'}",
+    assertEquals("MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='An error occurred'}",
         actualToStringResult);
     assertTrue(actualMissingDataPoints.isEmpty());
     assertTrue(actualHasErrorsResult);
@@ -63,13 +54,12 @@ class MarketDataErrorsDiffblueTest {
 
   /**
    * Test {@link MarketDataErrors#addMissingData(String)}.
-   *
-   * <p>Method under test: {@link MarketDataErrors#addMissingData(String)}
+   * <p>
+   * Method under test: {@link MarketDataErrors#addMissingData(String)}
    */
   @Test
   @DisplayName("Test addMissingData(String)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({"void MarketDataErrors.addMissingData(String)"})
   void testAddMissingData() {
     // Arrange

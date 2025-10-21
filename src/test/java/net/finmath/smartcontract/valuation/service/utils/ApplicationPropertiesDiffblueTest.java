@@ -2,7 +2,6 @@ package net.finmath.smartcontract.valuation.service.utils;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +12,8 @@ import org.junit.jupiter.api.Test;
 class ApplicationPropertiesDiffblueTest {
   /**
    * Test getters and setters.
-   *
-   * <p>Methods under test:
-   *
+   * <p>
+   * Methods under test:
    * <ul>
    *   <li>{@link ApplicationProperties#setUsers(List)}
    *   <li>{@link ApplicationProperties#getUsers()}
@@ -23,12 +21,8 @@ class ApplicationPropertiesDiffblueTest {
    */
   @Test
   @DisplayName("Test getters and setters")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "List ApplicationProperties.getUsers()",
-    "void ApplicationProperties.setUsers(List)"
-  })
+  @Tag("MaintainedByDiffblue")
+  @MethodsUnderTest({"List ApplicationProperties.getUsers()", "void ApplicationProperties.setUsers(List)"})
   void testGettersAndSetters() {
     // Arrange
     ApplicationProperties applicationProperties = new ApplicationProperties();

@@ -2,9 +2,7 @@ package net.finmath.smartcontract.valuation.service.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,98 +17,57 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 class BasicAuthWebSecurityConfigurationDiffblueTest {
   /**
-   * Test {@link BasicAuthWebSecurityConfiguration#corsConfigurer()}.
-   *
-   * <ul>
-   *   <li>Given {@link BasicAuthWebSecurityConfiguration} (default constructor).
-   * </ul>
-   *
-   * <p>Method under test: {@link BasicAuthWebSecurityConfiguration#corsConfigurer()}
-   */
-  @Test
-  @DisplayName(
-      "Test corsConfigurer(); given BasicAuthWebSecurityConfiguration (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"WebMvcConfigurer BasicAuthWebSecurityConfiguration.corsConfigurer()"})
-  void testCorsConfigurer_givenBasicAuthWebSecurityConfiguration() {
-    // Arrange and Act
-    WebMvcConfigurer actualCorsConfigurerResult =
-        new BasicAuthWebSecurityConfiguration().corsConfigurer();
-
-    // Assert
-    assertNull(actualCorsConfigurerResult.getMessageCodesResolver());
-    assertNull(actualCorsConfigurerResult.getValidator());
-  }
-
-  /**
    * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()}.
-   *   <li>Then return not userExists {@code janedoe}.
+   *   <li>Given {@link ArrayList#ArrayList()}.</li>
+   *   <li>Then return not userExists {@code janedoe}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link
-   * BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * <p>
+   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName(
-      "Test userDetailsService(ApplicationProperties); given ArrayList(); then return not userExists 'janedoe'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test userDetailsService(ApplicationProperties); given ArrayList(); then return not userExists 'janedoe'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({
-    "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"
-  })
+      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
   void testUserDetailsService_givenArrayList_thenReturnNotUserExistsJanedoe() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
     //   Run dcover create --keep-partial-tests to gain insights into why
     //   a non-Spring test was created.
 
     // Arrange
-    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration =
-        new BasicAuthWebSecurityConfiguration();
+    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
 
     ApplicationProperties applicationProperties = new ApplicationProperties();
     applicationProperties.setUsers(new ArrayList<>());
 
     // Act and Assert
-    assertFalse(
-        basicAuthWebSecurityConfiguration
-            .userDetailsService(applicationProperties)
-            .userExists("janedoe"));
+    assertFalse(basicAuthWebSecurityConfiguration.userDetailsService(applicationProperties).userExists("janedoe"));
   }
 
   /**
    * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   *
    * <ul>
-   *   <li>Given {@link SDCUser} (default constructor) Password is {@code Password}.
+   *   <li>Given {@link SDCUser} (default constructor) Password is {@code Password}.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link
-   * BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * <p>
+   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName(
-      "Test userDetailsService(ApplicationProperties); given SDCUser (default constructor) Password is 'Password'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test userDetailsService(ApplicationProperties); given SDCUser (default constructor) Password is 'Password'")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({
-    "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"
-  })
+      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
   void testUserDetailsService_givenSDCUserPasswordIsPassword() throws UsernameNotFoundException {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
     //   Run dcover create --keep-partial-tests to gain insights into why
     //   a non-Spring test was created.
 
     // Arrange
-    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration =
-        new BasicAuthWebSecurityConfiguration();
+    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
 
     SDCUser sdcUser = new SDCUser();
     sdcUser.setPassword("iloveyou");
@@ -130,12 +87,11 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
     applicationProperties.setUsers(users);
 
     // Act
-    InMemoryUserDetailsManager actualUserDetailsServiceResult =
-        basicAuthWebSecurityConfiguration.userDetailsService(applicationProperties);
+    InMemoryUserDetailsManager actualUserDetailsServiceResult = basicAuthWebSecurityConfiguration
+        .userDetailsService(applicationProperties);
 
     // Assert
-    UserDetails loadUserByUsernameResult =
-        actualUserDetailsServiceResult.loadUserByUsername("janedoe");
+    UserDetails loadUserByUsernameResult = actualUserDetailsServiceResult.loadUserByUsername("janedoe");
     Collection<? extends GrantedAuthority> authorities = loadUserByUsernameResult.getAuthorities();
     assertEquals(1, authorities.size());
     assertTrue(authorities instanceof Set);
@@ -151,22 +107,17 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
 
   /**
    * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   *
    * <ul>
-   *   <li>Then return loadUserByUsername {@code janedoe} Authorities size is one.
+   *   <li>Then return loadUserByUsername {@code janedoe} Authorities size is one.</li>
    * </ul>
-   *
-   * <p>Method under test: {@link
-   * BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * <p>
+   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName(
-      "Test userDetailsService(ApplicationProperties); then return loadUserByUsername 'janedoe' Authorities size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
+  @DisplayName("Test userDetailsService(ApplicationProperties); then return loadUserByUsername 'janedoe' Authorities size is one")
+  @Tag("MaintainedByDiffblue")
   @MethodsUnderTest({
-    "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"
-  })
+      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
   void testUserDetailsService_thenReturnLoadUserByUsernameJanedoeAuthoritiesSizeIsOne()
       throws UsernameNotFoundException {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
@@ -174,8 +125,7 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
     //   a non-Spring test was created.
 
     // Arrange
-    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration =
-        new BasicAuthWebSecurityConfiguration();
+    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
 
     SDCUser sdcUser = new SDCUser();
     sdcUser.setPassword("iloveyou");
@@ -189,12 +139,11 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
     applicationProperties.setUsers(users);
 
     // Act
-    InMemoryUserDetailsManager actualUserDetailsServiceResult =
-        basicAuthWebSecurityConfiguration.userDetailsService(applicationProperties);
+    InMemoryUserDetailsManager actualUserDetailsServiceResult = basicAuthWebSecurityConfiguration
+        .userDetailsService(applicationProperties);
 
     // Assert
-    UserDetails loadUserByUsernameResult =
-        actualUserDetailsServiceResult.loadUserByUsername("janedoe");
+    UserDetails loadUserByUsernameResult = actualUserDetailsServiceResult.loadUserByUsername("janedoe");
     Collection<? extends GrantedAuthority> authorities = loadUserByUsernameResult.getAuthorities();
     assertEquals(1, authorities.size());
     assertTrue(authorities instanceof Set);
