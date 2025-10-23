@@ -58,7 +58,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     // Arrange
     HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
     stringBigDecimalMap.put("42", new BigDecimal("2.3"));
-    stringBigDecimalMap.put("foo", new BigDecimal("2.3"));
+    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
 
@@ -71,16 +71,16 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(2, actualMargin.size());
-    BigDecimal getResult = actualMargin.get("foo");
+    BigDecimal getResult = actualMargin.get("42");
     assertEquals(new BigDecimal("0.0"), getResult);
-    assertSame(getResult, actualMargin.get("42"));
+    assertSame(getResult, actualMargin.get("Key"));
   }
 
   /**
    * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is {@link BigDecimal#BigDecimal(String)} with
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is {@link BigDecimal#BigDecimal(String)} with
    *       {@code 2.3}.
    *   <li>Then return size is one.
    * </ul>
@@ -90,16 +90,16 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() 'foo' is BigDecimal(String) with '2.3'; then return size is one")
+      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() 'Key' is BigDecimal(String) with '2.3'; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
   })
-  void testGetMargin_givenHashMapFooIsBigDecimalWith23_thenReturnSizeIsOne() {
+  void testGetMargin_givenHashMapKeyIsBigDecimalWith23_thenReturnSizeIsOne() {
     // Arrange
     HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
-    stringBigDecimalMap.put("foo", new BigDecimal("2.3"));
+    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
 
@@ -112,7 +112,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(1, actualMargin.size());
-    assertEquals(new BigDecimal("0.0"), actualMargin.get("foo"));
+    assertEquals(new BigDecimal("0.0"), actualMargin.get("Key"));
   }
 
   /**

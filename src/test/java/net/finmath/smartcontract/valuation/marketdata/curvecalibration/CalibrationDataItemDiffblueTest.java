@@ -3,8 +3,6 @@ package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
@@ -13,17 +11,8 @@ import net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrati
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class CalibrationDataItemDiffblueTest {
-  @InjectMocks private CalibrationDataItem calibrationDataItem;
-
-  @Mock private Spec spec;
-
   /**
    * Test getters and setters.
    *
@@ -141,14 +130,13 @@ class CalibrationDataItemDiffblueTest {
   @MethodsUnderTest({"String CalibrationDataItem.getCurveName()"})
   void testGetCurveName() {
     // Arrange
-    when(spec.getCurveName()).thenReturn("Curve Name");
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
 
-    // Act
-    String actualCurveName = calibrationDataItem.getCurveName();
-
-    // Assert
-    verify(spec).getCurveName();
-    assertEquals("Curve Name", actualCurveName);
+    // Act and Assert
+    assertEquals(
+        "Curve Name",
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay())
+            .getCurveName());
   }
 
   /**
@@ -163,14 +151,13 @@ class CalibrationDataItemDiffblueTest {
   @MethodsUnderTest({"String CalibrationDataItem.getProductName()"})
   void testGetProductName() {
     // Arrange
-    when(spec.getProductName()).thenReturn("Product Name");
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
 
-    // Act
-    String actualProductName = calibrationDataItem.getProductName();
-
-    // Assert
-    verify(spec).getProductName();
-    assertEquals("Product Name", actualProductName);
+    // Act and Assert
+    assertEquals(
+        "Product Name",
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay())
+            .getProductName());
   }
 
   /**
@@ -185,14 +172,13 @@ class CalibrationDataItemDiffblueTest {
   @MethodsUnderTest({"String CalibrationDataItem.getMaturity()"})
   void testGetMaturity() {
     // Arrange
-    when(spec.getMaturity()).thenReturn("Maturity");
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
 
-    // Act
-    String actualMaturity = calibrationDataItem.getMaturity();
-
-    // Assert
-    verify(spec).getMaturity();
-    assertEquals("Maturity", actualMaturity);
+    // Act and Assert
+    assertEquals(
+        "Maturity",
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay())
+            .getMaturity());
   }
 
   /**

@@ -23,18 +23,9 @@ import net.finmath.optimizer.SolverException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class CalibrationResultDiffblueTest {
-  @Mock private CalibratedCurves calibratedCurves;
-
-  @InjectMocks private CalibrationResult calibrationResult;
-
   /**
    * Test {@link CalibrationResult#CalibrationResult(CalibratedCurves, CalibrationSpec[])}.
    *
@@ -80,34 +71,6 @@ class CalibrationResultDiffblueTest {
    * Test {@link CalibrationResult#getCalibratedModel()}.
    *
    * <ul>
-   *   <li>Then return {@link AnalyticModelFromCurvesAndVols#AnalyticModelFromCurvesAndVols()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationResult#getCalibratedModel()}
-   */
-  @Test
-  @DisplayName("Test getCalibratedModel(); then return AnalyticModelFromCurvesAndVols()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
-  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols() {
-    // Arrange
-    AnalyticModelFromCurvesAndVols analyticModelFromCurvesAndVols =
-        new AnalyticModelFromCurvesAndVols();
-    when(calibratedCurves.getModel()).thenReturn(analyticModelFromCurvesAndVols);
-
-    // Act
-    AnalyticModel actualCalibratedModel = calibrationResult.getCalibratedModel();
-
-    // Assert
-    verify(calibratedCurves).getModel();
-    assertSame(analyticModelFromCurvesAndVols, actualCalibratedModel);
-  }
-
-  /**
-   * Test {@link CalibrationResult#getCalibratedModel()}.
-   *
-   * <ul>
    *   <li>Then return {@link AnalyticModelFromCurvesAndVols}.
    * </ul>
    *
@@ -118,7 +81,7 @@ class CalibrationResultDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
-  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols2()
+  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols()
       throws CloneNotSupportedException, SolverException {
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
@@ -142,6 +105,46 @@ class CalibrationResultDiffblueTest {
     assertNull(((AnalyticModelFromCurvesAndVols) actualCalibratedModel).getReferenceDate());
     assertTrue(actualCalibratedModel.getCurves().isEmpty());
     assertTrue(actualCalibratedModel.getVolatilitySurfaces().isEmpty());
+  }
+
+  /**
+   * Test {@link CalibrationResult#getCalibratedModel()}.
+   *
+   * <ul>
+   *   <li>Then return {@link AnalyticModelFromCurvesAndVols#AnalyticModelFromCurvesAndVols()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationResult#getCalibratedModel()}
+   */
+  @Test
+  @DisplayName("Test getCalibratedModel(); then return AnalyticModelFromCurvesAndVols()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"AnalyticModel CalibrationResult.getCalibratedModel()"})
+  void testGetCalibratedModel_thenReturnAnalyticModelFromCurvesAndVols2() {
+    // Arrange
+    CalibratedCurves c = mock(CalibratedCurves.class);
+    AnalyticModelFromCurvesAndVols analyticModelFromCurvesAndVols =
+        new AnalyticModelFromCurvesAndVols();
+    when(c.getModel()).thenReturn(analyticModelFromCurvesAndVols);
+    CalibrationSpec calibrationSpec =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
+
+    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
+
+    // Act
+    AnalyticModel actualCalibratedModel = calibrationResult.getCalibratedModel();
+
+    // Assert
+    verify(c).getModel();
+    assertSame(analyticModelFromCurvesAndVols, actualCalibratedModel);
   }
 
   /**

@@ -1,7 +1,6 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,41 +43,6 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then calls {@link CalibrationDataItem#getProductName()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); then calls getProductName()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenCallsGetProductName() {
-    // Arrange
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
-
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    curveDataPointSet.add(calibrationDataItem);
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset =
-        new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    verify(calibrationDataItem, atLeast(1)).getProductName();
-    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getCalibrationDataItems());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   *
-   * <ul>
    *   <li>Then return CalibrationDataItems is {@link HashSet#HashSet()}.
    * </ul>
    *
@@ -113,31 +77,24 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return CalibrationDataItems size is one.
+   *   <li>Then return CalibrationDataItems is {@link HashSet#HashSet()}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
   @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems size is one")
+      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is HashSet()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnCalibrationDataItemsSizeIsOne() {
+  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsHashSet2() {
     // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    Spec spec =
-        new Spec(
-            "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "Curve Name",
-            "Fixing",
-            "Maturity");
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    curveDataPointSet.add(calibrationDataItem);
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
@@ -145,8 +102,9 @@ class CalibrationDatasetDiffblueTest {
         new CalibrationDataset(curveDataPointSet, scenarioDate);
 
     // Assert
-    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
-    assertEquals(1, actualCalibrationDataset.getFixingDataItems().size());
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getCalibrationDataItems());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
@@ -182,6 +140,98 @@ class CalibrationDatasetDiffblueTest {
     assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getFixingDataItems());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return FixingDataItems size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName(
+      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsOne() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    Spec spec =
+        new Spec(
+            "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "Curve Name",
+            "Fixing",
+            "Maturity");
+    curveDataPointSet.add(
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    curveDataPointSet.add(
+        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(1, actualCalibrationDataset.getFixingDataItems().size());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return FixingDataItems size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName(
+      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsTwo() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
+
+    Spec spec = mock(Spec.class);
+    when(spec.getProductName()).thenReturn("Fixing");
+    CalibrationDataItem calibrationDataItem3 =
+        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem3);
+    curveDataPointSet.add(calibrationDataItem2);
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(calibrationDataItem2).getDate();
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(spec, atLeast(1)).getProductName();
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(2, actualCalibrationDataset.getFixingDataItems().size());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 
@@ -306,32 +356,6 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getScaled(double)}.
    *
    * <ul>
-   *   <li>Given {@link Set}.
-   *   <li>Then return Date is {@code null}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
-   */
-  @Test
-  @DisplayName("Test getScaled(double); given Set; then return Date is 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
-  void testGetScaled_givenSet_thenReturnDateIsNull() {
-    // Arrange and Act
-    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
-
-    // Assert
-    assertNull(actualScaled.getDate());
-    assertTrue(actualScaled.getCalibrationDataItems().isEmpty());
-    assertTrue(actualScaled.getDataPoints().isEmpty());
-    assertTrue(actualScaled.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getScaled(double)}.
-   *
-   * <ul>
    *   <li>Given {@link Spec#Spec(String, String, String, String)} with {@code Key} and {@code Curve
    *       Name} and {@code Product Name} and {@code Maturity}.
    * </ul>
@@ -373,6 +397,40 @@ class CalibrationDatasetDiffblueTest {
     assertEquals(1, calibrationDataItems.size());
     assertTrue(actualScaled.getFixingDataItems().isEmpty());
     assertEquals(calibrationDataItems, actualScaled.getDataPoints());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getScaled(double)}.
+   *
+   * <ul>
+   *   <li>Then return DataPoints Empty.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  @DisplayName("Test getScaled(double); then return DataPoints Empty")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
+  void testGetScaled_thenReturnDataPointsEmpty() {
+    // Arrange
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(new HashSet<>(), ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
+
+    // Assert
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertTrue(actualScaled.getCalibrationDataItems().isEmpty());
+    assertTrue(actualScaled.getDataPoints().isEmpty());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
     assertSame(ofResult, toLocalDateResult);
   }
 
@@ -481,7 +539,6 @@ class CalibrationDatasetDiffblueTest {
         calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
 
     // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
     assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
@@ -517,7 +574,6 @@ class CalibrationDatasetDiffblueTest {
         calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
 
     // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
     assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
@@ -547,7 +603,6 @@ class CalibrationDatasetDiffblueTest {
 
     // Assert
     verify(calibrationDataItem).getProductName();
-    assertNull(actualClonedFixingsAdded.getDate());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
     assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
@@ -583,7 +638,6 @@ class CalibrationDatasetDiffblueTest {
 
     // Assert
     verify(calibrationDataItem, atLeast(1)).getProductName();
-    assertNull(actualClonedFixingsAdded.getDate());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
     assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
@@ -617,7 +671,6 @@ class CalibrationDatasetDiffblueTest {
         calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
 
     // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
     assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
@@ -627,51 +680,35 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
    *
    * <ul>
-   *   <li>When {@link HashSet#HashSet()}.
-   *   <li>Then return DataPoints Empty.
+   *   <li>Then return Date toLocalTime toString is {@code 00:00}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
    */
   @Test
-  @DisplayName("Test getClonedFixingsAdded(Set); when HashSet(); then return DataPoints Empty")
+  @DisplayName("Test getClonedFixingsAdded(Set); then return Date toLocalTime toString is '00:00'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded_whenHashSet_thenReturnDataPointsEmpty() {
-    // Arrange and Act
+  void testGetClonedFixingsAdded_thenReturnDateToLocalTimeToStringIs0000() {
+    // Arrange
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(new HashSet<>(), ofResult.atStartOfDay());
+
+    // Act
     CalibrationDataset actualClonedFixingsAdded =
         calibrationDataset.getClonedFixingsAdded(new HashSet<>());
 
     // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
     assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#toMarketDataList()}.
-   *
-   * <ul>
-   *   <li>Given {@link Set}.
-   *   <li>Then return Size is zero.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
-   */
-  @Test
-  @DisplayName("Test toMarketDataList(); given Set; then return Size is zero")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
-  void testToMarketDataList_givenSet_thenReturnSizeIsZero() {
-    // Arrange and Act
-    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
-
-    // Assert
-    assertEquals(0, actualToMarketDataListResult.getSize());
-    assertTrue(actualToMarketDataListResult.getPoints().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
   }
 
   /**
@@ -762,6 +799,33 @@ class CalibrationDatasetDiffblueTest {
     assertEquals(1, actualToMarketDataListResult.getSize());
     assertEquals(10.0d, getResult.getValue().doubleValue());
     assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#toMarketDataList()}.
+   *
+   * <ul>
+   *   <li>Then return Size is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  @DisplayName("Test toMarketDataList(); then return Size is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
+  void testToMarketDataList_thenReturnSizeIsZero() {
+    // Arrange
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act
+    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
+
+    // Assert
+    assertEquals(0, actualToMarketDataListResult.getSize());
+    assertTrue(actualToMarketDataListResult.getPoints().isEmpty());
   }
 
   /**
@@ -886,6 +950,9 @@ class CalibrationDatasetDiffblueTest {
   })
   void testGetDataAsCalibrationDataPointStream() {
     // Arrange
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
+
     CalibrationParser parser = mock(CalibrationParser.class);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
@@ -906,19 +973,22 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getDataPoints()}.
    *
    * <ul>
-   *   <li>Given {@link Set}.
    *   <li>Then return Empty.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#getDataPoints()}
    */
   @Test
-  @DisplayName("Test getDataPoints(); given Set; then return Empty")
+  @DisplayName("Test getDataPoints(); then return Empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Set CalibrationDataset.getDataPoints()"})
-  void testGetDataPoints_givenSet_thenReturnEmpty() {
-    // Arrange, Act and Assert
+  void testGetDataPoints_thenReturnEmpty() {
+    // Arrange
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act and Assert
     assertTrue(calibrationDataset.getDataPoints().isEmpty());
   }
 
