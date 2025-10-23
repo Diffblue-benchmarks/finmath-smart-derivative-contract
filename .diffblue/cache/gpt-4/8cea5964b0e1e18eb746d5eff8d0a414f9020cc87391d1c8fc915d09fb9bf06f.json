@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn70ArDvy0ZnBtjRSVaXdYWngnNk","object":"chat.completion","created":1761216334,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"http://www.fpml.org/coding-scheme/credit-event\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":14,"total_tokens":447}}

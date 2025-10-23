@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn4RtbhRlTGUSit0RPJ6nH9Q2UJw","object":"chat.completion","created":1761216175,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Test Spring Application Context\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":220,"completion_tokens":6,"total_tokens":226}}

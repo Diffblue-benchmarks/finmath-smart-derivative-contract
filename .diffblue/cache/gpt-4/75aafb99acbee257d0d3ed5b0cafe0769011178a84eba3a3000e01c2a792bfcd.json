@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn5Mpaqii0aqoKC7fLGvB2kASNHO","object":"chat.completion","created":1761216232,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"{'name':'John', 'age':30, 'city':'New York'}\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":219,"completion_tokens":18,"total_tokens":237}}

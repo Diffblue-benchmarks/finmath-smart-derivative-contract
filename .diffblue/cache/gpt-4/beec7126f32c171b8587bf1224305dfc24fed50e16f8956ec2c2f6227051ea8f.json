@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmsVXVWjTqvkOSfeiJCDHNLU8djF","object":"chat.completion","created":1761215435,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Financial Data Analysis\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":295,"completion_tokens":5,"total_tokens":300}}

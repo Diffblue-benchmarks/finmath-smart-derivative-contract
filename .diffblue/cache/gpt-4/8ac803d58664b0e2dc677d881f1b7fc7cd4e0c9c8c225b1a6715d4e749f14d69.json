@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn54N439DstZ9ismAp1XggOQizTV","object":"chat.completion","created":1761216214,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"temperatureInCelsius\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":220,"completion_tokens":6,"total_tokens":226}}

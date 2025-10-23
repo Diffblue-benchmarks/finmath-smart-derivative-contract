@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmxLsxCHoPqJP03UVZ5aFv9jq38K","object":"chat.completion","created":1761215735,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"FX_Swap_Contract_2022_03_15\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":232,"completion_tokens":14,"total_tokens":246}}

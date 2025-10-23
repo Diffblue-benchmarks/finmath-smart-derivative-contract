@@ -66,7 +66,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("\"FpML-5-10\"");
+    value3.setFpmlVersion("\"FpML-5.10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -83,7 +83,7 @@ class MarketDataCheckDiffblueTest {
     sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
     sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
+    sdc.setReceiverPartyID("\"RCP123456789\"");
     sdc.setSettlement(value2);
     sdc.setSettlementCurrency("\"USD\"");
     sdc.setTradeType("\"SDCNoPrefunding\"");
@@ -142,7 +142,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("\"FpML-5-10\"");
+    value3.setFpmlVersion("\"FpML-5.10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -159,7 +159,7 @@ class MarketDataCheckDiffblueTest {
     sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
     sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
+    sdc.setReceiverPartyID("\"RCP123456789\"");
     sdc.setSettlement(value2);
     sdc.setSettlementCurrency("\"USD\"");
     sdc.setTradeType("\"SDCNoPrefunding\"");
@@ -211,7 +211,7 @@ class MarketDataCheckDiffblueTest {
     DataDocument value3 = new DataDocument();
     value3.setActualBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
     value3.setExpectedBuild(PlainSwapEditorHandler.DEFAULT_FIXED_PERIOD_MULTIPLIER);
-    value3.setFpmlVersion("\"FpML-5-10\"");
+    value3.setFpmlVersion("\"FpML-5.10\"");
     value3.setOnBehalfOf(new OnBehalfOf());
     value3.setOriginatingEvent(new OriginatingEvent());
 
@@ -228,7 +228,7 @@ class MarketDataCheckDiffblueTest {
     sdc.setDltAddress("\"0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE\"");
     sdc.setDltTradeId("\"DLT1234567890TradeID\"");
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("\"PartyID_1234567890\"");
+    sdc.setReceiverPartyID("\"RCP123456789\"");
     sdc.setSettlement(value2);
     sdc.setSettlementCurrency("\"USD\"");
     sdc.setTradeType("\"SDCNoPrefunding\"");

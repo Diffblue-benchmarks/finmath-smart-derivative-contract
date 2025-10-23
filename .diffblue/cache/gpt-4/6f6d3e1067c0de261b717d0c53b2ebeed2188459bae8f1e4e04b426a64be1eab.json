@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmwCOOwA0ld293c1Aoo2csVR9J5r","object":"chat.completion","created":1761215664,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"partyID1234MarginAccount\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":276,"completion_tokens":8,"total_tokens":284}}

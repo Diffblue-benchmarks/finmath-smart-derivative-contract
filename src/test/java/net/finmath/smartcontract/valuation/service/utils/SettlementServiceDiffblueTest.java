@@ -48,8 +48,8 @@ class SettlementServiceDiffblueTest {
         .thenThrow(
             new SDCException(
                 ExceptionId.SDC_AUTH_ERROR,
-                "\"Invalid smart contract detected: Contract ID #12345 does not comply with the standard financial model."
-                    + " Please review and correct the contract details.\""));
+                "\"Invalid smart contract execution: Contract ID not found in the blockchain ledger. Please verify the"
+                    + " contract details.\""));
 
     // Act and Assert
     assertThrows(
@@ -82,8 +82,8 @@ class SettlementServiceDiffblueTest {
         .thenThrow(
             new SDCException(
                 ExceptionId.SDC_AUTH_ERROR,
-                "\"Invalid smart contract detected: Contract ID #12345 does not comply with the standard financial model."
-                    + " Please review and correct the contract details.\""));
+                "\"Invalid smart contract execution: Contract ID not found in the blockchain ledger. Please verify the"
+                    + " contract details.\""));
 
     // Act and Assert
     assertThrows(

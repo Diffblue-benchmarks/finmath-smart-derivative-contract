@@ -40,14 +40,14 @@ class SDCUserDiffblueTest {
     // Arrange and Act
     SDCUser actualSdcUser = new SDCUser();
     actualSdcUser.setPassword("\"SecurePassword123!\"");
-    actualSdcUser.setRole("\"Risk Analyst\"");
+    actualSdcUser.setRole("\"FinancialAnalyst\"");
     actualSdcUser.setUsername("\"JohnDoe_SmartContractExpert\"");
     String actualPassword = actualSdcUser.getPassword();
     String actualRole = actualSdcUser.getRole();
 
     // Assert
+    assertEquals("\"FinancialAnalyst\"", actualRole);
     assertEquals("\"JohnDoe_SmartContractExpert\"", actualSdcUser.getUsername());
-    assertEquals("\"Risk Analyst\"", actualRole);
     assertEquals("\"SecurePassword123!\"", actualPassword);
   }
 }

@@ -67,7 +67,7 @@ class MarketDataPointDiffblueTest {
    * Test getters and setters.
    *
    * <ul>
-   *   <li>When {@code "EURUSD_FX_SPOT_RATE"}.
+   *   <li>When {@code "EURUSD_ExchangeRate"}.
    * </ul>
    *
    * <p>Methods under test:
@@ -84,7 +84,7 @@ class MarketDataPointDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters; when '\"EURUSD_FX_SPOT_RATE\"'")
+  @DisplayName("Test getters and setters; when '\"EURUSD_ExchangeRate\"'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
@@ -98,11 +98,11 @@ class MarketDataPointDiffblueTest {
     "void MarketDataPoint.setValue(Double)",
     "String MarketDataPoint.toString()"
   })
-  void testGettersAndSetters_whenEurusdFxSpotRate() {
+  void testGettersAndSetters_whenEurusdExchangeRate() {
     // Arrange and Act
     MarketDataPoint actualMarketDataPoint =
         new MarketDataPoint(
-            "\"EURUSD_FX_SPOT_RATE\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+            "\"EURUSD_ExchangeRate\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
     actualMarketDataPoint.setId("\"MDP_2022Q1_EURUSD_FXRate\"");
     LocalDateTime timeStamp = LocalDate.of(1970, 1, 1).atStartOfDay();
     actualMarketDataPoint.setTimeStamp(timeStamp);
@@ -189,7 +189,7 @@ class MarketDataPointDiffblueTest {
     // Arrange
     MarketDataPoint marketDataPoint =
         new MarketDataPoint(
-            "\"EURUSD_FX_SPOT_RATE\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
+            "\"EURUSD_ExchangeRate\"", 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay());
 
     // Act and Assert
     assertNotEquals(marketDataPoint, new MarketDataPoint());

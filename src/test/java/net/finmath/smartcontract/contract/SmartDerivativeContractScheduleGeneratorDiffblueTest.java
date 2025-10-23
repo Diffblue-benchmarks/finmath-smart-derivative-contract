@@ -224,7 +224,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Arrange and Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "\"USFederalReserve\"",
+            "\"New York Stock Exchange\"",
             LocalDate.of(1970, 1, 1),
             LocalDate.of(1970, 1, 1),
             LocalTime.MIDNIGHT,
@@ -267,7 +267,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "\"USFederalReserve\"",
+            "\"New York Stock Exchange\"",
             LocalDate.of(1970, 1, 1),
             LocalDate.ofEpochDay(1L),
             LocalTime.MIDNIGHT,

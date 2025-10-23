@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn6oN5x4GJkymfIdogmKc1odYsHB","object":"chat.completion","created":1761216322,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"DLT1234567890TradeID\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":2201,"completion_tokens":10,"total_tokens":2211}}

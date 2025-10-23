@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn5s8erxhd7vrZOi4KhyEQL4cPMh","object":"chat.completion","created":1761216264,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"wss://api.finmath.net:8080\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":261,"completion_tokens":11,"total_tokens":272}}

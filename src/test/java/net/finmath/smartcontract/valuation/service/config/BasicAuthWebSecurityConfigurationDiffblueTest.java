@@ -147,7 +147,7 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
 
     SDCUser sdcUser = new SDCUser();
     sdcUser.setPassword("\"SecurePassword123!\"");
-    sdcUser.setRole("\"Risk Analyst\"");
+    sdcUser.setRole("\"FinancialAnalyst\"");
     sdcUser.setUsername("\"JohnDoe_SmartContractExpert\"");
 
     SDCUser sdcUser2 = new SDCUser();
@@ -198,7 +198,7 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
 
     SDCUser sdcUser = new SDCUser();
     sdcUser.setPassword("\"SecurePassword123!\"");
-    sdcUser.setRole("\"Risk Analyst\"");
+    sdcUser.setRole("\"FinancialAnalyst\"");
     sdcUser.setUsername("\"JohnDoe_SmartContractExpert\"");
 
     ArrayList<SDCUser> users = new ArrayList<>();

@@ -95,7 +95,7 @@ class SettlementDiffblueTest {
         LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTimeNext(settlementTimeNext);
     actualSettlement.setSettlementType(SettlementType.INITIAL);
-    actualSettlement.setTradeId("\"TRADE12345XYZ\"");
+    actualSettlement.setTradeId("\"FXD-USD-EUR-2023-05-15\"");
     String actualCurrency = actualSettlement.getCurrency();
     List<BigDecimal> actualMarginLimits = actualSettlement.getMarginLimits();
     BigDecimal actualMarginValue = actualSettlement.getMarginValue();
@@ -109,7 +109,7 @@ class SettlementDiffblueTest {
     SettlementType actualSettlementType = actualSettlement.getSettlementType();
 
     // Assert
-    assertEquals("\"TRADE12345XYZ\"", actualSettlement.getTradeId());
+    assertEquals("\"FXD-USD-EUR-2023-05-15\"", actualSettlement.getTradeId());
     assertEquals("\"USD\"", actualCurrency);
     assertNull(actualMarginValue);
     assertNull(actualSettlementNPV);

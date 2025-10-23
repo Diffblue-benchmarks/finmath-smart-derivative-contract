@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn625J1JgDTkKuApWrlPmcGR3XIP","object":"chat.completion","created":1761216274,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EUR/USD,GBP/USD,USD/JPY,USD/CHF,USD/CAD,AUD/USD,NZD/USD\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":303,"completion_tokens":32,"total_tokens":335}}

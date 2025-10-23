@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn7lwwNeYK477bh3dEVsc552Z3tj","object":"chat.completion","created":1761216381,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EUR_3M_EONIA_OIS\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":283,"completion_tokens":11,"total_tokens":294}}

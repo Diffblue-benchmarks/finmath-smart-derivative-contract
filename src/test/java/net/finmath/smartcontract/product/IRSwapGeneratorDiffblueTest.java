@@ -41,7 +41,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -193,7 +193,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "\"EUR-OIS-ForwardCurve\"", "");
+            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "\"EUR-OIS-Forward-Curve\"", "");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -234,7 +234,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             false,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -243,7 +243,7 @@ class IRSwapGeneratorDiffblueTest {
     AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
     assertTrue(legReceiver instanceof SwapLeg);
     assertEquals("", ((SwapLeg) legPayer).getForwardCurveName());
-    assertEquals("\"EUR-OIS-ForwardCurve\"", ((SwapLeg) legReceiver).getForwardCurveName());
+    assertEquals("\"EUR-OIS-Forward-Curve\"", ((SwapLeg) legReceiver).getForwardCurveName());
     assertEquals(0.0d, ((SwapLeg) legReceiver).getSpread());
     assertEquals(10.0d, ((SwapLeg) legPayer).getSpread());
     assertArrayEquals(new double[] {0.0d}, ((SwapLeg) legReceiver).getSpreads(), 0.0);
@@ -278,7 +278,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -448,7 +448,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -556,7 +556,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -602,7 +602,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert
@@ -648,7 +648,7 @@ class IRSwapGeneratorDiffblueTest {
             10.0d,
             10.0d,
             true,
-            "\"EUR-OIS-ForwardCurve\"",
+            "\"EUR-OIS-Forward-Curve\"",
             "\"EUR-OIS-Discount\"");
 
     // Assert

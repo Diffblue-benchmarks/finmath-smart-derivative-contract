@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTnLk0Z93IARbgRPnhcBuGWbRmV9d","object":"chat.completion","created":1761217248,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"/usr/local/share/fpml/fpml-5-10-xml-2003-12-09.xsd\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":251,"completion_tokens":26,"total_tokens":277}}

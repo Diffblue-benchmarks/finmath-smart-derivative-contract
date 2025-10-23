@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn6bUVMM9qfxUMB1OC4UYgNRRQD1","object":"chat.completion","created":1761216309,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"BTCUSD\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":306,"completion_tokens":4,"total_tokens":310}}

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmzdONwtG41CpqcCjccXtTvJFa0P","object":"chat.completion","created":1761215877,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"MDP_2022Q1_EURUSD_FXRate\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":256,"completion_tokens":15,"total_tokens":271}}

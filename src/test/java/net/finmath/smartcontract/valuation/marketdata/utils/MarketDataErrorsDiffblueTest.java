@@ -44,8 +44,8 @@ class MarketDataErrorsDiffblueTest {
     // Arrange and Act
     MarketDataErrors actualMarketDataErrors = new MarketDataErrors(true);
     actualMarketDataErrors.setErrorMessage(
-        "\"Invalid market data received. Expected format: JSON with keys 'asset', 'price', 'timestamp'. Please"
-            + " check data source for consistency.\"");
+        "\"Invalid market data received. The interest rate for the 5-year bond is negative, which is not feasible"
+            + " in the current economic environment.\"");
     ArrayList<String> missingDataPoints = new ArrayList<>();
     actualMarketDataErrors.setMissingDataPoints(missingDataPoints);
     String actualToStringResult = actualMarketDataErrors.toString();
@@ -56,12 +56,12 @@ class MarketDataErrorsDiffblueTest {
     // Assert
     assertEquals(
         "MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='\"Invalid market data received."
-            + " Expected format: JSON with keys 'asset', 'price', 'timestamp'. Please check data source for"
-            + " consistency.\"'}",
+            + " The interest rate for the 5-year bond is negative, which is not feasible in the current economic"
+            + " environment.\"'}",
         actualToStringResult);
     assertEquals(
-        "\"Invalid market data received. Expected format: JSON with keys 'asset', 'price', 'timestamp'. Please"
-            + " check data source for consistency.\"",
+        "\"Invalid market data received. The interest rate for the 5-year bond is negative, which is not feasible"
+            + " in the current economic environment.\"",
         actualErrorMessage);
     assertTrue(actualMissingDataPoints.isEmpty());
     assertTrue(actualHasErrorsResult);

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmyAqbwoF39n6OSUA6F44BCOuJRk","object":"chat.completion","created":1761215786,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"LoginToLogoutTransition\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":294,"completion_tokens":6,"total_tokens":300}}

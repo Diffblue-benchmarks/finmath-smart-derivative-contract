@@ -72,8 +72,8 @@ class RefinitivConfigDiffblueTest {
 
     // Act
     refinitivConfig.setAuthUrl("\"https://api.refinitiv.com/auth/v1/token\"");
-    refinitivConfig.setClientId("\"refinitiv-client-1234567890\"");
-    refinitivConfig.setHostName("\"refinitiv-data-platform.eikon.com\"");
+    refinitivConfig.setClientId("\"refinitiv_client_123456789\"");
+    refinitivConfig.setHostName("\"api.refinitiv.com\"");
     refinitivConfig.setPassword("\"RefinitivSecurePassword123!\"");
     refinitivConfig.setPort(8080);
     refinitivConfig.setProxyHost("\"proxy.finmath.net\"");
@@ -97,11 +97,11 @@ class RefinitivConfigDiffblueTest {
     assertEquals("\"JohnDoe_RefinitivUser\"", refinitivConfig.getUser());
     assertEquals("\"RefinitivSecurePassword123!\"", actualPassword);
     assertEquals("\"SecureProxyPassword123!\"", actualProxyPassword);
+    assertEquals("\"api.refinitiv.com\"", actualHostName);
     assertEquals("\"https://api.refinitiv.com/auth/v1/token\"", actualAuthUrl);
     assertEquals("\"proxy.finmath.net\"", actualProxyHost);
     assertEquals("\"proxyUser123\"", actualProxyUser);
-    assertEquals("\"refinitiv-client-1234567890\"", actualClientId);
-    assertEquals("\"refinitiv-data-platform.eikon.com\"", actualHostName);
+    assertEquals("\"refinitiv_client_123456789\"", actualClientId);
     assertEquals("\"true\"", actualUseProxy);
     assertEquals(8080, actualPort);
     assertEquals(8080, actualProxyPort);

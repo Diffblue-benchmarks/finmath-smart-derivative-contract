@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn6cRWuWUS3qj1b4yFUm9yLeKTbJ","object":"chat.completion","created":1761216310,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"NASDAQ:GOOGL\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":306,"completion_tokens":7,"total_tokens":313}}

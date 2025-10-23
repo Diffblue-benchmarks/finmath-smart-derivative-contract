@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -84,6 +85,42 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     marketDataGeneratorWebsocket.onConnected(websocket, new HashMap<>());
 
     // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"employeeName\\\"\"},\"NameType\":\"AuthnToken\"}}");
+    verify(authJson).getString("access_token");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
+   *
+   * <ul>
+   *   <li>Given {@link RuntimeException#RuntimeException()}.
+   *   <li>Then throw {@link RuntimeException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}
+   */
+  @Test
+  @DisplayName(
+      "Test onConnected(WebSocket, Map); given RuntimeException(); then throw RuntimeException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
+  void testOnConnected_givenRuntimeException_thenThrowRuntimeException() throws Exception {
+    // Arrange
+    JSONObject authJson = mock(JSONObject.class);
+    when(authJson.getString(Mockito.<String>any())).thenReturn("\"employeeName\"");
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenThrow(new RuntimeException());
+
+    // Act and Assert
+    assertThrows(
+        RuntimeException.class,
+        () -> marketDataGeneratorWebsocket.onConnected(websocket, new HashMap<>()));
     verify(websocket)
         .sendText(
             "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"employeeName\\\"\"},\"NameType\":\"AuthnToken\"}}");
@@ -185,38 +222,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
         RuntimeException.class,
         () ->
             marketDataGeneratorWebsocket.writeDataset(
-                "\"C:/Users/testUser/Documents/MarketDataImport\"", new MarketDataList(), true));
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(
-        websocket,
-        "\"{\\\"ticker\\\":\\\"AAPL\\\",\\\"price\\\":150.25,\\\"volume\\\":10000,\\\"timestamp\\\":\\\"2022-01-01T10:00:00Z\\\"}\"");
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+                "\"C:/Users/test/Desktop/MarketData\"", new MarketDataList(), true));
   }
 
   /**
@@ -286,6 +292,45 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Act
     marketDataGeneratorWebsocket.onTextMessage(
         websocket,
+        "\"{\\\"marketData\\\":{\\\"asset\\\":\\\"AAPL\\\",\\\"price\\\":150.25,\\\"volume\\\":10000,\\\"timestamp\\\":\\\"2022-01-01T00"
+            + ":00:00Z\\\"}}\"");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
+   * websocket}, {@code message}.
+   *
+   * <ul>
+   *   <li>Then calls {@link JSONObject#put(String, long)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; then calls put(String, long)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_thenCallsPut() throws Exception {
+    // Arrange
+    JSONObject authJson = mock(JSONObject.class);
+    when(authJson.put(Mockito.<String>any(), anyLong())).thenReturn(new JSONObject());
+    authJson.put("message: {}", 0L);
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.onTextMessage(
+        websocket,
         "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
             + "\"},\"NameType\":\"AuthnToken\"}}");
 
@@ -293,6 +338,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    verify(authJson).put("message: {}", 0L);
   }
 
   /**

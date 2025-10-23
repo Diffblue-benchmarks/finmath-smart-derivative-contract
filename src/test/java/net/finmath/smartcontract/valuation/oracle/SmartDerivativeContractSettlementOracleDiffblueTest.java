@@ -58,7 +58,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     // Arrange
     HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
     stringBigDecimalMap.putAll(new HashMap<>());
-    stringBigDecimalMap.put("\"testKey\"", BigDecimal.valueOf(42L));
+    stringBigDecimalMap.put("\"TestKeyForHashMapPutMethod\"", BigDecimal.valueOf(42L));
     when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
         .thenReturn(stringBigDecimalMap);
 
@@ -71,7 +71,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(1, actualMargin.size());
-    assertEquals(new BigDecimal("0"), actualMargin.get("\"testKey\""));
+    assertEquals(new BigDecimal("0"), actualMargin.get("\"TestKeyForHashMapPutMethod\""));
   }
 
   /**
@@ -130,7 +130,7 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     // Arrange
     HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
     stringBigDecimalMap.putIfAbsent("\"employeeID\"", BigDecimal.valueOf(42L));
-    stringBigDecimalMap.put("\"testKey\"", BigDecimal.valueOf(42L));
+    stringBigDecimalMap.put("\"TestKeyForHashMapPutMethod\"", BigDecimal.valueOf(42L));
 
     ValuationOracle derivativeValuationOracle = mock(ValuationOracle.class);
     when(derivativeValuationOracle.getValues(
@@ -148,6 +148,6 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertEquals(2, actualMargin.size());
     assertEquals(new BigDecimal("0"), actualMargin.get("\"employeeID\""));
-    assertSame(BigDecimal.ZERO, actualMargin.get("\"testKey\""));
+    assertSame(BigDecimal.ZERO, actualMargin.get("\"TestKeyForHashMapPutMethod\""));
   }
 }

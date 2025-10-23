@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn85ZdsdTwWSo1gn7whz4kya3tjG","object":"chat.completion","created":1761216401,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"EURIBOR6M\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":285,"completion_tokens":7,"total_tokens":292}}

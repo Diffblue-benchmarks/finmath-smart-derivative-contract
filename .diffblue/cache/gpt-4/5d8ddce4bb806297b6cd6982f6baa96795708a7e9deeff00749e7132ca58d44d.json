@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTmsa3lIAxn4FJazwZGX3scz4cPY3","object":"chat.completion","created":1761215440,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"Interest Rate Swap Valuation - Comparison of Different Pricing Models\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":237,"completion_tokens":13,"total_tokens":250}}

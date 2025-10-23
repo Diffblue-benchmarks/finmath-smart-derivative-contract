@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTn5nexzJ6iGA6jHSVopwbBfbO1EV","object":"chat.completion","created":1761216259,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"https://api.refinitiv.com/auth/oauth2/beta1/token\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":357,"completion_tokens":15,"total_tokens":372}}

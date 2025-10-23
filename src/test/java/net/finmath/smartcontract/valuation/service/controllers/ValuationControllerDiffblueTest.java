@@ -40,7 +40,7 @@ class ValuationControllerDiffblueTest {
    * Test {@link ValuationController#margin(MarginRequest)}.
    *
    * <ul>
-   *   <li>Given {@code "2022-12-31T23:59:59Z"}.
+   *   <li>Given {@code "2022-12-31T23:59:59.999Z"}.
    *   <li>Then calls {@link MarginRequest#getMarketDataEnd()}.
    * </ul>
    *
@@ -48,19 +48,19 @@ class ValuationControllerDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test margin(MarginRequest); given '\"2022-12-31T23:59:59Z\"'; then calls getMarketDataEnd()")
+      "Test margin(MarginRequest); given '\"2022-12-31T23:59:59.999Z\"'; then calls getMarketDataEnd()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_given20221231t235959z_thenCallsGetMarketDataEnd() {
+  void testMargin_given20221231t235959999z_thenCallsGetMarketDataEnd() {
     // Arrange
     MarginRequest marginRequest = mock(MarginRequest.class);
-    when(marginRequest.getMarketDataEnd()).thenReturn("\"2022-12-31T23:59:59Z\"");
+    when(marginRequest.getMarketDataEnd()).thenReturn("\"2022-12-31T23:59:59.999Z\"");
     when(marginRequest.getMarketDataStart()).thenReturn("\"2022-01-01T00:00:00Z\"");
     when(marginRequest.getTradeData())
         .thenReturn(
-            "\"tradeId:12345,tradeDate:2022-01-01,tradeType:BUY,tradeQuantity:100,tradePrice:50,tradeCounterparty:XYZ"
-                + " Corp,tradeAsset:Apple Inc.,tradeCurrency:USD\"");
+            "\"tradeId:12345,tradeDate:2022-01-01,tradeType:BUY,tradeQuantity:100,tradePrice:50,tradeAsset:GOOG"
+                + ",tradeCounterparty:XYZ Corp,tradeCurrency:USD,tradeSettlementDate:2022-01-03\"");
     when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
     marginRequest.marketDataStart("\"2022-01-01T00:00:00Z\"");
 
@@ -92,8 +92,8 @@ class ValuationControllerDiffblueTest {
     // Arrange
     MarginRequest marginRequest = new MarginRequest();
     marginRequest.tradeData(
-        "\"{\\\"tradeId\\\":\\\"T12345\\\",\\\"tradeType\\\":\\\"Futures\\\",\\\"tradeDate\\\":\\\"2022-01-01\\\",\\\"quantity\\\":100,\\"
-            + "\"price\\\":1500,\\\"marginRate\\\":0.1,\\\"currency\\\":\\\"USD\\\"}\"");
+        "\"tradeId:12345,tradeType:Future,tradeVolume:1000,tradePrice:50.25,tradeDate:2022-01-01,counterparty:ABC"
+            + " Corp,marginType:Initial,marginAmount:50000\"");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
@@ -147,20 +147,24 @@ class ValuationControllerDiffblueTest {
    * Test {@link ValuationController#value(ValueRequest)}.
    *
    * <ul>
-   *   <li>Given {@code "BUY,100,GOOG,2025-10-21,1500.00,USD"}.
+   *   <li>Given a string.
+   *   <li>When {@link ValueRequest} (default constructor) tradeData a string.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
-  @DisplayName("Test value(ValueRequest); given '\"BUY,100,GOOG,2025-10-21,1500.00,USD\"'")
+  @DisplayName(
+      "Test value(ValueRequest); given a string; when ValueRequest (default constructor) tradeData a string")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
-  void testValue_givenBuy100Goog20251021150000Usd() {
+  void testValue_givenAString_whenValueRequestTradeDataAString() {
     // Arrange
     ValueRequest valueRequest = new ValueRequest();
-    valueRequest.tradeData("\"BUY,100,GOOG,2025-10-21,1500.00,USD\"");
+    valueRequest.tradeData(
+        "\"{\\\"tradeId\\\":\\\"12345\\\",\\\"tradeType\\\":\\\"Futures\\\",\\\"tradeDate\\\":\\\"2022-01-01\\\",\\\"maturityDate\\\":\\\"2023"
+            + "-01-01\\\",\\\"notional\\\":100000,\\\"currency\\\":\\\"USD\\\",\\\"interestRate\\\":0.05}\"");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
@@ -269,8 +273,8 @@ class ValuationControllerDiffblueTest {
         .thenThrow(
             new SDCException(
                 ExceptionId.SDC_AUTH_ERROR,
-                "\"Invalid smart contract detected: Contract ID #12345 does not comply with the standard financial model."
-                    + " Please review and correct the contract details.\""));
+                "\"Invalid smart contract execution: Contract ID not found in the blockchain ledger. Please verify the"
+                    + " contract details.\""));
 
     MultipartFile tradeData = mock(MultipartFile.class);
     when(tradeData.getInputStream()).thenReturn(dataInputStream);

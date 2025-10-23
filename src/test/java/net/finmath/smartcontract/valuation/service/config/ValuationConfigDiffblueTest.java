@@ -59,8 +59,7 @@ class ValuationConfigDiffblueTest {
     ValuationConfig valuationConfig = new ValuationConfig();
 
     // Act
-    valuationConfig.setFpmlSchemaPath(
-        "\"/usr/local/finmath/fpml/schema/financial-product-markup-language-v5-10.xsd\"");
+    valuationConfig.setFpmlSchemaPath("\"/usr/local/share/fpml/fpml-5-10-xml-2003-12-09.xsd\"");
     valuationConfig.setInternalMarketDataProvider("\"BloombergMarketDataProvider\"");
     valuationConfig.setLiveMarketData(true);
     valuationConfig.setLiveMarketDataProvider("\"BloombergMarketDataProvider\"");
@@ -78,9 +77,7 @@ class ValuationConfigDiffblueTest {
     boolean actualIsLiveMarketDataResult = valuationConfig.isLiveMarketData();
 
     // Assert
-    assertEquals(
-        "\"/usr/local/finmath/fpml/schema/financial-product-markup-language-v5-10.xsd\"",
-        actualFpmlSchemaPath);
+    assertEquals("\"/usr/local/share/fpml/fpml-5-10-xml-2003-12-09.xsd\"", actualFpmlSchemaPath);
     assertEquals("\"BloombergMarketDataProvider\"", actualInternalMarketDataProvider);
     assertEquals("\"BloombergMarketDataProvider\"", actualLiveMarketDataProvider);
     assertEquals("\"EquityOptionPhysicalDelivery\"", actualProductFixingType);

@@ -1,0 +1,1 @@
+{"id":"chatcmpl-CTnKrkHkDUiS1i7L2I1bS2cd66NhJ","object":"chat.completion","created":1761217193,"model":"gpt-4-0613","choices":[{"message":{"role":"assistant","content":"\"SELECT username, password, enabled FROM users WHERE username = ?\""},"index":0,"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":234,"completion_tokens":14,"total_tokens":248}}
