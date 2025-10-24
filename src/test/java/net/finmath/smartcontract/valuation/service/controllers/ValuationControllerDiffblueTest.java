@@ -40,79 +40,60 @@ class ValuationControllerDiffblueTest {
    * Test {@link ValuationController#margin(MarginRequest)}.
    *
    * <ul>
-   *   <li>Given {@code Market Data End}.
+   *   <li>Given {@code "2022-12-31T23:59:59.999Z"}.
    *   <li>Then calls {@link MarginRequest#getMarketDataEnd()}.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
-  @DisplayName("Test margin(MarginRequest); given 'Market Data End'; then calls getMarketDataEnd()")
+  @DisplayName(
+      "Test margin(MarginRequest); given '\"2022-12-31T23:59:59.999Z\"'; then calls getMarketDataEnd()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenMarketDataEnd_thenCallsGetMarketDataEnd() {
+  void testMargin_given20221231t235959999z_thenCallsGetMarketDataEnd() {
     // Arrange
     MarginRequest marginRequest = mock(MarginRequest.class);
-    when(marginRequest.getMarketDataEnd()).thenReturn("Market Data End");
-    when(marginRequest.getMarketDataStart()).thenReturn("Market Data Start");
-    when(marginRequest.getTradeData()).thenReturn("Trade Data");
+    when(marginRequest.getMarketDataEnd()).thenReturn("\"2022-12-31T23:59:59.999Z\"");
+    when(marginRequest.getMarketDataStart()).thenReturn("\"2022-01-01T00:00:00Z\"");
+    when(marginRequest.getTradeData())
+        .thenReturn(
+            "\"tradeId:12345,tradeDate:2025-10-24,tradeType:BUY,tradeQuantity:100,tradePrice:50,tradeAsset:GOOG"
+                + ",tradeCounterparty:XYZ Corp\"");
     when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
-    marginRequest.marketDataStart("Market Data Start");
+    marginRequest.marketDataStart("\"2022-01-01T00:00:00Z\"");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
     verify(marginRequest).getMarketDataEnd();
     verify(marginRequest).getMarketDataStart();
     verify(marginRequest).getTradeData();
-    verify(marginRequest).marketDataStart("Market Data Start");
+    verify(marginRequest).marketDataStart("\"2022-01-01T00:00:00Z\"");
   }
 
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
    *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) marketDataStart {@code Responded}.
+   *   <li>Given a string.
+   *   <li>When {@link MarginRequest} (default constructor) tradeData a string.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
   @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) marketDataStart 'Responded'")
+      "Test margin(MarginRequest); given a string; when MarginRequest (default constructor) tradeData a string")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenResponded_whenMarginRequestMarketDataStartResponded() {
+  void testMargin_givenAString_whenMarginRequestTradeDataAString() {
     // Arrange
     MarginRequest marginRequest = new MarginRequest();
-    marginRequest.marketDataStart("Responded");
-
-    // Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
-  }
-
-  /**
-   * Test {@link ValuationController#margin(MarginRequest)}.
-   *
-   * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) tradeData {@code Responded}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
-   */
-  @Test
-  @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) tradeData 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenResponded_whenMarginRequestTradeDataResponded() {
-    // Arrange
-    MarginRequest marginRequest = new MarginRequest();
-    marginRequest.tradeData("Responded");
+    marginRequest.tradeData(
+        "\"tradeId:12345,tradeDate:2022-01-01,tradeType:BUY,tradeQuantity:100,tradePrice:50,tradeAsset:GOOG"
+            + ",tradeCounterparty:XYZCorp,tradeCurrency:USD,tradeMargin:20\"");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
@@ -138,25 +119,52 @@ class ValuationControllerDiffblueTest {
   }
 
   /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>When {@link MarginRequest} (default constructor) marketDataStart {@code
+   *       "2022-01-01T00:00:00Z"}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName(
+      "Test margin(MarginRequest); when MarginRequest (default constructor) marketDataStart '\"2022-01-01T00:00:00Z\"'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_whenMarginRequestMarketDataStart20220101t000000z() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.marketDataStart("\"2022-01-01T00:00:00Z\"");
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
    * Test {@link ValuationController#value(ValueRequest)}.
    *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link ValueRequest} (default constructor) tradeData {@code Responded}.
+   *   <li>Given a string.
+   *   <li>When {@link ValueRequest} (default constructor) tradeData a string.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
   @DisplayName(
-      "Test value(ValueRequest); given 'Responded'; when ValueRequest (default constructor) tradeData 'Responded'")
+      "Test value(ValueRequest); given a string; when ValueRequest (default constructor) tradeData a string")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
-  void testValue_givenResponded_whenValueRequestTradeDataResponded() {
+  void testValue_givenAString_whenValueRequestTradeDataAString() {
     // Arrange
     ValueRequest valueRequest = new ValueRequest();
-    valueRequest.tradeData("Responded");
+    valueRequest.tradeData(
+        "\"TradeID: 12345, TradeType: Spot, Asset: EUR/USD, TradeDate: 2022-01-01, SettlementDate: 2022-01-03,"
+            + " Quantity: 100000, Price: 1.1234, Counterparty: ABC Bank\"");
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
@@ -262,7 +270,11 @@ class ValuationControllerDiffblueTest {
 
     DataInputStream dataInputStream = mock(DataInputStream.class);
     when(dataInputStream.readAllBytes())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                "\"Invalid smart contract execution: The contract failed to execute due to insufficient funds in the"
+                    + " account.\""));
 
     MultipartFile tradeData = mock(MultipartFile.class);
     when(tradeData.getInputStream()).thenReturn(dataInputStream);
@@ -297,7 +309,8 @@ class ValuationControllerDiffblueTest {
     // Arrange
     ValuationController valuationController = new ValuationController();
     MockMultipartFile tradeData =
-        new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
+        new MockMultipartFile(
+            "\"testFile.txt\"", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.testProductValue(tradeData));

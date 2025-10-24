@@ -141,7 +141,7 @@ class PlainSwapEditorControllerDiffblueTest {
     // Arrange
     when(valuationConfig.getMarketDataProviderToTemplate()).thenReturn(new HashMap<>());
     when(resourceLoader.getResource(Mockito.<String>any()))
-        .thenReturn(new ClassPathResource("Path"));
+        .thenReturn(new ClassPathResource("\"com/example/project/config/applicationContext.xml\""));
 
     // Act and Assert
     assertThrows(
@@ -262,7 +262,7 @@ class PlainSwapEditorControllerDiffblueTest {
     // Arrange
     when(valuationConfig.getMarketDataProviderToTemplate()).thenReturn(new HashMap<>());
     when(resourceLoader.getResource(Mockito.<String>any()))
-        .thenReturn(new ClassPathResource("Path"));
+        .thenReturn(new ClassPathResource("\"com/example/project/config/applicationContext.xml\""));
 
     // Act and Assert
     assertThrows(

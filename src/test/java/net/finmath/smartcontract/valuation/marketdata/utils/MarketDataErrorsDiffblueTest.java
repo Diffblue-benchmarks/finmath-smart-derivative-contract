@@ -43,7 +43,9 @@ class MarketDataErrorsDiffblueTest {
   void testGettersAndSetters() {
     // Arrange and Act
     MarketDataErrors actualMarketDataErrors = new MarketDataErrors(true);
-    actualMarketDataErrors.setErrorMessage("An error occurred");
+    actualMarketDataErrors.setErrorMessage(
+        "\"Invalid market data received. Expected format: JSON. Please check the data source for potential issues"
+            + " or inconsistencies.\"");
     ArrayList<String> missingDataPoints = new ArrayList<>();
     actualMarketDataErrors.setMissingDataPoints(missingDataPoints);
     String actualToStringResult = actualMarketDataErrors.toString();
@@ -52,10 +54,14 @@ class MarketDataErrorsDiffblueTest {
     boolean actualHasErrorsResult = actualMarketDataErrors.hasErrors();
 
     // Assert
-    assertEquals("An error occurred", actualErrorMessage);
     assertEquals(
-        "MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='An error occurred'}",
+        "MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='\"Invalid market data received."
+            + " Expected format: JSON. Please check the data source for potential issues or inconsistencies.\"'}",
         actualToStringResult);
+    assertEquals(
+        "\"Invalid market data received. Expected format: JSON. Please check the data source for potential issues"
+            + " or inconsistencies.\"",
+        actualErrorMessage);
     assertTrue(actualMissingDataPoints.isEmpty());
     assertTrue(actualHasErrorsResult);
     assertSame(missingDataPoints, actualMissingDataPoints);
@@ -76,11 +82,11 @@ class MarketDataErrorsDiffblueTest {
     MarketDataErrors marketDataErrors = new MarketDataErrors(true);
 
     // Act
-    marketDataErrors.addMissingData("Missing Data Point");
+    marketDataErrors.addMissingData("\"EUR/USD FX Rate 2022-03-01\"");
 
     // Assert
     List<String> missingDataPoints = marketDataErrors.getMissingDataPoints();
     assertEquals(1, missingDataPoints.size());
-    assertEquals("Missing Data Point", missingDataPoints.get(0));
+    assertEquals("\"EUR/USD FX Rate 2022-03-01\"", missingDataPoints.get(0));
   }
 }

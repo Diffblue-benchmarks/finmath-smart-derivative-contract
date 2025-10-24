@@ -94,7 +94,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar",
+            "\"TARGET2\"",
             startDate,
             LocalDate.of(1970, 1, 1),
             LocalTime.MIDNIGHT,
@@ -138,7 +138,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar",
+            "\"TARGET2\"",
             LocalDate.of(1970, 1, 1),
             LocalDate.ofEpochDay(1L),
             LocalTime.MIDNIGHT,
@@ -182,7 +182,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar",
+            "\"TARGET2\"",
             startDate,
             LocalDate.of(1970, 1, 1),
             LocalTime.MIDNIGHT,
@@ -224,7 +224,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Arrange and Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar",
+            "\"USFederalReserve\"",
             LocalDate.of(1970, 1, 1),
             LocalDate.of(1970, 1, 1),
             LocalTime.MIDNIGHT,
@@ -267,7 +267,7 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     // Act
     SmartDerivativeContractSchedule actualScheduleForBusinessDays =
         SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
-            "Calendar",
+            "\"USFederalReserve\"",
             LocalDate.of(1970, 1, 1),
             LocalDate.ofEpochDay(1L),
             LocalTime.MIDNIGHT,

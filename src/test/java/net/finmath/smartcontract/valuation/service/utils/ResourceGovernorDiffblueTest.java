@@ -99,10 +99,10 @@ class ResourceGovernorDiffblueTest {
 
     // Act
     Resource[] actualListContentsOfUserFolderResult =
-        resourceGovernor.listContentsOfUserFolder("janedoe", RoleFolders.MARKET_DATA_FOLDER);
+        resourceGovernor.listContentsOfUserFolder("\"JohnDoe\"", RoleFolders.MARKET_DATA_FOLDER);
 
     // Assert
-    verify(resourcePatternResolver).getResources("file:///null/janedoe.marketdata/*");
+    verify(resourcePatternResolver).getResources("file:///null/\"JohnDoe\".marketdata/*");
     assertEquals(1, actualListContentsOfUserFolderResult.length);
     assertSame(byteArrayResource, actualListContentsOfUserFolderResult[0]);
   }
@@ -128,8 +128,10 @@ class ResourceGovernorDiffblueTest {
     // Act and Assert
     assertThrows(
         IOException.class,
-        () -> resourceGovernor.listContentsOfUserFolder("janedoe", RoleFolders.MARKET_DATA_FOLDER));
-    verify(resourcePatternResolver).getResources("file:///null/janedoe.marketdata/*");
+        () ->
+            resourceGovernor.listContentsOfUserFolder(
+                "\"JohnDoe\"", RoleFolders.MARKET_DATA_FOLDER));
+    verify(resourcePatternResolver).getResources("file:///null/\"JohnDoe\".marketdata/*");
   }
 
   /**

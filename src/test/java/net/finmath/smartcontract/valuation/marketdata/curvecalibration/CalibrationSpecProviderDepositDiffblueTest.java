@@ -27,7 +27,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     LocalDate ofYearDayResult = LocalDate.ofYearDay(2, 2);
 
@@ -37,7 +37,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -56,7 +56,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec2() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     LocalDate ofYearDayResult = LocalDate.ofYearDay(2, 100);
 
@@ -66,7 +66,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -85,7 +85,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec3() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     LocalDate ofYearDayResult = LocalDate.ofYearDay(19, 100);
 
@@ -95,7 +95,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -114,7 +114,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec4() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     LocalDate ofYearDayResult = LocalDate.ofYearDay(2, Integer.SIZE);
 
@@ -124,7 +124,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -143,7 +143,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec5() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     LocalDate ofYearDayResult = LocalDate.ofYearDay(19, Integer.SIZE);
 
@@ -153,7 +153,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(ofYearDayResult.atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 
   /**
@@ -177,7 +177,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   void testGetCalibrationSpec_whenLocalDateWith1970AndOneAndOneAtStartOfDay() {
     // Arrange
     CalibrationSpecProviderDeposit calibrationSpecProviderDeposit =
-        new CalibrationSpecProviderDeposit("Tenor Label", "42", 10.0d);
+        new CalibrationSpecProviderDeposit("\"3M\"", "42", 10.0d);
 
     // Act
     CalibrationSpec actualCalibrationSpec =
@@ -185,6 +185,6 @@ class CalibrationSpecProviderDepositDiffblueTest {
             new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
 
     // Assert
-    assertEquals("EUR-Tenor Label42", actualCalibrationSpec.getSymbol());
+    assertEquals("EUR-\"3M\"42", actualCalibrationSpec.getSymbol());
   }
 }

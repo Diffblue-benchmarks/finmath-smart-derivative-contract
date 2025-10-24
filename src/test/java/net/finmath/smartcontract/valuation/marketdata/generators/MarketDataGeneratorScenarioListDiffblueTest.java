@@ -68,21 +68,23 @@ class MarketDataGeneratorScenarioListDiffblueTest {
    * Test {@link MarketDataGeneratorScenarioList#getMarketDataString(String)}.
    *
    * <ul>
-   *   <li>When {@code foo.txt}.
+   *   <li>When {@code "scenario_market_data.csv"}.
    *   <li>Then throw {@link SDCException}.
    * </ul>
    *
    * <p>Method under test: {@link MarketDataGeneratorScenarioList#getMarketDataString(String)}
    */
   @Test
-  @DisplayName("Test getMarketDataString(String); when 'foo.txt'; then throw SDCException")
+  @DisplayName(
+      "Test getMarketDataString(String); when '\"scenario_market_data.csv\"'; then throw SDCException")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String MarketDataGeneratorScenarioList.getMarketDataString(String)"})
-  void testGetMarketDataString_whenFooTxt_thenThrowSDCException() {
+  void testGetMarketDataString_whenScenarioMarketDataCsv_thenThrowSDCException() {
     // Arrange, Act and Assert
     assertThrows(
-        SDCException.class, () -> marketDataGeneratorScenarioList.getMarketDataString("foo.txt"));
+        SDCException.class,
+        () -> marketDataGeneratorScenarioList.getMarketDataString("\"scenario_market_data.csv\""));
   }
 
   /**

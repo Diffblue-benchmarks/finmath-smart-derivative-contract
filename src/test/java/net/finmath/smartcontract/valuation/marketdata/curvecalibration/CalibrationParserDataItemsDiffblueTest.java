@@ -85,7 +85,8 @@ class CalibrationParserDataItemsDiffblueTest {
   void testGetScenariosFromCSVFile() throws IOException {
     // Arrange, Act and Assert
     assertThrows(
-        IOException.class, () -> CalibrationParserDataItems.getScenariosFromCSVFile("foo.txt"));
+        IOException.class,
+        () -> CalibrationParserDataItems.getScenariosFromCSVFile("\"market_data_scenarios.csv\""));
   }
 
   /**
@@ -159,6 +160,32 @@ class CalibrationParserDataItemsDiffblueTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> CalibrationParserDataItems.getScenariosFromJsonString("42"));
+  }
+
+  /**
+   * Test {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}.
+   *
+   * <ul>
+   *   <li>When a string.
+   *   <li>Then throw {@link IllegalArgumentException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationParserDataItems#getScenariosFromJsonString(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getScenariosFromJsonString(String); when a string; then throw IllegalArgumentException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List CalibrationParserDataItems.getScenariosFromJsonString(String)"})
+  void testGetScenariosFromJsonString_whenAString_thenThrowIllegalArgumentException() {
+    // Arrange, Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () ->
+            CalibrationParserDataItems.getScenariosFromJsonString(
+                "\"{\\\"scenarios\\\":[{\\\"name\\\":\\\"scenario1\\\",\\\"curve\\\":{\\\"xData\\\":[1,2,3],\\\"yData\\\":[0.01,0.02,0.03]}},{"
+                    + "\\\"name\\\":\\\"scenario2\\\",\\\"curve\\\":{\\\"xData\\\":[4,5,6],\\\"yData\\\":[0.04,0.05,0.06]}}]}\""));
   }
 
   /**

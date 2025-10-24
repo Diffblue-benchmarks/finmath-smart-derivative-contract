@@ -36,7 +36,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "42", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.of(1970, 1, 1),
+            "42",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -91,7 +97,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "1M", "3");
+            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "1M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -139,7 +145,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "42", 10.0d, 10.0d, true, "3M", "3");
+            LocalDate.of(1970, 1, 1), "42", 10.0d, 10.0d, true, "3M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -187,7 +193,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "");
+            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "\"EUR-OIS\"", "");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -223,7 +229,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, false, "Forward Curve Name", "3");
+            LocalDate.of(1970, 1, 1),
+            "3M",
+            10.0d,
+            10.0d,
+            false,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -231,7 +243,7 @@ class IRSwapGeneratorDiffblueTest {
     AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
     assertTrue(legReceiver instanceof SwapLeg);
     assertEquals("", ((SwapLeg) legPayer).getForwardCurveName());
-    assertEquals("Forward Curve Name", ((SwapLeg) legReceiver).getForwardCurveName());
+    assertEquals("\"EUR-OIS\"", ((SwapLeg) legReceiver).getForwardCurveName());
     assertEquals(0.0d, ((SwapLeg) legReceiver).getSpread());
     assertEquals(10.0d, ((SwapLeg) legPayer).getSpread());
     assertArrayEquals(new double[] {0.0d}, ((SwapLeg) legReceiver).getSpreads(), 0.0);
@@ -261,7 +273,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.of(1970, 1, 1),
+            "3M",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -301,7 +319,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "3M", "3");
+            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "3M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -342,7 +360,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "1M", "3");
+            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "1M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -384,7 +402,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "6M", "3");
+            LocalDate.of(1970, 1, 1), "3M", 10.0d, 10.0d, true, "6M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -425,7 +443,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.ofYearDay(2, 8),
+            "42",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -480,7 +504,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "3M", "3");
+            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "3M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -527,7 +551,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 100), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.ofYearDay(2, 100),
+            "3M",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -567,7 +597,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 2), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.ofYearDay(2, 2),
+            "3M",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -607,7 +643,13 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 2), "42", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.ofYearDay(2, 2),
+            "42",
+            10.0d,
+            10.0d,
+            true,
+            "\"EUR-OIS\"",
+            "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -662,7 +704,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 2), "42", 10.0d, 10.0d, true, "3M", "3");
+            LocalDate.ofYearDay(2, 2), "42", 10.0d, 10.0d, true, "3M", "\"EUR-OIS-Discount\"");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();

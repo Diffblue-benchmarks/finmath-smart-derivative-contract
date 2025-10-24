@@ -45,7 +45,11 @@ class SettlementServiceDiffblueTest {
   void testGenerateRegularSettlementResult_thenThrowSDCException() {
     // Arrange
     when(valuationConfig.isLiveMarketData())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                "\"Invalid smart contract execution: The contract failed to execute due to insufficient funds in the"
+                    + " account.\""));
 
     // Act and Assert
     assertThrows(
@@ -75,7 +79,11 @@ class SettlementServiceDiffblueTest {
   void testGenerateInitialSettlementResult_thenThrowSDCException() {
     // Arrange
     when(valuationConfig.isLiveMarketData())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                "\"Invalid smart contract execution: The contract failed to execute due to insufficient funds in the"
+                    + " account.\""));
 
     // Act and Assert
     assertThrows(

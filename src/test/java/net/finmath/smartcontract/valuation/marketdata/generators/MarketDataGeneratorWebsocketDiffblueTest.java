@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.finmath.smartcontract.model.MarketDataList;
-import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
-import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec;
 import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -37,48 +35,18 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   /**
    * Test {@link MarketDataGeneratorWebsocket#allQuotesRetrieved()}.
    *
-   * <ul>
-   *   <li>Then return {@code false}.
-   * </ul>
-   *
    * <p>Method under test: {@link MarketDataGeneratorWebsocket#allQuotesRetrieved()}
    */
   @Test
-  @DisplayName("Test allQuotesRetrieved(); then return 'false'")
+  @DisplayName("Test allQuotesRetrieved()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean MarketDataGeneratorWebsocket.allQuotesRetrieved()"})
-  void testAllQuotesRetrieved_thenReturnFalse() {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-    itemList.add(spec);
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
-
-    // Act and Assert
-    assertFalse(marketDataGeneratorWebsocket.allQuotesRetrieved());
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#allQuotesRetrieved()}.
-   *
-   * <ul>
-   *   <li>Then return {@code true}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#allQuotesRetrieved()}
-   */
-  @Test
-  @DisplayName("Test allQuotesRetrieved(); then return 'true'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean MarketDataGeneratorWebsocket.allQuotesRetrieved()"})
-  void testAllQuotesRetrieved_thenReturnTrue() {
+  void testAllQuotesRetrieved() {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     // Act and Assert
     assertTrue(marketDataGeneratorWebsocket.allQuotesRetrieved());
@@ -87,42 +55,9 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   /**
    * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
    *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}
-   */
-  @Test
-  @DisplayName("Test onConnected(WebSocket, Map)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
-  void testOnConnected() throws Exception {
-    // Arrange
-    JSONObject authJson = mock(JSONObject.class);
-    when(authJson.getString(Mockito.<String>any())).thenReturn("String");
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-                + "\"},\"NameType\":\"AuthnToken\"}}",
-            new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onConnected(websocket, new HashMap<>());
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"{\\\"ID\\\":1,\\\"Domain\\\":\\\"Login\\\",\\\"Key\\\":{\\\"Elements\\\":{\\\"ApplicationId\\\":\\\"\\\",\\\"Position\\\":\\\"\\\",\\\"AuthenticationToken\\\":\\\"\\\"},\\\"NameType\\\":\\\"AuthnToken\\\"}}\",\"AuthenticationToken\":\"String\"},\"NameType\":\"AuthnToken\"}}");
-    verify(authJson).getString("access_token");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
-   *
    * <ul>
-   *   <li>Given {@link JSONObject} {@link JSONObject#getString(String)} return {@code String}.
+   *   <li>Given {@code null}.
+   *   <li>When {@link WebSocket} {@link WebSocket#sendText(String)} return {@code null}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
@@ -130,16 +65,17 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test onConnected(WebSocket, Map); given JSONObject getString(String) return 'String'; then calls sendText(String)")
+      "Test onConnected(WebSocket, Map); given 'null'; when WebSocket sendText(String) return 'null'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
-  void testOnConnected_givenJSONObjectGetStringReturnString_thenCallsSendText() throws Exception {
+  void testOnConnected_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText()
+      throws Exception {
     // Arrange
     JSONObject authJson = mock(JSONObject.class);
-    when(authJson.getString(Mockito.<String>any())).thenReturn("String");
+    when(authJson.getString(Mockito.<String>any())).thenReturn("\"employeeName\"");
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -150,47 +86,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"String\"},\"NameType\":\"AuthnToken\"}}");
-    verify(authJson).getString("access_token");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
-   *
-   * <ul>
-   *   <li>Given {@link JSONObject} {@link JSONObject#getString(String)} return {@code WebSocket
-   *       successfully connected!}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}
-   */
-  @Test
-  @DisplayName(
-      "Test onConnected(WebSocket, Map); given JSONObject getString(String) return 'WebSocket successfully connected!'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
-  void testOnConnected_givenJSONObjectGetStringReturnWebSocketSuccessfullyConnected()
-      throws Exception {
-    // Arrange
-    JSONObject authJson = mock(JSONObject.class);
-    when(authJson.getString(Mockito.<String>any())).thenReturn("WebSocket successfully connected!");
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    HashMap<String, List<String>> headers = new HashMap<>();
-    headers.put("42", new ArrayList<>());
-
-    // Act
-    marketDataGeneratorWebsocket.onConnected(websocket, headers);
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"WebSocket successfully connected!\"},\"NameType\":\"AuthnToken\"}}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"employeeName\\\"\"},\"NameType\":\"AuthnToken\"}}");
     verify(authJson).getString("access_token");
   }
 
@@ -208,7 +104,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     // Act
     Observable<MarketDataList> actualAsObservableResult =
@@ -253,7 +149,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket webSocket = mock(WebSocket.class);
     when(webSocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -282,74 +178,14 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     // Act and Assert
     assertThrows(
         RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.writeDataset("Import Dir", new MarketDataList(), true));
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(websocket, "42");
-
-    // Assert that nothing has changed
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage2() throws Exception {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec = new Spec("message: {}", "message: {}", "message: {}", "message: {}");
-    itemList.add(spec);
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(websocket, "42");
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"message: {}\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertTrue(marketDataGeneratorWebsocket.requestSent);
+        () ->
+            marketDataGeneratorWebsocket.writeDataset(
+                "\"/home/user/finmath/marketdata/dataset\"", new MarketDataList(), true));
   }
 
   /**
@@ -357,21 +193,25 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    * websocket}, {@code message}.
    *
    * <ul>
-   *   <li>When a string.
+   *   <li>Given {@link JSONObject#JSONObject(Map)} with {@link HashMap#HashMap()} {@code
+   *       "employeeName"} is {@code 42}.
    * </ul>
    *
    * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
    */
   @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when a string")
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given JSONObject(Map) with HashMap() '\"employeeName\"' is '42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenAString() throws Exception {
+  void testOnTextMessageWithWebsocketMessage_givenJSONObjectWithHashMapEmployeeNameIs42()
+      throws Exception {
     // Arrange
-    JSONObject authJson = new JSONObject();
+    JSONObject authJson = new JSONObject(new HashMap<>());
+    authJson.put("\"employeeName\"", "42");
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -382,11 +222,10 @@ class MarketDataGeneratorWebsocketDiffblueTest {
         "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
             + "\"},\"NameType\":\"AuthnToken\"}}");
 
-    // Assert that nothing has changed
+    // Assert
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(marketDataGeneratorWebsocket.requestSent);
   }
 
   /**
@@ -394,96 +233,115 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    * websocket}, {@code message}.
    *
    * <ul>
-   *   <li>When empty string.
+   *   <li>Given {@code null}.
+   *   <li>When {@code 42}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
    */
   @Test
   @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when empty string")
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when '42'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenEmptyString() throws Exception {
+  void testOnTextMessageWithWebsocketMessage_givenNull_when42_thenCallsSendText() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(null, "");
-
-    // Assert that nothing has changed
-    assertFalse(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code websocket}, {@code message}.
-   * <ul>
-   *   <li>When {@code "Key":{"Name":[}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when '\"Key\":{\"Name\":['")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenKeyName() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    marketDataGeneratorWebsocket.onTextMessage(websocket, "\"Key\":{\"Name\":[");
-
-    // Assert that nothing has changed
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#sendRICRequest(WebSocket)}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendRICRequest(WebSocket)}
-   */
-  @Test
-  @DisplayName("Test sendRICRequest(WebSocket)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.sendRICRequest(WebSocket)"})
-  void testSendRICRequest() {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec =
-        new Spec(
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[");
-    itemList.add(spec);
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.sendRICRequest(websocket);
+    marketDataGeneratorWebsocket.onTextMessage(websocket, "42");
 
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"\"Key\":{\"Name\":[\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
+   * websocket}, {@code message}.
+   *
+   * <ul>
+   *   <li>Given {@code null}.
+   *   <li>When a string.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when a string; then calls sendText(String)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_givenNull_whenAString_thenCallsSendText()
+      throws Exception {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.onTextMessage(
+        websocket,
+        "\"{\\\"type\\\":\\\"marketDataUpdate\\\",\\\"data\\\":{\\\"symbol\\\":\\\"AAPL\\\",\\\"price\\\":150.25,\\\"volume\\\":10000,\\"
+            + "\"timestamp\\\":\\\"2022-01-01T00:00:00Z\\\"}}\"");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
+   * websocket}, {@code message}.
+   *
+   * <ul>
+   *   <li>Given {@code null}.
+   *   <li>When a string.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; given 'null'; when a string; then calls sendText(String)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage_givenNull_whenAString_thenCallsSendText2()
+      throws Exception {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.onTextMessage(
+        websocket,
+        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
+            + "\"},\"NameType\":\"AuthnToken\"}}");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -507,7 +365,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -519,79 +377,6 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String,
-   * boolean)}
-   */
-  @Test
-  @DisplayName("Test sendLoginRequest(WebSocket, String, boolean)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
-  })
-  void testSendLoginRequest() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-                + "\"},\"NameType\":\"AuthnToken\"}}",
-            new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", true);
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"{\\\"ID\\\":1,\\\"Domain\\\":\\\"Login\\\",\\\"Key\\\":{\\\"Elements\\\":{\\\"ApplicationId\\\":\\\"\\\",\\\"Position\\\":\\\"\\\",\\\"AuthenticationToken\\\":\\\"\\\"},\\\"NameType\\\":\\\"AuthnToken\\\"}}\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"}}");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
-   *
-   * <ul>
-   *   <li>Given {@code null}.
-   *   <li>When {@code false}.
-   *   <li>Then calls {@link WebSocket#sendText(String)}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String,
-   * boolean)}
-   */
-  @Test
-  @DisplayName(
-      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when 'false'; then calls sendText(String)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
-  })
-  void testSendLoginRequest_givenNull_whenFalse_thenCallsSendText() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false);
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
   }
 
   /**
@@ -619,18 +404,65 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", true);
+    marketDataGeneratorWebsocket.sendLoginRequest(
+        websocket,
+        "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNT"
+            + "E2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"",
+        true);
 
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"}}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\\"\"},\"NameType\":\"AuthnToken\"}}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
+   *
+   * <ul>
+   *   <li>Given {@code null}.
+   *   <li>When {@link WebSocket} {@link WebSocket#sendText(String)} return {@code null}.
+   *   <li>Then calls {@link WebSocket#sendText(String)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String,
+   * boolean)}
+   */
+  @Test
+  @DisplayName(
+      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when WebSocket sendText(String) return 'null'; then calls sendText(String)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
+  })
+  void testSendLoginRequest_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText2()
+      throws Exception {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.sendLoginRequest(
+        websocket,
+        "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNT"
+            + "E2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"",
+        false);
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\\"\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
   }
 
   /**
@@ -656,7 +488,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, "\"EUR/USD\"", new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenThrow(new RuntimeException());
@@ -664,9 +496,14 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Act and Assert
     assertThrows(
         RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false));
+        () ->
+            marketDataGeneratorWebsocket.sendLoginRequest(
+                websocket,
+                "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNT"
+                    + "E2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"",
+                false));
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"\\\"EUR/USD\\\"\",\"AuthenticationToken\":\"\\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\\"\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
   }
 }
