@@ -2,63 +2,25 @@ package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import com.diffblue.cover.annotations.MethodsUnderTest;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class CalibrationDataItemDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
-   * Methods under test:
-   * <ul>
-   *   <li>{@link CalibrationDataItem#CalibrationDataItem(Spec, Double, LocalDateTime)}
-   *   <li>{@link CalibrationDataItem#getDateTime()}
-   *   <li>{@link CalibrationDataItem#getQuote()}
-   *   <li>{@link CalibrationDataItem#getSpec()}
-   * </ul>
-   */
-  @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void CalibrationDataItem.<init>(Spec, Double, LocalDateTime)",
-      "LocalDateTime CalibrationDataItem.getDateTime()", "Double CalibrationDataItem.getQuote()",
-      "Spec CalibrationDataItem.getSpec()"})
-  void testGettersAndSetters() {
-    // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
-    LocalDateTime dateTime = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataItem actualCalibrationDataItem = new CalibrationDataItem(spec, 10.0d, dateTime);
-    LocalDateTime actualDateTime = actualCalibrationDataItem.getDateTime();
-    Double actualQuote = actualCalibrationDataItem.getQuote();
-    Spec actualSpec = actualCalibrationDataItem.getSpec();
-
-    // Assert
-    assertEquals(10.0d, actualQuote.doubleValue());
-    assertSame(spec, actualSpec);
-    assertSame(dateTime, actualDateTime);
-  }
-
-  /**
-   * Test {@link CalibrationDataItem#getClonedScaled(double)}.
-   * <p>
    * Method under test: {@link CalibrationDataItem#getClonedScaled(double)}
    */
   @Test
-  @DisplayName("Test getClonedScaled(double)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataItem CalibrationDataItem.getClonedScaled(double)"})
   void testGetClonedScaled() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
 
@@ -67,6 +29,8 @@ class CalibrationDataItemDiffblueTest {
         .getClonedScaled(10.0d);
 
     // Assert
+    LocalDateTime dateTime = actualClonedScaled.getDateTime();
+    assertEquals("00:00", dateTime.toLocalTime().toString());
     LocalDate date = actualClonedScaled.getDate();
     assertEquals("1970-01-01", date.toString());
     assertEquals("1970-01-01", actualClonedScaled.getDateString());
@@ -75,22 +39,48 @@ class CalibrationDataItemDiffblueTest {
     assertEquals("Product Name", actualClonedScaled.getProductName());
     assertEquals(1.0d, actualClonedScaled.getQuote().doubleValue());
     assertSame(spec, actualClonedScaled.getSpec());
-    assertSame(ofResult, actualClonedScaled.getDateTime().toLocalDate());
+    assertSame(ofResult, dateTime.toLocalDate());
     assertSame(ofResult, date);
   }
 
   /**
-   * Test {@link CalibrationDataItem#getClonedShifted(double)}.
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getClonedScaled(double)}
+   */
+  @Test
+  void testGetClonedScaled2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataItem actualClonedScaled = (new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay()))
+        .getClonedScaled(10.0d);
+
+    // Assert
+    LocalDateTime dateTime = actualClonedScaled.getDateTime();
+    assertEquals("00:00", dateTime.toLocalTime().toString());
+    LocalDate date = actualClonedScaled.getDate();
+    assertEquals("1970-01-01", date.toString());
+    assertEquals("1970-01-01", actualClonedScaled.getDateString());
+    assertNull(actualClonedScaled.getCurveName());
+    assertNull(actualClonedScaled.getMaturity());
+    assertNull(actualClonedScaled.getProductName());
+    assertEquals(1.0d, actualClonedScaled.getQuote().doubleValue());
+    assertSame(ofResult, dateTime.toLocalDate());
+    assertSame(ofResult, date);
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getClonedShifted(double)}
    */
   @Test
-  @DisplayName("Test getClonedShifted(double)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataItem CalibrationDataItem.getClonedShifted(double)"})
   void testGetClonedShifted() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
 
@@ -99,6 +89,8 @@ class CalibrationDataItemDiffblueTest {
         .getClonedShifted(10.0d);
 
     // Assert
+    LocalDateTime dateTime = actualClonedShifted.getDateTime();
+    assertEquals("00:00", dateTime.toLocalTime().toString());
     LocalDate date = actualClonedShifted.getDate();
     assertEquals("1970-01-01", date.toString());
     assertEquals("1970-01-01", actualClonedShifted.getDateString());
@@ -107,25 +99,48 @@ class CalibrationDataItemDiffblueTest {
     assertEquals("Product Name", actualClonedShifted.getProductName());
     assertEquals(20.0d, actualClonedShifted.getQuote().doubleValue());
     assertSame(spec, actualClonedShifted.getSpec());
-    assertSame(ofResult, actualClonedShifted.getDateTime().toLocalDate());
+    assertSame(ofResult, dateTime.toLocalDate());
     assertSame(ofResult, date);
   }
 
   /**
-   * Test {@link CalibrationDataItem#getCurveName()}.
-   * <ul>
-   *   <li>Then return {@code Curve Name}.</li>
-   * </ul>
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getClonedShifted(double)}
+   */
+  @Test
+  void testGetClonedShifted2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataItem actualClonedShifted = (new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay()))
+        .getClonedShifted(10.0d);
+
+    // Assert
+    LocalDateTime dateTime = actualClonedShifted.getDateTime();
+    assertEquals("00:00", dateTime.toLocalTime().toString());
+    LocalDate date = actualClonedShifted.getDate();
+    assertEquals("1970-01-01", date.toString());
+    assertEquals("1970-01-01", actualClonedShifted.getDateString());
+    assertNull(actualClonedShifted.getCurveName());
+    assertNull(actualClonedShifted.getMaturity());
+    assertNull(actualClonedShifted.getProductName());
+    assertEquals(20.0d, actualClonedShifted.getQuote().doubleValue());
+    assertSame(ofResult, dateTime.toLocalDate());
+    assertSame(ofResult, date);
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getCurveName()}
    */
   @Test
-  @DisplayName("Test getCurveName(); then return 'Curve Name'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String CalibrationDataItem.getCurveName()"})
-  void testGetCurveName_thenReturnCurveName() {
+  void testGetCurveName() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals("Curve Name",
@@ -133,20 +148,34 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#getProductName()}.
-   * <ul>
-   *   <li>Then return {@code Product Name}.</li>
-   * </ul>
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getCurveName()}
+   */
+  @Test
+  void testGetCurveName2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getCurveName()).thenReturn("Curve Name");
+
+    // Act
+    String actualCurveName = (new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()))
+        .getCurveName();
+
+    // Assert
+    verify(spec).getCurveName();
+    assertEquals("Curve Name", actualCurveName);
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getProductName()}
    */
   @Test
-  @DisplayName("Test getProductName(); then return 'Product Name'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String CalibrationDataItem.getProductName()"})
-  void testGetProductName_thenReturnProductName() {
+  void testGetProductName() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals("Product Name",
@@ -154,20 +183,34 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#getMaturity()}.
-   * <ul>
-   *   <li>Then return {@code Maturity}.</li>
-   * </ul>
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getProductName()}
+   */
+  @Test
+  void testGetProductName2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getProductName()).thenReturn("Product Name");
+
+    // Act
+    String actualProductName = (new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()))
+        .getProductName();
+
+    // Assert
+    verify(spec).getProductName();
+    assertEquals("Product Name", actualProductName);
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getMaturity()}
    */
   @Test
-  @DisplayName("Test getMaturity(); then return 'Maturity'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String CalibrationDataItem.getMaturity()"})
-  void testGetMaturity_thenReturnMaturity() {
+  void testGetMaturity() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals("Maturity",
@@ -175,17 +218,34 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#getDateString()}.
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getMaturity()}
+   */
+  @Test
+  void testGetMaturity2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getMaturity()).thenReturn("Maturity");
+
+    // Act
+    String actualMaturity = (new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()))
+        .getMaturity();
+
+    // Assert
+    verify(spec).getMaturity();
+    assertEquals("Maturity", actualMaturity);
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getDateString()}
    */
   @Test
-  @DisplayName("Test getDateString()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String CalibrationDataItem.getDateString()"})
   void testGetDateString() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals("1970-01-01",
@@ -193,17 +253,29 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#getDate()}.
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getDateString()}
+   */
+  @Test
+  void testGetDateString2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+
+    // Act and Assert
+    assertEquals("1970-01-01",
+        (new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay())).getDateString());
+  }
+
+  /**
    * Method under test: {@link CalibrationDataItem#getDate()}
    */
   @Test
-  @DisplayName("Test getDate()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"LocalDate CalibrationDataItem.getDate()"})
   void testGetDate() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
 
@@ -216,12 +288,25 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}, and {@link CalibrationDataItem#hashCode()}.
-   * <ul>
-   *   <li>When other is equal.</li>
-   *   <li>Then return equal.</li>
-   * </ul>
-   * <p>
+   * Method under test: {@link CalibrationDataItem#getDate()}
+   */
+  @Test
+  void testGetDate2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    LocalDate actualDate = (new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay())).getDate();
+
+    // Assert
+    assertEquals("1970-01-01", actualDate.toString());
+    assertSame(ofResult, actualDate);
+  }
+
+  /**
    * Methods under test:
    * <ul>
    *   <li>{@link CalibrationDataItem#equals(Object)}
@@ -229,16 +314,13 @@ class CalibrationDataItemDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test equals(Object), and hashCode(); when other is equal; then return equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEqualsAndHashCode_whenOtherIsEqual_thenReturnEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
         LocalDate.of(1970, 1, 1).atStartOfDay());
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem2 = new CalibrationDataItem(spec2, 10.0d,
         LocalDate.of(1970, 1, 1).atStartOfDay());
@@ -250,12 +332,6 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}, and {@link CalibrationDataItem#hashCode()}.
-   * <ul>
-   *   <li>When other is same.</li>
-   *   <li>Then return equal.</li>
-   * </ul>
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>{@link CalibrationDataItem#equals(Object)}
@@ -263,12 +339,9 @@ class CalibrationDataItemDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test equals(Object), and hashCode(); when other is same; then return equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEqualsAndHashCode_whenOtherIsSame_thenReturnEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
         LocalDate.of(1970, 1, 1).atStartOfDay());
@@ -280,25 +353,16 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
    * Method under test: {@link CalibrationDataItem#equals(Object)}
    */
   @Test
-  @DisplayName("Test equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
-    Spec spec = new Spec(null, "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec(null, "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
         LocalDate.of(1970, 1, 1).atStartOfDay());
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertNotEquals(calibrationDataItem,
@@ -306,25 +370,32 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
    * Method under test: {@link CalibrationDataItem#equals(Object)}
    */
   @Test
-  @DisplayName("Test equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    // Act and Assert
+    assertNotEquals(calibrationDataItem,
+        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataItem#equals(Object)}
+   */
+  @Test
+  void testEquals_whenOtherIsDifferent_thenReturnNotEqual3() {
+    // Arrange
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, null,
         LocalDate.of(1970, 1, 1).atStartOfDay());
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertNotEquals(calibrationDataItem,
@@ -332,24 +403,15 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
    * Method under test: {@link CalibrationDataItem#equals(Object)}
    */
   @Test
-  @DisplayName("Test equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
-  void testEquals_whenOtherIsDifferent_thenReturnNotEqual3() {
+  void testEquals_whenOtherIsDifferent_thenReturnNotEqual4() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d, LocalDate.now().atStartOfDay());
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertNotEquals(calibrationDataItem,
@@ -357,42 +419,24 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}.
-   * <ul>
-   *   <li>When other is {@code null}.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
    * Method under test: {@link CalibrationDataItem#equals(Object)}
    */
   @Test
-  @DisplayName("Test equals(Object); when other is 'null'; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEquals_whenOtherIsNull_thenReturnNotEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertNotEquals(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()), null);
   }
 
   /**
-   * Test {@link CalibrationDataItem#equals(Object)}.
-   * <ul>
-   *   <li>When other is wrong type.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
    * Method under test: {@link CalibrationDataItem#equals(Object)}
    */
   @Test
-  @DisplayName("Test equals(Object); when other is wrong type; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean CalibrationDataItem.equals(Object)", "int CalibrationDataItem.hashCode()"})
   void testEquals_whenOtherIsWrongType_thenReturnNotEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertNotEquals(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()),
@@ -400,26 +444,46 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}, and {@link Spec#hashCode()}.
-   * <ul>
-   *   <li>When other is equal.</li>
-   *   <li>Then return equal.</li>
-   * </ul>
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link Spec#equals(Object)}
-   *   <li>{@link Spec#hashCode()}
+   *   <li>
+   * {@link CalibrationDataItem#CalibrationDataItem(CalibrationDataItem.Spec, Double, LocalDateTime)}
+   *   <li>{@link CalibrationDataItem#getDateTime()}
+   *   <li>{@link CalibrationDataItem#getQuote()}
+   *   <li>{@link CalibrationDataItem#getSpec()}
    * </ul>
    */
   @Test
-  @DisplayName("Test Spec equals(Object), and hashCode(); when other is equal; then return equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
+  void testGettersAndSetters() {
+    // Arrange
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    LocalDateTime dateTime = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataItem actualCalibrationDataItem = new CalibrationDataItem(spec, 10.0d, dateTime);
+    LocalDateTime actualDateTime = actualCalibrationDataItem.getDateTime();
+    Double actualQuote = actualCalibrationDataItem.getQuote();
+    CalibrationDataItem.Spec actualSpec = actualCalibrationDataItem.getSpec();
+
+    // Assert
+    assertEquals(10.0d, actualQuote.doubleValue());
+    assertSame(spec, actualSpec);
+    assertSame(dateTime, actualDateTime);
+  }
+
+  /**
+   * Methods under test:
+   * <ul>
+   *   <li>{@link CalibrationDataItem.Spec#equals(Object)}
+   *   <li>{@link CalibrationDataItem.Spec#hashCode()}
+   * </ul>
+   */
+  @Test
   void testSpecEqualsAndHashCode_whenOtherIsEqual_thenReturnEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals(spec, spec2);
@@ -428,25 +492,16 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}, and {@link Spec#hashCode()}.
-   * <ul>
-   *   <li>When other is same.</li>
-   *   <li>Then return equal.</li>
-   * </ul>
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link Spec#equals(Object)}
-   *   <li>{@link Spec#hashCode()}
+   *   <li>{@link CalibrationDataItem.Spec#equals(Object)}
+   *   <li>{@link CalibrationDataItem.Spec#hashCode()}
    * </ul>
    */
   @Test
-  @DisplayName("Test Spec equals(Object), and hashCode(); when other is same; then return equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEqualsAndHashCode_whenOtherIsSame_thenReturnEqual() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
     assertEquals(spec, spec);
@@ -455,145 +510,86 @@ class CalibrationDataItemDiffblueTest {
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
-    Spec spec = new Spec(null, "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec(null, "Curve Name", "Product Name", "Maturity");
 
     // Act and Assert
-    assertNotEquals(spec, new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    assertNotEquals(spec, new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
     // Arrange
-    Spec spec = new Spec("Key", null, "Product Name", "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", null, "Product Name", "Maturity");
 
     // Act and Assert
-    assertNotEquals(spec, new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    assertNotEquals(spec, new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsDifferent_thenReturnNotEqual3() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", null, "Maturity");
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", null, "Maturity");
 
     // Act and Assert
-    assertNotEquals(spec, new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    assertNotEquals(spec, new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is different.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is different; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsDifferent_thenReturnNotEqual4() {
     // Arrange
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", null);
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", null);
 
     // Act and Assert
-    assertNotEquals(spec, new Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    assertNotEquals(spec, new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is {@code null}.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is 'null'; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsNull_thenReturnNotEqual() {
     // Arrange, Act and Assert
-    assertNotEquals(new Spec("Key", "Curve Name", "Product Name", "Maturity"), null);
+    assertNotEquals(new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"), null);
   }
 
   /**
-   * Test Spec {@link Spec#equals(Object)}.
-   * <ul>
-   *   <li>When other is wrong type.</li>
-   *   <li>Then return not equal.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Spec#equals(Object)}
+   * Method under test: {@link CalibrationDataItem.Spec#equals(Object)}
    */
   @Test
-  @DisplayName("Test Spec equals(Object); when other is wrong type; then return not equal")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"boolean Spec.equals(Object)", "int Spec.hashCode()"})
   void testSpecEquals_whenOtherIsWrongType_thenReturnNotEqual() {
     // Arrange, Act and Assert
-    assertNotEquals(new Spec("Key", "Curve Name", "Product Name", "Maturity"), "Different type to Spec");
+    assertNotEquals(new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"),
+        "Different type to Spec");
   }
 
   /**
-   * Test Spec getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link Spec#Spec(String, String, String, String)}
-   *   <li>{@link Spec#getCurveName()}
-   *   <li>{@link Spec#getKey()}
-   *   <li>{@link Spec#getMaturity()}
-   *   <li>{@link Spec#getProductName()}
+   *   <li>{@link CalibrationDataItem.Spec#Spec(String, String, String, String)}
+   *   <li>{@link CalibrationDataItem.Spec#getCurveName()}
+   *   <li>{@link CalibrationDataItem.Spec#getKey()}
+   *   <li>{@link CalibrationDataItem.Spec#getMaturity()}
+   *   <li>{@link CalibrationDataItem.Spec#getProductName()}
    * </ul>
    */
   @Test
-  @DisplayName("Test Spec getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void Spec.<init>(String, String, String, String)", "String Spec.getCurveName()",
-      "String Spec.getKey()", "String Spec.getMaturity()", "String Spec.getProductName()"})
   void testSpecGettersAndSetters() {
     // Arrange and Act
-    Spec actualSpec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    CalibrationDataItem.Spec actualSpec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
     String actualCurveName = actualSpec.getCurveName();
     String actualKey = actualSpec.getKey();
     String actualMaturity = actualSpec.getMaturity();

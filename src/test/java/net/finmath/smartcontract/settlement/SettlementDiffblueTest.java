@@ -3,7 +3,6 @@ package net.finmath.smartcontract.settlement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -11,15 +10,10 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import net.finmath.smartcontract.model.MarketDataList;
-import net.finmath.smartcontract.settlement.Settlement.SettlementType;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class SettlementDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>default or parameterless constructor of {@link Settlement}
@@ -33,7 +27,7 @@ class SettlementDiffblueTest {
    *   <li>{@link Settlement#setSettlementNPVPrevious(BigDecimal)}
    *   <li>{@link Settlement#setSettlementTime(ZonedDateTime)}
    *   <li>{@link Settlement#setSettlementTimeNext(ZonedDateTime)}
-   *   <li>{@link Settlement#setSettlementType(SettlementType)}
+   *   <li>{@link Settlement#setSettlementType(Settlement.SettlementType)}
    *   <li>{@link Settlement#setTradeId(String)}
    *   <li>{@link Settlement#getCurrency()}
    *   <li>{@link Settlement#getMarginLimits()}
@@ -50,20 +44,6 @@ class SettlementDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void Settlement.<init>()", "String Settlement.getCurrency()", "List Settlement.getMarginLimits()",
-      "BigDecimal Settlement.getMarginValue()", "MarketDataList Settlement.getMarketData()",
-      "List Settlement.getSettlementInfos()", "BigDecimal Settlement.getSettlementNPV()",
-      "BigDecimal Settlement.getSettlementNPVNext()", "BigDecimal Settlement.getSettlementNPVPrevious()",
-      "ZonedDateTime Settlement.getSettlementTime()", "ZonedDateTime Settlement.getSettlementTimeNext()",
-      "SettlementType Settlement.getSettlementType()", "String Settlement.getTradeId()",
-      "void Settlement.setCurrency(String)", "void Settlement.setMarginLimits(List)",
-      "void Settlement.setMarginValue(BigDecimal)", "void Settlement.setMarketData(MarketDataList)",
-      "void Settlement.setSettlementInfos(List)", "void Settlement.setSettlementNPV(BigDecimal)",
-      "void Settlement.setSettlementNPVNext(BigDecimal)", "void Settlement.setSettlementNPVPrevious(BigDecimal)",
-      "void Settlement.setSettlementTime(ZonedDateTime)", "void Settlement.setSettlementTimeNext(ZonedDateTime)",
-      "void Settlement.setSettlementType(SettlementType)", "void Settlement.setTradeId(String)"})
   void testGettersAndSetters() {
     // Arrange and Act
     Settlement actualSettlement = new Settlement();
@@ -86,7 +66,7 @@ class SettlementDiffblueTest {
     actualSettlement.setSettlementTime(settlementTime);
     ZonedDateTime settlementTimeNext = LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTimeNext(settlementTimeNext);
-    actualSettlement.setSettlementType(SettlementType.INITIAL);
+    actualSettlement.setSettlementType(Settlement.SettlementType.INITIAL);
     actualSettlement.setTradeId("42");
     String actualCurrency = actualSettlement.getCurrency();
     List<BigDecimal> actualMarginLimits = actualSettlement.getMarginLimits();
@@ -98,12 +78,12 @@ class SettlementDiffblueTest {
     BigDecimal actualSettlementNPVPrevious = actualSettlement.getSettlementNPVPrevious();
     ZonedDateTime actualSettlementTime = actualSettlement.getSettlementTime();
     ZonedDateTime actualSettlementTimeNext = actualSettlement.getSettlementTimeNext();
-    SettlementType actualSettlementType = actualSettlement.getSettlementType();
+    Settlement.SettlementType actualSettlementType = actualSettlement.getSettlementType();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("42", actualSettlement.getTradeId());
     assertEquals("GBP", actualCurrency);
-    assertEquals(SettlementType.INITIAL, actualSettlementType);
+    assertEquals(Settlement.SettlementType.INITIAL, actualSettlementType);
     assertTrue(actualMarginLimits.isEmpty());
     assertTrue(actualSettlementInfos.isEmpty());
     assertEquals(new BigDecimal("2.3"), actualMarginValue);

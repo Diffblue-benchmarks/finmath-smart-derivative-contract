@@ -1,12 +1,14 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +19,23 @@ import net.finmath.marketdata.calibration.CalibratedCurves;
 import net.finmath.marketdata.model.AnalyticModel;
 import net.finmath.marketdata.model.AnalyticModelFromCurvesAndVols;
 import net.finmath.marketdata.model.curves.Curve;
+import net.finmath.marketdata.model.curves.CurveInterpolation;
 import net.finmath.marketdata.model.curves.DiscountCurveInterpolation;
 import net.finmath.marketdata.model.curves.ForwardCurveInterpolation;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+import net.finmath.time.businessdaycalendar.BusinessdayCalendar;
+import net.finmath.time.businessdaycalendar.BusinessdayCalendarExcludingTARGETHolidays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {Calibrator.class})
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisabledInAotMode
 class CalibratorDiffblueTest {
   @MockBean
@@ -49,14 +51,9 @@ class CalibratorDiffblueTest {
   private List<CalibrationDataItem> list;
 
   /**
-   * Test {@link Calibrator#getCalibratedCurves()}.
-   * <p>
    * Method under test: {@link Calibrator#getCalibratedCurves()}
    */
   @Test
-  @DisplayName("Test getCalibratedCurves()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibratedCurves Calibrator.getCalibratedCurves()"})
   void testGetCalibratedCurves() {
     // Arrange
     ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
@@ -67,23 +64,16 @@ class CalibratorDiffblueTest {
   }
 
   /**
-   * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
-   * <ul>
-   *   <li>Then {@link Optional#get()} CalibratedModel return {@link AnalyticModelFromCurvesAndVols}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
+   * Method under test:
+   * {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
    */
   @Test
-  @DisplayName("Test calibrateModel(Stream, CalibrationContext); then get() CalibratedModel return AnalyticModelFromCurvesAndVols")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Optional Calibrator.calibrateModel(Stream, CalibrationContext)"})
-  void testCalibrateModel_thenGetCalibratedModelReturnAnalyticModelFromCurvesAndVols()
-      throws CloneNotSupportedException {
+  void testCalibrateModel() throws CloneNotSupportedException {
     // Arrange
     when(calibrationDataItem.getCurveName()).thenReturn("Curve Name");
     when(calibrationContext.getAccuracy()).thenReturn(10.0d);
-    when(calibrationContext.getReferenceDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    when(calibrationContext.getReferenceDate()).thenReturn(ofResult);
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
@@ -100,15 +90,77 @@ class CalibratorDiffblueTest {
     assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
     Map<String, Curve> curves = calibratedModel.getCurves();
     assertEquals(5, curves.size());
-    assertTrue(curves.get(Calibrator.DISCOUNT_EUR_OIS) instanceof DiscountCurveInterpolation);
-    assertTrue(curves.get("forward-EUR-1M") instanceof ForwardCurveInterpolation);
-    assertTrue(curves.get("forward-EUR-3M") instanceof ForwardCurveInterpolation);
+    Curve getResult2 = curves.get("forward-EUR-1M");
+    assertTrue(getResult2.getCloneBuilder() instanceof CurveInterpolation.Builder);
+    Curve getResult3 = curves.get("forward-EUR-3M");
+    assertTrue(getResult3.getCloneBuilder() instanceof CurveInterpolation.Builder);
+    Curve getResult4 = curves.get(Calibrator.DISCOUNT_EUR_OIS);
+    assertTrue(getResult4.getCloneBuilder() instanceof CurveInterpolation.Builder);
+    assertTrue(getResult4 instanceof DiscountCurveInterpolation);
+    assertTrue(getResult2 instanceof ForwardCurveInterpolation);
+    assertTrue(getResult3 instanceof ForwardCurveInterpolation);
+    assertTrue(((ForwardCurveInterpolation) getResult2)
+        .getPaymentBusinessdayCalendar() instanceof BusinessdayCalendarExcludingTARGETHolidays);
+    assertTrue(((ForwardCurveInterpolation) getResult3)
+        .getPaymentBusinessdayCalendar() instanceof BusinessdayCalendarExcludingTARGETHolidays);
+    LocalDate referenceDate = getResult4.getReferenceDate();
+    assertEquals("1970-01-01", referenceDate.toString());
+    assertEquals("1M", ((ForwardCurveInterpolation) getResult2).getPaymentOffsetCode());
+    assertEquals("3M", ((ForwardCurveInterpolation) getResult3).getPaymentOffsetCode());
+    assertEquals("forward-EUR-1M", getResult2.getName());
+    assertEquals("forward-EUR-3M", getResult3.getName());
     assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
+    assertEquals(0, getResult2.getParameter().length);
+    assertEquals(0, getResult3.getParameter().length);
+    assertEquals(0, getResult4.getParameter().length);
+    assertEquals(0, ((ForwardCurveInterpolation) getResult2).getTimes().length);
+    assertEquals(0, ((ForwardCurveInterpolation) getResult3).getTimes().length);
+    List<CurveInterpolation.Point> points = ((DiscountCurveInterpolation) getResult4).getPoints();
+    assertEquals(1, points.size());
+    CurveInterpolation.Point getResult5 = points.get(0);
+    assertEquals(0.0d, getResult5.getTime());
+    assertEquals(0.0d, getResult5.getValue());
     assertEquals(0.0d, getResult.getSumOfSquaredErrors());
     CalibratedCurves calibratedCurves = calibrator.getCalibratedCurves();
     assertEquals(2, calibratedCurves.getLastNumberOfInterations());
+    assertEquals(CurveInterpolation.ExtrapolationMethod.CONSTANT,
+        ((DiscountCurveInterpolation) getResult4).getExtrapolationMethod());
+    assertEquals(CurveInterpolation.ExtrapolationMethod.CONSTANT,
+        ((ForwardCurveInterpolation) getResult2).getExtrapolationMethod());
+    assertEquals(CurveInterpolation.ExtrapolationMethod.CONSTANT,
+        ((ForwardCurveInterpolation) getResult3).getExtrapolationMethod());
+    assertEquals(CurveInterpolation.InterpolationEntity.LOG_OF_VALUE,
+        ((DiscountCurveInterpolation) getResult4).getInterpolationEntity());
+    assertEquals(CurveInterpolation.InterpolationEntity.VALUE,
+        ((ForwardCurveInterpolation) getResult2).getInterpolationEntity());
+    assertEquals(CurveInterpolation.InterpolationEntity.VALUE,
+        ((ForwardCurveInterpolation) getResult3).getInterpolationEntity());
+    assertEquals(CurveInterpolation.InterpolationMethod.LINEAR,
+        ((DiscountCurveInterpolation) getResult4).getInterpolationMethod());
+    assertEquals(CurveInterpolation.InterpolationMethod.LINEAR,
+        ((ForwardCurveInterpolation) getResult2).getInterpolationMethod());
+    assertEquals(CurveInterpolation.InterpolationMethod.LINEAR,
+        ((ForwardCurveInterpolation) getResult3).getInterpolationMethod());
+    assertEquals(ForwardCurveInterpolation.InterpolationEntityForward.FORWARD,
+        ((ForwardCurveInterpolation) getResult2).getInterpolationEntityForward());
+    assertEquals(ForwardCurveInterpolation.InterpolationEntityForward.FORWARD,
+        ((ForwardCurveInterpolation) getResult3).getInterpolationEntityForward());
+    assertEquals(BusinessdayCalendar.DateRollConvention.FOLLOWING,
+        ((ForwardCurveInterpolation) getResult2).getPaymentDateRollConvention());
+    assertEquals(BusinessdayCalendar.DateRollConvention.FOLLOWING,
+        ((ForwardCurveInterpolation) getResult3).getPaymentDateRollConvention());
+    assertFalse(getResult5.isParameter());
+    assertTrue(((ForwardCurveInterpolation) getResult2).getPoints().isEmpty());
+    assertTrue(((ForwardCurveInterpolation) getResult3).getPoints().isEmpty());
     assertTrue(calibratedModel.getVolatilitySurfaces().isEmpty());
     assertTrue(actualCalibrateModelResult.isPresent());
     assertEquals(Double.NaN, calibratedCurves.getLastAccuracy());
+    assertEquals(Calibrator.DISCOUNT_EUR_OIS, ((ForwardCurveInterpolation) getResult2).getDiscountCurveName());
+    assertEquals(Calibrator.DISCOUNT_EUR_OIS, ((ForwardCurveInterpolation) getResult3).getDiscountCurveName());
+    assertEquals(Calibrator.DISCOUNT_EUR_OIS, getResult4.getName());
+    assertSame(ofResult, getResult2.getReferenceDate());
+    assertSame(ofResult, getResult3.getReferenceDate());
+    assertSame(ofResult, referenceDate);
+    assertArrayEquals(new double[]{0.0d}, ((DiscountCurveInterpolation) getResult4).getTimes(), 0.0);
   }
 }

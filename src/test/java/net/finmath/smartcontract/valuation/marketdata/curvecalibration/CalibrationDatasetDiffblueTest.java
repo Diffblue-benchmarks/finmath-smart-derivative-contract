@@ -1,152 +1,896 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.anyDouble;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.finmath.smartcontract.model.MarketDataList;
-import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+import net.finmath.smartcontract.valuation.marketdata.data.MarketDataPoint;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class CalibrationDatasetDiffblueTest {
-  @InjectMocks
-  private CalibrationDataset calibrationDataset;
-
-  @Mock
-  private Set<CalibrationDataItem> set;
-
   /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   * <ul>
-   *   <li>Then return CalibrationDataItems is {@link HashSet#HashSet()}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is HashSet()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsHashSet() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
-    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getCalibrationDataItems());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   * <ul>
-   *   <li>Then return FixingDataItems is {@link HashSet#HashSet()}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems is HashSet()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnFixingDataItemsIsHashSet() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    Spec spec = new Spec("Key", "Curve Name", "Fixing", "Maturity");
-
-    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getFixingDataItems());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   * <ul>
-   *   <li>When {@link HashSet#HashSet()}.</li>
-   *   <li>Then return DataPoints Empty.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); when HashSet(); then return DataPoints Empty")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_whenHashSet_thenReturnDataPointsEmpty() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
-    assertTrue(actualCalibrationDataset.getDataPoints().isEmpty());
-    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getScaled(double)}.
-   * <p>
    * Method under test: {@link CalibrationDataset#getScaled(double)}
    */
   @Test
-  @DisplayName("Test getScaled(double)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
   void testGetScaled() {
-    // Arrange and Act
-    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataset actualScaled = (new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()))
+        .getScaled(10.0d);
 
     // Assert
-    assertNull(actualScaled.getDate());
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
     assertTrue(actualScaled.getCalibrationDataItems().isEmpty());
     assertTrue(actualScaled.getDataPoints().isEmpty());
     assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
   }
 
   /**
-   * Test getters and setters.
-   * <p>
+   * Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  void testGetScaled2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataset actualScaled = (new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()))
+        .getScaled(10.0d);
+
+    // Assert
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualScaled.getCalibrationDataItems().size());
+    assertEquals(1, actualScaled.getDataPoints().size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  void testGetScaled3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataset actualScaled = (new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()))
+        .getScaled(10.0d);
+
+    // Assert
+    verify(spec, atLeast(1)).getProductName();
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualScaled.getCalibrationDataItems().size());
+    assertEquals(1, actualScaled.getDataPoints().size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  void testGetScaled4() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Fixing", "Fixing", "Fixing", "Fixing");
+
+    when(calibrationDataItem.getClonedScaled(anyDouble()))
+        .thenReturn(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataset actualScaled = (new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()))
+        .getScaled(10.0d);
+
+    // Assert
+    verify(calibrationDataItem).getClonedScaled(eq(10.0d));
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualScaled.getDataPoints().size());
+    assertEquals(1, actualScaled.getFixingDataItems().size());
+    assertTrue(actualScaled.getCalibrationDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  void testGetScaled5() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getClonedScaled(anyDouble())).thenReturn(calibrationDataItem);
+    when(calibrationDataItem2.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem2);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+
+    // Act
+    CalibrationDataset actualScaled = (new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay()))
+        .getScaled(10.0d);
+
+    // Assert
+    verify(calibrationDataItem2).getClonedScaled(eq(10.0d));
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualScaled.getCalibrationDataItems().size());
+    assertEquals(1, actualScaled.getDataPoints().size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Fixing", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertEquals(1, actualClonedFixingsAdded.getFixingDataItems().size());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded4() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded5() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Fixing", "Maturity");
+
+    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertEquals(1, actualClonedFixingsAdded.getFixingDataItems().size());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded6() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec(
+        "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec", "Curve Name",
+        "Product Name", "Maturity");
+
+    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    newFixingDataItems.add(new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded7() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    verify(spec, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded8() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded9() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
+
+    // Assert
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getFixingDataItems().size());
+    assertEquals(curveDataPointSet, actualClonedFixingsAdded.getDataPoints());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded10() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(calibrationDataItem2);
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    verify(calibrationDataItem2).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded11() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(calibrationDataItem2);
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getCalibrationDataItems().size());
+    assertEquals(1, actualClonedFixingsAdded.getFixingDataItems().size());
+    assertEquals(2, actualClonedFixingsAdded.getDataPoints().size());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded12() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem.getCurveName()).thenReturn("Curve Name");
+    when(calibrationDataItem.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getCurveName()).thenReturn("Curve Name");
+    when(calibrationDataItem2.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(calibrationDataItem2);
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    verify(calibrationDataItem).getCurveName();
+    verify(calibrationDataItem2).getCurveName();
+    verify(calibrationDataItem).getDate();
+    verify(calibrationDataItem2).getDate();
+    verify(calibrationDataItem2).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals(1, actualClonedFixingsAdded.getDataPoints().size());
+    assertEquals(1, actualClonedFixingsAdded.getFixingDataItems().size());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  void testGetClonedFixingsAdded13() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem.getCurveName()).thenReturn("Fixing");
+    when(calibrationDataItem.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getCurveName()).thenReturn("Curve Name");
+    when(calibrationDataItem2.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
+    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(calibrationDataItem2);
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    verify(calibrationDataItem).getCurveName();
+    verify(calibrationDataItem2).getCurveName();
+    verify(calibrationDataItem).getDate();
+    verify(calibrationDataItem2).getDate();
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualClonedFixingsAdded.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    Set<CalibrationDataItem> dataPoints = actualClonedFixingsAdded.getDataPoints();
+    assertEquals(2, dataPoints.size());
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertEquals(dataPoints, actualClonedFixingsAdded.getFixingDataItems());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  void testToMarketDataList() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+
+    // Act
+    MarketDataList actualToMarketDataListResult = (new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay())).toMarketDataList();
+
+    // Assert
+    assertEquals(0, actualToMarketDataListResult.getSize());
+    assertTrue(actualToMarketDataListResult.getPoints().isEmpty());
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  void testToMarketDataList2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay()));
+
+    // Act
+    MarketDataList actualToMarketDataListResult = (new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay())).toMarketDataList();
+
+    // Assert
+    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
+    assertEquals(1, points.size());
+    MarketDataPoint getResult = points.get(0);
+    LocalDate toLocalDateResult = getResult.getTimeStamp().toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals("Key", getResult.getId());
+    assertEquals(1, actualToMarketDataListResult.getSize());
+    assertEquals(10.0d, getResult.getValue().doubleValue());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  void testToMarketDataList3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getKey()).thenReturn("Key");
+    when(spec.getProductName()).thenReturn("Product Name");
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+
+    // Act
+    MarketDataList actualToMarketDataListResult = (new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay())).toMarketDataList();
+
+    // Assert
+    verify(spec).getKey();
+    verify(spec, atLeast(1)).getProductName();
+    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
+    assertEquals(1, points.size());
+    MarketDataPoint getResult = points.get(0);
+    LocalDate toLocalDateResult = getResult.getTimeStamp().toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals("Key", getResult.getId());
+    assertEquals(1, actualToMarketDataListResult.getSize());
+    assertEquals(10.0d, getResult.getValue().doubleValue());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  void testToMarketDataList4() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    when(calibrationDataItem.getDateTime()).thenReturn(ofResult.atStartOfDay());
+    when(calibrationDataItem.getSpec())
+        .thenReturn(new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+
+    // Act
+    MarketDataList actualToMarketDataListResult = (new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay())).toMarketDataList();
+
+    // Assert
+    verify(calibrationDataItem).getDateTime();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(calibrationDataItem).getQuote();
+    verify(calibrationDataItem).getSpec();
+    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
+    assertEquals(1, points.size());
+    MarketDataPoint getResult = points.get(0);
+    LocalDate toLocalDateResult = getResult.getTimeStamp().toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertEquals("Key", getResult.getId());
+    assertEquals(1, actualToMarketDataListResult.getSize());
+    assertEquals(10.0d, getResult.getValue().doubleValue());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#serializeToJson()}
+   */
+  @Test
+  void testSerializeToJson() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getCurveName()).thenReturn("Curve Name");
+    when(spec.getMaturity()).thenReturn("Maturity");
+    when(spec.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+
+    // Act
+    (new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())).serializeToJson();
+
+    // Assert
+    verify(spec, atLeast(1)).getCurveName();
+    verify(spec).getMaturity();
+    verify(spec, atLeast(1)).getProductName();
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#serializeToJson()}
+   */
+  @Test
+  void testSerializeToJson2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
+    when(calibrationDataItem.getSpec())
+        .thenReturn(new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity"));
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+
+    // Act
+    (new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())).serializeToJson();
+
+    // Assert
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(calibrationDataItem).getQuote();
+    verify(calibrationDataItem, atLeast(1)).getSpec();
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationDataset#getDataAsCalibrationDataPointStream(CalibrationParser)}
+   */
+  @Test
+  void testGetDataAsCalibrationDataPointStream() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataset calibrationDataset = new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+    CalibrationParser parser = mock(CalibrationParser.class);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
+    when(parser.parse(Mockito.<Stream<CalibrationDataItem>>any())).thenReturn(streamResult);
+
+    // Act
+    Stream<CalibrationSpecProvider> actualDataAsCalibrationDataPointStream = calibrationDataset
+        .getDataAsCalibrationDataPointStream(parser);
+
+    // Assert
+    verify(parser).parse(isA(Stream.class));
+    assertTrue(actualDataAsCalibrationDataPointStream.limit(5).collect(Collectors.toList()).isEmpty());
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getDataPoints()}
+   */
+  @Test
+  void testGetDataPoints() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+
+    // Act and Assert
+    assertTrue(
+        (new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())).getDataPoints().isEmpty());
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getDataPoints()}
+   */
+  @Test
+  void testGetDataPoints2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
+    // Act and Assert
+    assertEquals(1,
+        (new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())).getDataPoints().size());
+  }
+
+  /**
+   * Method under test: {@link CalibrationDataset#getDataPoints()}
+   */
+  @Test
+  void testGetDataPoints3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+
+    // Act
+    Set<CalibrationDataItem> actualDataPoints = (new CalibrationDataset(curveDataPointSet,
+        LocalDate.of(1970, 1, 1).atStartOfDay())).getDataPoints();
+
+    // Assert
+    verify(spec, atLeast(1)).getProductName();
+    assertEquals(1, actualDataPoints.size());
+  }
+
+  /**
    * Methods under test:
    * <ul>
    *   <li>{@link CalibrationDataset#getCalibrationDataItems()}
@@ -155,10 +899,6 @@ class CalibrationDatasetDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Set CalibrationDataset.getCalibrationDataItems()", "LocalDateTime CalibrationDataset.getDate()",
-      "Set CalibrationDataset.getFixingDataItems()"})
   void testGettersAndSetters() {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
@@ -177,274 +917,130 @@ class CalibrationDatasetDiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   * Method under test:
+   * {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
-  @DisplayName("Test getClonedFixingsAdded(Set)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded() {
-    // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    Spec spec = new Spec("Key", "Curve Name", "Fixing", "Maturity");
-
-    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded2() {
-    // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    Spec spec = new Spec("net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-        "Curve Name", "Product Name", "Maturity");
-
-    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    Spec spec2 = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
-    newFixingDataItems.add(new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded3() {
-    // Arrange
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
-
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    newFixingDataItems.add(calibrationDataItem);
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    verify(calibrationDataItem).getProductName();
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <ul>
-   *   <li>Given {@link CalibrationDataItem} {@link CalibrationDataItem#getProductName()} return {@code Fixing}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set); given CalibrationDataItem getProductName() return 'Fixing'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded_givenCalibrationDataItemGetProductNameReturnFixing() {
-    // Arrange
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getProductName()).thenReturn("Fixing");
-
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    newFixingDataItems.add(calibrationDataItem);
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    verify(calibrationDataItem, atLeast(1)).getProductName();
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <ul>
-   *   <li>Given {@link Spec#Spec(String, String, String, String)} with {@code Key} and {@code Curve Name} and {@code Product Name} and {@code Maturity}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set); given Spec(String, String, String, String) with 'Key' and 'Curve Name' and 'Product Name' and 'Maturity'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded_givenSpecWithKeyAndCurveNameAndProductNameAndMaturity() {
-    // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-
-    newFixingDataItems.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   * <ul>
-   *   <li>When {@link HashSet#HashSet()}.</li>
-   *   <li>Then return DataPoints Empty.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set); when HashSet(); then return DataPoints Empty")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded_whenHashSet_thenReturnDataPointsEmpty() {
-    // Arrange and Act
-    CalibrationDataset actualClonedFixingsAdded = calibrationDataset.getClonedFixingsAdded(new HashSet<>());
-
-    // Assert
-    assertNull(actualClonedFixingsAdded.getDate());
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#toMarketDataList()}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#toMarketDataList()}
-   */
-  @Test
-  @DisplayName("Test toMarketDataList()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
-  void testToMarketDataList() {
-    // Arrange and Act
-    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
-
-    // Assert
-    assertEquals(0, actualToMarketDataListResult.getSize());
-    assertTrue(actualToMarketDataListResult.getPoints().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#serializeToJson()}.
-   * <ul>
-   *   <li>Then calls {@link CalibrationDataItem#getDaysToMaturity()}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationDataset#serializeToJson()}
-   */
-  @Test
-  @DisplayName("Test serializeToJson(); then calls getDaysToMaturity()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
-  void testSerializeToJson_thenCallsGetDaysToMaturity() {
+  void testNewCalibrationDataset() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
-    //   Run dcover create --keep-partial-tests to gain insights into why
-    //   a non-Spring test was created.
 
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
-    when(calibrationDataItem.getSpec()).thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
-    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
-    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
-    curveDataPointSet.add(calibrationDataItem);
-    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
-    when(calibrationDataItem2.getQuote()).thenReturn(10.0d);
-    when(calibrationDataItem2.getDaysToMaturity()).thenReturn(1);
-    when(calibrationDataItem2.getSpec()).thenReturn(new Spec("Key", "Curve Name", "Product Name", "Maturity"));
-    when(calibrationDataItem2.getProductName()).thenReturn("Product Name");
-    curveDataPointSet.add(calibrationDataItem2);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
-    (new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay())).serializeToJson();
+    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
 
     // Assert
-    verify(calibrationDataItem).getDaysToMaturity();
-    verify(calibrationDataItem2).getDaysToMaturity();
-    verify(calibrationDataItem, atLeast(1)).getProductName();
-    verify(calibrationDataItem2, atLeast(1)).getProductName();
-    verify(calibrationDataItem).getQuote();
-    verify(calibrationDataItem2).getQuote();
-    verify(calibrationDataItem, atLeast(1)).getSpec();
-    verify(calibrationDataItem2, atLeast(1)).getSpec();
+    assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
+    assertTrue(actualCalibrationDataset.getDataPoints().isEmpty());
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 
   /**
-   * Test {@link CalibrationDataset#getDataAsCalibrationDataPointStream(CalibrationParser)}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#getDataAsCalibrationDataPointStream(CalibrationParser)}
+   * Method under test:
+   * {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
-  @DisplayName("Test getDataAsCalibrationDataPointStream(CalibrationParser)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Stream CalibrationDataset.getDataAsCalibrationDataPointStream(CalibrationParser)"})
-  void testGetDataAsCalibrationDataPointStream() {
+  void testNewCalibrationDataset2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
-    CalibrationParser parser = mock(CalibrationParser.class);
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Product Name", "Maturity");
 
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-    when(parser.parse(Mockito.<Stream<CalibrationDataItem>>any())).thenReturn(streamResult);
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
-    Stream<CalibrationSpecProvider> actualDataAsCalibrationDataPointStream = calibrationDataset
-        .getDataAsCalibrationDataPointStream(parser);
+    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
 
     // Assert
-    verify(parser).parse(isA(Stream.class));
-    assertTrue(actualDataAsCalibrationDataPointStream.limit(5).collect(Collectors.toList()).isEmpty());
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(1, actualCalibrationDataset.getDataPoints().size());
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 
   /**
-   * Test {@link CalibrationDataset#getDataPoints()}.
-   * <p>
-   * Method under test: {@link CalibrationDataset#getDataPoints()}
+   * Method under test:
+   * {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
-  @DisplayName("Test getDataPoints()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Set CalibrationDataset.getDataPoints()"})
-  void testGetDataPoints() {
-    // Arrange, Act and Assert
-    assertTrue(calibrationDataset.getDataPoints().isEmpty());
+  void testNewCalibrationDataset3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("Key", "Curve Name", "Fixing", "Maturity");
+
+    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    assertEquals(1, actualCalibrationDataset.getDataPoints().size());
+    assertEquals(1, actualCalibrationDataset.getFixingDataItems().size());
+    assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  void testNewCalibrationDataset4() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem.Spec spec = mock(CalibrationDataItem.Spec.class);
+    when(spec.getProductName()).thenReturn("Product Name");
+    CalibrationDataItem calibrationDataItem = new CalibrationDataItem(spec, 10.0d,
+        LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(spec, atLeast(1)).getProductName();
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(1, actualCalibrationDataset.getDataPoints().size());
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  void testNewCalibrationDataset5() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName()).thenReturn("Product Name");
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset = new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
+    assertEquals(1, actualCalibrationDataset.getDataPoints().size());
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 }

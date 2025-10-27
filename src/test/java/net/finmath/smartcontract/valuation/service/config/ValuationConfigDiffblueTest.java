@@ -3,17 +3,12 @@ package net.finmath.smartcontract.valuation.service.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class ValuationConfigDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>{@link ValuationConfig#setFpmlSchemaPath(String)}
@@ -33,16 +28,6 @@ class ValuationConfigDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String ValuationConfig.getFpmlSchemaPath()",
-      "String ValuationConfig.getInternalMarketDataProvider()", "String ValuationConfig.getLiveMarketDataProvider()",
-      "Map ValuationConfig.getMarketDataProviderToTemplate()", "String ValuationConfig.getProductFixingType()",
-      "String ValuationConfig.getSettlementCurrency()", "boolean ValuationConfig.isLiveMarketData()",
-      "void ValuationConfig.setFpmlSchemaPath(String)", "void ValuationConfig.setInternalMarketDataProvider(String)",
-      "void ValuationConfig.setLiveMarketData(boolean)", "void ValuationConfig.setLiveMarketDataProvider(String)",
-      "void ValuationConfig.setMarketDataProviderToTemplate(Map)", "void ValuationConfig.setProductFixingType(String)",
-      "void ValuationConfig.setSettlementCurrency(String)"})
   void testGettersAndSetters() {
     // Arrange
     ValuationConfig valuationConfig = new ValuationConfig();
@@ -64,7 +49,7 @@ class ValuationConfigDiffblueTest {
     String actualSettlementCurrency = valuationConfig.getSettlementCurrency();
     boolean actualIsLiveMarketDataResult = valuationConfig.isLiveMarketData();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("Fpml Schema Path", actualFpmlSchemaPath);
     assertEquals("GBP", actualSettlementCurrency);
     assertEquals("Internal Market Data Provider", actualInternalMarketDataProvider);

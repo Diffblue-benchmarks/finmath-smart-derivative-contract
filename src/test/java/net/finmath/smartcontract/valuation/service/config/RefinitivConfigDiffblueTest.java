@@ -1,15 +1,10 @@
 package net.finmath.smartcontract.valuation.service.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.MethodsUnderTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class RefinitivConfigDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>{@link RefinitivConfig#setAuthUrl(String)}
@@ -37,19 +32,6 @@ class RefinitivConfigDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String RefinitivConfig.getAuthUrl()", "String RefinitivConfig.getClientId()",
-      "String RefinitivConfig.getHostName()", "String RefinitivConfig.getPassword()", "int RefinitivConfig.getPort()",
-      "String RefinitivConfig.getProxyHost()", "String RefinitivConfig.getProxyPassword()",
-      "int RefinitivConfig.getProxyPort()", "String RefinitivConfig.getProxyUser()",
-      "String RefinitivConfig.getUseProxy()", "String RefinitivConfig.getUser()",
-      "void RefinitivConfig.setAuthUrl(String)", "void RefinitivConfig.setClientId(String)",
-      "void RefinitivConfig.setHostName(String)", "void RefinitivConfig.setPassword(String)",
-      "void RefinitivConfig.setPort(int)", "void RefinitivConfig.setProxyHost(String)",
-      "void RefinitivConfig.setProxyPassword(String)", "void RefinitivConfig.setProxyPort(int)",
-      "void RefinitivConfig.setProxyUser(String)", "void RefinitivConfig.setUseProxy(String)",
-      "void RefinitivConfig.setUser(String)"})
   void testGettersAndSetters() {
     // Arrange
     RefinitivConfig refinitivConfig = new RefinitivConfig();
@@ -77,7 +59,7 @@ class RefinitivConfigDiffblueTest {
     String actualProxyUser = refinitivConfig.getProxyUser();
     String actualUseProxy = refinitivConfig.getUseProxy();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("42", actualClientId);
     assertEquals("Host Name", actualHostName);
     assertEquals("Proxy User", actualProxyUser);

@@ -1,34 +1,137 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.MethodsUnderTest;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import java.time.LocalDate;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+import net.finmath.marketdata.calibration.CalibratedCurves;
 import org.junit.jupiter.api.Test;
 
 class CalibrationSpecProviderFRADiffblueTest {
   /**
-   * Test {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}.
-   * <ul>
-   *   <li>Then return Symbol is {@code EUR-4242}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
    */
   @Test
-  @DisplayName("Test getCalibrationSpec(CalibrationContext); then return Symbol is 'EUR-4242'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({
-      "net.finmath.marketdata.calibration.CalibratedCurves.CalibrationSpec CalibrationSpecProviderFRA.getCalibrationSpec(CalibrationContext)"})
-  void testGetCalibrationSpec_thenReturnSymbolIsEur4242() {
+  void testGetCalibrationSpec() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
     // Arrange
     CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.of(1970, 1, 1));
 
-    // Act and Assert
-    assertEquals("EUR-4242",
-        calibrationSpecProviderFRA
-            .getCalibrationSpec(new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
-            .getSymbol());
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   */
+  @Test
+  void testGetCalibrationSpec2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.ofYearDay(2, 2));
+
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   */
+  @Test
+  void testGetCalibrationSpec3() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.ofYearDay(2, 100));
+
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   */
+  @Test
+  void testGetCalibrationSpec4() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.ofYearDay(2, 25));
+
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   */
+  @Test
+  void testGetCalibrationSpec5() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.ofYearDay(19, 100));
+
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
+  }
+
+  /**
+   * Method under test:
+   * {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   */
+  @Test
+  void testGetCalibrationSpec6() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    CalibrationSpecProviderFRA calibrationSpecProviderFRA = new CalibrationSpecProviderFRA("42", "42", 10.0d);
+    CalibrationContextImpl ctx = mock(CalibrationContextImpl.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.ofYearDay(-2, 25));
+
+    // Act
+    CalibratedCurves.CalibrationSpec actualCalibrationSpec = calibrationSpecProviderFRA.getCalibrationSpec(ctx);
+
+    // Assert
+    verify(ctx).getReferenceDate();
+    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
   }
 }

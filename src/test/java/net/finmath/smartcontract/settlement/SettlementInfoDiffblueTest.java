@@ -2,16 +2,11 @@ package net.finmath.smartcontract.settlement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.math.BigDecimal;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class SettlementInfoDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>{@link SettlementInfo#SettlementInfo()}
@@ -22,11 +17,6 @@ class SettlementInfoDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void SettlementInfo.<init>()", "void SettlementInfo.<init>(String, BigDecimal)",
-      "String SettlementInfo.getKey()", "BigDecimal SettlementInfo.getValue()", "void SettlementInfo.setKey(String)",
-      "void SettlementInfo.setValue(BigDecimal)"})
   void testGettersAndSetters() {
     // Arrange and Act
     SettlementInfo actualSettlementInfo = new SettlementInfo();
@@ -36,18 +26,13 @@ class SettlementInfoDiffblueTest {
     String actualKey = actualSettlementInfo.getKey();
     BigDecimal actualValue = actualSettlementInfo.getValue();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("Key", actualKey);
     assertEquals(new BigDecimal("2.3"), actualValue);
     assertSame(value, actualValue);
   }
 
   /**
-   * Test getters and setters.
-   * <ul>
-   *   <li>When {@code Key}.</li>
-   * </ul>
-   * <p>
    * Methods under test:
    * <ul>
    *   <li>{@link SettlementInfo#SettlementInfo(String, BigDecimal)}
@@ -58,12 +43,7 @@ class SettlementInfoDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters; when 'Key'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void SettlementInfo.<init>()", "void SettlementInfo.<init>(String, BigDecimal)",
-      "String SettlementInfo.getKey()", "BigDecimal SettlementInfo.getValue()", "void SettlementInfo.setKey(String)",
-      "void SettlementInfo.setValue(BigDecimal)"})
-  void testGettersAndSetters_whenKey() {
+  void testGettersAndSetters2() {
     // Arrange and Act
     SettlementInfo actualSettlementInfo = new SettlementInfo("Key", new BigDecimal("2.3"));
     actualSettlementInfo.setKey("Key");
@@ -72,7 +52,7 @@ class SettlementInfoDiffblueTest {
     String actualKey = actualSettlementInfo.getKey();
     BigDecimal actualValue = actualSettlementInfo.getValue();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("Key", actualKey);
     assertEquals(new BigDecimal("2.3"), actualValue);
     assertSame(value, actualValue);

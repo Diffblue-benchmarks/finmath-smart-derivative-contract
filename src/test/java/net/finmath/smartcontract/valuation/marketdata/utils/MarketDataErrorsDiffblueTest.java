@@ -3,17 +3,59 @@ package net.finmath.smartcontract.valuation.marketdata.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+import net.finmath.smartcontract.model.MarketDataList;
+import net.finmath.smartcontract.product.xml.Smartderivativecontract;
 import org.junit.jupiter.api.Test;
 
 class MarketDataErrorsDiffblueTest {
   /**
-   * Test getters and setters.
-   * <p>
+   * Method under test: {@link MarketDataErrors#addMissingData(String)}
+   */
+  @Test
+  void testAddMissingData() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    MarketDataErrors marketDataErrors = new MarketDataErrors(true);
+
+    // Act
+    marketDataErrors.addMissingData("Missing Data Point");
+
+    // Assert
+    List<String> missingDataPoints = marketDataErrors.getMissingDataPoints();
+    assertEquals(1, missingDataPoints.size());
+    assertEquals("Missing Data Point", missingDataPoints.get(0));
+  }
+
+  /**
+   * Method under test: {@link MarketDataErrors#addMissingData(String)}
+   */
+  @Test
+  void testAddMissingData2() {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    MarketDataList marketDataList = mock(MarketDataList.class);
+    when(marketDataList.getPoints()).thenReturn(new ArrayList<>());
+    MarketDataErrors checkMarketDataResult = MarketDataCheck.checkMarketData(marketDataList,
+        new Smartderivativecontract());
+
+    // Act
+    checkMarketDataResult.addMissingData("Missing Data Point");
+
+    // Assert
+    verify(marketDataList).getPoints();
+    List<String> missingDataPoints = checkMarketDataResult.getMissingDataPoints();
+    assertEquals(2, missingDataPoints.size());
+    assertEquals("Missing Data Point", missingDataPoints.get(1));
+  }
+
+  /**
    * Methods under test:
    * <ul>
    *   <li>{@link MarketDataErrors#MarketDataErrors(boolean)}
@@ -26,12 +68,6 @@ class MarketDataErrorsDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void MarketDataErrors.<init>(boolean)", "String MarketDataErrors.getErrorMessage()",
-      "List MarketDataErrors.getMissingDataPoints()", "boolean MarketDataErrors.hasErrors()",
-      "void MarketDataErrors.setErrorMessage(String)", "void MarketDataErrors.setMissingDataPoints(List)",
-      "String MarketDataErrors.toString()"})
   void testGettersAndSetters() {
     // Arrange and Act
     MarketDataErrors actualMarketDataErrors = new MarketDataErrors(true);
@@ -43,34 +79,12 @@ class MarketDataErrorsDiffblueTest {
     List<String> actualMissingDataPoints = actualMarketDataErrors.getMissingDataPoints();
     boolean actualHasErrorsResult = actualMarketDataErrors.hasErrors();
 
-    // Assert
+    // Assert that nothing has changed
     assertEquals("An error occurred", actualErrorMessage);
     assertEquals("MarketDataErrors{hasErrors=true, missingDataPoints=[], errorMessage='An error occurred'}",
         actualToStringResult);
     assertTrue(actualMissingDataPoints.isEmpty());
     assertTrue(actualHasErrorsResult);
     assertSame(missingDataPoints, actualMissingDataPoints);
-  }
-
-  /**
-   * Test {@link MarketDataErrors#addMissingData(String)}.
-   * <p>
-   * Method under test: {@link MarketDataErrors#addMissingData(String)}
-   */
-  @Test
-  @DisplayName("Test addMissingData(String)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void MarketDataErrors.addMissingData(String)"})
-  void testAddMissingData() {
-    // Arrange
-    MarketDataErrors marketDataErrors = new MarketDataErrors(true);
-
-    // Act
-    marketDataErrors.addMissingData("Missing Data Point");
-
-    // Assert
-    List<String> missingDataPoints = marketDataErrors.getMissingDataPoints();
-    assertEquals(1, missingDataPoints.size());
-    assertEquals("Missing Data Point", missingDataPoints.get(0));
   }
 }

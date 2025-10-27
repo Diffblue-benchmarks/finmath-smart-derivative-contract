@@ -3,19 +3,19 @@
     "reportVersion" : "2.6"
   },
   "run" : {
-    "version" : "2025.02.02-08b2a5a-licensed",
-    "creationTimestamp" : "2025-10-21T13:58:07.417404527Z",
+    "version" : "2024.10.01-2ee2e3d-licensed",
+    "creationTimestamp" : "2025-10-27T14:21:41.272231513Z",
     "command" : "dcover create --exclude=net.finmath.smartcontract.product.xml. --exclude=net.finmath.smartcontract.api. --exclude=net.finmath.smartcontract.model. --coverage-reports --upload http://localhost:8080 --project-name finmath-smart-derivative-contract --name with-diffblue-tests",
-    "totalTime" : 2726.942,
-    "environmentDetectionTime" : 467.361,
-    "indexingTime" : 0.272,
-    "entryPointsTime" : 467.246,
-    "generationTime" : 1600.586,
-    "timeToFirstTest" : 624.039,
-    "timeToLastTest" : 2226.327,
-    "indexQueryTime" : 497.13800000000003,
-    "verificationTime" : 59.119,
-    "validationTime" : 335.168
+    "totalTime" : 2365.668,
+    "environmentDetectionTime" : 453.107,
+    "indexingTime" : 0.229,
+    "entryPointsTime" : 452.995,
+    "generationTime" : 1219.596,
+    "timeToFirstTest" : 629.506,
+    "timeToLastTest" : 1864.077,
+    "indexQueryTime" : 480.66,
+    "verificationTime" : 67.602,
+    "validationTime" : 335.365
   },
   "codes" : {
     "F009" : "Internal error",
@@ -25,7 +25,6 @@
     "R013" : "No inputs found that don't throw a trivial exception",
     "R024" : "Analysis service shutdown unexpectedly",
     "R026" : "Failed to create Spring context",
-    "R027" : "Missing beans when creating Spring context",
     "R081" : "Exception in arrange section",
     "T000" : "Method eligible for test creation",
     "T001" : "Trivial getter",
@@ -48,9 +47,9 @@
   "summary" : {
     "classesCount" : 1585,
     "methodsCount" : 14443,
-    "cumulativeDiffblueTestCount" : 236,
+    "cumulativeDiffblueTestCount" : 277,
     "cumulativeManualTestCount" : 85,
-    "completeTestCount" : 240,
+    "completeTestCount" : 288,
     "incompleteTestCount" : 0,
     "skeletonTestCount" : 0,
     "totalPhysicalLineCount" : 4743,
@@ -70,14 +69,13 @@
       "T033" : 13828
     },
     "perMethodOutcome" : {
-      "F009" : 4,
-      "R000" : 244,
+      "F009" : 2,
+      "R000" : 243,
       "R002" : 17,
       "R004" : 9,
-      "R013" : 41,
+      "R013" : 39,
       "R024" : 2,
-      "R026" : 14,
-      "R027" : 1,
+      "R026" : 20,
       "R081" : 12,
       "T003" : 56,
       "T004" : 22,
@@ -91,10 +89,10 @@
       "W002" : 1
     },
     "perTestOutcome" : {
-      "R000" : 240
+      "R000" : 288
     },
     "perTestValidation" : {
-      "V000" : 236,
+      "V000" : 284,
       "V003" : 4
     },
     "warnings" : {
@@ -229,7 +227,7 @@
     },
     "net.finmath.smartcontract.demo.VisualiserSDC" : {
       "methodsCount" : 11,
-      "completeTestCount" : 0,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
@@ -238,11 +236,14 @@
         "T012" : 7
       },
       "perMethodOutcome" : {
+        "R000" : 1,
         "R002" : 1,
         "R004" : 1,
-        "R013" : 1,
         "T006" : 1,
         "T012" : 7
+      },
+      "perTestOutcome" : {
+        "R000" : 2
       }
     },
     "net.finmath.smartcontract.demo.VisualiserSDC$1" : {
@@ -555,7 +556,7 @@
     },
     "net.finmath.smartcontract.product.IRSwapGenerator" : {
       "methodsCount" : 2,
-      "completeTestCount" : 10,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 1,
@@ -566,7 +567,7 @@
         "T008" : 1
       },
       "perTestOutcome" : {
-        "R000" : 10
+        "R000" : 3
       }
     },
     "net.finmath.smartcontract.product.SmartDerivativeContractDescriptor" : {
@@ -16888,15 +16889,18 @@
     },
     "net.finmath.smartcontract.statemachine.SmartContractStateMachine$StateMachineListener" : {
       "methodsCount" : 2,
-      "completeTestCount" : 0,
+      "completeTestCount" : 1,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 1,
         "T005" : 1
       },
       "perMethodOutcome" : {
-        "R002" : 1,
-        "R013" : 1
+        "R000" : 1,
+        "R002" : 1
+      },
+      "perTestOutcome" : {
+        "R000" : 1
       }
     },
     "net.finmath.smartcontract.statemachine.SmartContractStateMachine$States" : {
@@ -17031,7 +17035,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem" : {
       "methodsCount" : 14,
-      "completeTestCount" : 15,
+      "completeTestCount" : 23,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 10,
@@ -17043,7 +17047,7 @@
         "R026" : 1
       },
       "perTestOutcome" : {
-        "R000" : 15
+        "R000" : 23
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec" : {
@@ -17064,7 +17068,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset" : {
       "methodsCount" : 18,
-      "completeTestCount" : 15,
+      "completeTestCount" : 34,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 7,
@@ -17076,7 +17080,7 @@
         "T012" : 8
       },
       "perTestOutcome" : {
-        "R000" : 15
+        "R000" : 34
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParser" : {
@@ -17092,7 +17096,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems" : {
       "methodsCount" : 22,
-      "completeTestCount" : 8,
+      "completeTestCount" : 7,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 5,
@@ -17101,19 +17105,20 @@
         "T012" : 12
       },
       "perMethodOutcome" : {
-        "R000" : 4,
+        "F009" : 1,
+        "R000" : 3,
         "R002" : 1,
         "R013" : 1,
         "T003" : 4,
         "T012" : 12
       },
       "perTestOutcome" : {
-        "R000" : 8
+        "R000" : 7
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult" : {
       "methodsCount" : 5,
-      "completeTestCount" : 6,
+      "completeTestCount" : 7,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 3,
@@ -17126,7 +17131,7 @@
         "T012" : 1
       },
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 7
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProvider" : {
@@ -17142,7 +17147,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit" : {
       "methodsCount" : 2,
-      "completeTestCount" : 4,
+      "completeTestCount" : 6,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 1,
@@ -17153,12 +17158,12 @@
         "R002" : 1
       },
       "perTestOutcome" : {
-        "R000" : 4
+        "R000" : 6
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderFRA" : {
       "methodsCount" : 2,
-      "completeTestCount" : 1,
+      "completeTestCount" : 6,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2
@@ -17168,7 +17173,7 @@
         "R026" : 1
       },
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 6
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis" : {
@@ -17258,7 +17263,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector" : {
       "methodsCount" : 4,
-      "completeTestCount" : 2,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 3,
@@ -17269,9 +17274,6 @@
         "R024" : 2,
         "R026" : 1,
         "T012" : 1
-      },
-      "perTestOutcome" : {
-        "R000" : 2
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorInterface" : {
@@ -17337,7 +17339,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket" : {
       "methodsCount" : 15,
-      "completeTestCount" : 10,
+      "completeTestCount" : 14,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 9,
@@ -17346,18 +17348,18 @@
       },
       "perMethodOutcome" : {
         "R000" : 7,
-        "R027" : 1,
+        "R026" : 1,
         "T003" : 4,
         "T005" : 1,
         "T012" : 2
       },
       "perTestOutcome" : {
-        "R000" : 10
+        "R000" : 14
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector" : {
       "methodsCount" : 8,
-      "completeTestCount" : 6,
+      "completeTestCount" : 9,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 5,
@@ -17370,7 +17372,7 @@
         "T012" : 1
       },
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 9
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.LiveFeedAdapter" : {
@@ -17386,7 +17388,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater" : {
       "methodsCount" : 16,
-      "completeTestCount" : 16,
+      "completeTestCount" : 20,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 6,
@@ -17399,7 +17401,7 @@
         "T012" : 4
       },
       "perTestOutcome" : {
-        "R000" : 16
+        "R000" : 20
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.utils.MarketDataCheck" : {
@@ -17422,7 +17424,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.utils.MarketDataErrors" : {
       "methodsCount" : 8,
-      "completeTestCount" : 2,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 1,
@@ -17435,7 +17437,7 @@
         "R000" : 8
       },
       "perTestOutcome" : {
-        "R000" : 2
+        "R000" : 3
       }
     },
     "net.finmath.smartcontract.valuation.oracle.SmartDerivativeContractSettlementOracle" : {
@@ -17495,7 +17497,7 @@
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap" : {
       "methodsCount" : 13,
-      "completeTestCount" : 30,
+      "completeTestCount" : 38,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 5,
@@ -17508,7 +17510,7 @@
         "T012" : 7
       },
       "perTestOutcome" : {
-        "R000" : 30
+        "R000" : 38
       }
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap$ValuationTypeSwap" : {
@@ -17544,7 +17546,7 @@
     },
     "net.finmath.smartcontract.valuation.oracle.simulated.ContinouslyCompoundedBankAccountOracle" : {
       "methodsCount" : 5,
-      "completeTestCount" : 4,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 5
@@ -17554,7 +17556,7 @@
         "W002" : 1
       },
       "perTestOutcome" : {
-        "R000" : 4
+        "R000" : 5
       },
       "warnings" : {
         "W002" : 1
@@ -17595,7 +17597,7 @@
     },
     "net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration" : {
       "methodsCount" : 7,
-      "completeTestCount" : 3,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 4,
@@ -17611,7 +17613,7 @@
         "W001" : 1
       },
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 4
       },
       "warnings" : {
         "W001" : 1
@@ -17913,7 +17915,7 @@
     },
     "net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint" : {
       "methodsCount" : 10,
-      "completeTestCount" : 3,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 6,
@@ -17921,18 +17923,15 @@
         "T012" : 2
       },
       "perMethodOutcome" : {
-        "F009" : 3,
-        "R000" : 3,
+        "F009" : 1,
+        "R026" : 5,
         "T003" : 2,
         "T012" : 2
-      },
-      "perTestOutcome" : {
-        "R000" : 3
       }
     },
     "net.finmath.smartcontract.valuation.service.websocket.handler.ValuationHandler" : {
       "methodsCount" : 8,
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
@@ -17941,13 +17940,12 @@
         "T021" : 3
       },
       "perMethodOutcome" : {
-        "F009" : 1,
-        "R000" : 1,
+        "R000" : 2,
         "R002" : 4,
         "T012" : 2
       },
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       }
     }
   },
@@ -19102,10 +19100,13 @@
       ]
     },
     "net.finmath.smartcontract.demo.VisualiserSDC.updateWithValue:(Ljava/time/LocalDateTime;DDLjava/lang/Double;D)V" : {
-      "completeTestCount" : 0,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R013",
+      "perMethodOutcome" : "R000",
+      "perTestOutcome" : {
+        "R000" : 2
+      },
       "lineNumbers" : [
         139,
         140,
@@ -23237,12 +23238,12 @@
       ]
     },
     "net.finmath.smartcontract.product.IRSwapGenerator.generateAnalyticSwapObject:(Ljava/time/LocalDate;Ljava/lang/String;DDZLjava/lang/String;Ljava/lang/String;)Lnet/finmath/marketdata/products/Swap;" : {
-      "completeTestCount" : 10,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 10
+        "R000" : 3
       },
       "lineNumbers" : [
         28,
@@ -152907,10 +152908,13 @@
       ]
     },
     "net.finmath.smartcontract.statemachine.SmartContractStateMachine$StateMachineListener.stateChanged:(Lorg/springframework/statemachine/state/State;Lorg/springframework/statemachine/state/State;)V" : {
-      "completeTestCount" : 0,
+      "completeTestCount" : 1,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R013",
+      "perMethodOutcome" : "R000",
+      "perTestOutcome" : {
+        "R000" : 1
+      },
       "lineNumbers" : [
         338,
         339,
@@ -153931,12 +153935,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.equals:(Ljava/lang/Object;)Z" : {
-      "completeTestCount" : 7,
+      "completeTestCount" : 8,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 7
+        "R000" : 8
       },
       "lineNumbers" : [
         127,
@@ -153946,60 +153950,60 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getClonedScaled:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         74
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getClonedShifted:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         78
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getCurveName:()Ljava/lang/String;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         86
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDate:()Ljava/time/LocalDate;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         121
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDateString:()Ljava/lang/String;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         118
@@ -154036,24 +154040,24 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getMaturity:()Ljava/lang/String;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         94
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getProductName:()Ljava/lang/String;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         90
@@ -154084,24 +154088,24 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.hashCode:()I" : {
-      "completeTestCount" : 7,
+      "completeTestCount" : 8,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 7
+        "R000" : 8
       },
       "lineNumbers" : [
         135
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.<init>:(Ljava/util/Set;Ljava/time/LocalDateTime;)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       },
       "lineNumbers" : [
         26,
@@ -154124,12 +154128,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getClonedFixingsAdded:(Ljava/util/Set;)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataset;" : {
-      "completeTestCount" : 6,
+      "completeTestCount" : 13,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 13
       },
       "lineNumbers" : [
         53,
@@ -154152,12 +154156,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getDataPoints:()Ljava/util/Set;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 3
       },
       "lineNumbers" : [
         124,
@@ -154191,12 +154195,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getScaled:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataset;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 5
       },
       "lineNumbers" : [
         34,
@@ -154279,12 +154283,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.serializeToJson:()Ljava/lang/String;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         75,
@@ -154315,12 +154319,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.toMarketDataList:()Lnet/finmath/smartcontract/model/MarketDataList;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 4
       },
       "lineNumbers" : [
         66,
@@ -154558,13 +154562,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems.parse:(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 1
-      },
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
         33
       ]
@@ -154609,12 +154610,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult.<init>:(Lnet/finmath/marketdata/calibration/CalibratedCurves;[Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         17,
@@ -154688,12 +154689,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;" : {
-      "completeTestCount" : 4,
+      "completeTestCount" : 6,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 4
+        "R000" : 6
       },
       "lineNumbers" : [
         34,
@@ -154720,12 +154721,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderFRA.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 6,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 6
       },
       "lineNumbers" : [
         39,
@@ -155368,13 +155369,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.init:()V" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R024",
-      "perTestOutcome" : {
-        "R000" : 2
-      },
       "lineNumbers" : [
         49,
         50,
@@ -155668,24 +155666,24 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.allQuotesRetrieved:()Z" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 2
+        "R000" : 3
       },
       "lineNumbers" : [
         63
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.asObservable:()Lio/reactivex/rxjava3/core/Observable;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         77
@@ -155742,7 +155740,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R027",
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         107,
         109,
@@ -155807,12 +155805,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.sendLoginRequest:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;Z)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 4
       },
       "lineNumbers" : [
         194,
@@ -155828,12 +155826,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.sendRICRequest:(Lcom/neovisionaries/ws/client/WebSocket;)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         187,
@@ -155893,12 +155891,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthenticationInfo:(Lorg/json/JSONObject;Ljava/lang/String;)Lorg/json/JSONObject;" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       },
       "lineNumbers" : [
         131,
@@ -155974,12 +155972,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initAuthJson:()Lnet/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnector;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         84,
@@ -156048,12 +156046,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater.<init>:(Lorg/json/JSONObject;Ljava/lang/String;Ljava/util/List;)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       },
       "lineNumbers" : [
         45,
@@ -156082,12 +156080,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater.asObservable:()Lio/reactivex/rxjava3/core/Observable;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         86
@@ -156126,12 +156124,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater.onConnected:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/util/Map;)V" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 1,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 2
+        "R000" : 1
       },
       "lineNumbers" : [
         75,
@@ -156144,12 +156142,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater.onTextMessage:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;)V" : {
-      "completeTestCount" : 8,
+      "completeTestCount" : 10,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 8
+        "R000" : 10
       },
       "lineNumbers" : [
         93,
@@ -156359,12 +156357,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.utils.MarketDataErrors.addMissingData:(Ljava/lang/String;)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         29,
@@ -156611,12 +156609,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap.<init>:(Ljava/util/Map;Ljava/util/List;)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 4
       },
       "lineNumbers" : [
         66,
@@ -156624,12 +156622,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap.<init>:(Ljava/util/Map;Ljava/util/List;I)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 4
       },
       "lineNumbers" : [
         53,
@@ -156676,24 +156674,24 @@
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap.getValue:(Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;)Ljava/math/BigDecimal;" : {
-      "completeTestCount" : 11,
+      "completeTestCount" : 12,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 11
+        "R000" : 12
       },
       "lineNumbers" : [
         76
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap.getValues:(Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;)Ljava/util/Map;" : {
-      "completeTestCount" : 9,
+      "completeTestCount" : 14,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 9
+        "R000" : 14
       },
       "lineNumbers" : [
         80,
@@ -156909,12 +156907,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.simulated.ContinouslyCompoundedBankAccountOracle.<init>:(Lnet/finmath/time/TimeDiscretization;Ljava/time/LocalDateTime;DD)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         75,
@@ -157148,12 +157146,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration.userDetailsService:(Lnet/finmath/smartcontract/valuation/service/utils/ApplicationProperties;)Lorg/springframework/security/provisioning/InMemoryUserDetailsManager;" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 4
       },
       "lineNumbers" : [
         65
@@ -159243,13 +159241,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.asObservable:()Lio/reactivex/rxjava3/core/Observable;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 1
-      },
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         47,
         48,
@@ -159268,13 +159263,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.getUserSession:()Ljakarta/websocket/Session;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 1
-      },
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         41,
         42,
@@ -159309,7 +159301,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "F009",
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         79,
         80,
@@ -159321,7 +159313,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "F009",
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         70,
         71,
@@ -159329,13 +159321,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.sendTextMessage:(Ljava/lang/String;)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 1
-      },
+      "perMethodOutcome" : "R026",
       "lineNumbers" : [
         63,
         64,
@@ -159371,10 +159360,13 @@
       ]
     },
     "net.finmath.smartcontract.valuation.service.websocket.handler.ValuationHandler.handleMessage:(Lorg/springframework/web/socket/WebSocketSession;Lorg/springframework/web/socket/WebSocketMessage;)V" : {
-      "completeTestCount" : 0,
+      "completeTestCount" : 1,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "F009",
+      "perMethodOutcome" : "R000",
+      "perTestOutcome" : {
+        "R000" : 1
+      },
       "lineNumbers" : [
         39,
         40,

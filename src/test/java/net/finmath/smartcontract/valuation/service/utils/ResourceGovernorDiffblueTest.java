@@ -3,36 +3,35 @@ package net.finmath.smartcontract.valuation.service.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.io.File;
 import java.io.IOException;
-import net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.RoleFolders;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.WritableResource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {ResourceGovernor.class})
 @ExtendWith(SpringExtension.class)
+@DisabledInAotMode
 class ResourceGovernorDiffblueTest {
   @Autowired
   private ResourceGovernor resourceGovernor;
 
+  @MockBean
+  private ResourcePatternResolver resourcePatternResolver;
+
   /**
-   * Test {@link ResourceGovernor#getActiveDatasetAsResourceInReadMode(String)}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getActiveDatasetAsResourceInReadMode(String)}
+   * Method under test:
+   * {@link ResourceGovernor#getActiveDatasetAsResourceInReadMode(String)}
    */
   @Test
-  @DisplayName("Test getActiveDatasetAsResourceInReadMode(String)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource ResourceGovernor.getActiveDatasetAsResourceInReadMode(String)"})
   void testGetActiveDatasetAsResourceInReadMode() throws IOException {
     // Arrange and Act
     Resource actualActiveDatasetAsResourceInReadMode = resourceGovernor.getActiveDatasetAsResourceInReadMode("janedoe");
@@ -52,14 +51,10 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getActiveDatasetAsResourceInWriteMode(String)}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getActiveDatasetAsResourceInWriteMode(String)}
+   * Method under test:
+   * {@link ResourceGovernor#getActiveDatasetAsResourceInWriteMode(String)}
    */
   @Test
-  @DisplayName("Test getActiveDatasetAsResourceInWriteMode(String)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"WritableResource ResourceGovernor.getActiveDatasetAsResourceInWriteMode(String)"})
   void testGetActiveDatasetAsResourceInWriteMode() throws IOException {
     // Arrange and Act
     WritableResource actualActiveDatasetAsResourceInWriteMode = resourceGovernor
@@ -80,14 +75,10 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getImportCandidateAsResourceInReadMode()}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getImportCandidateAsResourceInReadMode()}
+   * Method under test:
+   * {@link ResourceGovernor#getImportCandidateAsResourceInReadMode()}
    */
   @Test
-  @DisplayName("Test getImportCandidateAsResourceInReadMode()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource ResourceGovernor.getImportCandidateAsResourceInReadMode()"})
   void testGetImportCandidateAsResourceInReadMode() throws IOException {
     // Arrange and Act
     Resource actualImportCandidateAsResourceInReadMode = resourceGovernor.getImportCandidateAsResourceInReadMode();
@@ -107,14 +98,10 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getImportCandidateAsResourceInWriteMode()}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getImportCandidateAsResourceInWriteMode()}
+   * Method under test:
+   * {@link ResourceGovernor#getImportCandidateAsResourceInWriteMode()}
    */
   @Test
-  @DisplayName("Test getImportCandidateAsResourceInWriteMode()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"WritableResource ResourceGovernor.getImportCandidateAsResourceInWriteMode()"})
   void testGetImportCandidateAsResourceInWriteMode() throws IOException {
     // Arrange and Act
     WritableResource actualImportCandidateAsResourceInWriteMode = resourceGovernor
@@ -135,14 +122,10 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getRefinitivPropertiesAsResourceInReadMode()}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getRefinitivPropertiesAsResourceInReadMode()}
+   * Method under test:
+   * {@link ResourceGovernor#getRefinitivPropertiesAsResourceInReadMode()}
    */
   @Test
-  @DisplayName("Test getRefinitivPropertiesAsResourceInReadMode()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource ResourceGovernor.getRefinitivPropertiesAsResourceInReadMode()"})
   void testGetRefinitivPropertiesAsResourceInReadMode() throws IOException {
     // Arrange and Act
     Resource actualRefinitivPropertiesAsResourceInReadMode = resourceGovernor
@@ -164,14 +147,10 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getDatabasePropertiesAsResourceInReadMode()}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getDatabasePropertiesAsResourceInReadMode()}
+   * Method under test:
+   * {@link ResourceGovernor#getDatabasePropertiesAsResourceInReadMode()}
    */
   @Test
-  @DisplayName("Test getDatabasePropertiesAsResourceInReadMode()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource ResourceGovernor.getDatabasePropertiesAsResourceInReadMode()"})
   void testGetDatabasePropertiesAsResourceInReadMode() throws IOException {
     // Arrange and Act
     Resource actualDatabasePropertiesAsResourceInReadMode = resourceGovernor
@@ -193,18 +172,14 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getReadableResource(String, RoleFolders, String)}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getReadableResource(String, RoleFolders, String)}
+   * Method under test:
+   * {@link ResourceGovernor#getReadableResource(String, ResourceGovernor.RoleFolders, String)}
    */
   @Test
-  @DisplayName("Test getReadableResource(String, RoleFolders, String)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource ResourceGovernor.getReadableResource(String, RoleFolders, String)"})
   void testGetReadableResource() throws IOException {
     // Arrange and Act
-    Resource actualReadableResource = resourceGovernor.getReadableResource("janedoe", RoleFolders.MARKET_DATA_FOLDER,
-        "foo.txt");
+    Resource actualReadableResource = resourceGovernor.getReadableResource("janedoe",
+        ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "foo.txt");
 
     // Assert
     assertTrue(actualReadableResource instanceof FileUrlResource);
@@ -219,18 +194,14 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#getWritableResource(String, RoleFolders, String)}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#getWritableResource(String, RoleFolders, String)}
+   * Method under test:
+   * {@link ResourceGovernor#getWritableResource(String, ResourceGovernor.RoleFolders, String)}
    */
   @Test
-  @DisplayName("Test getWritableResource(String, RoleFolders, String)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"WritableResource ResourceGovernor.getWritableResource(String, RoleFolders, String)"})
   void testGetWritableResource() throws IOException {
     // Arrange and Act
     WritableResource actualWritableResource = resourceGovernor.getWritableResource("janedoe",
-        RoleFolders.MARKET_DATA_FOLDER, "foo.txt");
+        ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "foo.txt");
 
     // Assert
     assertTrue(actualWritableResource instanceof FileUrlResource);
@@ -245,30 +216,22 @@ class ResourceGovernorDiffblueTest {
   }
 
   /**
-   * Test {@link ResourceGovernor#listContentsOfUserFolder(String, RoleFolders)}.
-   * <p>
-   * Method under test: {@link ResourceGovernor#listContentsOfUserFolder(String, RoleFolders)}
+   * Method under test:
+   * {@link ResourceGovernor#listContentsOfUserFolder(String, ResourceGovernor.RoleFolders)}
    */
   @Test
-  @DisplayName("Test listContentsOfUserFolder(String, RoleFolders)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"Resource[] ResourceGovernor.listContentsOfUserFolder(String, RoleFolders)"})
   void testListContentsOfUserFolder() throws IOException {
     // Arrange, Act and Assert
-    assertEquals(0, resourceGovernor.listContentsOfUserFolder("janedoe", RoleFolders.MARKET_DATA_FOLDER).length);
+    assertEquals(0,
+        resourceGovernor.listContentsOfUserFolder("janedoe", ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER).length);
   }
 
   /**
-   * Test RoleFolders {@link RoleFolders#toString()}.
-   * <p>
-   * Method under test: {@link RoleFolders#toString()}
+   * Method under test: {@link ResourceGovernor.RoleFolders#toString()}
    */
   @Test
-  @DisplayName("Test RoleFolders toString()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"String RoleFolders.toString()"})
   void testRoleFoldersToString() {
     // Arrange, Act and Assert
-    assertEquals("/%s.marketdata/", RoleFolders.valueOf("MARKET_DATA_FOLDER").toString());
+    assertEquals("/%s.marketdata/", ResourceGovernor.RoleFolders.valueOf("MARKET_DATA_FOLDER").toString());
   }
 }

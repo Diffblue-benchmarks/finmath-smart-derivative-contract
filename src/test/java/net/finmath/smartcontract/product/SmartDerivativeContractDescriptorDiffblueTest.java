@@ -1,34 +1,26 @@
 package net.finmath.smartcontract.product;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.diffblue.cover.annotations.MethodsUnderTest;
-import net.finmath.smartcontract.product.SmartDerivativeContractDescriptor.Party;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class SmartDerivativeContractDescriptorDiffblueTest {
   /**
-   * Test Party getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link Party#Party(String, String, String, String)}
-   *   <li>{@link Party#toString()}
-   *   <li>{@link Party#getAddress()}
-   *   <li>{@link Party#getHref()}
-   *   <li>{@link Party#getId()}
-   *   <li>{@link Party#getName()}
+   *   <li>
+   * {@link SmartDerivativeContractDescriptor.Party#Party(String, String, String, String)}
+   *   <li>{@link SmartDerivativeContractDescriptor.Party#toString()}
+   *   <li>{@link SmartDerivativeContractDescriptor.Party#getAddress()}
+   *   <li>{@link SmartDerivativeContractDescriptor.Party#getHref()}
+   *   <li>{@link SmartDerivativeContractDescriptor.Party#getId()}
+   *   <li>{@link SmartDerivativeContractDescriptor.Party#getName()}
    * </ul>
    */
   @Test
-  @DisplayName("Test Party getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void Party.<init>(String, String, String, String)", "String Party.getAddress()",
-      "String Party.getHref()", "String Party.getId()", "String Party.getName()", "String Party.toString()"})
   void testPartyGettersAndSetters() {
     // Arrange and Act
-    Party actualParty = new Party("42", "Name", "Href", "42 Main St");
+    SmartDerivativeContractDescriptor.Party actualParty = new SmartDerivativeContractDescriptor.Party("42", "Name",
+        "Href", "42 Main St");
     String actualToStringResult = actualParty.toString();
     String actualAddress = actualParty.getAddress();
     String actualHref = actualParty.getHref();

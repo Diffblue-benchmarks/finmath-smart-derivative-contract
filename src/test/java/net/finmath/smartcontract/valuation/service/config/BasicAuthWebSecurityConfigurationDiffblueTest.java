@@ -3,15 +3,18 @@ package net.finmath.smartcontract.valuation.service.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import net.finmath.smartcontract.valuation.service.utils.ApplicationProperties;
 import net.finmath.smartcontract.valuation.service.utils.SDCUser;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,23 +23,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 class BasicAuthWebSecurityConfigurationDiffblueTest {
   /**
-   * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()}.</li>
-   *   <li>Then return not userExists {@code janedoe}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * Method under test:
+   * {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName("Test userDetailsService(ApplicationProperties); given ArrayList(); then return not userExists 'janedoe'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({
-      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
-  void testUserDetailsService_givenArrayList_thenReturnNotUserExistsJanedoe() {
+  void testUserDetailsService() {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
-    //   Run dcover create --keep-partial-tests to gain insights into why
-    //   a non-Spring test was created.
 
     // Arrange
     BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
@@ -49,22 +41,53 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
   }
 
   /**
-   * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   * <ul>
-   *   <li>Given {@link SDCUser} (default constructor) Password is {@code Password}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * Method under test:
+   * {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName("Test userDetailsService(ApplicationProperties); given SDCUser (default constructor) Password is 'Password'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({
-      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
-  void testUserDetailsService_givenSDCUserPasswordIsPassword() throws UsernameNotFoundException {
+  void testUserDetailsService2() throws UsernameNotFoundException {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
-    //   Run dcover create --keep-partial-tests to gain insights into why
-    //   a non-Spring test was created.
+
+    // Arrange
+    BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
+
+    SDCUser sdcUser = new SDCUser();
+    sdcUser.setPassword("iloveyou");
+    sdcUser.setRole("Role");
+    sdcUser.setUsername("janedoe");
+
+    ArrayList<SDCUser> users = new ArrayList<>();
+    users.add(sdcUser);
+
+    ApplicationProperties applicationProperties = new ApplicationProperties();
+    applicationProperties.setUsers(users);
+
+    // Act
+    InMemoryUserDetailsManager actualUserDetailsServiceResult = basicAuthWebSecurityConfiguration
+        .userDetailsService(applicationProperties);
+
+    // Assert
+    UserDetails loadUserByUsernameResult = actualUserDetailsServiceResult.loadUserByUsername("janedoe");
+    Collection<? extends GrantedAuthority> authorities = loadUserByUsernameResult.getAuthorities();
+    assertEquals(1, authorities.size());
+    assertTrue(authorities instanceof Set);
+    assertTrue(loadUserByUsernameResult instanceof User);
+    assertEquals("janedoe", loadUserByUsernameResult.getUsername());
+    assertEquals("{noop}iloveyou", loadUserByUsernameResult.getPassword());
+    assertTrue(loadUserByUsernameResult.isAccountNonExpired());
+    assertTrue(loadUserByUsernameResult.isAccountNonLocked());
+    assertTrue(loadUserByUsernameResult.isCredentialsNonExpired());
+    assertTrue(loadUserByUsernameResult.isEnabled());
+    assertTrue(actualUserDetailsServiceResult.userExists("janedoe"));
+  }
+
+  /**
+   * Method under test:
+   * {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   */
+  @Test
+  void testUserDetailsService3() throws UsernameNotFoundException {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
 
     // Arrange
     BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
@@ -106,28 +129,22 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
   }
 
   /**
-   * Test {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}.
-   * <ul>
-   *   <li>Then return loadUserByUsername {@code janedoe} Authorities size is one.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
+   * Method under test:
+   * {@link BasicAuthWebSecurityConfiguration#userDetailsService(ApplicationProperties)}
    */
   @Test
-  @DisplayName("Test userDetailsService(ApplicationProperties); then return loadUserByUsername 'janedoe' Authorities size is one")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({
-      "InMemoryUserDetailsManager BasicAuthWebSecurityConfiguration.userDetailsService(ApplicationProperties)"})
-  void testUserDetailsService_thenReturnLoadUserByUsernameJanedoeAuthoritiesSizeIsOne()
-      throws UsernameNotFoundException {
+  void testUserDetailsService4() throws UsernameNotFoundException {
     //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
-    //   Run dcover create --keep-partial-tests to gain insights into why
-    //   a non-Spring test was created.
 
     // Arrange
     BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration = new BasicAuthWebSecurityConfiguration();
-
-    SDCUser sdcUser = new SDCUser();
+    SDCUser sdcUser = mock(SDCUser.class);
+    when(sdcUser.getPassword()).thenReturn("iloveyou");
+    when(sdcUser.getRole()).thenReturn("Role");
+    when(sdcUser.getUsername()).thenReturn("janedoe");
+    doNothing().when(sdcUser).setPassword(Mockito.<String>any());
+    doNothing().when(sdcUser).setRole(Mockito.<String>any());
+    doNothing().when(sdcUser).setUsername(Mockito.<String>any());
     sdcUser.setPassword("iloveyou");
     sdcUser.setRole("Role");
     sdcUser.setUsername("janedoe");
@@ -143,6 +160,12 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
         .userDetailsService(applicationProperties);
 
     // Assert
+    verify(sdcUser).getPassword();
+    verify(sdcUser).getRole();
+    verify(sdcUser).getUsername();
+    verify(sdcUser).setPassword(eq("iloveyou"));
+    verify(sdcUser).setRole(eq("Role"));
+    verify(sdcUser).setUsername(eq("janedoe"));
     UserDetails loadUserByUsernameResult = actualUserDetailsServiceResult.loadUserByUsername("janedoe");
     Collection<? extends GrantedAuthority> authorities = loadUserByUsernameResult.getAuthorities();
     assertEquals(1, authorities.size());

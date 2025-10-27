@@ -4,46 +4,113 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
+import static org.mockito.Mockito.mock;
 import java.util.Properties;
 import org.json.JSONObject;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class WebSocketConnectorDiffblueTest {
-  @InjectMocks
-  private Properties properties;
-
-  @InjectMocks
-  private WebSocketConnector webSocketConnector;
-
   /**
-   * Test {@link WebSocketConnector#WebSocketConnector(Properties)}.
-   * <p>
-   * Method under test: {@link WebSocketConnector#WebSocketConnector(Properties)}
+   * Method under test: {@link WebSocketConnector#initAuthJson()}
    */
   @Test
-  @DisplayName("Test new WebSocketConnector(Properties)")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void WebSocketConnector.<init>(Properties)"})
-  void testNewWebSocketConnector() throws Exception {
-    // Arrange and Act
-    WebSocketConnector actualWebSocketConnector = new WebSocketConnector(new Properties());
+  void testInitAuthJson() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
 
-    // Assert
-    assertEquals("", actualWebSocketConnector.scope);
-    assertNull(actualWebSocketConnector.getAuthJson());
-    assertTrue(actualWebSocketConnector.connectionProperties.isEmpty());
+    // Arrange
+    WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
+
+    // Act and Assert
+    assertSame(webSocketConnector, webSocketConnector.initAuthJson());
   }
 
   /**
-   * Test getters and setters.
-   * <p>
+   * Method under test: {@link WebSocketConnector#initAuthJson()}
+   */
+  @Test
+  void testInitAuthJson2() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
+    webSocketConnector.authJson = mock(JSONObject.class);
+
+    // Act and Assert
+    assertSame(webSocketConnector, webSocketConnector.initAuthJson());
+  }
+
+  /**
+   * Method under test:
+   * {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
+   */
+  @Test
+  void testGetAuthenticationInfo() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
+
+    // Act and Assert
+    assertNull(webSocketConnector.getAuthenticationInfo(new JSONObject(), "https://example.org/example"));
+  }
+
+  /**
+   * Method under test:
+   * {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
+   */
+  @Test
+  void testGetAuthenticationInfo2() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange, Act and Assert
+    assertNull((new WebSocketConnector(new Properties())).getAuthenticationInfo(null, "https://example.org/example"));
+  }
+
+  /**
+   * Method under test:
+   * {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
+   */
+  @Test
+  void testGetAuthenticationInfo3() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange, Act and Assert
+    assertNull((new WebSocketConnector(new Properties())).getAuthenticationInfo(mock(JSONObject.class),
+        "https://example.org/example"));
+  }
+
+  /**
+   * Method under test:
+   * {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
+   */
+  @Test
+  void testGetAuthenticationInfo4() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
+
+    // Act and Assert
+    assertNull(
+        webSocketConnector.getAuthenticationInfo(new JSONObject(), "Refinitiv Data Platform authentication failure:"));
+  }
+
+  /**
+   * Method under test:
+   * {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
+   */
+  @Test
+  void testGetAuthenticationInfo5() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
+
+    // Arrange
+    WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
+
+    // Act and Assert
+    assertNull(webSocketConnector.getAuthenticationInfo(new JSONObject(), ""));
+  }
+
+  /**
    * Methods under test:
    * <ul>
    *   <li>{@link WebSocketConnector#getAuthJson()}
@@ -51,9 +118,6 @@ class WebSocketConnectorDiffblueTest {
    * </ul>
    */
   @Test
-  @DisplayName("Test getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"JSONObject WebSocketConnector.getAuthJson()", "String WebSocketConnector.getPosition()"})
   void testGettersAndSetters() throws Exception {
     // Arrange
     WebSocketConnector webSocketConnector = new WebSocketConnector(new Properties());
@@ -67,70 +131,18 @@ class WebSocketConnectorDiffblueTest {
   }
 
   /**
-   * Test {@link WebSocketConnector#initAuthJson()}.
-   * <p>
-   * Method under test: {@link WebSocketConnector#initAuthJson()}
+   * Method under test: {@link WebSocketConnector#WebSocketConnector(Properties)}
    */
   @Test
-  @DisplayName("Test initAuthJson()")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"WebSocketConnector WebSocketConnector.initAuthJson()"})
-  void testInitAuthJson() {
-    // Arrange, Act and Assert
-    assertSame(webSocketConnector, webSocketConnector.initAuthJson());
-  }
+  void testNewWebSocketConnector() throws Exception {
+    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
 
-  /**
-   * Test {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}.
-   * <ul>
-   *   <li>When {@link JSONObject#JSONObject()}.</li>
-   *   <li>Then return {@code null}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
-   */
-  @Test
-  @DisplayName("Test getAuthenticationInfo(JSONObject, String); when JSONObject(); then return 'null'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"JSONObject WebSocketConnector.getAuthenticationInfo(JSONObject, String)"})
-  void testGetAuthenticationInfo_whenJSONObject_thenReturnNull() {
-    // Arrange, Act and Assert
-    assertNull(webSocketConnector.getAuthenticationInfo(new JSONObject(), "https://example.org/example"));
-  }
+    // Arrange and Act
+    WebSocketConnector actualWebSocketConnector = new WebSocketConnector(new Properties());
 
-  /**
-   * Test {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}.
-   * <ul>
-   *   <li>When {@code null}.</li>
-   *   <li>Then return {@code null}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
-   */
-  @Test
-  @DisplayName("Test getAuthenticationInfo(JSONObject, String); when 'null'; then return 'null'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"JSONObject WebSocketConnector.getAuthenticationInfo(JSONObject, String)"})
-  void testGetAuthenticationInfo_whenNull_thenReturnNull() {
-    // Arrange, Act and Assert
-    assertNull(webSocketConnector.getAuthenticationInfo(null, "https://example.org/example"));
-  }
-
-  /**
-   * Test {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}.
-   * <ul>
-   *   <li>When {@code Refinitiv Data Platform authentication failure:}.</li>
-   * </ul>
-   * <p>
-   * Method under test: {@link WebSocketConnector#getAuthenticationInfo(JSONObject, String)}
-   */
-  @Test
-  @DisplayName("Test getAuthenticationInfo(JSONObject, String); when 'Refinitiv Data Platform authentication failure:'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"JSONObject WebSocketConnector.getAuthenticationInfo(JSONObject, String)"})
-  void testGetAuthenticationInfo_whenRefinitivDataPlatformAuthenticationFailure() {
-    // Arrange, Act and Assert
-    assertNull(
-        webSocketConnector.getAuthenticationInfo(new JSONObject(), "Refinitiv Data Platform authentication failure:"));
+    // Assert
+    assertEquals("", actualWebSocketConnector.scope);
+    assertNull(actualWebSocketConnector.getAuthJson());
+    assertTrue(actualWebSocketConnector.connectionProperties.isEmpty());
   }
 }

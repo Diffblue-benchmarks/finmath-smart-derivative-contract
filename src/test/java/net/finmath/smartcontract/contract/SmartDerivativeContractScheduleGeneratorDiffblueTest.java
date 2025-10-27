@@ -4,40 +4,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import net.finmath.smartcontract.contract.SmartDerivativeContractSchedule.EventTimes;
-import net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator.EventTimesImpl;
-import net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator.SimpleSchedule;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   /**
-   * Test EventTimesImpl getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link EventTimesImpl#EventTimesImpl(LocalDateTime, LocalDateTime, Duration, LocalDateTime)}
-   *   <li>{@link EventTimesImpl#getAccountAccessAllowedPeriod()}
-   *   <li>{@link EventTimesImpl#getAccountAccessAllowedStart()}
-   *   <li>{@link EventTimesImpl#getMarginCheckTime()}
-   *   <li>{@link EventTimesImpl#getSettementTime()}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.EventTimesImpl#EventTimesImpl(LocalDateTime, LocalDateTime, Duration, LocalDateTime)}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.EventTimesImpl#getAccountAccessAllowedPeriod()}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.EventTimesImpl#getAccountAccessAllowedStart()}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.EventTimesImpl#getMarginCheckTime()}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.EventTimesImpl#getSettementTime()}
    * </ul>
    */
   @Test
-  @DisplayName("Test EventTimesImpl getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void EventTimesImpl.<init>(LocalDateTime, LocalDateTime, Duration, LocalDateTime)",
-      "Duration EventTimesImpl.getAccountAccessAllowedPeriod()",
-      "LocalDateTime EventTimesImpl.getAccountAccessAllowedStart()",
-      "LocalDateTime EventTimesImpl.getMarginCheckTime()", "LocalDateTime EventTimesImpl.getSettementTime()"})
   void testEventTimesImplGettersAndSetters() {
     // Arrange
     LocalDateTime settementTime = LocalDate.of(1970, 1, 1).atStartOfDay();
@@ -45,8 +36,8 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
     LocalDateTime marginCheckTime = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
-    EventTimesImpl actualEventTimesImpl = new EventTimesImpl(settementTime, accountAccessAllowedStart, null,
-        marginCheckTime);
+    SmartDerivativeContractScheduleGenerator.EventTimesImpl actualEventTimesImpl = new SmartDerivativeContractScheduleGenerator.EventTimesImpl(
+        settementTime, accountAccessAllowedStart, null, marginCheckTime);
     Duration actualAccountAccessAllowedPeriod = actualEventTimesImpl.getAccountAccessAllowedPeriod();
     LocalDateTime actualAccountAccessAllowedStart = actualEventTimesImpl.getAccountAccessAllowedStart();
     LocalDateTime actualMarginCheckTime = actualEventTimesImpl.getMarginCheckTime();
@@ -59,16 +50,11 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   }
 
   /**
-   * Test {@link SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, LocalTime, Duration, LocalTime)} with {@code calendar}, {@code startDate}, {@code maturity}, {@code settlementTime}, {@code accountAccessAllowedStartTime}, {@code accountAccessAllowedDuration}, {@code marginCheckTime}.
-   * <p>
-   * Method under test: {@link SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, LocalTime, Duration, LocalTime)}
+   * Method under test:
+   * {@link SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, LocalTime, Duration, LocalTime)}
    */
   @Test
-  @DisplayName("Test getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, LocalTime, Duration, LocalTime) with 'calendar', 'startDate', 'maturity', 'settlementTime', 'accountAccessAllowedStartTime', 'accountAccessAllowedDuration', 'marginCheckTime'")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({
-      "SmartDerivativeContractSchedule SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, LocalTime, Duration, LocalTime)"})
-  void testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedStartTimeAccountAccessAllowedDurationMarginCheckTime() {
+  void testGetScheduleForBusinessDays() {
     // Arrange
     LocalDate startDate = LocalDate.of(1970, 1, 1);
     LocalTime marginCheckTime = LocalTime.MIDNIGHT;
@@ -79,43 +65,45 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
             LocalTime.MIDNIGHT, null, marginCheckTime);
 
     // Assert
-    List<EventTimes> eventTimes = actualScheduleForBusinessDays.getEventTimes();
+    List<SmartDerivativeContractSchedule.EventTimes> eventTimes = actualScheduleForBusinessDays.getEventTimes();
     assertEquals(1, eventTimes.size());
-    EventTimes getResult = eventTimes.get(0);
-    assertTrue(getResult instanceof EventTimesImpl);
-    assertTrue(actualScheduleForBusinessDays instanceof SimpleSchedule);
-    assertNull(getResult.getAccountAccessAllowedPeriod());
+    SmartDerivativeContractSchedule.EventTimes getResult = eventTimes.get(0);
+    assertTrue(getResult instanceof SmartDerivativeContractScheduleGenerator.EventTimesImpl);
+    assertTrue(actualScheduleForBusinessDays instanceof SmartDerivativeContractScheduleGenerator.SimpleSchedule);
     LocalDateTime accountAccessAllowedStart = getResult.getAccountAccessAllowedStart();
-    assertSame(startDate, accountAccessAllowedStart.toLocalDate());
+    LocalTime toLocalTimeResult = accountAccessAllowedStart.toLocalTime();
+    assertEquals("00:00", toLocalTimeResult.toString());
+    LocalDate toLocalDateResult = accountAccessAllowedStart.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    assertNull(getResult.getAccountAccessAllowedPeriod());
+    assertSame(startDate, toLocalDateResult);
     LocalDateTime marginCheckTime2 = getResult.getMarginCheckTime();
     assertSame(startDate, marginCheckTime2.toLocalDate());
     LocalDateTime settementTime = getResult.getSettementTime();
     assertSame(startDate, settementTime.toLocalDate());
     LocalTime localTime = marginCheckTime.MIN;
-    assertSame(localTime, accountAccessAllowedStart.toLocalTime());
+    assertSame(localTime, toLocalTimeResult);
     assertSame(localTime, marginCheckTime2.toLocalTime());
     assertSame(localTime, settementTime.toLocalTime());
   }
 
   /**
-   * Test SimpleSchedule getters and setters.
-   * <p>
    * Methods under test:
    * <ul>
-   *   <li>{@link SimpleSchedule#SimpleSchedule(List)}
-   *   <li>{@link SimpleSchedule#getEventTimes()}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.SimpleSchedule#SimpleSchedule(List)}
+   *   <li>
+   * {@link SmartDerivativeContractScheduleGenerator.SimpleSchedule#getEventTimes()}
    * </ul>
    */
   @Test
-  @DisplayName("Test SimpleSchedule getters and setters")
-  @Tag("MaintainedByDiffblue")
-  @MethodsUnderTest({"void SimpleSchedule.<init>(List)", "List SimpleSchedule.getEventTimes()"})
   void testSimpleScheduleGettersAndSetters() {
     // Arrange
-    ArrayList<EventTimes> eventTimes = new ArrayList<>();
+    ArrayList<SmartDerivativeContractSchedule.EventTimes> eventTimes = new ArrayList<>();
 
     // Act
-    List<EventTimes> actualEventTimes = (new SimpleSchedule(eventTimes)).getEventTimes();
+    List<SmartDerivativeContractSchedule.EventTimes> actualEventTimes = (new SmartDerivativeContractScheduleGenerator.SimpleSchedule(
+        eventTimes)).getEventTimes();
 
     // Assert
     assertTrue(actualEventTimes.isEmpty());
