@@ -1,0 +1,1 @@
+--exclude=net.finmath.smartcontract.product.xml. --exclude=net.finmath.smartcontract.api. --exclude=net.finmath.smartcontract.model.
