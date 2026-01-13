@@ -286,3 +286,5 @@ $RECYCLE.BIN/
 solidity/node_modules
 solidity/cache
 solidity/artifacts
+
+**/.diffblue/cache
