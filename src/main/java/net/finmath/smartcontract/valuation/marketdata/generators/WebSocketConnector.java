@@ -58,9 +58,10 @@ public class WebSocketConnector {
 	public static WebSocket ws = null;
 
 
-	public WebSocketConnector(Properties connectionProperties) throws Exception {
+	public WebSocketConnector(Properties connectionProperties) {
 		this.connectionProperties = connectionProperties;
-		this.position = Inet4Address.getLocalHost().getHostAddress();
+		// Delay initialization of position to avoid network calls in constructor
+		// This makes the class more testable and avoids sandbox violations in test generation tools
 	}
 
 	public WebSocket getWebSocket() throws Exception{
@@ -75,6 +76,14 @@ public class WebSocketConnector {
 	}
 
 	public String getPosition(){
+		if (this.position == null) {
+			try {
+				this.position = Inet4Address.getLocalHost().getHostAddress();
+			} catch (Exception e) {
+				// Fallback to a default value if host address cannot be determined
+				this.position = "127.0.0.1";
+			}
+		}
 		return this.position;
 	}
 

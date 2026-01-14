@@ -1,0 +1,97 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T124605.json'
+INFO  
+INFO  R027: Missing beans when creating Spring context
+      Failed to create Spring context due to missing beans
+      in the current Spring profile:
+      - java.util.Properties
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12968 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      See https://diff.blue/R027 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      
+      Failed to create Spring context due to missing beans
+      in the current Spring profile:
+      - java.util.Properties
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12968 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      See https://diff.blue/R027 to resolve this issue.
+      
+INFO  
+INFO  1 issues were found and displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 1 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] Perfect! The file has been created successfully. Let me now document what I've done in a summary.
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] I've successfully addressed the Diffblue Cover issue R027 for the `WebSocketConnector` class. The issue was that Diffblue Cover couldn't create tests for the `WebSocketConnector` constructor because it requires a `java.util.Properties` parameter, which cannot be automatically provided by Spring as it's not a bean.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Solution Implemented
+INFO  [Claude Code] 
+INFO  [Claude Code] I created a new test configuration class: `/home/jbergqvist/diffblue/finmath-smart-derivative-contract/src/test/java/net/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnectorTestConfiguration.java`
+INFO  [Claude Code] 
+INFO  [Claude Code] This configuration class:
+INFO  [Claude Code] 1. Uses `@TestConfiguration` annotation to mark it as a Spring test configuration
+INFO  [Claude Code] 2. Provides a `@Bean` method that creates a `Properties` object with all the required connection properties that `WebSocketConnector` needs
+INFO  [Claude Code] 3. Uses safe, non-functional test values (e.g., test URLs, mock credentials) to prevent any actual network calls during testing
+INFO  [Claude Code] 4. Follows the same pattern as the existing `MockUserAuthConfig` class in the codebase
+INFO  [Claude Code] 
+INFO  [Claude Code] ### How This Resolves the Issue
+INFO  [Claude Code] 
+INFO  [Claude Code] When Diffblue Cover generates tests for `WebSocketConnector`, it can now:
+INFO  [Claude Code] - Reference `WebSocketConnectorTestConfiguration` in the `@ContextConfiguration` annotation
+INFO  [Claude Code] - Have Spring automatically wire the `Properties` bean into the `WebSocketConnector` constructor
+INFO  [Claude Code] - Successfully create a Spring context for testing
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps
+INFO  [Claude Code] 
+INFO  [Claude Code] As mentioned in your advisory note, you may want to run `mvn install -DskipTests` or `mvn test-compile` to update the classpath. However, I encountered a GPG signing configuration issue during the install phase. You can either:
+INFO  [Claude Code] 1. Run `mvn test-compile -DskipTests` to compile just the test classes
+INFO  [Claude Code] 2. Or simply let Diffblue Cover pick up the new configuration file when it next runs
+INFO  [Claude Code] 
+INFO  [Claude Code] The test configuration file is now in place and ready for Diffblue Cover to use when generating tests for the `WebSocketConnector` class.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T134110.log
+INFO  Finished in 1m 47s

@@ -1,6 +1,5 @@
 package net.finmath.smartcontract.valuation.oracle.interestrates;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,6 +31,7 @@ import net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrati
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParser;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProvider;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -263,8 +263,19 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetAmount() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
+    String createMinimalSmartDerivativeContractXmlResult =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String currency =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    Cashflow cashflow =
+        new Cashflow(
+            currency,
+            1.0E-9d,
+            1.0E-9d,
+            true,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    products.put(createMinimalSmartDerivativeContractXmlResult, cashflow);
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     CalibrationDataset calibrationDataset =
@@ -298,7 +309,10 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
     when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
@@ -331,14 +345,20 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetAmount3() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
@@ -388,7 +408,10 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     calibrationSpecProviderList.add(calibrationSpecProvider);
@@ -434,70 +457,18 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetAmount5() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
             "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getAmount(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getAmount(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getAmount(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "javax.money.MonetaryAmount ValuationOraclePlainSwap.getAmount(LocalDateTime, LocalDateTime)"
-  })
-  void testGetAmount6() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
@@ -569,8 +540,19 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValue2() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
+    String createMinimalSmartDerivativeContractXmlResult =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String currency =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    Cashflow cashflow =
+        new Cashflow(
+            currency,
+            1.0E-9d,
+            1.0E-9d,
+            true,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    products.put(createMinimalSmartDerivativeContractXmlResult, cashflow);
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     CalibrationDataset calibrationDataset =
@@ -600,39 +582,12 @@ class ValuationOraclePlainSwapDiffblueTest {
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
   void testGetValue3() {
     // Arrange
-    HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS");
-    products.put("discount-EUR-OIS", cashflow);
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
-
-    // Act and Assert
-    assertNull(
-        valuationOraclePlainSwap.getValue(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue4() {
-    // Arrange
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
     when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
@@ -660,11 +615,21 @@ class ValuationOraclePlainSwapDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue5() {
+  void testGetValue4() {
     // Arrange
     HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     calibrationDataItemSet.add(
         new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -706,11 +671,21 @@ class ValuationOraclePlainSwapDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue6() {
+  void testGetValue5() {
     // Arrange
     HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     calibrationDataItemSet.add(
         new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -752,20 +727,74 @@ class ValuationOraclePlainSwapDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue7() {
+  void testGetValue6() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    calibrationSpecProviderList.add(calibrationSpecProvider);
+    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
+
+    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
+    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
+    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
+    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
+        .thenReturn(streamResult);
+    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
+    scenarioList.add(calibrationDataset);
+    ValuationOraclePlainSwap valuationOraclePlainSwap =
+        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
+
+    // Act and Assert
+    assertThrows(
+        SDCException.class,
+        () ->
+            valuationOraclePlainSwap.getValue(
+                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
+    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
+    verify(calibrationDataset, atLeast(1)).getDataPoints();
+    verify(calibrationDataset).getDate();
+    verify(calibrationDataset).getFixingDataItems();
+    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
+  }
+
+  /**
+   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
+   *
+   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
+  void testGetValue7() {
+    // Arrange
+    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     calibrationSpecProviderList.add(calibrationSpecProvider);
@@ -809,113 +838,18 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValue8() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
 
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue9() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
             "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValue(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValue(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValue(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"BigDecimal ValuationOraclePlainSwap.getValue(LocalDateTime, LocalDateTime)"})
-  void testGetValue10() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
@@ -1036,8 +970,19 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValues2() {
     // Arrange
     HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "3");
-    products.put("discount-EUR-OIS", cashflow);
+    String createMinimalSmartDerivativeContractXmlResult =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String currency =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    Cashflow cashflow =
+        new Cashflow(
+            currency,
+            1.0E-9d,
+            1.0E-9d,
+            true,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    products.put(createMinimalSmartDerivativeContractXmlResult, cashflow);
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
     CalibrationDataset calibrationDataset =
@@ -1069,7 +1014,10 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
     when(calibrationDataset.getDataPoints())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
     when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
 
     ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
@@ -1100,8 +1048,18 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValues4() {
     // Arrange
     HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     calibrationDataItemSet.add(
         new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -1146,8 +1104,18 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValues5() {
     // Arrange
     HashSet<CalibrationDataItem> calibrationDataItemSet = new HashSet<>();
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     Spec spec =
-        new Spec("discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS", "discount-EUR-OIS");
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     calibrationDataItemSet.add(
         new CalibrationDataItem(spec, 1.0E-9d, LocalDate.of(1970, 1, 1).atStartOfDay()));
 
@@ -1192,14 +1160,20 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValues6() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
@@ -1247,7 +1221,10 @@ class ValuationOraclePlainSwapDiffblueTest {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
 
     ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
     calibrationSpecProviderList.add(calibrationSpecProvider);
@@ -1291,68 +1268,18 @@ class ValuationOraclePlainSwapDiffblueTest {
   void testGetValues8() {
     // Arrange
     CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
             "discount-EUR-OIS",
-            "Calibration Curve Name",
-            10.0d);
-    when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
-        .thenReturn(calibrationSpec);
-
-    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
-    calibrationSpecProviderList.add(calibrationSpecProvider);
-    Stream<CalibrationSpecProvider> streamResult = calibrationSpecProviderList.stream();
-
-    CalibrationDataset calibrationDataset = mock(CalibrationDataset.class);
-    when(calibrationDataset.getDataPoints()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getFixingDataItems()).thenReturn(new HashSet<>());
-    when(calibrationDataset.getDataAsCalibrationDataPointStream(Mockito.<CalibrationParser>any()))
-        .thenReturn(streamResult);
-    when(calibrationDataset.getDate()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    scenarioList.add(calibrationDataset);
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(new HashMap<>(), scenarioList);
-
-    // Act and Assert
-    assertThrows(
-        SDCException.class,
-        () ->
-            valuationOraclePlainSwap.getValues(
-                LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-    verify(calibrationDataset).getDataAsCalibrationDataPointStream(isA(CalibrationParser.class));
-    verify(calibrationDataset, atLeast(1)).getDataPoints();
-    verify(calibrationDataset).getDate();
-    verify(calibrationDataset).getFixingDataItems();
-    verify(calibrationSpecProvider).getCalibrationSpec(isA(CalibrationContext.class));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues9() {
-    // Arrange
-    CalibrationSpecProvider calibrationSpecProvider = mock(CalibrationSpecProvider.class);
-    CalibrationSpec calibrationSpec =
-        new CalibrationSpec(
-            "Type",
-            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
-            10.0d,
-            "",
-            "Calibration Curve Name",
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     when(calibrationSpecProvider.getCalibrationSpec(Mockito.<CalibrationContext>any()))
         .thenReturn(calibrationSpec);
@@ -1457,43 +1384,5 @@ class ValuationOraclePlainSwapDiffblueTest {
     assertNull(
         valuationOraclePlainSwap.getValues(
             LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay()));
-  }
-
-  /**
-   * Test {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Then return size is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link ValuationOraclePlainSwap#getValues(LocalDateTime, LocalDateTime)}
-   */
-  @Test
-  @DisplayName("Test getValues(LocalDateTime, LocalDateTime); then return size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Map ValuationOraclePlainSwap.getValues(LocalDateTime, LocalDateTime)"})
-  void testGetValues_thenReturnSizeIsOne() {
-    // Arrange
-    HashMap<String, AnalyticProduct> products = new HashMap<>();
-    Cashflow cashflow = new Cashflow("GBP", 1.0E-9d, 1.0E-9d, true, "discount-EUR-OIS");
-    products.put("discount-EUR-OIS", cashflow);
-
-    ArrayList<CalibrationDataset> scenarioList = new ArrayList<>();
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
-    scenarioList.add(calibrationDataset);
-
-    ValuationOraclePlainSwap valuationOraclePlainSwap =
-        new ValuationOraclePlainSwap(products, scenarioList);
-
-    // Act
-    Map<String, BigDecimal> actualValues =
-        valuationOraclePlainSwap.getValues(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    assertEquals(1, actualValues.size());
-    assertEquals(new BigDecimal("0.00"), actualValues.get("discount-EUR-OIS"));
   }
 }

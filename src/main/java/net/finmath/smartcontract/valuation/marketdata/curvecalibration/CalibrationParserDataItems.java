@@ -28,6 +28,10 @@ public class CalibrationParserDataItems implements CalibrationParser {
 
 	private static final Logger logger = LoggerFactory.getLogger(CalibrationParserDataItems.class);
 
+	public CalibrationParserDataItems() {
+		// Default constructor
+	}
+
 	@Override
 	public Stream<CalibrationSpecProvider> parse(final Stream<CalibrationDataItem> datapoints) {
 		return datapoints.map(this::parseDatapointIfPresent).filter(Optional::isPresent).map(Optional::get);

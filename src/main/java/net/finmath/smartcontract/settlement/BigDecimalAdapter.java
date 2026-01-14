@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 public class BigDecimalAdapter extends XmlAdapter<String, BigDecimal> {
 
+	public BigDecimalAdapter() {
+		// Default constructor for XML binding
+	}
+
 	@Override
 	public String marshal(BigDecimal value) throws Exception
 	{

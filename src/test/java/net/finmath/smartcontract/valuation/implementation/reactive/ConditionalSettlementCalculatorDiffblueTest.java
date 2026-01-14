@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import net.finmath.smartcontract.model.ValueResult;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -46,9 +47,13 @@ class ConditionalSettlementCalculatorDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void ConditionalSettlementCalculator.<init>(String, BigDecimal)"})
   void testNewConditionalSettlementCalculator() {
-    // Arrange and Act
+    // Arrange
+    String sdcXML =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
+    // Act
     ConditionalSettlementCalculator actualConditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(sdcXML, new BigDecimal("2.3"));
     CalibrationDataset actualmarketdata =
         new CalibrationDataset(new HashSet<>(), LocalDate.of(1970, 1, 1).atStartOfDay());
     ValueResult actualApplyResult = actualConditionalSettlementCalculator.apply(actualmarketdata);
@@ -72,11 +77,17 @@ class ConditionalSettlementCalculatorDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void ConditionalSettlementCalculator.<init>(String, BigDecimal)"})
   void testNewConditionalSettlementCalculator2() {
-    // Arrange and Act
+    // Arrange
+    String sdcXML =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
+    // Act
     ConditionalSettlementCalculator actualConditionalSettlementCalculator =
-        new ConditionalSettlementCalculator("Sdc XML", new BigDecimal("2.3"));
+        new ConditionalSettlementCalculator(sdcXML, new BigDecimal("2.3"));
     CalibrationDataset actualmarketdata = mock(CalibrationDataset.class);
-    when(actualmarketdata.serializeToJson()).thenReturn("Serialize To Json");
+    when(actualmarketdata.serializeToJson())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     ValueResult actualApplyResult = actualConditionalSettlementCalculator.apply(actualmarketdata);
 
     // Assert

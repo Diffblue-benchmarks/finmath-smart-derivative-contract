@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.settlement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.finmath.smartcontract.model.MarketDataList;
 import net.finmath.smartcontract.settlement.Settlement.SettlementType;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,12 +29,8 @@ class SettlementDiffblueTest {
    *   <li>default or parameterless constructor of {@link Settlement}
    *   <li>{@link Settlement#setCurrency(String)}
    *   <li>{@link Settlement#setMarginLimits(List)}
-   *   <li>{@link Settlement#setMarginValue(BigDecimal)}
    *   <li>{@link Settlement#setMarketData(MarketDataList)}
    *   <li>{@link Settlement#setSettlementInfos(List)}
-   *   <li>{@link Settlement#setSettlementNPV(BigDecimal)}
-   *   <li>{@link Settlement#setSettlementNPVNext(BigDecimal)}
-   *   <li>{@link Settlement#setSettlementNPVPrevious(BigDecimal)}
    *   <li>{@link Settlement#setSettlementTime(ZonedDateTime)}
    *   <li>{@link Settlement#setSettlementTimeNext(ZonedDateTime)}
    *   <li>{@link Settlement#setSettlementType(SettlementType)}
@@ -85,28 +83,22 @@ class SettlementDiffblueTest {
   void testGettersAndSetters() {
     // Arrange and Act
     Settlement actualSettlement = new Settlement();
-    actualSettlement.setCurrency("GBP");
+    actualSettlement.setCurrency(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     ArrayList<BigDecimal> marginLimits = new ArrayList<>();
     actualSettlement.setMarginLimits(marginLimits);
-    BigDecimal marginValue = new BigDecimal("2.3");
-    actualSettlement.setMarginValue(marginValue);
     MarketDataList marketData = new MarketDataList();
     actualSettlement.setMarketData(marketData);
     ArrayList<SettlementInfo> settlementInfos = new ArrayList<>();
     actualSettlement.setSettlementInfos(settlementInfos);
-    BigDecimal settlementNPV = new BigDecimal("2.3");
-    actualSettlement.setSettlementNPV(settlementNPV);
-    BigDecimal settlementNPVNext = new BigDecimal("2.3");
-    actualSettlement.setSettlementNPVNext(settlementNPVNext);
-    BigDecimal settlementNPVPrevious = new BigDecimal("2.3");
-    actualSettlement.setSettlementNPVPrevious(settlementNPVPrevious);
     ZonedDateTime settlementTime = LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTime(settlementTime);
     ZonedDateTime settlementTimeNext =
         LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC);
     actualSettlement.setSettlementTimeNext(settlementTimeNext);
     actualSettlement.setSettlementType(SettlementType.INITIAL);
-    actualSettlement.setTradeId("42");
+    actualSettlement.setTradeId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     String actualCurrency = actualSettlement.getCurrency();
     List<BigDecimal> actualMarginLimits = actualSettlement.getMarginLimits();
     BigDecimal actualMarginValue = actualSettlement.getMarginValue();
@@ -120,19 +112,89 @@ class SettlementDiffblueTest {
     SettlementType actualSettlementType = actualSettlement.getSettlementType();
 
     // Assert
-    assertEquals("42", actualSettlement.getTradeId());
-    assertEquals("GBP", actualCurrency);
+    assertEquals(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www"
+            + ".w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract"
+            + ".xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI"
+            + "-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance"
+            + "</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart"
+            + "-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>"
+            + "    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0<"
+            + "/value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>   "
+            + " <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>   "
+            + " <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type"
+            + ">constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties>"
+            + "<settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata> "
+            + "   <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>     "
+            + "   <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>"
+            + "  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap<"
+            + "/productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference"
+            + "><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency"
+            + "><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference"
+            + ">party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01<"
+            + "/effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency"
+            + "><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>     "
+            + " </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6<"
+            + "/periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>"
+            + "        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>       "
+            + " <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor>"
+            + "<periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>     "
+            + "   </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">    "
+            + "  <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>       "
+            + " <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>     "
+            + "   <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculation"
+            + "PeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency>"
+            + "<periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>    "
+            + "  <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0<"
+            + "/amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule> "
+            + "       </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderiva"
+            + "tivecontract>",
+        actualCurrency);
+    assertEquals(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www"
+            + ".w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract"
+            + ".xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI"
+            + "-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance"
+            + "</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart"
+            + "-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>"
+            + "    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0<"
+            + "/value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>   "
+            + " <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>   "
+            + " <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type"
+            + ">constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties>"
+            + "<settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata> "
+            + "   <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>     "
+            + "   <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>"
+            + "  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap<"
+            + "/productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference"
+            + "><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency"
+            + "><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference"
+            + ">party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01<"
+            + "/effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency"
+            + "><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>     "
+            + " </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6<"
+            + "/periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>"
+            + "        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>       "
+            + " <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor>"
+            + "<periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>     "
+            + "   </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">    "
+            + "  <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>       "
+            + " <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>     "
+            + "   <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculation"
+            + "PeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency>"
+            + "<periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>    "
+            + "  <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0<"
+            + "/amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule> "
+            + "       </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderiva"
+            + "tivecontract>",
+        actualSettlement.getTradeId());
+    assertNull(actualMarginValue);
+    assertNull(actualSettlementNPV);
+    assertNull(actualSettlementNPVNext);
+    assertNull(actualSettlementNPVPrevious);
     assertEquals(SettlementType.INITIAL, actualSettlementType);
     assertTrue(actualMarginLimits.isEmpty());
     assertTrue(actualSettlementInfos.isEmpty());
-    assertEquals(new BigDecimal("2.3"), actualMarginValue);
-    assertEquals(new BigDecimal("2.3"), actualSettlementNPV);
-    assertEquals(new BigDecimal("2.3"), actualSettlementNPVNext);
-    assertEquals(new BigDecimal("2.3"), actualSettlementNPVPrevious);
-    assertSame(marginValue, actualMarginValue);
-    assertSame(settlementNPV, actualSettlementNPV);
-    assertSame(settlementNPVNext, actualSettlementNPVNext);
-    assertSame(settlementNPVPrevious, actualSettlementNPVPrevious);
     assertSame(marginLimits, actualMarginLimits);
     assertSame(settlementInfos, actualSettlementInfos);
     assertSame(marketData, actualMarketData);

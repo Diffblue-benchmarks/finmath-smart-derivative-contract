@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
+	public LocalDateTimeAdapter() {
+		// Default constructor for XML binding
+	}
+
 	@Override
 	public String marshal(LocalDateTime v) {
 		return v.format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));

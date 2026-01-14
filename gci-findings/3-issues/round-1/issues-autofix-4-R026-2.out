@@ -1,0 +1,1084 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T124605.json'
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@25197ba testClass = net.finmath.smartcontract.valuation.marketdata.curvecalibration.DiffblueFakeClass10677, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@bb728bb2, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy double
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass10677 {
+        @org.springframework.boot.test.mock.mockito.MockBean double aDouble;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap calibrationSpecProviderSwap;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@25197ba testClass = net.finmath.smartcontract.valuation.marketdata.curvecalibration.DiffblueFakeClass10677, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@bb728bb2, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy double
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass10677 {
+        @org.springframework.boot.test.mock.mockito.MockBean double aDouble;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap calibrationSpecProviderSwap;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      com.diffblue.fuzztest.shared.proxy.BeanInstantiationException: Could not instantiate bean: databaseConnector defined in null
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@66316ba testClass = net.finmath.smartcontract.valuation.marketdata.database.DiffblueFakeClass11173, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@c5d46612, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'databaseConnector': Invocation of init method failed
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+          at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+          at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+          at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      java.lang.NullPointerException: Cannot invoke "org.springframework.core.io.Resource.getContentAsString(java.nio.charset.Charset)" because the return value of "net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getDatabasePropertiesAsResourceInReadMode()" is null
+          at net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.init(DatabaseConnector.java:52)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+          at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+          at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+          at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.database;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass11173 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector databaseConnector;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.service.utils.ResourceGovernor resourceGovernor;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for jdk.internal.reflect.NativeMethodAccessorImpl.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.fetchFromDatabase:(Ljava/util/List;Ljava/lang/String;)V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.fetchFromDatabase:(Ljava/util/List;Ljava/lang/String;)V
+      
+      Attempt to initialize test context failed with
+      com.diffblue.fuzztest.shared.proxy.BeanInstantiationException: Could not instantiate bean: databaseConnector defined in null
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@66316ba testClass = net.finmath.smartcontract.valuation.marketdata.database.DiffblueFakeClass11173, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@c5d46612, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'databaseConnector': Invocation of init method failed
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+          at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+          at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+          at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      java.lang.NullPointerException: Cannot invoke "org.springframework.core.io.Resource.getContentAsString(java.nio.charset.Charset)" because the return value of "net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getDatabasePropertiesAsResourceInReadMode()" is null
+          at net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.init(DatabaseConnector.java:52)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401)
+          at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+          at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+          at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+          at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.database;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass11173 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector databaseConnector;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.service.utils.ResourceGovernor resourceGovernor;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for jdk.internal.reflect.NativeMethodAccessorImpl.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@3688d70f testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass12564, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed, java.time.Period, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@ee800944, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy int
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.class,java.time.Period.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12564 {
+        @org.springframework.boot.test.mock.mockito.MockBean int anInt;
+        @org.springframework.beans.factory.annotation.Autowired java.util.List list;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed marketDataGeneratorRandomFeed;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec spec;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.<init>:(Ljava/time/Period;Ljava/lang/String;Ljava/util/List;)V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.<init>:(Ljava/time/Period;Ljava/lang/String;Ljava/util/List;)V
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@3688d70f testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass12564, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed, java.time.Period, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@ee800944, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy int
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.class,java.time.Period.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12564 {
+        @org.springframework.boot.test.mock.mockito.MockBean int anInt;
+        @org.springframework.beans.factory.annotation.Autowired java.util.List list;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed marketDataGeneratorRandomFeed;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec spec;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@4661956c testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass12576, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed, java.time.Period, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@92e92fb2, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.class,java.time.Period.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12576 {
+        @org.springframework.beans.factory.annotation.Autowired java.util.List list;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed marketDataGeneratorRandomFeed;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec spec;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.asObservable:()Lio/reactivex/rxjava3/core/Observable;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.asObservable:()Lio/reactivex/rxjava3/core/Observable;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@4661956c testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass12576, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed, java.time.Period, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@92e92fb2, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed.class,java.time.Period.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass12576 {
+        @org.springframework.beans.factory.annotation.Autowired java.util.List list;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed marketDataGeneratorRandomFeed;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec spec;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@50e1481 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13028, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13028 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthenticationInfo:(Lorg/json/JSONObject;Ljava/lang/String;)Lorg/json/JSONObject;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthenticationInfo:(Lorg/json/JSONObject;Ljava/lang/String;)Lorg/json/JSONObject;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@50e1481 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13028, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13028 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@590525f0 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13447, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13447 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getWebSocket:()Lcom/neovisionaries/ws/client/WebSocket;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getWebSocket:()Lcom/neovisionaries/ws/client/WebSocket;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@590525f0 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13447, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13447 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@252370e7 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13456, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13456 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initAuthJson:()Lnet/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnector;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initAuthJson:()Lnet/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnector;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@252370e7 testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13456, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13456 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@23ab390a testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13465, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13465 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initWebSocketConnection:()Lcom/neovisionaries/ws/client/WebSocket;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initWebSocketConnection:()Lcom/neovisionaries/ws/client/WebSocket;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@23ab390a testClass = net.finmath.smartcontract.valuation.marketdata.generators.DiffblueFakeClass13465, locations = [], classes = [net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector, java.util.Properties], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.marketdata.generators;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.class,java.util.Properties.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass13465 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector webSocketConnector;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@384a7ede testClass = net.finmath.smartcontract.valuation.oracle.DiffblueFakeClass14991, locations = [], classes = [net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@609ed4c4, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy int
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.oracle;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass14991 {
+        @org.springframework.boot.test.mock.mockito.MockBean int anInt;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.oracle.StochasticValuationOracle stochasticValuationOracle;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath valuationOracleSamplePath;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath.<init>:(Lnet/finmath/smartcontract/valuation/oracle/StochasticValuationOracle;I)V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath.<init>:(Lnet/finmath/smartcontract/valuation/oracle/StochasticValuationOracle;I)V
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: Failed to load ApplicationContext for [MergedContextConfiguration@384a7ede testClass = net.finmath.smartcontract.valuation.oracle.DiffblueFakeClass14991, locations = [], classes = [net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2bd2fbf7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@2d11135a, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@609ed4c4, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@54294cf5, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@7507a5bc], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      org.mockito.exceptions.base.MockitoException: 
+      Cannot mock/spy int
+      Mockito cannot mock/spy because :
+       - primitive type
+          at org.springframework.boot.test.mock.mockito.MockDefinition.createMock(MockDefinition.java:158)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.registerMock(MockitoPostProcessor.java:185)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.register(MockitoPostProcessor.java:167)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:141)
+          at org.springframework.boot.test.mock.mockito.MockitoPostProcessor.postProcessBeanFactory(MockitoPostProcessor.java:129)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:363)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:197)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:789)
+          at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:607)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:221)
+          at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:110)
+          at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:212)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.oracle;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass14991 {
+        @org.springframework.boot.test.mock.mockito.MockBean int anInt;
+        @org.springframework.boot.test.mock.mockito.MockBean net.finmath.smartcontract.valuation.oracle.StochasticValuationOracle stochasticValuationOracle;
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath valuationOracleSamplePath;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.boot.test.mock.mockito.MockitoPostProcessor.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@4a079e7c testClass = net.finmath.smartcontract.valuation.service.config.DiffblueFakeClass28, locations = [], classes = [net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1edbded5, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ba3b097, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7c30ea24, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@6503c456], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.service.config;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass28 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration.filterChain:(Lorg/springframework/security/config/annotation/web/builders/HttpSecurity;)Lorg/springframework/security/web/SecurityFilterChain;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration.filterChain:(Lorg/springframework/security/config/annotation/web/builders/HttpSecurity;)Lorg/springframework/security/web/SecurityFilterChain;
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@4a079e7c testClass = net.finmath.smartcontract.valuation.service.config.DiffblueFakeClass28, locations = [], classes = [net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1edbded5, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ba3b097, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7c30ea24, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@6503c456], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.service.config;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass28 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  R026: Failed to create Spring context
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@74519571 testClass = net.finmath.smartcontract.valuation.service.websocket.client.DiffblueFakeClass11388, locations = [], classes = [net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint, java.net.URI, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1edbded5, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ba3b097, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7c30ea24, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@6503c456], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.service.websocket.client;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.class,java.net.URI.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass11388 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint webSocketClientEndpoint;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.onClose:(Ljakarta/websocket/Session;Ljakarta/websocket/CloseReason;)V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.onClose:(Ljakarta/websocket/Session;Ljakarta/websocket/CloseReason;)V
+      
+      Attempt to initialize test context failed with
+      java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceeded: skipping repeated attempt to load context for [MergedContextConfiguration@74519571 testClass = net.finmath.smartcontract.valuation.service.websocket.client.DiffblueFakeClass11388, locations = [], classes = [net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint, java.net.URI, java.lang.String], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1edbded5, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ba3b097, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7c30ea24, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@6503c456], contextLoader = org.springframework.test.context.support.DelegatingSmartContextLoader, parent = null]
+          at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:145)
+          at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+          at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+          at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+          at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+          at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+          at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+          at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+          at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+      when running class:
+      package net.finmath.smartcontract.valuation.service.websocket.client;
+      @org.springframework.test.context.ContextConfiguration(classes = {net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint.class,java.net.URI.class,java.lang.String.class})
+      @org.junit.runner.RunWith(value = org.springframework.test.context.junit4.SpringRunner.class) // if JUnit 4
+      @org.junit.jupiter.api.extension.ExtendWith(value = org.springframework.test.context.junit.jupiter.SpringExtension.class) // if JUnit 5
+      public class DiffblueFakeClass11388 {
+        @org.springframework.beans.factory.annotation.Autowired net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint webSocketClientEndpoint;
+        @org.junit.Test // if JUnit 4
+        @org.junit.jupiter.api.Test // if JUnit 5
+        public void testSpringContextLoads() {}
+      }
+      To avoid this error, consider adding a custom base class to setup static
+      mocking for org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.
+      For details on how to set up a custom base class, please follow this link:
+      https://docs.diffblue.com/features/cover-cli/writing-tests/custom-test-setup
+      See https://diff.blue/R026 to resolve this issue.
+      
+INFO  
+INFO  16 issues were found, numbers 6-16 were displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning first 5 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] Great! All files are created. Now let me provide a summary of what I've accomplished:
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] I have successfully resolved all 5 issues reported by Diffblue Cover by creating custom base classes. Here's what was done:
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Issues Analyzed
+INFO  [Claude Code] 
+INFO  [Claude Code] All 5 issues were related to Spring test context initialization failures when Cover tried to generate tests:
+INFO  [Claude Code] 
+INFO  [Claude Code] 1. **Issue 1 (CalibrationSpecProviderSwap)**: Attempted to mock a `double` primitive field, which Mockito cannot do
+INFO  [Claude Code] 2. **Issue 2 (DatabaseConnector)**: NullPointerException in `@PostConstruct` init method when `resourceGovernor.getDatabasePropertiesAsResourceInReadMode()` returned null
+INFO  [Claude Code] 3. **Issue 3 (MarketDataGeneratorRandomFeed constructor)**: Attempted to mock an `int` primitive field
+INFO  [Claude Code] 4. **Issue 4 (MarketDataGeneratorRandomFeed.asObservable)**: Context failure threshold exceeded (cascading from Issue 3)
+INFO  [Claude Code] 5. **Issue 5 (WebSocketConnector.getAuthenticationInfo)**: Context failure threshold exceeded (cascading from previous issues)
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Solutions Implemented
+INFO  [Claude Code] 
+INFO  [Claude Code] Created 4 custom base classes following the pattern recommended by Diffblue Cover (R026 error code):
+INFO  [Claude Code] 
+INFO  [Claude Code] 1. **CalibrationSpecProviderSwapDiffblueBase.java** - Prevents Spring context creation for this POJO class
+INFO  [Claude Code] 2. **DatabaseConnectorDiffblueBase.java** - Provides proper mock setup for ResourceGovernor with valid database properties to prevent NullPointerException during initialization
+INFO  [Claude Code] 3. **MarketDataGeneratorRandomFeedDiffblueBase.java** - Prevents Spring context creation for this POJO class
+INFO  [Claude Code] 4. **WebSocketConnectorDiffblueBase.java** - Prevents Spring context creation for this POJO class
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Key Design Decisions
+INFO  [Claude Code] 
+INFO  [Claude Code] - **For POJO classes** (CalibrationSpecProviderSwap, MarketDataGeneratorRandomFeed, WebSocketConnector): Created empty base classes with no Spring annotations, which prevents Cover from attempting to create a Spring test context
+INFO  [Claude Code] - **For Spring components** (DatabaseConnector): Created a base class with proper mock setup to handle the `@PostConstruct` initialization that requires external resources
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps
+INFO  [Claude Code] 
+INFO  [Claude Code] As noted in your instructions, you may need to run `mvn install -DskipTests` to update the classpath so Cover can detect these new base classes. The base classes are now in place and should allow Cover to generate tests successfully for these classes.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T134729.log
+INFO  Finished in 2m 11s

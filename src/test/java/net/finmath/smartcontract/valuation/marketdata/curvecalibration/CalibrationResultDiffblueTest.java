@@ -20,6 +20,7 @@ import net.finmath.marketdata.model.AnalyticModel;
 import net.finmath.marketdata.model.AnalyticModelFromCurvesAndVols;
 import net.finmath.marketdata.products.AnalyticProduct;
 import net.finmath.optimizer.SolverException;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -46,14 +47,20 @@ class CalibrationResultDiffblueTest {
 
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
     CalibrationSpec[] specs = new CalibrationSpec[] {calibrationSpec};
 
@@ -88,14 +95,20 @@ class CalibrationResultDiffblueTest {
       throws CloneNotSupportedException, SolverException {
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
 
     CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
@@ -130,14 +143,20 @@ class CalibrationResultDiffblueTest {
     AnalyticModelFromCurvesAndVols analyticModelFromCurvesAndVols =
         new AnalyticModelFromCurvesAndVols();
     when(c.getModel()).thenReturn(analyticModelFromCurvesAndVols);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
 
     CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
@@ -173,14 +192,20 @@ class CalibrationResultDiffblueTest {
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
     when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
         .thenReturn(analyticProduct);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
 
     CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
@@ -218,23 +243,36 @@ class CalibrationResultDiffblueTest {
     when(c.getModel()).thenReturn(new AnalyticModelFromCurvesAndVols());
     when(c.getCalibrationProductForSpec(Mockito.<CalibrationSpec>any()))
         .thenReturn(analyticProduct);
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
+    String type2 =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName2 =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName2 =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec2 =
         new CalibrationSpec(
-            "Type",
+            type2,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName2,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName2,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
 
     CalibrationResult calibrationResult =
@@ -295,14 +333,20 @@ class CalibrationResultDiffblueTest {
   void testGettersAndSetters() throws CloneNotSupportedException, SolverException {
     // Arrange
     CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    String type = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String forwardCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String discountCurveReceiverName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     CalibrationSpec calibrationSpec =
         new CalibrationSpec(
-            "Type",
+            type,
             new double[] {10.0d, 0.5d, 10.0d, 0.5d},
-            "Forward Curve Receiver Name",
+            forwardCurveReceiverName,
             10.0d,
-            "3",
-            "Calibration Curve Name",
+            discountCurveReceiverName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
             10.0d);
 
     CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);

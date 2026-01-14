@@ -1,0 +1,156 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T124605.json'
+INFO  
+INFO  R013: No inputs found that don't throw a trivial exception
+      Diffblue Cover tried to run the arrange/act section, but the test threw
+      java.lang.NullPointerException
+          at java.util.Objects.requireNonNull(Objects.java:209)
+          at net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getReadableResource(ResourceGovernor.java:72)
+      In order to prevent the method under test
+      from throwing NullPointerException, add constructors or factory
+      methods that make it easier to construct fully initialized objects used in
+      the method under test.
+      See https://diff.blue/R013 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getReadableResource:(Ljava/lang/String;Lnet/finmath/smartcontract/valuation/service/utils/ResourceGovernor$RoleFolders;Ljava/lang/String;)Lorg/springframework/core/io/Resource;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      We are unit testing `net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getReadableResource:(Ljava/lang/String;Lnet/finmath/smartcontract/valuation/service/utils/ResourceGovernor$RoleFolders;Ljava/lang/String;)Lorg/springframework/core/io/Resource;`.
+      
+      Create a parameterless factory method for the problematic
+      parameter/this object, determining which by reading the error message below.
+      The new factory method should be in the test classpath, not production.
+      Create a new factory class if there isn't already one for the class under test.
+      Do not create a test yourself, only a factory (don't test the factory either).
+      The factory method must be annotated with 
+      `@com.diffblue.cover.annotations.InterestingTestFactory`.
+      Avoid using mocks, these tend to produce unused stubbing errors or a
+      `java.lang.NullPointerException`.
+      If your environment has internet access then further documentation on
+      factory methods for Cover can be found here:
+      https://docs.diffblue.com/features/tutorials/increase-code-coverage#test-factory-pattern
+      
+      The factory should produce a parameter/this object such that
+      the following exception does not occur:
+      
+      ```
+      java.lang.NullPointerException
+        at java.util.Objects.requireNonNull(Objects.java:209)
+        at net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getReadableResource(ResourceGovernor.java:72)
+      ```
+      
+      Recompile the project to make sure the new factory / annotation / getter / etc
+      is available to Cover.
+      For example run `mvn install -DskipTests` or `gradle install -x test`.
+      
+INFO  
+INFO  R013: No inputs found that don't throw a trivial exception
+      Diffblue Cover tried to run the arrange/act section, but the test threw
+      java.lang.NullPointerException
+          at java.util.Objects.requireNonNull(Objects.java:209)
+          at net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getWritableResource(ResourceGovernor.java:78)
+      In order to prevent the method under test
+      from throwing NullPointerException, add constructors or factory
+      methods that make it easier to construct fully initialized objects used in
+      the method under test.
+      See https://diff.blue/R013 to resolve this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getWritableResource:(Ljava/lang/String;Lnet/finmath/smartcontract/valuation/service/utils/ResourceGovernor$RoleFolders;Ljava/lang/String;)Lorg/springframework/core/io/WritableResource;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      We are unit testing `net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getWritableResource:(Ljava/lang/String;Lnet/finmath/smartcontract/valuation/service/utils/ResourceGovernor$RoleFolders;Ljava/lang/String;)Lorg/springframework/core/io/WritableResource;`.
+      
+      Create a parameterless factory method for the problematic
+      parameter/this object, determining which by reading the error message below.
+      The new factory method should be in the test classpath, not production.
+      Create a new factory class if there isn't already one for the class under test.
+      Do not create a test yourself, only a factory (don't test the factory either).
+      The factory method must be annotated with 
+      `@com.diffblue.cover.annotations.InterestingTestFactory`.
+      Avoid using mocks, these tend to produce unused stubbing errors or a
+      `java.lang.NullPointerException`.
+      If your environment has internet access then further documentation on
+      factory methods for Cover can be found here:
+      https://docs.diffblue.com/features/tutorials/increase-code-coverage#test-factory-pattern
+      
+      The factory should produce a parameter/this object such that
+      the following exception does not occur:
+      
+      ```
+      java.lang.NullPointerException
+        at java.util.Objects.requireNonNull(Objects.java:209)
+        at net.finmath.smartcontract.valuation.service.utils.ResourceGovernor.getWritableResource(ResourceGovernor.java:78)
+      ```
+      
+      Recompile the project to make sure the new factory / annotation / getter / etc
+      is available to Cover.
+      For example run `mvn install -DskipTests` or `gradle install -x test`.
+      
+INFO  
+INFO  37 issues were found, numbers 36-37 were displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 2 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] I need permission to compile the project. Let me explain what I've done and ask the user to run the compilation:
+INFO  [Claude Code] 
+INFO  [Claude Code] I've successfully addressed both issues by adding an additional factory method to the existing `ResourceGovernorDiffblueBase` class. Here's what I did:
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Summary of Changes
+INFO  [Claude Code] 
+INFO  [Claude Code] I added a new factory method called `createResourceGovernorForReadWriteMethods()` to the test factory class at:
+INFO  [Claude Code] `src/test/java/net/finmath/smartcontract/valuation/service/utils/ResourceGovernorDiffblueBase.java`
+INFO  [Claude Code] 
+INFO  [Claude Code] ### What the Factory Does
+INFO  [Claude Code] 
+INFO  [Claude Code] The new factory method:
+INFO  [Claude Code] 1. Creates a `ResourceGovernor` instance with a `PathMatchingResourcePatternResolver`
+INFO  [Claude Code] 2. Uses reflection to set the `storageBaseDir` field (which was null and causing the `NullPointerException`)
+INFO  [Claude Code] 3. Also sets other required fields (`importDir`, `refinitivConnectionPropertiesFile`, `databaseConnectionPropertiesFile`)
+INFO  [Claude Code] 4. Is annotated with `@InterestingTestFactory` so Cover can discover and use it
+INFO  [Claude Code] 5. Avoids using mocks (as requested in the issue description)
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Why This Fixes the Issues
+INFO  [Claude Code] 
+INFO  [Claude Code] Both issues were caused by `Objects.requireNonNull(storageBaseDir)` throwing a `NullPointerException` at:
+INFO  [Claude Code] - **Issue 1**: Line 72 in `getReadableResource` method
+INFO  [Claude Code] - **Issue 2**: Line 78 in `getWritableResource` method
+INFO  [Claude Code] 
+INFO  [Claude Code] The factory ensures that `storageBaseDir` is initialized with a valid temporary directory path, preventing the NPE.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps
+INFO  [Claude Code] 
+INFO  [Claude Code] To make this available to Cover, you need to recompile the project. Please run:
+INFO  [Claude Code] 
+INFO  [Claude Code] ```bash
+INFO  [Claude Code] mvn install -DskipTests -Dgpg.skip=true
+INFO  [Claude Code] ```
+INFO  [Claude Code] 
+INFO  [Claude Code] Or if you prefer a simpler command:
+INFO  [Claude Code] 
+INFO  [Claude Code] ```bash
+INFO  [Claude Code] mvn package -DskipTests -Dgpg.skip=true
+INFO  [Claude Code] ```
+INFO  [Claude Code] 
+INFO  [Claude Code] This will compile the test classes and make the new factory method available to Diffblue Cover for its test generation process.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T142344.log
+INFO  Finished in 1m 19s

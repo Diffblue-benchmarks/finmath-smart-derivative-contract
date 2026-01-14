@@ -27,6 +27,7 @@ import net.finmath.smartcontract.product.xml.Smartderivativecontract.Underlyings
 import net.finmath.smartcontract.product.xml.Smartderivativecontract.Valuation;
 import net.finmath.smartcontract.product.xml.Smartderivativecontract.Valuation.Artefact;
 import net.finmath.smartcontract.valuation.marketdata.data.MarketDataPoint;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -58,11 +59,14 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
+    value.setProvider(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    value2.setType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value2.setValue(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Settlement value3 = new Settlement();
     value3.setMarketdata(value);
@@ -82,23 +86,32 @@ class MarketDataCheckDiffblueTest {
     value6.setUnderlying(value5);
 
     Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
+    value7.setArtifactId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setGroupId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setVersion(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Valuation value8 = new Valuation();
     value8.setArtefact(value7);
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setDltTradeId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setSettlement(value3);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setTradeType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setUnderlyings(value6);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setValuation(value8);
 
     // Act
@@ -144,11 +157,14 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
+    value.setProvider(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    value2.setType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value2.setValue(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Settlement value3 = new Settlement();
     value3.setMarketdata(value);
@@ -168,23 +184,32 @@ class MarketDataCheckDiffblueTest {
     value6.setUnderlying(value5);
 
     Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
+    value7.setArtifactId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setGroupId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setVersion(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Valuation value8 = new Valuation();
     value8.setArtefact(value7);
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setDltTradeId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setSettlement(value3);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setTradeType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setUnderlyings(value6);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setValuation(value8);
 
     // Act
@@ -223,11 +248,14 @@ class MarketDataCheckDiffblueTest {
 
     Marketdata value = new Marketdata();
     value.setMarketdataitems(new Marketdataitems());
-    value.setProvider("42");
+    value.setProvider(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     SettlementTime value2 = new SettlementTime();
-    value2.setType("42");
-    value2.setValue("42");
+    value2.setType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value2.setValue(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Settlement value3 = new Settlement();
     value3.setMarketdata(value);
@@ -247,23 +275,32 @@ class MarketDataCheckDiffblueTest {
     value6.setUnderlying(value5);
 
     Artefact value7 = new Artefact();
-    value7.setArtifactId("42");
-    value7.setGroupId("42");
-    value7.setVersion("42");
+    value7.setArtifactId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setGroupId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    value7.setVersion(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     Valuation value8 = new Valuation();
     value8.setArtefact(value7);
 
     Smartderivativecontract sdc = new Smartderivativecontract();
-    sdc.setDltAddress("42");
-    sdc.setDltTradeId("42");
+    sdc.setDltAddress(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setDltTradeId(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setParties(new Parties());
-    sdc.setReceiverPartyID("42");
+    sdc.setReceiverPartyID(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setSettlement(value3);
-    sdc.setSettlementCurrency("42");
-    sdc.setTradeType("42");
+    sdc.setSettlementCurrency(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    sdc.setTradeType(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setUnderlyings(value6);
-    sdc.setUniqueTradeIdentifier("42");
+    sdc.setUniqueTradeIdentifier(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     sdc.setValuation(value8);
 
     // Act

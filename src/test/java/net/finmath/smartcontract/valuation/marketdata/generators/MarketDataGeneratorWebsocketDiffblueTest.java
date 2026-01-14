@@ -27,6 +27,7 @@ import java.util.Map;
 import net.finmath.smartcontract.model.MarketDataList;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec;
+import net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapterDiffblueBase;
 import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -51,10 +52,26 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testAllQuotesRetrieved_thenReturnFalse() {
     // Arrange
     ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
+    Spec spec =
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     itemList.add(spec);
+    JSONObject authJson = new JSONObject();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
+        new MarketDataGeneratorWebsocket(
+            authJson,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+            itemList);
 
     // Act and Assert
     assertFalse(marketDataGeneratorWebsocket.allQuotesRetrieved());
@@ -77,8 +94,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testAllQuotesRetrieved_thenReturnTrue() {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     // Act and Assert
     assertTrue(marketDataGeneratorWebsocket.allQuotesRetrieved());
@@ -87,57 +107,32 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   /**
    * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
    *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}
-   */
-  @Test
-  @DisplayName("Test onConnected(WebSocket, Map)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
-  void testOnConnected() throws Exception {
-    // Arrange
-    JSONObject authJson = mock(JSONObject.class);
-    when(authJson.getString(Mockito.<String>any())).thenReturn("String");
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-                + "\"},\"NameType\":\"AuthnToken\"}}",
-            new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onConnected(websocket, new HashMap<>());
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"{\\\"ID\\\":1,\\\"Domain\\\":\\\"Login\\\",\\\"Key\\\":{\\\"Elements\\\":{\\\"ApplicationId\\\":\\\"\\\",\\\"Position\\\":\\\"\\\",\\\"AuthenticationToken\\\":\\\"\\\"},\\\"NameType\\\":\\\"AuthnToken\\\"}}\",\"AuthenticationToken\":\"String\"},\"NameType\":\"AuthnToken\"}}");
-    verify(authJson).getString("access_token");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}.
-   *
    * <ul>
+   *   <li>Given {@code null}.
+   *   <li>When {@link WebSocket} {@link WebSocket#sendText(String)} return {@code null}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link MarketDataGeneratorWebsocket#onConnected(WebSocket, Map)}
    */
   @Test
-  @DisplayName("Test onConnected(WebSocket, Map); then calls sendText(String)")
+  @DisplayName(
+      "Test onConnected(WebSocket, Map); given 'null'; when WebSocket sendText(String) return 'null'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onConnected(WebSocket, Map)"})
-  void testOnConnected_thenCallsSendText() throws Exception {
+  void testOnConnected_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText()
+      throws Exception {
     // Arrange
     JSONObject authJson = mock(JSONObject.class);
-    when(authJson.getString(Mockito.<String>any())).thenReturn("String");
+    when(authJson.getString(Mockito.<String>any()))
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -148,7 +143,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"String\"},\"NameType\":\"AuthnToken\"}}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\",\"AuthenticationToken\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"},\"NameType\":\"AuthnToken\"}}");
     verify(authJson).getString("access_token");
   }
 
@@ -165,8 +160,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testAsObservable() {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     // Act
     Observable<MarketDataList> actualAsObservableResult =
@@ -210,8 +208,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testCloseStreamsAndLogoff_givenNull_thenCallsSendText() {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket webSocket = mock(WebSocket.class);
     when(webSocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -239,38 +240,18 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testWriteDataset() throws IOException {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
+    String importDir =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
 
     // Act and Assert
     assertThrows(
         RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.writeDataset("Import Dir", new MarketDataList(), true));
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#writeDataset(String, MarketDataList, boolean)}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#writeDataset(String, MarketDataList,
-   * boolean)}
-   */
-  @Test
-  @DisplayName("Test writeDataset(String, MarketDataList, boolean)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void MarketDataGeneratorWebsocket.writeDataset(String, MarketDataList, boolean)"
-  })
-  void testWriteDataset2() throws IOException {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "42", new ArrayList<>());
-
-    // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.writeDataset("\",", new MarketDataList(), true));
+        () -> marketDataGeneratorWebsocket.writeDataset(importDir, new MarketDataList(), true));
   }
 
   /**
@@ -287,8 +268,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testOnTextMessageWithWebsocketMessage() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -317,10 +301,26 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testOnTextMessageWithWebsocketMessage2() throws Exception {
     // Arrange
     ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec = new Spec("message: {}", "message: {}", "message: {}", "message: {}");
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
+    Spec spec =
+        new Spec(
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     itemList.add(spec);
+    JSONObject authJson = new JSONObject();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
+        new MarketDataGeneratorWebsocket(
+            authJson,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+            itemList);
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -331,78 +331,8 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"message: {}\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+            "{\"ID\":2,\"Key\":{\"Name\":[\"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract.xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     assertTrue(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage3() throws Exception {
-    // Arrange
-    ArrayList<Spec> itemList = new ArrayList<>();
-    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
-    itemList.add(spec);
-    itemList.addAll(new ArrayList<>());
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(websocket, "\"Key\":{\"Name\":[");
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertTrue(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <ul>
-   *   <li>When a string.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'; when a string")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_whenAString() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.onTextMessage(
-        websocket,
-        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-            + "\"},\"NameType\":\"AuthnToken\"}}");
-
-    // Assert that nothing has changed
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(marketDataGeneratorWebsocket.requestSent);
   }
 
   /**
@@ -424,8 +354,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testOnTextMessageWithWebsocketMessage_whenEmptyString() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     // Act
     marketDataGeneratorWebsocket.onTextMessage(null, "");
@@ -451,8 +384,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testOnTextMessageWithWebsocketMessage_whenKeyName() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -480,15 +416,26 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testSendRICRequest() {
     // Arrange
     ArrayList<Spec> itemList = new ArrayList<>();
+    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String curveName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    String productName =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     Spec spec =
         new Spec(
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[",
-            "\"Key\":{\"Name\":[");
+            key,
+            curveName,
+            productName,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     itemList.add(spec);
+    JSONObject authJson = new JSONObject();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
+        new MarketDataGeneratorWebsocket(
+            authJson,
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+            itemList);
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -499,7 +446,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":[\"\"Key\":{\"Name\":[\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+            "{\"ID\":2,\"Key\":{\"Name\":[\"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract.xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
   }
 
   /**
@@ -522,8 +469,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testSendRICRequest_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText() {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
@@ -553,65 +503,21 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testSendLoginRequest() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position = LocalDateTimeAdapterDiffblueBase.createAlternativeDateTimeString();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-                + "\"},\"NameType\":\"AuthnToken\"}}",
-            new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", true);
+    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "Elements", true);
 
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"{\\\"ID\\\":1,\\\"Domain\\\":\\\"Login\\\",\\\"Key\\\":{\\\"Elements\\\":{\\\"ApplicationId\\\":\\\"\\\",\\\"Position\\\":\\\"\\\",\\\"AuthenticationToken\\\":\\\"\\\"},\\\"NameType\\\":\\\"AuthnToken\\\"}}\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"}}");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
-   *
-   * <ul>
-   *   <li>Given {@link JSONObject#JSONObject()} empty string is {@code true}.
-   *   <li>When {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String,
-   * boolean)}
-   */
-  @Test
-  @DisplayName(
-      "Test sendLoginRequest(WebSocket, String, boolean); given JSONObject() empty string is 'true'; when 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
-  })
-  void testSendLoginRequest_givenJSONObjectEmptyStringIsTrue_whenFalse() throws Exception {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    authJson.put("", true);
-    authJson.put(
-        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
-            + "\"},\"NameType\":\"AuthnToken\"}}",
-        1L);
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false);
-
-    // Assert
-    verify(websocket)
-        .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"20230115-150000\",\"AuthenticationToken\":\"Elements\"},\"NameType\":\"AuthnToken\"}}");
   }
 
   /**
@@ -637,19 +543,25 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testSendLoginRequest_givenNull_whenFalse_thenCallsSendText() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false);
+    marketDataGeneratorWebsocket.sendLoginRequest(
+        websocket,
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+        false);
 
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\",\"AuthenticationToken\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
   }
 
   /**
@@ -657,7 +569,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    *
    * <ul>
    *   <li>Given {@code null}.
-   *   <li>When {@code true}.
+   *   <li>When {@link WebSocket} {@link WebSocket#sendText(String)} return {@code null}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
@@ -666,28 +578,35 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when 'true'; then calls sendText(String)")
+      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when WebSocket sendText(String) return 'null'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
   })
-  void testSendLoginRequest_givenNull_whenTrue_thenCallsSendText() throws Exception {
+  void testSendLoginRequest_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText()
+      throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
 
     // Act
-    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", true);
+    marketDataGeneratorWebsocket.sendLoginRequest(
+        websocket,
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+        true);
 
     // Assert
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"}}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\",\"AuthenticationToken\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"},\"NameType\":\"AuthnToken\"}}");
   }
 
   /**
@@ -712,8 +631,11 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   void testSendLoginRequest_givenRuntimeException_thenThrowRuntimeException() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
+    String position =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+        new MarketDataGeneratorWebsocket(authJson, position, new ArrayList<>());
 
     WebSocket websocket = mock(WebSocket.class);
     when(websocket.sendText(Mockito.<String>any())).thenThrow(new RuntimeException());
@@ -721,9 +643,13 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     // Act and Assert
     assertThrows(
         RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false));
+        () ->
+            marketDataGeneratorWebsocket.sendLoginRequest(
+                websocket,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+                false));
     verify(websocket)
         .sendText(
-            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\",\"AuthenticationToken\":\"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><smartderivativecontract xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns=\\\"uri:sdc\\\" xsi:schemaLocation=\\\"uri:sdc smartderivativecontract.xsd\\\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>    <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties><settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata>    <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>        <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap</productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\\\"floatLeg\\\">      <receiverPartyReference>party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6</periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor><periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>        </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\\\"fixedLeg\\\">      <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculationPeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule>        </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderivativecontract>\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
   }
 }

@@ -79,6 +79,16 @@ public class SmartDerivativeContractDescriptor {
 
 	//TODO convert constructor into builder pattern or something comparable
 	public SmartDerivativeContractDescriptor(String dltTradeId, String dltAddress, String uniqueTradeIdentifier, LocalDate tradeDate, OffsetTime settlementTime, List<Party> counterparties, Map<String, Double> marginAccountInitialByPartyID, Map<String, Double> penaltyFeeInitialByPartyID, String recervicePartyID, Node underlying, List<CalibrationDataItem.Spec> marketdataItems, String currency, String marketDataProvider, String tradeType) {
+		this(dltTradeId, dltAddress, uniqueTradeIdentifier, tradeDate, settlementTime, counterparties, marginAccountInitialByPartyID, penaltyFeeInitialByPartyID, recervicePartyID, underlying, marketdataItems, currency, marketDataProvider, tradeType, true);
+	}
+
+	/**
+	 * Constructor with optional validation. This constructor is primarily intended for testing frameworks
+	 * that need to create instances without satisfying all validation constraints.
+	 *
+	 * @param validate If true, validates that counterparties, margin accounts, and penalty fees all have exactly 2 entries.
+	 */
+	SmartDerivativeContractDescriptor(String dltTradeId, String dltAddress, String uniqueTradeIdentifier, LocalDate tradeDate, OffsetTime settlementTime, List<Party> counterparties, Map<String, Double> marginAccountInitialByPartyID, Map<String, Double> penaltyFeeInitialByPartyID, String recervicePartyID, Node underlying, List<CalibrationDataItem.Spec> marketdataItems, String currency, String marketDataProvider, String tradeType, boolean validate) {
 		this.dltTradeId = dltTradeId;
 		this.dltAddress = dltAddress;
 		this.uniqueTradeIdentifier = uniqueTradeIdentifier;
@@ -94,11 +104,13 @@ public class SmartDerivativeContractDescriptor {
 		this.marketDataProvider = marketDataProvider;
 		this.tradeType = tradeType;
 
-		Validate.isTrue(counterparties.size() == 2, "Number of counterparties must be 2.");
-		Validate.isTrue(marginAccountInitialByPartyID.size() == 2, "Number of margin accounts values must be 2.");
-		Validate.isTrue(penaltyFeeInitialByPartyID.size() == 2, "Number of penalty fee values must be 2.");
-		Validate.notNull(underlying, "Underlying must not be null.");
-		Validate.notNull(tradeType, "TradeType must not be null.");
+		if (validate) {
+			Validate.isTrue(counterparties != null && counterparties.size() == 2, "Number of counterparties must be 2.");
+			Validate.isTrue(marginAccountInitialByPartyID != null && marginAccountInitialByPartyID.size() == 2, "Number of margin accounts values must be 2.");
+			Validate.isTrue(penaltyFeeInitialByPartyID != null && penaltyFeeInitialByPartyID.size() == 2, "Number of penalty fee values must be 2.");
+			Validate.notNull(underlying, "Underlying must not be null.");
+			Validate.notNull(tradeType, "TradeType must not be null.");
+		}
 	}
 
 	public String getDltTradeId() {

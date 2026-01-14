@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -73,87 +74,6 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
    * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code 42} is {@link BigDecimal#BigDecimal(String)} with
-   *       {@code 2.3}.
-   *   <li>Then return size is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime,
-   * LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() '42' is BigDecimal(String) with '2.3'; then return size is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
-  })
-  void testGetMargin_givenHashMap42IsBigDecimalWith23_thenReturnSizeIsTwo() {
-    // Arrange
-    HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
-    stringBigDecimalMap.put("42", new BigDecimal("2.3"));
-    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
-    when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
-        .thenReturn(stringBigDecimalMap);
-
-    // Act
-    Map<String, BigDecimal> actualMargin =
-        smartDerivativeContractSettlementOracle.getMargin(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(valuationOracle, atLeast(1))
-        .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
-    assertEquals(2, actualMargin.size());
-    BigDecimal getResult = actualMargin.get("42");
-    assertEquals(new BigDecimal("0.0"), getResult);
-    assertSame(getResult, actualMargin.get("Key"));
-  }
-
-  /**
-   * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code Key} is {@link BigDecimal#BigDecimal(String)} with
-   *       {@code 2.3}.
-   *   <li>Then return size is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime,
-   * LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test getMargin(LocalDateTime, LocalDateTime); given HashMap() 'Key' is BigDecimal(String) with '2.3'; then return size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
-  })
-  void testGetMargin_givenHashMapKeyIsBigDecimalWith23_thenReturnSizeIsOne() {
-    // Arrange
-    HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
-    stringBigDecimalMap.put("Key", new BigDecimal("2.3"));
-    when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
-        .thenReturn(stringBigDecimalMap);
-
-    // Act
-    Map<String, BigDecimal> actualMargin =
-        smartDerivativeContractSettlementOracle.getMargin(
-            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Assert
-    verify(valuationOracle, atLeast(1))
-        .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
-    assertEquals(1, actualMargin.size());
-    assertEquals(new BigDecimal("0.0"), actualMargin.get("Key"));
-  }
-
-  /**
-   * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
-   *
-   * <ul>
    *   <li>Then return Empty.
    * </ul>
    *
@@ -181,5 +101,81 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
     verify(valuationOracle, atLeast(1))
         .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
     assertTrue(actualMargin.isEmpty());
+  }
+
+  /**
+   * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then return size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime,
+   * LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test getMargin(LocalDateTime, LocalDateTime); then return size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "Map SmartDerivativeContractSettlementOracle.getMargin(LocalDateTime, LocalDateTime)"
+  })
+  void testGetMargin_thenReturnSizeIsOne() {
+    // Arrange
+    HashMap<String, BigDecimal> stringBigDecimalMap = new HashMap<>();
+    String createMinimalSmartDerivativeContractXmlResult =
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
+    stringBigDecimalMap.put(createMinimalSmartDerivativeContractXmlResult, new BigDecimal("2.3"));
+    when(valuationOracle.getValues(Mockito.<LocalDateTime>any(), Mockito.<LocalDateTime>any()))
+        .thenReturn(stringBigDecimalMap);
+
+    // Act
+    Map<String, BigDecimal> actualMargin =
+        smartDerivativeContractSettlementOracle.getMargin(
+            LocalDate.of(1970, 1, 1).atStartOfDay(), LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Assert
+    verify(valuationOracle, atLeast(1))
+        .getValues(isA(LocalDateTime.class), isA(LocalDateTime.class));
+    assertEquals(1, actualMargin.size());
+    assertEquals(
+        new BigDecimal("0.0"),
+        actualMargin.get(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www"
+                + ".w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract"
+                + ".xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI"
+                + "-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance"
+                + "</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart"
+                + "-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>"
+                + "    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0<"
+                + "/value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>   "
+                + " <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>   "
+                + " <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type"
+                + ">constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties>"
+                + "<settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata> "
+                + "   <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>     "
+                + "   <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>"
+                + "  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap<"
+                + "/productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference"
+                + "><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency"
+                + "><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference"
+                + ">party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01<"
+                + "/effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency"
+                + "><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>     "
+                + " </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6<"
+                + "/periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>"
+                + "        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>       "
+                + " <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor>"
+                + "<periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>     "
+                + "   </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">    "
+                + "  <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>       "
+                + " <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>     "
+                + "   <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculation"
+                + "PeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency>"
+                + "<periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>    "
+                + "  <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0<"
+                + "/amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule> "
+                + "       </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderiva"
+                + "tivecontract>"));
   }
 }

@@ -16,6 +16,11 @@ import net.finmath.smartcontract.model.ExceptionId;
 import net.finmath.smartcontract.model.MarginRequest;
 import net.finmath.smartcontract.model.SDCException;
 import net.finmath.smartcontract.model.ValueRequest;
+import net.finmath.smartcontract.settlement.SettlementGeneratorDiffblueBase;
+import net.finmath.smartcontract.valuation.implementation.MarginCalculatorDiffblueBase;
+import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItemsDiffblueBase;
+import net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapterDiffblueBase;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -39,83 +44,132 @@ class ValuationControllerDiffblueTest {
   /**
    * Test {@link ValuationController#margin(MarginRequest)}.
    *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName("Test margin(MarginRequest)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.marketDataStart(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
    * <ul>
-   *   <li>Given {@code Market Data End}.
+   *   <li>Given createAlternativeSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName("Test margin(MarginRequest); given createAlternativeSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_givenCreateAlternativeSmartDerivativeContractXml() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.tradeData(
+        MarginCalculatorDiffblueBase.createAlternativeSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName("Test margin(MarginRequest); given createValidSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_givenCreateValidSmartDerivativeContractXml() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName("Test margin(MarginRequest); given createValidSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_givenCreateValidSmartDerivativeContractXml2() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.marketDataStart(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    marginRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>Given {@link MarginRequest} (default constructor).
    *   <li>Then calls {@link MarginRequest#getMarketDataEnd()}.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
    */
   @Test
-  @DisplayName("Test margin(MarginRequest); given 'Market Data End'; then calls getMarketDataEnd()")
+  @DisplayName(
+      "Test margin(MarginRequest); given MarginRequest (default constructor); then calls getMarketDataEnd()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenMarketDataEnd_thenCallsGetMarketDataEnd() {
+  void testMargin_givenMarginRequest_thenCallsGetMarketDataEnd() {
     // Arrange
     MarginRequest marginRequest = mock(MarginRequest.class);
-    when(marginRequest.getMarketDataEnd()).thenReturn("Market Data End");
-    when(marginRequest.getMarketDataStart()).thenReturn("Market Data Start");
-    when(marginRequest.getTradeData()).thenReturn("Trade Data");
-    when(marginRequest.marketDataStart(Mockito.<String>any())).thenReturn(new MarginRequest());
-    marginRequest.marketDataStart("Market Data Start");
+    when(marginRequest.getMarketDataEnd())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    when(marginRequest.getMarketDataStart())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    when(marginRequest.getTradeData())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    when(marginRequest.tradeData(Mockito.<String>any())).thenReturn(new MarginRequest());
+    marginRequest.tradeData(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
     verify(marginRequest).getMarketDataEnd();
     verify(marginRequest).getMarketDataStart();
     verify(marginRequest).getTradeData();
-    verify(marginRequest).marketDataStart("Market Data Start");
-  }
-
-  /**
-   * Test {@link ValuationController#margin(MarginRequest)}.
-   *
-   * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) marketDataStart {@code Responded}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
-   */
-  @Test
-  @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) marketDataStart 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenResponded_whenMarginRequestMarketDataStartResponded() {
-    // Arrange
-    MarginRequest marginRequest = new MarginRequest();
-    marginRequest.marketDataStart("Responded");
-
-    // Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
-  }
-
-  /**
-   * Test {@link ValuationController#margin(MarginRequest)}.
-   *
-   * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link MarginRequest} (default constructor) tradeData {@code Responded}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
-   */
-  @Test
-  @DisplayName(
-      "Test margin(MarginRequest); given 'Responded'; when MarginRequest (default constructor) tradeData 'Responded'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
-  void testMargin_givenResponded_whenMarginRequestTradeDataResponded() {
-    // Arrange
-    MarginRequest marginRequest = new MarginRequest();
-    marginRequest.tradeData("Responded");
-
-    // Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+    verify(marginRequest).tradeData("20220905-170000");
   }
 
   /**
@@ -138,25 +192,74 @@ class ValuationControllerDiffblueTest {
   }
 
   /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>When {@link MarginRequest} (default constructor) tradeData
+   *       createMinimalSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName(
+      "Test margin(MarginRequest); when MarginRequest (default constructor) tradeData createMinimalSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_whenMarginRequestTradeDataCreateMinimalSmartDerivativeContractXml() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.tradeData(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#margin(MarginRequest)}.
+   *
+   * <ul>
+   *   <li>When {@link MarginRequest} (default constructor) tradeData createValidDateTimeString.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#margin(MarginRequest)}
+   */
+  @Test
+  @DisplayName(
+      "Test margin(MarginRequest); when MarginRequest (default constructor) tradeData createValidDateTimeString")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.margin(MarginRequest)"})
+  void testMargin_whenMarginRequestTradeDataCreateValidDateTimeString() {
+    // Arrange
+    MarginRequest marginRequest = new MarginRequest();
+    marginRequest.tradeData(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.margin(marginRequest));
+  }
+
+  /**
    * Test {@link ValuationController#value(ValueRequest)}.
    *
    * <ul>
-   *   <li>Given {@code Responded}.
-   *   <li>When {@link ValueRequest} (default constructor) tradeData {@code Responded}.
+   *   <li>Given createMinimalSmartDerivativeContractXml.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
-  @DisplayName(
-      "Test value(ValueRequest); given 'Responded'; when ValueRequest (default constructor) tradeData 'Responded'")
+  @DisplayName("Test value(ValueRequest); given createMinimalSmartDerivativeContractXml")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
-  void testValue_givenResponded_whenValueRequestTradeDataResponded() {
+  void testValue_givenCreateMinimalSmartDerivativeContractXml() {
     // Arrange
     ValueRequest valueRequest = new ValueRequest();
-    valueRequest.tradeData("Responded");
+    valueRequest.tradeData(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
@@ -166,19 +269,94 @@ class ValuationControllerDiffblueTest {
    * Test {@link ValuationController#value(ValueRequest)}.
    *
    * <ul>
-   *   <li>When {@code null}.
+   *   <li>Given createValidDateTimeString.
    * </ul>
    *
    * <p>Method under test: {@link ValuationController#value(ValueRequest)}
    */
   @Test
-  @DisplayName("Test value(ValueRequest); when 'null'")
+  @DisplayName("Test value(ValueRequest); given createValidDateTimeString")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
-  void testValue_whenNull() {
-    // Arrange, Act and Assert
-    assertThrows(SDCException.class, () -> valuationController.value(null));
+  void testValue_givenCreateValidDateTimeString() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.tradeData(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#value(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidMarketDataXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test value(ValueRequest); given createValidMarketDataXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
+  void testValue_givenCreateValidMarketDataXml() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.marketData(CalibrationParserDataItemsDiffblueBase.createValidMarketDataXml());
+    valueRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#value(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidMarketDataXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test value(ValueRequest); given createValidMarketDataXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
+  void testValue_givenCreateValidMarketDataXml2() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.marketData(SettlementGeneratorDiffblueBase.createValidMarketDataXml());
+    valueRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#value(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#value(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test value(ValueRequest); given createValidSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.value(ValueRequest)"})
+  void testValue_givenCreateValidSmartDerivativeContractXml() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.value(valueRequest));
   }
 
   /**
@@ -198,6 +376,78 @@ class ValuationControllerDiffblueTest {
   void testValue_whenValueRequest() {
     // Arrange, Act and Assert
     assertThrows(SDCException.class, () -> valuationController.value(new ValueRequest()));
+  }
+
+  /**
+   * Test {@link ValuationController#valueAtTime(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createMinimalSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test valueAtTime(ValueRequest); given createMinimalSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
+  void testValueAtTime_givenCreateMinimalSmartDerivativeContractXml() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.tradeData(
+        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    valueRequest.valuationDate(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.valueAtTime(valueRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#valueAtTime(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidDateTimeString.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test valueAtTime(ValueRequest); given createValidDateTimeString")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
+  void testValueAtTime_givenCreateValidDateTimeString() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.valuationDate(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.valueAtTime(valueRequest));
+  }
+
+  /**
+   * Test {@link ValuationController#valueAtTime(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>Given createValidSmartDerivativeContractXml.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   */
+  @Test
+  @DisplayName("Test valueAtTime(ValueRequest); given createValidSmartDerivativeContractXml")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
+  void testValueAtTime_givenCreateValidSmartDerivativeContractXml() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.tradeData(MarginCalculatorDiffblueBase.createValidSmartDerivativeContractXml());
+    valueRequest.valuationDate(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.valueAtTime(valueRequest));
   }
 
   /**
@@ -239,6 +489,31 @@ class ValuationControllerDiffblueTest {
   }
 
   /**
+   * Test {@link ValuationController#valueAtTime(ValueRequest)}.
+   *
+   * <ul>
+   *   <li>When {@link ValueRequest} (default constructor) tradeData createValidDateTimeString.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationController#valueAtTime(ValueRequest)}
+   */
+  @Test
+  @DisplayName(
+      "Test valueAtTime(ValueRequest); when ValueRequest (default constructor) tradeData createValidDateTimeString")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ResponseEntity ValuationController.valueAtTime(ValueRequest)"})
+  void testValueAtTime_whenValueRequestTradeDataCreateValidDateTimeString() {
+    // Arrange
+    ValueRequest valueRequest = new ValueRequest();
+    valueRequest.tradeData(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+    valueRequest.valuationDate(LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
+
+    // Act and Assert
+    assertThrows(SDCException.class, () -> valuationController.valueAtTime(valueRequest));
+  }
+
+  /**
    * Test {@link ValuationController#testProductValue(MultipartFile)}.
    *
    * <ul>
@@ -256,7 +531,10 @@ class ValuationControllerDiffblueTest {
     // Arrange
     DataInputStream dataInputStream = mock(DataInputStream.class);
     when(dataInputStream.readAllBytes())
-        .thenThrow(new SDCException(ExceptionId.SDC_AUTH_ERROR, "An error occurred"));
+        .thenThrow(
+            new SDCException(
+                ExceptionId.SDC_AUTH_ERROR,
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml()));
 
     MultipartFile tradeData = mock(MultipartFile.class);
     when(tradeData.getInputStream()).thenReturn(dataInputStream);
@@ -285,8 +563,9 @@ class ValuationControllerDiffblueTest {
   @MethodsUnderTest({"ResponseEntity ValuationController.testProductValue(MultipartFile)"})
   void testTestProductValue_whenByteArrayInputStreamWithAxaxaxaxBytesIsUtf8() throws IOException {
     // Arrange
+    String name = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
     MockMultipartFile tradeData =
-        new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
+        new MockMultipartFile(name, new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")));
 
     // Act and Assert
     assertThrows(SDCException.class, () -> valuationController.testProductValue(tradeData));

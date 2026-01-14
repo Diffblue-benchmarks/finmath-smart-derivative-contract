@@ -10,9 +10,8 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
+import net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncherDiffblueBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -30,50 +29,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.adapter.standard.StandardWebSocketSession;
 import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator;
 import org.springframework.web.socket.handler.WebSocketSessionDecorator;
-import org.springframework.web.socket.sockjs.client.RestTemplateXhrTransport;
-import org.springframework.web.socket.sockjs.client.SockJsUrlInfo;
-import org.springframework.web.socket.sockjs.client.TransportRequest;
-import org.springframework.web.socket.sockjs.client.XhrClientSockJsSession;
 
 @ContextConfiguration(classes = {ValuationHandler.class})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 class ValuationHandlerDiffblueTest {
   @Autowired private ValuationHandler valuationHandler;
-
-  /**
-   * Test {@link ValuationHandler#handleMessage(WebSocketSession, WebSocketMessage)}.
-   *
-   * <p>Method under test: {@link ValuationHandler#handleMessage(WebSocketSession,
-   * WebSocketMessage)}
-   */
-  @Test
-  @DisplayName("Test handleMessage(WebSocketSession, WebSocketMessage)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ValuationHandler.handleMessage(WebSocketSession, WebSocketMessage)"})
-  void testHandleMessage() throws Exception {
-    // Arrange
-    HttpHeaders headers = new HttpHeaders();
-    HashMap<String, Object> attributes = new HashMap<>();
-    InetSocketAddress localAddress = InetSocketAddress.createUnresolved("localhost", 8080);
-
-    StandardWebSocketSession delegate =
-        new StandardWebSocketSession(
-            headers,
-            attributes,
-            localAddress,
-            InetSocketAddress.createUnresolved("localhost", 8080));
-    WebSocketSessionDecorator session =
-        new WebSocketSessionDecorator(new ConcurrentWebSocketSessionDecorator(delegate, 3, 3));
-
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class,
-        () ->
-            valuationHandler.handleMessage(
-                session, new BinaryMessage(ByteBuffer.wrap("AXAXAXAX".getBytes("UTF-8")))));
-  }
 
   /**
    * Test {@link ValuationHandler#handleMessage(WebSocketSession, WebSocketMessage)}.
@@ -94,27 +55,75 @@ class ValuationHandlerDiffblueTest {
   @MethodsUnderTest({"void ValuationHandler.handleMessage(WebSocketSession, WebSocketMessage)"})
   void testHandleMessage_givenIllegalStateException_thenCallsGetPayload() throws Exception {
     // Arrange
-    TransportRequest request = mock(TransportRequest.class);
-    when(request.getSockJsUrlInfo())
-        .thenReturn(
-            new SockJsUrlInfo(Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri()));
-    when(request.getHttpRequestHeaders()).thenReturn(new HttpHeaders());
-    ValuationHandler handler = new ValuationHandler();
-    RestTemplateXhrTransport transport = new RestTemplateXhrTransport();
+    HttpHeaders headers = new HttpHeaders();
+    HashMap<String, Object> attributes = new HashMap<>();
+    InetSocketAddress localAddress =
+        InetSocketAddress.createUnresolved(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+            8080);
 
-    XhrClientSockJsSession session =
-        new XhrClientSockJsSession(request, handler, transport, new CompletableFuture<>());
-    WebSocketSessionDecorator session2 = new WebSocketSessionDecorator(session);
+    StandardWebSocketSession delegate =
+        new StandardWebSocketSession(
+            headers,
+            attributes,
+            localAddress,
+            InetSocketAddress.createUnresolved(
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+                8080));
+    WebSocketSessionDecorator session =
+        new WebSocketSessionDecorator(new ConcurrentWebSocketSessionDecorator(delegate, 3, 3));
 
     TextMessage message = mock(TextMessage.class);
     when(message.getPayload()).thenThrow(new IllegalStateException());
 
     // Act and Assert
     assertThrows(
-        IllegalStateException.class, () -> valuationHandler.handleMessage(session2, message));
+        IllegalStateException.class, () -> valuationHandler.handleMessage(session, message));
     verify(message).getPayload();
-    verify(request).getHttpRequestHeaders();
-    verify(request).getSockJsUrlInfo();
+  }
+
+  /**
+   * Test {@link ValuationHandler#handleMessage(WebSocketSession, WebSocketMessage)}.
+   *
+   * <ul>
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ValuationHandler#handleMessage(WebSocketSession,
+   * WebSocketMessage)}
+   */
+  @Test
+  @DisplayName(
+      "Test handleMessage(WebSocketSession, WebSocketMessage); then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ValuationHandler.handleMessage(WebSocketSession, WebSocketMessage)"})
+  void testHandleMessage_thenThrowIllegalStateException() throws Exception {
+    // Arrange
+    HttpHeaders headers = new HttpHeaders();
+    HashMap<String, Object> attributes = new HashMap<>();
+    InetSocketAddress localAddress =
+        InetSocketAddress.createUnresolved(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+            8080);
+
+    StandardWebSocketSession delegate =
+        new StandardWebSocketSession(
+            headers,
+            attributes,
+            localAddress,
+            InetSocketAddress.createUnresolved(
+                MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
+                8080));
+    WebSocketSessionDecorator session =
+        new WebSocketSessionDecorator(new ConcurrentWebSocketSessionDecorator(delegate, 3, 3));
+
+    // Act and Assert
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            valuationHandler.handleMessage(
+                session, new BinaryMessage(ByteBuffer.wrap("AXAXAXAX".getBytes("UTF-8")))));
   }
 
   /**

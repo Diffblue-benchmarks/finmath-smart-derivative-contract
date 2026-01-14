@@ -9,6 +9,10 @@ import java.time.format.DateTimeFormatter;
 
 public class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
 
+	public ZonedDateTimeAdapter() {
+		// Default constructor for XML binding
+	}
+
 	@Override
 	public String marshal(ZonedDateTime v) {
 		return v.format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
