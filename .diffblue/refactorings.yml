@@ -1,0 +1,45 @@
+name: com.diffblue.cover.refactoring.Recipe
+recipeList:
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.demo.VisualiserSDC,
+    fieldName: plotMarginAccounts}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.demo.VisualiserSDC,
+    fieldName: plotMarketValue}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.demo.VisualiserSDC,
+    fieldName: seriesMarketValues}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.settlement.SettlementGenerator,
+    fieldName: settlement}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.statemachine.SmartContractStateMachine$StateMachineListener,
+    fieldName: this$0}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.implementation.MarginCalculator,
+    fieldName: rounding}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult,
+    fieldName: calibration}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult,
+    fieldName: calibrationSpecs}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult,
+    fieldName: freshness}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit,
+    fieldName: depositRate}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit,
+    fieldName: maturityLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit,
+    fieldName: tenorLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis,
+    fieldName: frequency}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis,
+    fieldName: maturityLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis,
+    fieldName: swapRate}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap,
+    fieldName: frequencyLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap,
+    fieldName: maturityLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap,
+    fieldName: swapRate}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap,
+    fieldName: tenorLabel}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.oracle.SmartDerivativeContractSettlementOracle,
+    fieldName: derivativeValuationOracle}
+- com.diffblue.cover.refactoring.recipes.AddGetter: {className: net.finmath.smartcontract.valuation.service.websocket.handler.ValuationHandler,
+    fieldName: marketDataWebSocketAdapter}
+type: specs.openrewrite.org/v1beta/recipe

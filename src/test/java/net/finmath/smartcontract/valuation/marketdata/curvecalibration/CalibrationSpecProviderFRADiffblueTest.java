@@ -33,34 +33,4 @@ class CalibrationSpecProviderFRADiffblueTest {
     // Assert
     assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
   }
-
-  /**
-   * Test {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}.
-   *
-   * <ul>
-   *   <li>Then return Symbol is {@code EUR-4242}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
-   */
-  @Test
-  @DisplayName("Test getCalibrationSpec(CalibrationContext); then return Symbol is 'EUR-4242'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderFRA.getCalibrationSpec(CalibrationContext)"
-  })
-  void testGetCalibrationSpec_thenReturnSymbolIsEur4242() {
-    // Arrange
-    CalibrationSpecProviderFRA calibrationSpecProviderFRA =
-        new CalibrationSpecProviderFRA("42", "42", 10.0d);
-
-    // Act
-    CalibrationSpec actualCalibrationSpec =
-        calibrationSpecProviderFRA.getCalibrationSpec(
-            new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
-
-    // Assert
-    assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
-  }
 }

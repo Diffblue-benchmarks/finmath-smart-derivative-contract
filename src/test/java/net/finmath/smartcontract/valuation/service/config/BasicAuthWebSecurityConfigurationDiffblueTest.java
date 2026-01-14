@@ -14,31 +14,14 @@ import net.finmath.smartcontract.valuation.service.utils.SDCUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.aot.DisabledInAotMode;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@ContextConfiguration(
-    classes = {BasicAuthWebSecurityConfiguration.class, ApplicationProperties.class})
-@DisabledInAotMode
-@ExtendWith(SpringExtension.class)
 class BasicAuthWebSecurityConfigurationDiffblueTest {
-  @Autowired private BasicAuthWebSecurityConfiguration basicAuthWebSecurityConfiguration;
-
-  @MockBean private InMemoryUserDetailsManager inMemoryUserDetailsManager;
-
-  @MockBean private SecurityFilterChain securityFilterChain;
-
   /**
    * Test {@link BasicAuthWebSecurityConfiguration#corsConfigurer()}.
    *
@@ -58,30 +41,6 @@ class BasicAuthWebSecurityConfigurationDiffblueTest {
     // Arrange and Act
     WebMvcConfigurer actualCorsConfigurerResult =
         new BasicAuthWebSecurityConfiguration().corsConfigurer();
-
-    // Assert
-    assertNull(actualCorsConfigurerResult.getMessageCodesResolver());
-    assertNull(actualCorsConfigurerResult.getValidator());
-  }
-
-  /**
-   * Test {@link BasicAuthWebSecurityConfiguration#corsConfigurer()}.
-   *
-   * <ul>
-   *   <li>Then return MessageCodesResolver is {@code null}.
-   * </ul>
-   *
-   * <p>Method under test: {@link BasicAuthWebSecurityConfiguration#corsConfigurer()}
-   */
-  @Test
-  @DisplayName("Test corsConfigurer(); then return MessageCodesResolver is 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"WebMvcConfigurer BasicAuthWebSecurityConfiguration.corsConfigurer()"})
-  void testCorsConfigurer_thenReturnMessageCodesResolverIsNull() {
-    // Arrange and Act
-    WebMvcConfigurer actualCorsConfigurerResult =
-        basicAuthWebSecurityConfiguration.corsConfigurer();
 
     // Assert
     assertNull(actualCorsConfigurerResult.getMessageCodesResolver());

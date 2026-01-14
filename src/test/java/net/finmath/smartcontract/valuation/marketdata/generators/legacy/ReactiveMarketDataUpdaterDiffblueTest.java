@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import net.finmath.smartcontract.model.MarketDataSet;
 import net.finmath.smartcontract.model.MarketDataSetValuesInner;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
@@ -137,6 +138,41 @@ class ReactiveMarketDataUpdaterDiffblueTest {
 
     // Assert
     assertFalse(actualReactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}.
+   *
+   * <ul>
+   *   <li>Given {@link BiFunction}.
+   *   <li>When {@link HashMap#HashMap()} replaceAll {@link BiFunction}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onConnected(WebSocket, Map)}
+   */
+  @Test
+  @DisplayName(
+      "Test onConnected(WebSocket, Map); given BiFunction; when HashMap() replaceAll BiFunction")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onConnected(WebSocket, Map)"})
+  void testOnConnected_givenBiFunction_whenHashMapReplaceAllBiFunction() throws Exception {
+    // Arrange
+    when(jSONObject.getString(Mockito.<String>any())).thenReturn("String");
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    HashMap<String, List<String>> headers = new HashMap<>();
+    headers.replaceAll(mock(BiFunction.class));
+    headers.putAll(new HashMap<>());
+
+    // Act
+    reactiveMarketDataUpdater.onConnected(websocket, headers);
+
+    // Assert
+    verify(websocket, atLeast(1)).sendText(Mockito.<String>any());
+    verify(jSONObject, atLeast(1)).getString("access_token");
   }
 
   /**
