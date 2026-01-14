@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,34 +44,63 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return CalibrationDataItems is {@link HashSet#HashSet()}.
+   *   <li>Given createCalibrationDataItemMonthlyMaturity.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
   @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is HashSet()")
+      "Test new CalibrationDataset(Set, LocalDateTime); given createCalibrationDataItemMonthlyMaturity")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsHashSet() {
+  void testNewCalibrationDataset_givenCreateCalibrationDataItemMonthlyMaturity() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(
+        CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(calibrationDataItem).getDaysToMaturity();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getCalibrationDataItems());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Given createCalibrationDataItemWithNullQuote.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName(
+      "Test new CalibrationDataset(Set, LocalDateTime); given createCalibrationDataItemWithNullQuote")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_givenCreateCalibrationDataItemWithNullQuote() {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
@@ -89,25 +118,64 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return CalibrationDataItems is {@link LinkedHashSet#LinkedHashSet()}.
+   *   <li>Then calls {@link CalibrationDataItem#getDaysToMaturity()}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
-  @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return CalibrationDataItems is LinkedHashSet()")
+  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); then calls getDaysToMaturity()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnCalibrationDataItemsIsLinkedHashSet() {
+  void testNewCalibrationDataset_thenCallsGetDaysToMaturity() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
+    curveDataPointSet.add(calibrationDataItem);
+    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
+
+    // Act
+    CalibrationDataset actualCalibrationDataset =
+        new CalibrationDataset(curveDataPointSet, scenarioDate);
+
+    // Assert
+    verify(calibrationDataItem).getDaysToMaturity();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    assertTrue(actualCalibrationDataset.getFixingDataItems().isEmpty());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getCalibrationDataItems());
+    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
+    assertSame(scenarioDate, actualCalibrationDataset.getDate());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
+   *
+   * <ul>
+   *   <li>Then calls {@link CalibrationDataItem#getProductName()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
+   */
+  @Test
+  @DisplayName("Test new CalibrationDataset(Set, LocalDateTime); then calls getProductName()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
+  void testNewCalibrationDataset_thenCallsGetProductName() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
-    LinkedHashSet<CalibrationDataItem> curveDataPointSet = new LinkedHashSet<>();
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
     curveDataPointSet.add(calibrationDataItem);
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
@@ -127,32 +195,21 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
    *
    * <ul>
-   *   <li>Then return FixingDataItems is {@link LinkedHashSet#LinkedHashSet()}.
+   *   <li>Then return FixingDataItems is {@link HashSet#HashSet()}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
    */
   @Test
   @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems is LinkedHashSet()")
+      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems is HashSet()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnFixingDataItemsIsLinkedHashSet() {
+  void testNewCalibrationDataset_thenReturnFixingDataItemsIsHashSet() {
     // Arrange
-    LinkedHashSet<CalibrationDataItem> curveDataPointSet = new LinkedHashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            "Fixing",
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemDailyMaturity());
     LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
 
     // Act
@@ -163,117 +220,6 @@ class CalibrationDatasetDiffblueTest {
     assertTrue(actualCalibrationDataset.getCalibrationDataItems().isEmpty());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertEquals(curveDataPointSet, actualCalibrationDataset.getFixingDataItems());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Then return FixingDataItems size is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsOne() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            "Fixing",
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 0.5d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    String key2 = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName2 =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec2 =
-        new Spec(
-            key2,
-            curveName2,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset =
-        new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
-    assertEquals(1, actualCalibrationDataset.getFixingDataItems().size());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
-    assertSame(scenarioDate, actualCalibrationDataset.getDate());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}.
-   *
-   * <ul>
-   *   <li>Then return FixingDataItems size is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationDataset#CalibrationDataset(Set, LocalDateTime)}
-   */
-  @Test
-  @DisplayName(
-      "Test new CalibrationDataset(Set, LocalDateTime); then return FixingDataItems size is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CalibrationDataset.<init>(Set, LocalDateTime)"})
-  void testNewCalibrationDataset_thenReturnFixingDataItemsSizeIsTwo() {
-    // Arrange
-    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    when(calibrationDataItem.getProductName())
-        .thenReturn(
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-
-    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
-    when(calibrationDataItem2.getDate()).thenReturn(LocalDate.of(1970, 1, 1));
-    when(calibrationDataItem2.getProductName()).thenReturn("Fixing");
-
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    Spec spec =
-        new Spec(
-            key,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
-            "Fixing",
-            "42");
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    curveDataPointSet.add(calibrationDataItem2);
-    curveDataPointSet.add(calibrationDataItem);
-    LocalDateTime scenarioDate = LocalDate.of(1970, 1, 1).atStartOfDay();
-
-    // Act
-    CalibrationDataset actualCalibrationDataset =
-        new CalibrationDataset(curveDataPointSet, scenarioDate);
-
-    // Assert
-    verify(calibrationDataItem2).getDate();
-    verify(calibrationDataItem2, atLeast(1)).getProductName();
-    verify(calibrationDataItem, atLeast(1)).getProductName();
-    assertEquals(1, actualCalibrationDataset.getCalibrationDataItems().size());
-    assertEquals(2, actualCalibrationDataset.getFixingDataItems().size());
-    assertEquals(curveDataPointSet, actualCalibrationDataset.getDataPoints());
     assertSame(scenarioDate, actualCalibrationDataset.getDate());
   }
 
@@ -320,68 +266,9 @@ class CalibrationDatasetDiffblueTest {
   @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
   void testGetScaled() {
     // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    LocalDate ofResult = LocalDate.of(1970, 1, 1);
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
-
-    // Act
-    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
-
-    // Assert
-    LocalDateTime date = actualScaled.getDate();
-    assertEquals("00:00", date.toLocalTime().toString());
-    LocalDate toLocalDateResult = date.toLocalDate();
-    assertEquals("1970-01-01", toLocalDateResult.toString());
-    Set<CalibrationDataItem> calibrationDataItems = actualScaled.getCalibrationDataItems();
-    assertEquals(1, calibrationDataItems.size());
-    assertTrue(actualScaled.getFixingDataItems().isEmpty());
-    assertEquals(calibrationDataItems, actualScaled.getDataPoints());
-    assertSame(ofResult, toLocalDateResult);
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getScaled(double)}.
-   *
-   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
-   */
-  @Test
-  @DisplayName("Test getScaled(double)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
-  void testGetScaled2() {
-    // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     when(calibrationDataItem.getClonedScaled(anyDouble()))
-        .thenReturn(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+        .thenReturn(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
@@ -414,19 +301,114 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getScaled(double)}.
    *
    * <ul>
-   *   <li>Given {@link CalibrationDataItem} {@link CalibrationDataItem#getClonedScaled(double)}
-   *       return {@link CalibrationDataItem}.
+   *   <li>Given {@link HashSet#HashSet()} add createCalibrationDataItemEuribor6M.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  @DisplayName("Test getScaled(double); given HashSet() add createCalibrationDataItemEuribor6M")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
+  void testGetScaled_givenHashSetAddCreateCalibrationDataItemEuribor6M() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem2.getClonedScaled(anyDouble())).thenReturn(calibrationDataItem);
+    when(calibrationDataItem2.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemEuribor6M());
+    curveDataPointSet.add(calibrationDataItem2);
+
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
+
+    // Assert
+    verify(calibrationDataItem2).getClonedScaled(10.0d);
+    verify(calibrationDataItem2).getDaysToMaturity();
+    verify(calibrationDataItem).getDaysToMaturity();
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    Set<CalibrationDataItem> calibrationDataItems = actualScaled.getCalibrationDataItems();
+    assertEquals(2, calibrationDataItems.size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertEquals(calibrationDataItems, actualScaled.getDataPoints());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getScaled(double)}.
+   *
+   * <ul>
+   *   <li>Given {@link HashSet#HashSet()} add createCalibrationDataItemMonthlyMaturity.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
    */
   @Test
   @DisplayName(
-      "Test getScaled(double); given CalibrationDataItem getClonedScaled(double) return CalibrationDataItem")
+      "Test getScaled(double); given HashSet() add createCalibrationDataItemMonthlyMaturity")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
-  void testGetScaled_givenCalibrationDataItemGetClonedScaledReturnCalibrationDataItem() {
+  void testGetScaled_givenHashSetAddCreateCalibrationDataItemMonthlyMaturity() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(
+        CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
+
+    // Assert
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    Set<CalibrationDataItem> calibrationDataItems = actualScaled.getCalibrationDataItems();
+    assertEquals(1, calibrationDataItems.size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertEquals(calibrationDataItems, actualScaled.getDataPoints());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getScaled(double)}.
+   *
+   * <ul>
+   *   <li>Then return CalibrationDataItems size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  @DisplayName("Test getScaled(double); then return CalibrationDataItems size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
+  void testGetScaled_thenReturnCalibrationDataItemsSizeIsOne() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getProductName())
@@ -459,6 +441,64 @@ class CalibrationDatasetDiffblueTest {
     assertEquals("1970-01-01", toLocalDateResult.toString());
     Set<CalibrationDataItem> calibrationDataItems = actualScaled.getCalibrationDataItems();
     assertEquals(1, calibrationDataItems.size());
+    assertTrue(actualScaled.getFixingDataItems().isEmpty());
+    assertEquals(calibrationDataItems, actualScaled.getDataPoints());
+    assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getScaled(double)}.
+   *
+   * <ul>
+   *   <li>Then return CalibrationDataItems size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getScaled(double)}
+   */
+  @Test
+  @DisplayName("Test getScaled(double); then return CalibrationDataItems size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getScaled(double)"})
+  void testGetScaled_thenReturnCalibrationDataItemsSizeIsTwo() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    CalibrationDataItem calibrationDataItem2 = mock(CalibrationDataItem.class);
+    when(calibrationDataItem2.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem2.getClonedScaled(anyDouble())).thenReturn(calibrationDataItem);
+    when(calibrationDataItem2.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(
+        CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+    curveDataPointSet.add(calibrationDataItem2);
+
+    LocalDate ofResult = LocalDate.of(1970, 1, 1);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, ofResult.atStartOfDay());
+
+    // Act
+    CalibrationDataset actualScaled = calibrationDataset.getScaled(10.0d);
+
+    // Assert
+    verify(calibrationDataItem2).getClonedScaled(10.0d);
+    verify(calibrationDataItem2).getDaysToMaturity();
+    verify(calibrationDataItem).getDaysToMaturity();
+    verify(calibrationDataItem2, atLeast(1)).getProductName();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    LocalDateTime date = actualScaled.getDate();
+    assertEquals("00:00", date.toLocalTime().toString());
+    LocalDate toLocalDateResult = date.toLocalDate();
+    assertEquals("1970-01-01", toLocalDateResult.toString());
+    Set<CalibrationDataItem> calibrationDataItems = actualScaled.getCalibrationDataItems();
+    assertEquals(2, calibrationDataItems.size());
     assertTrue(actualScaled.getFixingDataItems().isEmpty());
     assertEquals(calibrationDataItems, actualScaled.getDataPoints());
     assertSame(ofResult, toLocalDateResult);
@@ -515,18 +555,8 @@ class CalibrationDatasetDiffblueTest {
   void testGetScaled_thenReturnDataPointsSizeIsOne() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            "Fixing",
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
     when(calibrationDataItem.getClonedScaled(anyDouble()))
-        .thenReturn(new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+        .thenReturn(CalibrationDataItemTestFactory.createCalibrationDataItemDailyMaturity());
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
@@ -604,27 +634,20 @@ class CalibrationDatasetDiffblueTest {
   @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
   void testGetClonedFixingsAdded() {
     // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    newFixingDataItems.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(calibrationDataItem);
 
     // Act
     CalibrationDataset actualClonedFixingsAdded =
         calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
 
     // Assert
+    verify(calibrationDataItem).getProductName();
     assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
     assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
     assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
@@ -642,100 +665,13 @@ class CalibrationDatasetDiffblueTest {
   @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
   void testGetClonedFixingsAdded2() {
     // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            "Fixing",
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    newFixingDataItems.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded =
-        calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
-    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   *
-   * <p>Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded3() {
-    // Arrange
-    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    newFixingDataItems.add(
-        new CalibrationDataItem(spec, 0.5d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-    String key2 = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName2 =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName2 =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec2 =
-        new Spec(
-            key2,
-            curveName2,
-            productName2,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    newFixingDataItems.add(
-        new CalibrationDataItem(spec2, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
-
-    // Act
-    CalibrationDataset actualClonedFixingsAdded =
-        calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
-
-    // Assert
-    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
-    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
-  }
-
-  /**
-   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
-   *
-   * <p>Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
-   */
-  @Test
-  @DisplayName("Test getClonedFixingsAdded(Set)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
-  void testGetClonedFixingsAdded4() {
-    // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
 
     HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
     newFixingDataItems.add(calibrationDataItem);
 
     // Act
@@ -788,6 +724,64 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
    *
    * <ul>
+   *   <li>Given createCalibrationDataItemDailyMaturity.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  @DisplayName("Test getClonedFixingsAdded(Set); given createCalibrationDataItemDailyMaturity")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
+  void testGetClonedFixingsAdded_givenCreateCalibrationDataItemDailyMaturity() {
+    // Arrange
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(CalibrationDataItemTestFactory.createCalibrationDataItemDailyMaturity());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded =
+        calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getDataPoints());
+    assertEquals(newFixingDataItems, actualClonedFixingsAdded.getFixingDataItems());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
+   *
+   * <ul>
+   *   <li>Given createCalibrationDataItemWithNullQuote.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getClonedFixingsAdded(Set)}
+   */
+  @Test
+  @DisplayName("Test getClonedFixingsAdded(Set); given createCalibrationDataItemWithNullQuote")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CalibrationDataset CalibrationDataset.getClonedFixingsAdded(Set)"})
+  void testGetClonedFixingsAdded_givenCreateCalibrationDataItemWithNullQuote() {
+    // Arrange
+    HashSet<CalibrationDataItem> newFixingDataItems = new HashSet<>();
+    newFixingDataItems.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
+
+    // Act
+    CalibrationDataset actualClonedFixingsAdded =
+        calibrationDataset.getClonedFixingsAdded(newFixingDataItems);
+
+    // Assert
+    assertTrue(actualClonedFixingsAdded.getCalibrationDataItems().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getDataPoints().isEmpty());
+    assertTrue(actualClonedFixingsAdded.getFixingDataItems().isEmpty());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getClonedFixingsAdded(Set)}.
+   *
+   * <ul>
    *   <li>Then return Date toLocalTime toString is {@code 00:00}.
    * </ul>
    *
@@ -822,120 +816,27 @@ class CalibrationDatasetDiffblueTest {
   /**
    * Test {@link CalibrationDataset#toMarketDataList()}.
    *
-   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
-   */
-  @Test
-  @DisplayName("Test toMarketDataList()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
-  void testToMarketDataList() {
-    // Arrange
-    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-
-    LocalDate ofResult = LocalDate.of(1970, 1, 1);
-    curveDataPointSet.add(new CalibrationDataItem(spec, 10.0d, ofResult.atStartOfDay()));
-    CalibrationDataset calibrationDataset =
-        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
-
-    // Act
-    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
-
-    // Assert
-    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
-    assertEquals(1, points.size());
-    MarketDataPoint getResult = points.get(0);
-    LocalDate toLocalDateResult = getResult.getTimeStamp().toLocalDate();
-    assertEquals("1970-01-01", toLocalDateResult.toString());
-    assertEquals(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www"
-            + ".w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract"
-            + ".xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI"
-            + "-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance"
-            + "</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart"
-            + "-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>"
-            + "    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0<"
-            + "/value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>   "
-            + " <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>   "
-            + " <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type"
-            + ">constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties>"
-            + "<settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata> "
-            + "   <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>     "
-            + "   <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>"
-            + "  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap<"
-            + "/productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference"
-            + "><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency"
-            + "><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference"
-            + ">party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01<"
-            + "/effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency"
-            + "><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>     "
-            + " </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6<"
-            + "/periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>"
-            + "        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>       "
-            + " <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor>"
-            + "<periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>     "
-            + "   </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">    "
-            + "  <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>       "
-            + " <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>     "
-            + "   <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculation"
-            + "PeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency>"
-            + "<periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>    "
-            + "  <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0<"
-            + "/amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule> "
-            + "       </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderiva"
-            + "tivecontract>",
-        getResult.getId());
-    assertEquals(1, actualToMarketDataListResult.getSize());
-    assertEquals(10.0d, getResult.getValue().doubleValue());
-    assertSame(ofResult, toLocalDateResult);
-  }
-
-  /**
-   * Test {@link CalibrationDataset#toMarketDataList()}.
-   *
    * <ul>
-   *   <li>Then calls {@link CalibrationDataItem#getDateTime()}.
+   *   <li>Then return Points first TimeStamp toLocalDate toString is {@code 1970-01-01}.
    * </ul>
    *
    * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
    */
   @Test
-  @DisplayName("Test toMarketDataList(); then calls getDateTime()")
+  @DisplayName(
+      "Test toMarketDataList(); then return Points first TimeStamp toLocalDate toString is '1970-01-01'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
-  void testToMarketDataList_thenCallsGetDateTime() {
+  void testToMarketDataList_thenReturnPointsFirstTimeStampToLocalDateToStringIs19700101() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenReturn(10.0d);
 
     LocalDate ofResult = LocalDate.of(1970, 1, 1);
     when(calibrationDataItem.getDateTime()).thenReturn(ofResult.atStartOfDay());
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    when(calibrationDataItem.getSpec()).thenReturn(spec);
+    when(calibrationDataItem.getSpec())
+        .thenReturn(CalibrationDataItemTestFactory.createSpecForSwapRate());
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
@@ -958,47 +859,129 @@ class CalibrationDatasetDiffblueTest {
     MarketDataPoint getResult = points.get(0);
     LocalDate toLocalDateResult = getResult.getTimeStamp().toLocalDate();
     assertEquals("1970-01-01", toLocalDateResult.toString());
-    assertEquals(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><smartderivativecontract xmlns:xsi=\"http://www"
-            + ".w3.org/2001/XMLSchema-instance\" xmlns=\"uri:sdc\" xsi:schemaLocation=\"uri:sdc smartderivativecontract"
-            + ".xsd\"><dltTradeId>TEST-TRADE-001</dltTradeId><dltAddress>0xTEST</dltAddress><uniqueTradeIdentifier>UTI"
-            + "-TEST-001</uniqueTradeIdentifier><settlementCurrency>EUR</settlementCurrency><tradeType>SDCPledgedBalance"
-            + "</tradeType><valuation>  <artefact>    <groupId>net.finmath</groupId>    <artifactId>finmath-smart"
-            + "-derivative-contract</artifactId>    <version>1.0.0</version>  </artefact></valuation><parties>  <party>"
-            + "    <name>Party 1</name>    <id>party1</id>    <marginAccount><type>constant</type><value>10000.0<"
-            + "/value></marginAccount>    <penaltyFee><type>constant</type><value>100.0</value></penaltyFee>   "
-            + " <address>0x1234</address>  </party>  <party>    <name>Party 2</name>    <id>party2</id>   "
-            + " <marginAccount><type>constant</type><value>10000.0</value></marginAccount>    <penaltyFee><type"
-            + ">constant</type><value>100.0</value></penaltyFee>    <address>0x5678</address>  </party></parties>"
-            + "<settlement>  <settlementTime><type>daily</type><value>17:00</value></settlementTime>  <marketdata> "
-            + "   <provider>test</provider>    <marketdataitems>      <item>        <symbol>EUR-EONIA</symbol>     "
-            + "   <curve>ESTR</curve>        <type>Fixing</type>        <tenor>1D</tenor>      </item>    </marketdataitems>"
-            + "  </marketdata></settlement><trade>  <product>InterestRateDerivative</product>  <productType>Swap<"
-            + "/productType>  <startDate>2024-01-01</startDate>  <endDate>2029-01-01</endDate>  <receiverPartyReference"
-            + "><partyReference>party1</partyReference></receiverPartyReference>  <notional><currency>EUR</currency"
-            + "><amount>1000000.0</amount></notional>  <swap>    <swapStream id=\"floatLeg\">      <receiverPartyReference"
-            + ">party1</receiverPartyReference>      <calculationPeriodDates>        <effectiveDate>2024-01-01<"
-            + "/effectiveDate>        <terminationDate>2029-01-01</terminationDate>        <calculationPeriodFrequency"
-            + "><periodMultiplier>6</periodMultiplier><period>M</period></calculationPeriodFrequency>     "
-            + " </calculationPeriodDates>      <paymentDates>        <paymentFrequency><periodMultiplier>6<"
-            + "/periodMultiplier><period>M</period></paymentFrequency>      </paymentDates>      <calculationPeriodAmount>"
-            + "        <calculation><notional><currency>EUR</currency><amount>1000000.0</amount></notional>       "
-            + " <floatingRateCalculation><floatingRateIndex>EUR-EURIBOR-Reuters</floatingRateIndex><indexTenor>"
-            + "<periodMultiplier>6</periodMultiplier><period>M</period></indexTenor></floatingRateCalculation>     "
-            + "   </calculation>      </calculationPeriodAmount>    </swapStream>    <swapStream id=\"fixedLeg\">    "
-            + "  <receiverPartyReference>party2</receiverPartyReference>      <calculationPeriodDates>       "
-            + " <effectiveDate>2024-01-01</effectiveDate>        <terminationDate>2029-01-01</terminationDate>     "
-            + "   <calculationPeriodFrequency><periodMultiplier>1</periodMultiplier><period>Y</period></calculation"
-            + "PeriodFrequency>      </calculationPeriodDates>      <paymentDates>        <paymentFrequency>"
-            + "<periodMultiplier>1</periodMultiplier><period>Y</period></paymentFrequency>      </paymentDates>    "
-            + "  <calculationPeriodAmount>        <calculation><notional><currency>EUR</currency><amount>1000000.0<"
-            + "/amount></notional>        <fixedRateSchedule><initialValue>0.02</initialValue></fixedRateSchedule> "
-            + "       </calculation>      </calculationPeriodAmount>    </swapStream>  </swap></trade></smartderiva"
-            + "tivecontract>",
-        getResult.getId());
-    assertEquals(1, actualToMarketDataListResult.getSize());
+    assertEquals("ESTR_Swap-Rate_5Y", getResult.getId());
     assertEquals(10.0d, getResult.getValue().doubleValue());
     assertSame(ofResult, toLocalDateResult);
+  }
+
+  /**
+   * Test {@link CalibrationDataset#toMarketDataList()}.
+   *
+   * <ul>
+   *   <li>Then return Points first TimeStamp toLocalDate toString is {@code 2024-01-01}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  @DisplayName(
+      "Test toMarketDataList(); then return Points first TimeStamp toLocalDate toString is '2024-01-01'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
+  void testToMarketDataList_thenReturnPointsFirstTimeStampToLocalDateToStringIs20240101() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemDailyMaturity());
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act
+    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
+
+    // Assert
+    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
+    assertEquals(1, points.size());
+    MarketDataPoint getResult = points.get(0);
+    assertEquals("2024-01-01", getResult.getTimeStamp().toLocalDate().toString());
+    assertEquals("ESTR_Fixing_1D", getResult.getId());
+    assertEquals(0.001d, getResult.getValue().doubleValue());
+    assertEquals(1, actualToMarketDataListResult.getSize());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#toMarketDataList()}.
+   *
+   * <ul>
+   *   <li>Then return Points first TimeStamp toLocalTime toString is {@code 17:00}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  @DisplayName(
+      "Test toMarketDataList(); then return Points first TimeStamp toLocalTime toString is '17:00'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
+  void testToMarketDataList_thenReturnPointsFirstTimeStampToLocalTimeToStringIs1700() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act and Assert
+    List<MarketDataPoint> points = calibrationDataset.toMarketDataList().getPoints();
+    assertEquals(1, points.size());
+    MarketDataPoint getResult = points.get(0);
+    LocalDateTime timeStamp = getResult.getTimeStamp();
+    assertEquals("17:00", timeStamp.toLocalTime().toString());
+    assertEquals("2024-03-15", timeStamp.toLocalDate().toString());
+    assertEquals("ESTR_Swap-Rate_2Y", getResult.getId());
+    assertNull(getResult.getValue());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#toMarketDataList()}.
+   *
+   * <ul>
+   *   <li>Then return Points size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#toMarketDataList()}
+   */
+  @Test
+  @DisplayName("Test toMarketDataList(); then return Points size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"MarketDataList CalibrationDataset.toMarketDataList()"})
+  void testToMarketDataList_thenReturnPointsSizeIsTwo() {
+    // Arrange
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getDaysToMaturity()).thenReturn(1);
+    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
+    when(calibrationDataItem.getDateTime()).thenReturn(LocalDate.of(1970, 1, 1).atStartOfDay());
+    when(calibrationDataItem.getSpec())
+        .thenReturn(CalibrationDataItemTestFactory.createSpecForSwapRate());
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
+    curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act
+    MarketDataList actualToMarketDataListResult = calibrationDataset.toMarketDataList();
+
+    // Assert
+    verify(calibrationDataItem).getDateTime();
+    verify(calibrationDataItem).getDaysToMaturity();
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(calibrationDataItem).getQuote();
+    verify(calibrationDataItem).getSpec();
+    List<MarketDataPoint> points = actualToMarketDataListResult.getPoints();
+    assertEquals(2, points.size());
+    MarketDataPoint getResult = points.get(1);
+    LocalDateTime timeStamp = getResult.getTimeStamp();
+    assertEquals("17:00", timeStamp.toLocalTime().toString());
+    assertEquals("2024-03-15", timeStamp.toLocalDate().toString());
+    assertEquals("ESTR_Swap-Rate_2Y", getResult.getId());
+    assertNull(getResult.getValue());
+    assertEquals(2, actualToMarketDataListResult.getSize());
   }
 
   /**
@@ -1043,24 +1026,13 @@ class CalibrationDatasetDiffblueTest {
       "Test serializeToJson(); given CalibrationDataItem getQuote() return ten; then calls getQuote()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"String CalibrationDataset.serializeToJson()"})
+  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
   void testSerializeToJson_givenCalibrationDataItemGetQuoteReturnTen_thenCallsGetQuote() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenReturn(10.0d);
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    when(calibrationDataItem.getSpec()).thenReturn(spec);
+    when(calibrationDataItem.getSpec())
+        .thenReturn(CalibrationDataItemTestFactory.createSpecForSwapRate());
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
@@ -1094,24 +1066,13 @@ class CalibrationDatasetDiffblueTest {
       "Test serializeToJson(); given CalibrationDataItem getQuote() throw RuntimeException()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"String CalibrationDataset.serializeToJson()"})
+  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
   void testSerializeToJson_givenCalibrationDataItemGetQuoteThrowRuntimeException() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
     when(calibrationDataItem.getQuote()).thenThrow(new RuntimeException());
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    when(calibrationDataItem.getSpec()).thenReturn(spec);
+    when(calibrationDataItem.getSpec())
+        .thenReturn(CalibrationDataItemTestFactory.createSpecForSwapRate());
     when(calibrationDataItem.getProductName())
         .thenReturn(
             MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
@@ -1143,7 +1104,7 @@ class CalibrationDatasetDiffblueTest {
       "Test serializeToJson(); given CalibrationDataItem getSpec() throw RuntimeException()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"String CalibrationDataset.serializeToJson()"})
+  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
   void testSerializeToJson_givenCalibrationDataItemGetSpecThrowRuntimeException() {
     // Arrange
     CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
@@ -1161,6 +1122,95 @@ class CalibrationDatasetDiffblueTest {
     assertThrows(RuntimeException.class, () -> calibrationDataset.serializeToJson());
     verify(calibrationDataItem, atLeast(1)).getProductName();
     verify(calibrationDataItem).getSpec();
+  }
+
+  /**
+   * Test {@link CalibrationDataset#serializeToJson()}.
+   *
+   * <ul>
+   *   <li>Given {@link Spec} {@link Spec#getCurveName()} throw {@link
+   *       RuntimeException#RuntimeException()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#serializeToJson()}
+   */
+  @Test
+  @DisplayName("Test serializeToJson(); given Spec getCurveName() throw RuntimeException()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
+  void testSerializeToJson_givenSpecGetCurveNameThrowRuntimeException() {
+    // Arrange
+    Spec spec = mock(Spec.class);
+    when(spec.getCurveName()).thenThrow(new RuntimeException());
+
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getSpec()).thenReturn(spec);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act and Assert
+    assertThrows(RuntimeException.class, () -> calibrationDataset.serializeToJson());
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(calibrationDataItem).getSpec();
+    verify(spec).getCurveName();
+  }
+
+  /**
+   * Test {@link CalibrationDataset#serializeToJson()}.
+   *
+   * <ul>
+   *   <li>Then calls {@link Spec#getMaturity()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#serializeToJson()}
+   */
+  @Test
+  @DisplayName("Test serializeToJson(); then calls getMaturity()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"java.lang.String CalibrationDataset.serializeToJson()"})
+  void testSerializeToJson_thenCallsGetMaturity() {
+    // Arrange
+    Spec spec = mock(Spec.class);
+    when(spec.getCurveName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    when(spec.getMaturity())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+    when(spec.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    CalibrationDataItem calibrationDataItem = mock(CalibrationDataItem.class);
+    when(calibrationDataItem.getQuote()).thenReturn(10.0d);
+    when(calibrationDataItem.getSpec()).thenReturn(spec);
+    when(calibrationDataItem.getProductName())
+        .thenReturn(
+            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
+
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(calibrationDataItem);
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act
+    calibrationDataset.serializeToJson();
+
+    // Assert
+    verify(calibrationDataItem, atLeast(1)).getProductName();
+    verify(calibrationDataItem).getQuote();
+    verify(calibrationDataItem, atLeast(1)).getSpec();
+    verify(spec, atLeast(1)).getCurveName();
+    verify(spec).getMaturity();
+    verify(spec, atLeast(1)).getProductName();
   }
 
   /**
@@ -1201,6 +1251,31 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getDataPoints()}.
    *
    * <ul>
+   *   <li>Given {@link HashSet#HashSet()} add createCalibrationDataItemDailyMaturity.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getDataPoints()}
+   */
+  @Test
+  @DisplayName("Test getDataPoints(); given HashSet() add createCalibrationDataItemDailyMaturity")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Set CalibrationDataset.getDataPoints()"})
+  void testGetDataPoints_givenHashSetAddCreateCalibrationDataItemDailyMaturity() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemDailyMaturity());
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act and Assert
+    assertEquals(1, calibrationDataset.getDataPoints().size());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getDataPoints()}.
+   *
+   * <ul>
    *   <li>Then return Empty.
    * </ul>
    *
@@ -1224,6 +1299,33 @@ class CalibrationDatasetDiffblueTest {
    * Test {@link CalibrationDataset#getDataPoints()}.
    *
    * <ul>
+   *   <li>Then return {@link HashSet#HashSet()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CalibrationDataset#getDataPoints()}
+   */
+  @Test
+  @DisplayName("Test getDataPoints(); then return HashSet()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Set CalibrationDataset.getDataPoints()"})
+  void testGetDataPoints_thenReturnHashSet() {
+    // Arrange
+    HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
+    curveDataPointSet.add(
+        CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
+    CalibrationDataset calibrationDataset =
+        new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
+
+    // Act and Assert
+    assertEquals(curveDataPointSet, calibrationDataset.getDataPoints());
+  }
+
+  /**
+   * Test {@link CalibrationDataset#getDataPoints()}.
+   *
+   * <ul>
    *   <li>Then return size is one.
    * </ul>
    *
@@ -1237,20 +1339,7 @@ class CalibrationDatasetDiffblueTest {
   void testGetDataPoints_thenReturnSizeIsOne() {
     // Arrange
     HashSet<CalibrationDataItem> curveDataPointSet = new HashSet<>();
-    String key = MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String curveName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-    String productName =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    Spec spec =
-        new Spec(
-            key,
-            curveName,
-            productName,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml());
-    curveDataPointSet.add(
-        new CalibrationDataItem(spec, 10.0d, LocalDate.of(1970, 1, 1).atStartOfDay()));
+    curveDataPointSet.add(CalibrationDataItemTestFactory.createCalibrationDataItemWithNullQuote());
     CalibrationDataset calibrationDataset =
         new CalibrationDataset(curveDataPointSet, LocalDate.of(1970, 1, 1).atStartOfDay());
 

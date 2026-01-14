@@ -1,0 +1,104 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T142558.json'
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>:()V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>:()V
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>(Properties).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthJson:()Lorg/json/JSONObject;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthJson:()Lorg/json/JSONObject;
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>(Properties).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  12 issues were found, numbers 11-12 were displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 2 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] Let me create a summary document to explain the resolution.
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] I have successfully resolved both R081 issues reported by Diffblue Cover by creating appropriate test factory classes:
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Issue 1: LocalDateTimeAdapter (R081)
+INFO  [Claude Code] 
+INFO  [Claude Code] **Problem**: Diffblue Cover couldn't instantiate `net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter`.
+INFO  [Claude Code] 
+INFO  [Claude Code] **Solution**: Created `LocalDateTimeAdapterTestFactory.java` in `src/test/java/net/finmath/smartcontract/valuation/marketdata/data/`
+INFO  [Claude Code] 
+INFO  [Claude Code] This factory provides a simple method annotated with `@InterestingTestFactory` that instantiates the adapter using its no-arg constructor. The `LocalDateTimeAdapter` is an XML adapter class similar to `ZonedDateTimeAdapter`, which already had a test factory in the codebase.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Issue 2: WebSocketConnector (R081)
+INFO  [Claude Code] 
+INFO  [Claude Code] **Problem**: Diffblue Cover couldn't instantiate `net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector` which requires a `Properties` object.
+INFO  [Claude Code] 
+INFO  [Claude Code] **Solution**: Created `WebSocketConnectorTestFactory.java` in `src/test/java/net/finmath/smartcontract/valuation/marketdata/generators/`
+INFO  [Claude Code] 
+INFO  [Claude Code] This factory provides two factory methods:
+INFO  [Claude Code] 1. `createWebSocketConnector()` - Creates an instance with minimal valid configuration (proxy disabled)
+INFO  [Claude Code] 2. `createWebSocketConnectorWithProxy()` - Creates an instance with proxy configuration enabled
+INFO  [Claude Code] 
+INFO  [Claude Code] Both methods provide all required Properties keys that the `WebSocketConnector` constructor and methods expect:
+INFO  [Claude Code] - Authentication properties (AUTHURL, CLIENTID, USER, PASSWORD)
+INFO  [Claude Code] - WebSocket properties (HOSTNAME, PORT)
+INFO  [Claude Code] - Proxy properties (USEPROXY, PROXYHOST, PROXYPORT, PROXYUSER, PROXYPASS)
+INFO  [Claude Code] 
+INFO  [Claude Code] The configuration uses placeholder values that allow the class to be instantiated without triggering actual network calls during test generation.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Files Created
+INFO  [Claude Code] 
+INFO  [Claude Code] 1. `src/test/java/net/finmath/smartcontract/valuation/marketdata/data/LocalDateTimeAdapterTestFactory.java`
+INFO  [Claude Code] 2. `src/test/java/net/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnectorTestFactory.java`
+INFO  [Claude Code] 
+INFO  [Claude Code] Both files follow the same pattern as existing test factories in the codebase (e.g., `ZonedDateTimeAdapterTestFactory`, `CalibrationDataItemTestFactory`).
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps
+INFO  [Claude Code] 
+INFO  [Claude Code] As you mentioned, you may need to run `mvn install -DskipTests` to update the classpath with these new test factories. After that, Diffblue Cover should be able to generate tests for these classes successfully.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T151220.log
+INFO  Finished in 1m 37s

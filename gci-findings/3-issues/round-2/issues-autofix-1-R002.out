@@ -1,0 +1,61 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T142558.json'
+INFO  
+INFO  R002: Missing observers
+      Diffblue Cover was unable to create an assertion.
+      There are no fields that could be asserted on.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.settlement.BigDecimalAdapter.<init>:()V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.settlement.BigDecimalAdapter.<init>:()V
+      
+      Diffblue Cover was unable to create an assertion.
+      There are no fields that could be asserted on.
+      
+INFO  
+INFO  1 issues were found and displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 1 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] Perfect! I've successfully resolved the issue. Here's a summary of what I did:
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Resolution Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] **Issue**: Diffblue Cover was unable to create an assertion for the `BigDecimalAdapter.<init>:()V` constructor because there are no fields to assert on.
+INFO  [Claude Code] 
+INFO  [Claude Code] **Solution**: I added a constructor test to the `BigDecimalAdapterDiffblueTest.java` file that:
+INFO  [Claude Code] 
+INFO  [Claude Code] 1. **Added the necessary import**: `assertNotNull` from JUnit assertions
+INFO  [Claude Code] 2. **Created a new test method** `testConstructor_thenReturnNewInstance()` that:
+INFO  [Claude Code]    - Instantiates a new `BigDecimalAdapter` object
+INFO  [Claude Code]    - Asserts that the object is not null (verifying successful construction)
+INFO  [Claude Code]    - Follows the same Diffblue test conventions with proper annotations (`@ManagedByDiffblue`, `@MethodsUnderTest`, etc.)
+INFO  [Claude Code]    - Uses the same documentation and naming style as the other tests in the file
+INFO  [Claude Code] 
+INFO  [Claude Code] The test is located at `/home/jbergqvist/diffblue/finmath-smart-derivative-contract/src/test/java/net/finmath/smartcontract/settlement/BigDecimalAdapterDiffblueTest.java:36-42`.
+INFO  [Claude Code] 
+INFO  [Claude Code] This provides a simple but meaningful assertion that verifies the constructor works correctly. Since the constructor is just a default no-arg constructor used for XML binding, asserting that it returns a non-null instance is appropriate and sufficient.
+INFO  [Claude Code] 
+INFO  [Claude Code] Would you like me to run `mvn install -DskipTests` as suggested in your advisory note, or would you prefer to verify this yourself first?
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T150000.log
+INFO  Finished in 57s

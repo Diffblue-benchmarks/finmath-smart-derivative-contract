@@ -1,0 +1,243 @@
+INFO  Diffblue Cover 2025.12.02-74144f0-licensed
+INFO  
+INFO  Command: create
+INFO  Create tests for the specified package/class/method.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Creating tests for module: net.finmath:finmath-smart-derivative-contract
+INFO  ==============================================================================
+INFO  
+INFO  Detecting environment:
+INFO  ----------------------
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Selected classpath from build system maven
+INFO  Selected test framework: JUnit Jupiter API
+INFO  Selected Java language compliance level: 17
+INFO  Selected test validation: enabled
+INFO  Selected active Spring profile(s): "test"
+INFO  Prefixes for filtering classes/methods:
+INFO  - net.finmath.smartcontract.api
+INFO  - net.finmath.smartcontract.contract
+INFO  - net.finmath.smartcontract.demo
+INFO  - net.finmath.smartcontract.model
+INFO  - net.finmath.smartcontract.product
+INFO  - net.finmath.smartcontract.product.xml
+INFO  - net.finmath.smartcontract.settlement
+INFO  - net.finmath.smartcontract.statemachine
+INFO  - net.finmath.smartcontract.util
+INFO  - net.finmath.smartcontract.valuation.client
+INFO  - net.finmath.smartcontract.valuation.implementation
+INFO  - net.finmath.smartcontract.valuation.implementation.reactive
+INFO  - net.finmath.smartcontract.valuation.marketdata
+INFO  - net.finmath.smartcontract.valuation.marketdata.curvecalibration
+INFO  - net.finmath.smartcontract.valuation.marketdata.data
+INFO  - net.finmath.smartcontract.valuation.marketdata.database
+INFO  - net.finmath.smartcontract.valuation.marketdata.generators
+INFO  - net.finmath.smartcontract.valuation.marketdata.generators.legacy
+INFO  - net.finmath.smartcontract.valuation.marketdata.utils
+INFO  - net.finmath.smartcontract.valuation.oracle
+INFO  - net.finmath.smartcontract.valuation.oracle.interestrates
+INFO  - net.finmath.smartcontract.valuation.oracle.simulated
+INFO  - net.finmath.smartcontract.valuation.service
+INFO  - net.finmath.smartcontract.valuation.service.config
+INFO  - net.finmath.smartcontract.valuation.service.controllers
+INFO  - net.finmath.smartcontract.valuation.service.utils
+INFO  - net.finmath.smartcontract.valuation.service.websocket
+INFO  - net.finmath.smartcontract.valuation.service.websocket.client
+INFO  - net.finmath.smartcontract.valuation.service.websocket.handler
+INFO  Gathering methods to test...
+WARN  E199: Libraries with limited support found
+      Libraries are on the classpath that have only limited support by
+      Diffblue Cover:
+      - JavaFX 19
+      For code that uses these libraries fewer or lower quality tests may be written.
+INFO  Found 404 callable methods in 72 classes
+INFO  
+INFO  Creating tests:
+INFO  ---------------
+INFO   [1/72] net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator
+INFO   [1/72]   Tests created: 5
+INFO   [2/72] net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator$EventTimesImpl
+INFO   [2/72]   Tests created: 1
+INFO   [3/72] net.finmath.smartcontract.contract.SmartDerivativeContractScheduleGenerator$SimpleSchedule
+INFO   [3/72]   Tests created: 1
+INFO   [4/72] net.finmath.smartcontract.demo.VisualiserSDC
+INFO   [4/72]   Tests created: 3
+INFO   [5/72] net.finmath.smartcontract.product.IRSwapGenerator
+INFO   [5/72]   Tests created: 7
+INFO   [6/72] net.finmath.smartcontract.product.SmartDerivativeContractDescriptor
+INFO   [6/72]   Tests created: 0
+INFO   [7/72] net.finmath.smartcontract.product.SmartDerivativeContractDescriptor$Party
+INFO   [7/72]   Tests created: 0
+INFO   [8/72] net.finmath.smartcontract.settlement.BigDecimalAdapter
+INFO   [8/72]   Tests created: 3
+INFO   [9/72] net.finmath.smartcontract.settlement.Settlement
+INFO   [9/72]   Tests created: 1
+INFO  [10/72] net.finmath.smartcontract.settlement.Settlement$SettlementType
+INFO  [10/72]   Tests created: 0
+INFO  [11/72] net.finmath.smartcontract.settlement.SettlementGenerator
+INFO  [11/72]   Tests created: 0
+INFO  [12/72] net.finmath.smartcontract.settlement.SettlementInfo
+INFO  [12/72]   Tests created: 0
+INFO  [13/72] net.finmath.smartcontract.settlement.Settlements
+INFO  [13/72]   Tests created: 1
+INFO  [14/72] net.finmath.smartcontract.settlement.ZonedDateTimeAdapter
+INFO  [14/72]   Tests created: 0
+INFO  [15/72] net.finmath.smartcontract.statemachine.SmartContractStateMachine
+INFO  [15/72]   Tests created: 6
+INFO  [16/72] net.finmath.smartcontract.statemachine.SmartContractStateMachine$Events
+INFO  [16/72]   Tests created: 0
+INFO  [17/72] net.finmath.smartcontract.statemachine.SmartContractStateMachine$StateMachineListener
+INFO  [17/72]   Tests created: 1
+INFO  [18/72] net.finmath.smartcontract.statemachine.SmartContractStateMachine$States
+INFO  [18/72]   Tests created: 0
+INFO  [19/72] net.finmath.smartcontract.util.TradeUtils
+INFO  [19/72]   Tests created: 0
+INFO  [20/72] net.finmath.smartcontract.valuation.client.ValuationClient
+INFO  [20/72]   Tests created: 0
+INFO  [21/72] net.finmath.smartcontract.valuation.implementation.MarginCalculator
+INFO  [21/72]   Tests created: 0
+INFO  [22/72] net.finmath.smartcontract.valuation.implementation.reactive.ConditionalSettlementCalculator
+INFO  [22/72]   Tests created: 2
+INFO  [23/72] net.finmath.smartcontract.valuation.marketdata.LaunchAGenerator
+INFO  [23/72]   Tests created: 0
+INFO  [24/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationContextImpl
+INFO  [24/72]   Tests created: 2
+INFO  [25/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem
+INFO  [25/72]   Tests created: 0
+INFO  [26/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec
+INFO  [26/72]   Tests created: 0
+INFO  [27/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset
+INFO  [27/72]   Tests created: 35
+INFO  [28/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems
+INFO  [28/72]   Tests created: 0
+INFO  [29/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationResult
+INFO  [29/72]   Tests created: 7
+INFO  [30/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderDeposit
+INFO  [30/72]   Tests created: 7
+INFO  [31/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderFRA
+INFO  [31/72]   Tests created: 1
+INFO  [32/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis
+INFO  [32/72]   Tests created: 0
+INFO  [33/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap
+INFO  [33/72]   Tests created: 0
+INFO  [34/72] net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator
+INFO  [34/72]   Tests created: 11
+INFO  [35/72] net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter
+INFO  [35/72]   Tests created: 0
+INFO  [36/72] net.finmath.smartcontract.valuation.marketdata.data.MarketDataPoint
+INFO  [36/72]   Tests created: 9
+INFO  [37/72] net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector
+INFO  [37/72]   Tests created: 0
+INFO  [38/72] net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorLauncher
+INFO  [38/72]   Tests created: 0
+INFO  [39/72] net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorRandomFeed
+INFO  [39/72]   Tests created: 0
+INFO  [40/72] net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorScenarioList
+INFO  [40/72]   Tests created: 4
+INFO  [41/72] net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket
+INFO  [41/72]   Tests created: 17
+INFO  [42/72] net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector
+INFO  [42/72]   Tests created: 0
+INFO  [43/72] net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater
+INFO  [43/72]   Tests created: 16
+INFO  [44/72] net.finmath.smartcontract.valuation.marketdata.utils.MarketDataCheck
+INFO  [44/72]   Tests created: 3
+INFO  [45/72] net.finmath.smartcontract.valuation.marketdata.utils.MarketDataErrors
+INFO  [45/72]   Tests created: 2
+INFO  [46/72] net.finmath.smartcontract.valuation.oracle.SmartDerivativeContractSettlementOracle
+INFO  [46/72]   Tests created: 3
+INFO  [47/72] net.finmath.smartcontract.valuation.oracle.ValuationOracleSamplePath
+INFO  [47/72]   Tests created: 0
+INFO  [48/72] net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap
+INFO  [48/72]   Tests created: 30
+INFO  [49/72] net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap$ValuationTypeSwap
+INFO  [49/72]   Tests created: 0
+INFO  [50/72] net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle
+INFO  [50/72]   Tests created: 0
+INFO  [51/72] net.finmath.smartcontract.valuation.oracle.simulated.ContinouslyCompoundedBankAccountOracle
+INFO  [51/72]   Tests created: 5
+INFO  [52/72] net.finmath.smartcontract.valuation.oracle.simulated.GeometricBrownianMotionOracle
+INFO  [52/72]   Tests created: 0
+INFO  [53/72] net.finmath.smartcontract.valuation.service.Application
+INFO  [53/72]   Tests created: 0
+INFO  [54/72] net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration
+INFO  [54/72]   Tests created: 0
+INFO  [55/72] net.finmath.smartcontract.valuation.service.config.RefinitivConfig
+INFO  [55/72]   Tests created: 1
+INFO  [56/72] net.finmath.smartcontract.valuation.service.config.ValuationConfig
+INFO  [56/72]   Tests created: 1
+INFO  [57/72] net.finmath.smartcontract.valuation.service.controllers.InfoController
+INFO  [57/72]   Tests created: 2
+INFO  [58/72] net.finmath.smartcontract.valuation.service.controllers.PlainSwapEditorController
+INFO  [58/72]   Tests created: 0
+INFO  [59/72] net.finmath.smartcontract.valuation.service.controllers.SettlementController
+INFO  [59/72]   Tests created: 2
+INFO  [60/72] net.finmath.smartcontract.valuation.service.controllers.ValuationController
+INFO  [60/72]   Tests created: 24
+INFO  [61/72] net.finmath.smartcontract.valuation.service.utils.ApplicationProperties
+INFO  [61/72]   Tests created: 1
+INFO  [62/72] net.finmath.smartcontract.valuation.service.utils.ResourceGovernor
+INFO  [62/72]   Tests created: 0
+INFO  [63/72] net.finmath.smartcontract.valuation.service.utils.ResourceGovernor$RoleFolders
+INFO  [63/72]   Tests created: 0
+INFO  [64/72] net.finmath.smartcontract.valuation.service.utils.SDCAbstractRounding
+INFO  [64/72]   Tests created: 4
+INFO  [65/72] net.finmath.smartcontract.valuation.service.utils.SDCRounding
+INFO  [65/72]   Tests created: 1
+INFO  [66/72] net.finmath.smartcontract.valuation.service.utils.SDCUser
+INFO  [66/72]   Tests created: 1
+INFO  [67/72] net.finmath.smartcontract.valuation.service.utils.SettlementService
+INFO  [67/72]   Tests created: 7
+INFO  [68/72] net.finmath.smartcontract.valuation.service.websocket.WebSocketConfig
+INFO  [68/72]   Tests created: 2
+INFO  [69/72] net.finmath.smartcontract.valuation.service.websocket.WebSocketServerApplication
+INFO  [69/72]   Tests created: 0
+INFO  [70/72] net.finmath.smartcontract.valuation.service.websocket.client.DemoStarter
+INFO  [70/72]   Tests created: 0
+INFO  [71/72] net.finmath.smartcontract.valuation.service.websocket.client.WebSocketClientEndpoint
+INFO  [71/72]   Tests created: 0
+INFO  [72/72] net.finmath.smartcontract.valuation.service.websocket.handler.ValuationHandler
+INFO  [72/72]   Tests created: 4
+INFO  
+INFO  Test creation summary for module: net.finmath:finmath-smart-derivative-contract
+INFO  -------------------------------------------------------------------------------
+INFO  Total:                                             404 methods
+INFO  233 tests created for:                             206 methods
+INFO  
+INFO  Tested indirectly via other methods:                19 methods
+INFO     19 T005: Trivial constructor
+INFO  Not unit-testable:                                   7 methods
+INFO      7 T006: Main method
+INFO  No tests created for:                              162 methods
+INFO     39 R081: Exception in arrange section
+INFO      2 R013: No inputs found that don't throw a trivial exception
+INFO      1 R002: Missing observers
+INFO  
+INFO  Running validation command.
+INFO  This can take a couple of minutes.
+INFO  Test execution failed, analyzing...
+INFO  4 individual tests did not pass and were removed.
+INFO    
+INFO  Number of tests discarded during validation since they didn't compile, run or pass
+INFO    2 for net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator.<init>
+INFO    1 for net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorScenarioList.getMarketDataString
+INFO    1 for net.finmath.smartcontract.valuation.service.controllers.InfoController.infoGit
+INFO  To skip discarding these tests please re-run DCover with --skip-test-validation
+INFO  Test validation was able to validate 229 out of 233 complete tests, the remainder were discarded.
+INFO  Calculating coverage from Diffblue tests.
+INFO  JaCoCo report file created in /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/diffblue-tests-jacoco-report.xml
+INFO  Calculating coverage from manual tests.
+INFO  JaCoCo report file created in /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/manual-tests-jacoco-report.xml
+INFO  
+INFO  Diffblue tests cover 963 of 2370 lines to cover (40.6%)
+INFO  Manual tests cover 1023 of 2370 lines to cover (43.2%)
+INFO  Writing JSON report to /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json
+INFO  
+WARN  One or more warnings were logged, please review them in the log file
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T151511.log
+INFO  Finished in 31m 41s

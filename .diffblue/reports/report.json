@@ -4,18 +4,18 @@
   },
   "run" : {
     "version" : "2025.12.02-74144f0-licensed",
-    "creationTimestamp" : "2026-01-14T14:25:58.542666036Z",
+    "creationTimestamp" : "2026-01-14T15:15:12.769424364Z",
     "command" : "dcover create --exclude=net.finmath.smartcontract.product.xml. --exclude=net.finmath.smartcontract.api. --exclude=net.finmath.smartcontract.model. -B --coverage-reports",
-    "totalTime" : 1894.436,
-    "environmentDetectionTime" : 3.776,
-    "indexingTime" : 0.28,
-    "entryPointsTime" : 3.636,
-    "generationTime" : 1444.864,
-    "timeToFirstTest" : 81.683,
-    "timeToLastTest" : 1527.868,
-    "indexQueryTime" : 64.609,
-    "verificationTime" : 40.009,
-    "validationTime" : 197.235
+    "totalTime" : 1901.02,
+    "environmentDetectionTime" : 4.161,
+    "indexingTime" : 0.326,
+    "entryPointsTime" : 3.997,
+    "generationTime" : 1446.32,
+    "timeToFirstTest" : 93.843,
+    "timeToLastTest" : 1537.69,
+    "indexQueryTime" : 63.062000000000005,
+    "verificationTime" : 40.727,
+    "validationTime" : 196.768
   },
   "codes" : {
     "F009" : "Internal error",
@@ -46,9 +46,9 @@
   "summary" : {
     "classesCount" : 1584,
     "methodsCount" : 14327,
-    "cumulativeDiffblueTestCount" : 221,
+    "cumulativeDiffblueTestCount" : 229,
     "cumulativeManualTestCount" : 85,
-    "completeTestCount" : 225,
+    "completeTestCount" : 233,
     "incompleteTestCount" : 0,
     "skeletonTestCount" : 0,
     "totalPhysicalLineCount" : 4820,
@@ -69,12 +69,12 @@
     },
     "perMethodOutcome" : {
       "F009" : 104,
-      "R000" : 207,
+      "R000" : 206,
       "R002" : 1,
-      "R003" : 4,
-      "R004" : 4,
-      "R013" : 4,
-      "R024" : 1,
+      "R003" : 3,
+      "R004" : 3,
+      "R013" : 2,
+      "R024" : 2,
       "R081" : 39,
       "T003" : 56,
       "T004" : 22,
@@ -86,10 +86,10 @@
       "T033" : 13712
     },
     "perTestOutcome" : {
-      "R000" : 225
+      "R000" : 233
     },
     "perTestValidation" : {
-      "V000" : 221,
+      "V000" : 229,
       "V003" : 4
     },
     "warnings" : {
@@ -17037,7 +17037,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset" : {
       "methodsCount" : 18,
-      "completeTestCount" : 27,
+      "completeTestCount" : 35,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 7,
@@ -17049,7 +17049,7 @@
         "T012" : 8
       },
       "perTestOutcome" : {
-        "R000" : 27
+        "R000" : 35
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParser" : {
@@ -17169,7 +17169,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator" : {
       "methodsCount" : 28,
-      "completeTestCount" : 9,
+      "completeTestCount" : 11,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
@@ -17183,7 +17183,7 @@
         "T012" : 19
       },
       "perTestOutcome" : {
-        "R000" : 9
+        "R000" : 11
       },
       "warnings" : {
         "W002" : 1
@@ -17298,7 +17298,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket" : {
       "methodsCount" : 14,
-      "completeTestCount" : 16,
+      "completeTestCount" : 17,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 9,
@@ -17312,7 +17312,7 @@
         "T012" : 1
       },
       "perTestOutcome" : {
-        "R000" : 16
+        "R000" : 17
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector" : {
@@ -17342,7 +17342,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater" : {
       "methodsCount" : 15,
-      "completeTestCount" : 17,
+      "completeTestCount" : 16,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 6,
@@ -17355,7 +17355,7 @@
         "T012" : 3
       },
       "perTestOutcome" : {
-        "R000" : 17
+        "R000" : 16
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.utils.MarketDataCheck" : {
@@ -17477,22 +17477,16 @@
       }
     },
     "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle" : {
-      "methodsCount" : 6,
-      "completeTestCount" : 2,
+      "methodsCount" : 2,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 5,
         "T003" : 1
       },
       "perMethodOutcome" : {
-        "R000" : 1,
-        "R003" : 1,
-        "R004" : 1,
-        "R013" : 2,
+        "R024" : 1,
         "T003" : 1
-      },
-      "perTestOutcome" : {
-        "R000" : 2
       }
     },
     "net.finmath.smartcontract.valuation.oracle.simulated.ContinouslyCompoundedBankAccountOracle" : {
@@ -151795,12 +151789,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getDataPoints:()Ljava/util/Set;" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 2
+        "R000" : 4
       },
       "lineNumbers" : [
         124,
@@ -151834,12 +151828,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getScaled:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataset;" : {
-      "completeTestCount" : 5,
+      "completeTestCount" : 7,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 5
+        "R000" : 7
       },
       "lineNumbers" : [
         34,
@@ -151922,12 +151916,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.serializeToJson:()Ljava/lang/String;" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       },
       "lineNumbers" : [
         75,
@@ -151958,12 +151952,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.toMarketDataList:()Lnet/finmath/smartcontract/model/MarketDataList;" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       },
       "lineNumbers" : [
         66,
@@ -152557,12 +152551,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator.calibrateModel:(Ljava/util/stream/Stream;Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Ljava/util/Optional;" : {
-      "completeTestCount" : 6,
+      "completeTestCount" : 8,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 8
       },
       "lineNumbers" : [
         50,
@@ -153450,12 +153444,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.onTextMessage:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;)V" : {
-      "completeTestCount" : 4,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 4
+        "R000" : 5
       },
       "lineNumbers" : [
         107,
@@ -153521,12 +153515,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.sendLoginRequest:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;Z)V" : {
-      "completeTestCount" : 4,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 4
+        "R000" : 3
       },
       "lineNumbers" : [
         194,
@@ -153542,12 +153536,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.sendRICRequest:(Lcom/neovisionaries/ws/client/WebSocket;)V" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 2
+        "R000" : 3
       },
       "lineNumbers" : [
         187,
@@ -153829,12 +153823,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.ReactiveMarketDataUpdater.onTextMessage:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;)V" : {
-      "completeTestCount" : 9,
+      "completeTestCount" : 8,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 9
+        "R000" : 8
       },
       "lineNumbers" : [
         93,
@@ -154460,7 +154454,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R013",
+      "perMethodOutcome" : "R024",
       "lineNumbers" : [
         50,
         51
@@ -154470,20 +154464,17 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R004",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
         61,
         67
       ]
     },
     "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle.<init>:(Ljava/time/LocalDateTime;DDDDI)V" : {
-      "completeTestCount" : 2,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 2
-      },
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
         82,
         88
@@ -154493,7 +154484,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R013",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
         92,
         39,
@@ -154510,7 +154501,7 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R003",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
         111,
         112,
@@ -159999,49 +159990,13 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.NoNonThrowingInputsMessage\",\"serializableCause\":{\"cause\":null,\"message\":\"Index -1 out of bounds for length 7301\",\"originalClassName\":\"java.lang.ArrayIndexOutOfBoundsException\",\"stackTrace\":[{\"classLoaderName\":null,\"className\":\"net.finmath.time.TimeDiscretizationFromArray\",\"fileName\":\"TimeDiscretizationFromArray.java\",\"lineNumber\":263,\"methodName\":\"getTime\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle\",\"fileName\":\"BrownianMotionOracle.java\",\"lineNumber\":120,\"methodName\":\"getValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"jdk.internal.reflect.NativeMethodAccessorImpl\",\"fileName\":\"NativeMethodAccessorImpl.java\",\"lineNumber\":-2,\"methodName\":\"invoke0\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":true},{\"classLoaderName\":null,\"className\":\"jdk.internal.reflect.NativeMethodAccessorImpl\",\"fileName\":\"NativeMethodAccessorImpl.java\",\"lineNumber\":77,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"jdk.internal.reflect.DelegatingMethodAccessorImpl\",\"fileName\":\"DelegatingMethodAccessorImpl.java\",\"lineNumber\":43,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.lang.reflect.Method\",\"fileName\":\"Method.java\",\"lineNumber\":569,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.h\",\"fileName\":\"SourceFile\",\"lineNumber\":140,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.h\",\"fileName\":\"SourceFile\",\"lineNumber\":77,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.a.f\",\"fileName\":\"SourceFile\",\"lineNumber\":852,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":463,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":99,\"methodName\":\"b\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.g.d\",\"fileName\":\"SourceFile\",\"lineNumber\":51,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.g\",\"fileName\":\"SourceFile\",\"lineNumber\":368,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.g\",\"fileName\":\"SourceFile\",\"lineNumber\":261,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.fuzztest.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":1105,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.SafeTimedExecutor\",\"fileName\":\"SourceFile\",\"lineNumber\":171,\"methodName\":\"lambda$runWithLoopIterationLimit$5\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.TimedCallableExecutor$CallableFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":29,\"methodName\":\"executeTask\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.TaskQueueRunner\",\"fileName\":\"SourceFile\",\"lineNumber\":39,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.WorkerThread\",\"fileName\":\"SourceFile\",\"lineNumber\":265,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false}]}}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.environment.ServiceShutdownMessage\",\"method\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle\",\"descriptor\":\"(Ljava/time/LocalDateTime;)V\",\"methodName\":\"<init>\"},\"serializableCause\":{\"cause\":{\"cause\":{\"cause\":null,\"message\":\"CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL\",\"originalClassName\":\"io.grpc.StatusRuntimeException\",\"stackTrace\":[{\"classLoaderName\":null,\"className\":\"io.grpc.Status\",\"fileName\":\"SourceFile\",\"lineNumber\":539,\"methodName\":\"asRuntimeException\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.stub.ClientCalls$UnaryStreamToFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":544,\"methodName\":\"onClose\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.ClientCallImpl\",\"fileName\":\"SourceFile\",\"lineNumber\":563,\"methodName\":\"closeObserver\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.ClientCallImpl\",\"fileName\":\"SourceFile\",\"lineNumber\":70,\"methodName\":\"access$300\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed\",\"fileName\":\"SourceFile\",\"lineNumber\":744,\"methodName\":\"runInternal\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed\",\"fileName\":\"SourceFile\",\"lineNumber\":723,\"methodName\":\"runInContext\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.ContextRunnable\",\"fileName\":\"SourceFile\",\"lineNumber\":37,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"io.grpc.internal.SerializingExecutor\",\"fileName\":\"SourceFile\",\"lineNumber\":133,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":1136,\"methodName\":\"runWorker\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor$Worker\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":635,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.lang.Thread\",\"fileName\":\"Thread.java\",\"lineNumber\":840,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false}]},\"message\":\"io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL\",\"originalClassName\":\"java.util.concurrent.ExecutionException\",\"stackTrace\":[{\"classLoaderName\":null,\"className\":\"com.google.common.util.concurrent.AbstractFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":594,\"methodName\":\"getDoneValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.google.common.util.concurrent.AbstractFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":573,\"methodName\":\"get\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.google.common.util.concurrent.FluentFuture$TrustedFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":91,\"methodName\":\"get\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.service.analyzer.a.d\",\"fileName\":\"SourceFile\",\"lineNumber\":89,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.analysis.a.e$a$1\",\"fileName\":\"SourceFile\",\"lineNumber\":150,\"methodName\":\"tryAdvance\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.Spliterator\",\"fileName\":\"Spliterator.java\",\"lineNumber\":332,\"methodName\":\"forEachRemaining\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.b\",\"fileName\":\"SourceFile\",\"lineNumber\":602,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.b\",\"fileName\":\"SourceFile\",\"lineNumber\":571,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.e\",\"fileName\":\"SourceFile\",\"lineNumber\":105,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.p.a.a\",\"fileName\":\"SourceFile\",\"lineNumber\":176,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.CompletableFuture$AsyncRun\",\"fileName\":\"CompletableFuture.java\",\"lineNumber\":1804,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":1136,\"methodName\":\"runWorker\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor$Worker\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":635,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.lang.Thread\",\"fileName\":\"Thread.java\",\"lineNumber\":840,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false}]},\"message\":\"Failed to call nextAnalysisResultAsPatch\",\"originalClassName\":\"com.diffblue.cover.service.analyzer.b\",\"stackTrace\":[{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.service.analyzer.a.d\",\"fileName\":\"SourceFile\",\"lineNumber\":92,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.analysis.a.e$a$1\",\"fileName\":\"SourceFile\",\"lineNumber\":150,\"methodName\":\"tryAdvance\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.Spliterator\",\"fileName\":\"Spliterator.java\",\"lineNumber\":332,\"methodName\":\"forEachRemaining\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.b\",\"fileName\":\"SourceFile\",\"lineNumber\":602,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.b\",\"fileName\":\"SourceFile\",\"lineNumber\":571,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.m.a.e\",\"fileName\":\"SourceFile\",\"lineNumber\":105,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.p.a.a\",\"fileName\":\"SourceFile\",\"lineNumber\":176,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.CompletableFuture$AsyncRun\",\"fileName\":\"CompletableFuture.java\",\"lineNumber\":1804,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":1136,\"methodName\":\"runWorker\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.util.concurrent.ThreadPoolExecutor$Worker\",\"fileName\":\"ThreadPoolExecutor.java\",\"lineNumber\":635,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.lang.Thread\",\"fileName\":\"Thread.java\",\"lineNumber\":840,\"methodName\":\"run\",\"moduleName\":\"java.base\",\"moduleVersion\":\"17.0.17\",\"nativeMethod\":false}]}}",
       "methodGroup" : {
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle",
             "descriptor" : "()V",
             "methodName" : "<init>"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.NoMeaningfulAssertionMessage\",\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle",
-            "descriptor" : "(Ljava/time/LocalDateTime;)V",
-            "methodName" : "<init>"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.NoNonThrowingInputsMessage\",\"serializableCause\":{\"cause\":null,\"message\":\"Index 10 for process time discretization out of bounds.\",\"originalClassName\":\"java.lang.ArrayIndexOutOfBoundsException\",\"stackTrace\":[{\"classLoaderName\":null,\"className\":\"net.finmath.montecarlo.process.MonteCarloProcessFromProcessModel\",\"fileName\":\"MonteCarloProcessFromProcessModel.java\",\"lineNumber\":95,\"methodName\":\"getTime\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.montecarlo.process.EulerSchemeFromProcessModel\",\"fileName\":\"EulerSchemeFromProcessModel.java\",\"lineNumber\":205,\"methodName\":\"doPrecalculateProcess\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.montecarlo.process.EulerSchemeFromProcessModel\",\"fileName\":\"EulerSchemeFromProcessModel.java\",\"lineNumber\":136,\"methodName\":\"getProcessValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.montecarlo.assetderivativevaluation.MonteCarloAssetModel\",\"fileName\":\"MonteCarloAssetModel.java\",\"lineNumber\":87,\"methodName\":\"getAssetValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.montecarlo.assetderivativevaluation.MonteCarloAssetModel\",\"fileName\":\"MonteCarloAssetModel.java\",\"lineNumber\":82,\"methodName\":\"getAssetValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle\",\"fileName\":\"BrownianMotionOracle.java\",\"lineNumber\":124,\"methodName\":\"getValue\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"jdk.internal.reflect.GeneratedMethodAccessor1013\",\"fileName\":null,\"lineNumber\":-1,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"jdk.internal.reflect.DelegatingMethodAccessorImpl\",\"fileName\":\"DelegatingMethodAccessorImpl.java\",\"lineNumber\":43,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"java.lang.reflect.Method\",\"fileName\":\"Method.java\",\"lineNumber\":569,\"methodName\":\"invoke\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.h\",\"fileName\":\"SourceFile\",\"lineNumber\":140,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.h\",\"fileName\":\"SourceFile\",\"lineNumber\":77,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.a.f\",\"fileName\":\"SourceFile\",\"lineNumber\":852,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":463,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":99,\"methodName\":\"b\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.g.d\",\"fileName\":\"SourceFile\",\"lineNumber\":51,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.g\",\"fileName\":\"SourceFile\",\"lineNumber\":368,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.tir.b.g\",\"fileName\":\"SourceFile\",\"lineNumber\":261,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.fuzztest.b.f\",\"fileName\":\"SourceFile\",\"lineNumber\":1105,\"methodName\":\"a\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.SafeTimedExecutor\",\"fileName\":\"SourceFile\",\"lineNumber\":171,\"methodName\":\"lambda$runWithLoopIterationLimit$5\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.TimedCallableExecutor$CallableFuture\",\"fileName\":\"SourceFile\",\"lineNumber\":29,\"methodName\":\"executeTask\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.TaskQueueRunner\",\"fileName\":\"SourceFile\",\"lineNumber\":39,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false},{\"classLoaderName\":null,\"className\":\"com.diffblue.cover.sandbox.execution.WorkerThread\",\"fileName\":\"SourceFile\",\"lineNumber\":265,\"methodName\":\"run\",\"moduleName\":null,\"moduleVersion\":null,\"nativeMethod\":false}]}}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle",
-            "descriptor" : "(Lnet/finmath/time/TimeDiscretization;Ljava/time/LocalDateTime;DDDI)V",
-            "methodName" : "<init>"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.TestNotAddingCoverageMessage\",\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.oracle.simulated.BrownianMotionOracle",
-            "descriptor" : "(Ljava/time/LocalDateTime;Ljava/time/LocalDateTime;)Lnet/finmath/stochastic/RandomVariable;",
-            "methodName" : "getValue"
           }
         ]
       }

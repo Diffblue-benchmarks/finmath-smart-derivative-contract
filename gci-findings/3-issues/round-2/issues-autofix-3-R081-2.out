@@ -1,0 +1,179 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T142558.json'
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.<init>(Spec, Double, LocalDateTime).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.<init>:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDateTime:()Ljava/time/LocalDateTime;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getQuote:()Ljava/lang/Double;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getSpec:()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.<init>:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDateTime:()Ljava/time/LocalDateTime;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getQuote:()Ljava/lang/Double;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getSpec:()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.<init>(Spec, Double, LocalDateTime).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.<init>(String, String, String, String).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getCurveName:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getKey:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getMaturity:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getProductName:()Ljava/lang/String;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getCurveName:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getKey:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getMaturity:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getProductName:()Ljava/lang/String;
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.<init>(String, String, String, String).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems.<init>:()V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems.<init>:()V
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.<init>(String, String, double).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.<init>:(Ljava/lang/String;Ljava/lang/String;D)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getFrequency:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getMaturityLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getSwapRate:()D
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.<init>:(Ljava/lang/String;Ljava/lang/String;D)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getFrequency:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getMaturityLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getSwapRate:()D
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.<init>(String, String, double).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.<init>(String, String, String, double).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getFrequencyLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getMaturityLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getSwapRate:()D
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getTenorLabel:()Ljava/lang/String;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getFrequencyLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getMaturityLabel:()Ljava/lang/String;
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getSwapRate:()D
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getTenorLabel:()Ljava/lang/String;
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.<init>(String, String, String, double).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  12 issues were found, numbers 6-10 were displayed
+INFO  Rerun with --prompts --skip 10 to see the next set of issues
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 5 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] Perfect! All the test factory files have been created successfully. Now let me create a summary of what was done.
+INFO  [Claude Code] 
+INFO  [Claude Code] ## Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] I have successfully resolved all five R081 issues reported by Diffblue Cover by creating test factory classes. The R081 error occurs when Diffblue Cover cannot construct instances of classes using their constructors, typically because it doesn't know what valid parameter values to use.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Test Factories Created:
+INFO  [Claude Code] 
+INFO  [Claude Code] 1. **CalibrationDataItemTestFactory.java** - Resolves Issues 1 & 2
+INFO  [Claude Code]    - Provides factory methods for both `CalibrationDataItem` and its inner class `CalibrationDataItem.Spec`
+INFO  [Claude Code]    - Created 7 factory methods covering various scenarios: typical swap rates, Euribor data, different maturities (yearly, monthly, daily), null quotes, and different curve types
+INFO  [Claude Code] 
+INFO  [Claude Code] 2. **CalibrationParserDataItemsTestFactory.java** - Resolves Issue 3
+INFO  [Claude Code]    - Provides a factory method for `CalibrationParserDataItems`
+INFO  [Claude Code]    - Simple no-arg constructor case
+INFO  [Claude Code] 
+INFO  [Claude Code] 3. **CalibrationSpecProviderOisTestFactory.java** - Resolves Issue 4
+INFO  [Claude Code]    - Provides 6 factory methods for `CalibrationSpecProviderOis`
+INFO  [Claude Code]    - Covers various maturities (1Y, 2Y, 5Y, 10Y), zero rates, and negative rates
+INFO  [Claude Code] 
+INFO  [Claude Code] 4. **CalibrationSpecProviderSwapTestFactory.java** - Resolves Issue 5
+INFO  [Claude Code]    - Provides 7 factory methods for `CalibrationSpecProviderSwap`
+INFO  [Claude Code]    - Covers various tenors (1M, 3M, 6M), frequencies (monthly, quarterly, semiannual), maturities, zero rates, and negative rates
+INFO  [Claude Code] 
+INFO  [Claude Code] All test factories follow the established pattern in the project:
+INFO  [Claude Code] - Use the `@InterestingTestFactory` annotation from Diffblue Cover
+INFO  [Claude Code] - Provide static factory methods that return valid instances
+INFO  [Claude Code] - Include multiple variants to cover different use cases
+INFO  [Claude Code] - Use realistic parameter values based on the domain (financial calibration data)
+INFO  [Claude Code] 
+INFO  [Claude Code] The test factories are located in: `/home/jbergqvist/diffblue/finmath-smart-derivative-contract/src/test/java/net/finmath/smartcontract/valuation/marketdata/curvecalibration/`
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps:
+INFO  [Claude Code] 
+INFO  [Claude Code] As noted in your advisory, you should run `mvn install -DskipTests` (or `mvn compile test-compile -DskipTests` to avoid the full install) to update the classpath so that Diffblue Cover can discover and use these new test factories. You may need to skip GPG signing with `-Dgpg.skip=true` if you encounter signing issues.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T150948.log
+INFO  Finished in 2m 12s

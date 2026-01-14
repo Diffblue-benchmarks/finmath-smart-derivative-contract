@@ -336,40 +336,6 @@ class ReactiveMarketDataUpdaterDiffblueTest {
    * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
    * {@code message}.
    *
-   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage4() {
-    // Arrange
-    JSONObject authJson = new JSONObject();
-    String position =
-        MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml();
-
-    ReactiveMarketDataUpdater reactiveMarketDataUpdater =
-        new ReactiveMarketDataUpdater(authJson, position, new ArrayList<>());
-
-    WebSocket websocket = mock(WebSocket.class);
-    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
-
-    // Act
-    reactiveMarketDataUpdater.onTextMessage(
-        websocket, LocalDateTimeAdapterDiffblueBase.createValidDateTimeString());
-
-    // Assert that nothing has changed
-    verify(websocket)
-        .sendText(
-            "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-    assertFalse(reactiveMarketDataUpdater.requestSent);
-  }
-
-  /**
-   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
-   * {@code message}.
-   *
    * <ul>
    *   <li>Then throw {@link IllegalStateException}.
    * </ul>

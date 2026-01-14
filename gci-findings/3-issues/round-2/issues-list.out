@@ -1,0 +1,34 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T142558.json'
+INFO  
+INFO  R013: No inputs found that don't throw a trivial exception
+INFO  Issues: 3
+INFO  Affected methods: 4
+INFO  
+INFO  R002: Missing observers
+INFO  Issues: 1
+INFO  Affected methods: 1
+INFO  
+INFO  R081: Exception in arrange section
+INFO  Issues: 12
+INFO  Affected methods: 39
+INFO  
+INFO  16 issues were found, rerun with --prompts to list with actionable advice
+INFO  Rerun with --prompts --limit 10 --skip 10 to restrict which issues are displayed
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T145907.log
+INFO  Finished in 3s
