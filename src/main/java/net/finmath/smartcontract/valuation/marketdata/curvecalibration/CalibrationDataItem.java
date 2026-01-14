@@ -8,54 +8,15 @@ import java.util.List;
 import java.util.Objects;
 
 @SuppressWarnings("java:S125")
-public class CalibrationDataItem {
+public record CalibrationDataItem(Spec spec, Double quote, LocalDateTime dateTime) {
 	private static final String REGEX = "((?<=[a-zA-Z])(?=[0-9]))|((?<=[0-9])(?=[a-zA-Z]))";
 
-	public static class Spec {
-		private final String key;
-		private final String curveName;
-		private final String productName;
-		private final String maturity;
-
-		public Spec(final String key, final String curveName, final String productName, final String maturity) {
-			this.key = key;
-			this.curveName = curveName;
-			this.productName = productName;
-			this.maturity = maturity;
-		}
-
-		public String getKey() {return key;}
-
-		public String getCurveName() {
-			return curveName;
-		}
-
-		public String getProductName() {
-			return productName;
-		}
-
-		public String getMaturity() {
-			return maturity;
-		}
-
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(key, curveName, productName, maturity);
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
-			Spec spec = (Spec) o;
-			return Objects.equals(key, spec.key) && Objects.equals(curveName, spec.curveName) && Objects.equals(productName, spec.productName) && Objects.equals(maturity, spec.maturity);
-		}
+	public record Spec(String key, String curveName, String productName, String maturity) {
+		public String getKey() { return key; }
+		public String getCurveName() { return curveName; }
+		public String getProductName() { return productName; }
+		public String getMaturity() { return maturity; }
 	}
-
-	final CalibrationDataItem.Spec spec;
-	final Double quote;
-	final LocalDateTime dateTime;
 
     /*public CalibrationDataItem(String curve, String productName, String maturity, Double quote){
         spec = new Spec("",curve,productName,maturity);
@@ -63,12 +24,9 @@ public class CalibrationDataItem {
         this.dateTime=null;
     }*/
 
-	public CalibrationDataItem(final CalibrationDataItem.Spec spec, Double quote, LocalDateTime dateTime) {
-		this.spec = spec;
-		this.quote = quote;
-		this.dateTime = dateTime;
-	}
-
+	public Spec getSpec() { return spec; }
+	public Double getQuote() { return quote; }
+	public LocalDateTime getDateTime() { return dateTime; }
 
 	public CalibrationDataItem getClonedScaled(double factor) {
 		return new CalibrationDataItem(spec, quote / factor, dateTime);
@@ -76,10 +34,6 @@ public class CalibrationDataItem {
 
 	public CalibrationDataItem getClonedShifted(double amount) {
 		return new CalibrationDataItem(spec, quote + amount, dateTime);
-	}
-
-	public CalibrationDataItem.Spec getSpec() {
-		return spec;
 	}
 
 	public String getCurveName() {
@@ -93,12 +47,6 @@ public class CalibrationDataItem {
 	public String getMaturity() {
 		return getSpec().getMaturity();
 	}
-
-
-	public Double getQuote() {
-		return quote;
-	}
-
 
 	public Integer getDaysToMaturity() {
 		List<String> list = Arrays.asList(getSpec().getMaturity().split(REGEX));
@@ -119,19 +67,4 @@ public class CalibrationDataItem {
 	}
 
 	public LocalDate getDate() {return dateTime.toLocalDate();}
-
-	public LocalDateTime getDateTime(){ return dateTime;}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		CalibrationDataItem that = (CalibrationDataItem) o;
-		return Objects.equals(spec, that.spec) && Objects.equals(quote, that.quote) && Objects.equals(dateTime, that.dateTime);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(spec, quote, dateTime);
-	}
 }

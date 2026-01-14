@@ -4,18 +4,18 @@
   },
   "run" : {
     "version" : "2025.12.02-74144f0-licensed",
-    "creationTimestamp" : "2026-01-14T15:15:12.769424364Z",
+    "creationTimestamp" : "2026-01-14T16:08:44.16377287Z",
     "command" : "dcover create --exclude=net.finmath.smartcontract.product.xml. --exclude=net.finmath.smartcontract.api. --exclude=net.finmath.smartcontract.model. -B --coverage-reports",
-    "totalTime" : 1901.02,
-    "environmentDetectionTime" : 4.161,
-    "indexingTime" : 0.326,
-    "entryPointsTime" : 3.997,
-    "generationTime" : 1446.32,
-    "timeToFirstTest" : 93.843,
-    "timeToLastTest" : 1537.69,
-    "indexQueryTime" : 63.062000000000005,
-    "verificationTime" : 40.727,
-    "validationTime" : 196.768
+    "totalTime" : 1998.508,
+    "environmentDetectionTime" : 3.682,
+    "indexingTime" : 0.291,
+    "entryPointsTime" : 3.544,
+    "generationTime" : 1532.552,
+    "timeToFirstTest" : 81.074,
+    "timeToLastTest" : 1616.557,
+    "indexQueryTime" : 62.185,
+    "verificationTime" : 40.714,
+    "validationTime" : 205.352
   },
   "codes" : {
     "F009" : "Internal error",
@@ -25,6 +25,7 @@
     "R004" : "No meaningful assertions found",
     "R013" : "No inputs found that don't throw a trivial exception",
     "R024" : "Analysis service shutdown unexpectedly",
+    "R031" : "Method may be time-sensitive",
     "R081" : "Exception in arrange section",
     "T000" : "Method eligible for test creation",
     "T001" : "Trivial getter",
@@ -45,37 +46,38 @@
   },
   "summary" : {
     "classesCount" : 1584,
-    "methodsCount" : 14327,
-    "cumulativeDiffblueTestCount" : 229,
+    "methodsCount" : 14349,
+    "cumulativeDiffblueTestCount" : 218,
     "cumulativeManualTestCount" : 85,
-    "completeTestCount" : 233,
+    "completeTestCount" : 222,
     "incompleteTestCount" : 0,
     "skeletonTestCount" : 0,
-    "totalPhysicalLineCount" : 4820,
+    "totalPhysicalLineCount" : 4655,
     "perMethodTestability" : {
-      "T000" : 190,
-      "T001" : 104,
+      "T000" : 195,
+      "T001" : 118,
       "T002" : 45,
       "T003" : 56,
       "T004" : 22,
-      "T005" : 42,
+      "T005" : 41,
       "T006" : 7,
       "T008" : 4,
       "T010" : 20,
       "T012" : 119,
-      "T020" : 3,
+      "T020" : 7,
       "T021" : 3,
       "T033" : 13712
     },
     "perMethodOutcome" : {
-      "F009" : 104,
-      "R000" : 206,
+      "F009" : 116,
+      "R000" : 205,
       "R002" : 1,
       "R003" : 3,
       "R004" : 3,
       "R013" : 2,
       "R024" : 2,
-      "R081" : 39,
+      "R031" : 1,
+      "R081" : 19,
       "T003" : 56,
       "T004" : 22,
       "T005" : 19,
@@ -86,10 +88,10 @@
       "T033" : 13712
     },
     "perTestOutcome" : {
-      "R000" : 233
+      "R000" : 222
     },
     "perTestValidation" : {
-      "V000" : 229,
+      "V000" : 218,
       "V003" : 4
     },
     "warnings" : {
@@ -16706,7 +16708,7 @@
     },
     "net.finmath.smartcontract.settlement.BigDecimalAdapter" : {
       "methodsCount" : 5,
-      "completeTestCount" : 3,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
@@ -16719,7 +16721,7 @@
         "T012" : 2
       },
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 5
       }
     },
     "net.finmath.smartcontract.settlement.Settlement" : {
@@ -17008,36 +17010,36 @@
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem" : {
-      "methodsCount" : 14,
+      "methodsCount" : 11,
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 10,
-        "T001" : 3,
-        "T005" : 1
+        "T001" : 6,
+        "T005" : 1,
+        "T020" : 1
       },
       "perMethodOutcome" : {
-        "F009" : 10,
-        "R081" : 4
+        "F009" : 11
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec" : {
-      "methodsCount" : 7,
+      "methodsCount" : 4,
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
-        "T001" : 4,
-        "T005" : 1
+        "T001" : 8,
+        "T005" : 1,
+        "T020" : 1
       },
       "perMethodOutcome" : {
-        "F009" : 2,
-        "R081" : 5
+        "F009" : 4
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset" : {
       "methodsCount" : 18,
-      "completeTestCount" : 35,
+      "completeTestCount" : 22,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 7,
@@ -17045,11 +17047,12 @@
         "T012" : 8
       },
       "perMethodOutcome" : {
-        "R000" : 10,
+        "R000" : 9,
+        "R031" : 1,
         "T012" : 8
       },
       "perTestOutcome" : {
-        "R000" : 35
+        "R000" : 22
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParser" : {
@@ -17140,36 +17143,36 @@
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis" : {
+      "methodsCount" : 4,
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : {
+        "T000" : 3,
+        "T001" : 6,
+        "T005" : 1,
+        "T020" : 1
+      },
+      "perMethodOutcome" : {
+        "F009" : 4
+      }
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap" : {
       "methodsCount" : 5,
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
-        "T000" : 1,
-        "T001" : 3,
-        "T005" : 1
+        "T000" : 3,
+        "T001" : 8,
+        "T005" : 1,
+        "T020" : 1
       },
       "perMethodOutcome" : {
-        "F009" : 1,
-        "R081" : 4
-      }
-    },
-    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap" : {
-      "methodsCount" : 6,
-      "completeTestCount" : 0,
-      "incompleteTestCount" : 0,
-      "perMethodTestability" : {
-        "T000" : 1,
-        "T001" : 4,
-        "T005" : 1
-      },
-      "perMethodOutcome" : {
-        "F009" : 1,
-        "R081" : 5
+        "F009" : 5
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator" : {
       "methodsCount" : 28,
-      "completeTestCount" : 11,
+      "completeTestCount" : 12,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 2,
@@ -17183,7 +17186,7 @@
         "T012" : 19
       },
       "perTestOutcome" : {
-        "R000" : 11
+        "R000" : 12
       },
       "warnings" : {
         "W002" : 1
@@ -17298,7 +17301,7 @@
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket" : {
       "methodsCount" : 14,
-      "completeTestCount" : 17,
+      "completeTestCount" : 16,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
         "T000" : 9,
@@ -17312,7 +17315,7 @@
         "T012" : 1
       },
       "perTestOutcome" : {
-        "R000" : 17
+        "R000" : 16
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector" : {
@@ -17320,13 +17323,11 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : {
-        "T000" : 5,
-        "T001" : 1,
-        "T005" : 1
+        "T000" : 6,
+        "T001" : 1
       },
       "perMethodOutcome" : {
-        "F009" : 5,
-        "R081" : 2
+        "F009" : 7
       }
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.LiveFeedAdapter" : {
@@ -149838,15 +149839,17 @@
       ]
     },
     "net.finmath.smartcontract.settlement.BigDecimalAdapter.unmarshal:(Ljava/lang/String;)Ljava/math/BigDecimal;" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 3
       },
       "lineNumbers" : [
-        26
+        26,
+        27,
+        29
       ]
     },
     "net.finmath.smartcontract.settlement.Settlement$SettlementType.$values:()[Lnet/finmath/smartcontract/settlement/Settlement$SettlementType;" : {
@@ -151523,14 +151526,18 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T005",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        20,
-        21,
-        22,
-        23,
-        24,
-        25
+        14
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.curveName:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        14
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.equals:(Ljava/lang/Object;)Z" : {
@@ -151539,46 +151546,43 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        49,
-        50,
-        51,
-        52
+        14
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getCurveName:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        30
+        16
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getKey:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        27
+        15
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getMaturity:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        38
+        18
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.getProductName:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        34
+        17
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.hashCode:()I" : {
@@ -151587,20 +151591,61 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        44
+        14
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.key:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        14
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.maturity:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        14
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.productName:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        14
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec.toString:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T020",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        14
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.<init>:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T005",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        66,
-        67,
-        68,
-        69,
-        70
+        11
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.dateTime:()Ljava/time/LocalDateTime;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        10
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.equals:(Ljava/lang/Object;)Z" : {
@@ -151609,10 +151654,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        127,
-        128,
-        129,
-        130
+        10
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getClonedScaled:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem;" : {
@@ -151621,7 +151663,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        74
+        32
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getClonedShifted:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem;" : {
@@ -151630,7 +151672,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        78
+        36
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getCurveName:()Ljava/lang/String;" : {
@@ -151639,7 +151681,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        86
+        40
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDate:()Ljava/time/LocalDate;" : {
@@ -151648,7 +151690,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        121
+        69
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDateString:()Ljava/lang/String;" : {
@@ -151657,16 +151699,16 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        118
+        66
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDateTime:()Ljava/time/LocalDateTime;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        123
+        29
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getDaysToMaturity:()Ljava/lang/Integer;" : {
@@ -151675,16 +151717,16 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        104,
-        105,
-        106,
-        107,
-        108,
-        109,
-        110,
-        111,
-        112,
-        114
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        62
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getMaturity:()Ljava/lang/String;" : {
@@ -151693,7 +151735,7 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        94
+        48
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getProductName:()Ljava/lang/String;" : {
@@ -151702,25 +151744,25 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        90
+        44
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getQuote:()Ljava/lang/Double;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        99
+        28
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.getSpec:()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        82
+        27
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.hashCode:()I" : {
@@ -151729,16 +151771,43 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        135
+        10
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.quote:()Ljava/lang/Double;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        10
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.spec:()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        10
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.toString:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T020",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        10
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.<init>:(Ljava/util/Set;Ljava/time/LocalDateTime;)V" : {
-      "completeTestCount" : 6,
+      "completeTestCount" : 5,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 5
       },
       "lineNumbers" : [
         26,
@@ -151761,12 +151830,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getClonedFixingsAdded:(Ljava/util/Set;)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataset;" : {
-      "completeTestCount" : 6,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 6
+        "R000" : 4
       },
       "lineNumbers" : [
         53,
@@ -151828,12 +151897,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.getScaled:(D)Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataset;" : {
-      "completeTestCount" : 7,
+      "completeTestCount" : 3,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 7
+        "R000" : 3
       },
       "lineNumbers" : [
         34,
@@ -151916,13 +151985,10 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.serializeToJson:()Ljava/lang/String;" : {
-      "completeTestCount" : 5,
+      "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
-      "perMethodOutcome" : "R000",
-      "perTestOutcome" : {
-        "R000" : 5
-      },
+      "perMethodOutcome" : "R031",
       "lineNumbers" : [
         75,
         77,
@@ -151952,12 +152018,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset.toMarketDataList:()Lnet/finmath/smartcontract/model/MarketDataList;" : {
-      "completeTestCount" : 5,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 5
+        "R000" : 4
       },
       "lineNumbers" : [
         66,
@@ -152421,13 +152487,27 @@
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T005",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        22,
-        23,
-        24,
-        25,
-        26
+        17
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.equals:(Ljava/lang/Object;)Z" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T000",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.frequency:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;" : {
@@ -152436,51 +152516,100 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        30,
-        31,
-        32,
-        34
+        25,
+        26,
+        27,
+        29
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getFrequency:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        42
+        20
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getMaturityLabel:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        38
+        19
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.getSwapRate:()D" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        46
+        21
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.hashCode:()I" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T000",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.maturityLabel:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.swapRate:()D" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis.toString:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T020",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        17
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T005",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        27,
-        28,
-        29,
-        30,
-        31,
-        32
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.equals:(Ljava/lang/Object;)Z" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T000",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.frequencyLabel:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getCalibrationSpec:(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Lnet/finmath/marketdata/calibration/CalibratedCurves$CalibrationSpec;" : {
@@ -152489,47 +152618,92 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        36,
-        37,
-        38,
-        40,
-        42
+        29,
+        30,
+        31,
+        33,
+        35
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getFrequencyLabel:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        50
+        23
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getMaturityLabel:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        54
+        24
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getSwapRate:()D" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        58
+        25
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.getTenorLabel:()Ljava/lang/String;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        46
+        22
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.hashCode:()I" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T000",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.maturityLabel:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.swapRate:()D" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.tenorLabel:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T001",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
+      ]
+    },
+    "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap.toString:()Ljava/lang/String;" : {
+      "completeTestCount" : 0,
+      "incompleteTestCount" : 0,
+      "perMethodTestability" : "T020",
+      "perMethodOutcome" : "F009",
+      "lineNumbers" : [
+        20
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator.<init>:(Ljava/util/List;Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)V" : {
@@ -152551,12 +152725,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.curvecalibration.Calibrator.calibrateModel:(Ljava/util/stream/Stream;Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationContext;)Ljava/util/Optional;" : {
-      "completeTestCount" : 8,
+      "completeTestCount" : 9,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 8
+        "R000" : 9
       },
       "lineNumbers" : [
         50,
@@ -152852,6 +153026,8 @@
       "perMethodTestability" : "T012",
       "perMethodOutcome" : "T012",
       "lineNumbers" : [
+        78,
+        80,
         78,
         81,
         82,
@@ -153397,12 +153573,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.closeStreamsAndLogoff:(Lcom/neovisionaries/ws/client/WebSocket;)V" : {
-      "completeTestCount" : 1,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 1
+        "R000" : 2
       },
       "lineNumbers" : [
         88,
@@ -153444,12 +153620,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.onTextMessage:(Lcom/neovisionaries/ws/client/WebSocket;Ljava/lang/String;)V" : {
-      "completeTestCount" : 5,
+      "completeTestCount" : 4,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 5
+        "R000" : 4
       },
       "lineNumbers" : [
         107,
@@ -153536,12 +153712,12 @@
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket.sendRICRequest:(Lcom/neovisionaries/ws/client/WebSocket;)V" : {
-      "completeTestCount" : 3,
+      "completeTestCount" : 2,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "R000",
       "perTestOutcome" : {
-        "R000" : 3
+        "R000" : 2
       },
       "lineNumbers" : [
         187,
@@ -153565,23 +153741,25 @@
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
-      "perMethodTestability" : "T005",
-      "perMethodOutcome" : "R081",
+      "perMethodTestability" : "T000",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        61,
+        67,
         56,
         57,
-        62,
-        65
+        68,
+        69,
+        71,
+        74
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthJson:()Lorg/json/JSONObject;" : {
       "completeTestCount" : 0,
       "incompleteTestCount" : 0,
       "perMethodTestability" : "T001",
-      "perMethodOutcome" : "R081",
+      "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        75
+        91
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthenticationInfo:(Lorg/json/JSONObject;Ljava/lang/String;)Lorg/json/JSONObject;" : {
@@ -153590,53 +153768,53 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        140,
-        141,
-        142,
-        144,
-        145,
-        146,
-        153,
-        154,
-        155,
+        156,
         157,
-        159,
+        158,
         160,
         161,
         162,
-        163,
-        167,
-        168,
         169,
+        170,
+        171,
         173,
+        175,
         176,
+        177,
         178,
-        180,
+        179,
         183,
-        186,
-        193,
+        184,
+        185,
+        189,
+        192,
         194,
         196,
-        197,
         199,
-        200,
-        203,
-        207,
-        208,
+        202,
         209,
         210,
         212,
-        218,
+        213,
+        215,
+        216,
         219,
-        220,
         223,
         224,
+        225,
         226,
-        227,
-        229,
-        230,
-        231,
-        232
+        228,
+        234,
+        235,
+        236,
+        239,
+        240,
+        242,
+        243,
+        245,
+        246,
+        247,
+        248
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getPosition:()Ljava/lang/String;" : {
@@ -153645,12 +153823,12 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        79,
-        81,
-        85,
-        82,
-        84,
-        87
+        95,
+        97,
+        101,
+        98,
+        100,
+        103
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getWebSocket:()Lcom/neovisionaries/ws/client/WebSocket;" : {
@@ -153659,9 +153837,9 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        68,
-        69,
-        71
+        77,
+        78,
+        80
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initAuthJson:()Lnet/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnector;" : {
@@ -153670,11 +153848,11 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        93,
-        96,
-        94,
-        95,
-        97
+        109,
+        112,
+        110,
+        111,
+        113
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.initWebSocketConnection:()Lcom/neovisionaries/ws/client/WebSocket;" : {
@@ -153683,20 +153861,20 @@
       "perMethodTestability" : "T000",
       "perMethodOutcome" : "F009",
       "lineNumbers" : [
-        106,
-        107,
-        108,
-        110,
-        111,
-        113,
-        114,
-        115,
-        116,
-        118,
-        119,
-        120,
-        121,
-        123
+        122,
+        123,
+        124,
+        126,
+        127,
+        129,
+        130,
+        131,
+        132,
+        134,
+        135,
+        136,
+        137,
+        139
       ]
     },
     "net.finmath.smartcontract.valuation.marketdata.generators.legacy.LiveFeedAdapter.<init>:()V" : {
@@ -158872,95 +159050,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem\",\"descriptor\":\"(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/time/LocalDateTime;",
-            "methodName" : "getDateTime"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/lang/Double;",
-            "methodName" : "getQuote"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;",
-            "methodName" : "getSpec"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem\",\"descriptor\":\"(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/time/LocalDateTime;",
-            "methodName" : "getDateTime"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/lang/Double;",
-            "methodName" : "getQuote"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;",
-            "methodName" : "getSpec"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem\",\"descriptor\":\"(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/time/LocalDateTime;",
-            "methodName" : "getDateTime"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Ljava/lang/Double;",
-            "methodName" : "getQuote"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;",
-            "methodName" : "getSpec"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem\",\"descriptor\":\"(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;Ljava/lang/Double;Ljava/time/LocalDateTime;)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
             "descriptor" : "()Ljava/time/LocalDateTime;",
@@ -158985,13 +159077,18 @@
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Ljava/lang/Object;)Z",
-            "methodName" : "equals"
+            "descriptor" : "()Ljava/time/LocalDateTime;",
+            "methodName" : "getDateTime"
           },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()I",
-            "methodName" : "hashCode"
+            "descriptor" : "()Ljava/lang/Double;",
+            "methodName" : "getQuote"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
+            "descriptor" : "()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;",
+            "methodName" : "getSpec"
           }
         ]
       }
@@ -159002,13 +159099,18 @@
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "(Ljava/lang/Object;)Z",
-            "methodName" : "equals"
+            "descriptor" : "()Ljava/time/LocalDateTime;",
+            "methodName" : "getDateTime"
           },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
-            "descriptor" : "()I",
-            "methodName" : "hashCode"
+            "descriptor" : "()Ljava/lang/Double;",
+            "methodName" : "getQuote"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem",
+            "descriptor" : "()Lnet/finmath/smartcontract/valuation/marketdata/curvecalibration/CalibrationDataItem$Spec;",
+            "methodName" : "getSpec"
           }
         ]
       }
@@ -159110,142 +159212,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getCurveName"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getKey"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturity"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getProductName"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getCurveName"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getKey"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturity"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getProductName"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getCurveName"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getKey"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturity"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getProductName"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getCurveName"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getKey"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturity"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getProductName"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
             "descriptor" : "()Ljava/lang/String;",
@@ -159275,13 +159244,23 @@
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/Object;)Z",
-            "methodName" : "equals"
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getCurveName"
           },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()I",
-            "methodName" : "hashCode"
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getKey"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getMaturity"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getProductName"
           }
         ]
       }
@@ -159292,13 +159271,62 @@
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "(Ljava/lang/Object;)Z",
-            "methodName" : "equals"
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getCurveName"
           },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
-            "descriptor" : "()I",
-            "methodName" : "hashCode"
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getKey"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getMaturity"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getProductName"
+          }
+        ]
+      }
+    },
+    {
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
+      "methodGroup" : {
+        "methods" : [
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getCurveName"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getKey"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getMaturity"
+          },
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem$Spec",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "getProductName"
+          }
+        ]
+      }
+    },
+    {
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.TimeSensitiveAssertionMessage\",\"serializableCause\":null}",
+      "methodGroup" : {
+        "methods" : [
+          {
+            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset",
+            "descriptor" : "()Ljava/lang/String;",
+            "methodName" : "serializeToJson"
           }
         ]
       }
@@ -159388,14 +159416,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
             "descriptor" : "()Ljava/lang/String;",
@@ -159415,14 +159438,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
             "descriptor" : "()Ljava/lang/String;",
@@ -159442,41 +159460,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getFrequency"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturityLabel"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "()D",
-            "methodName" : "getSwapRate"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderOis",
             "descriptor" : "()Ljava/lang/String;",
@@ -159508,14 +159494,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
             "descriptor" : "()Ljava/lang/String;",
@@ -159540,14 +159521,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
             "descriptor" : "()Ljava/lang/String;",
@@ -159572,14 +159548,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
             "descriptor" : "()Ljava/lang/String;",
@@ -159604,46 +159575,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getFrequencyLabel"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getMaturityLabel"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "()D",
-            "methodName" : "getSwapRate"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "()Ljava/lang/String;",
-            "methodName" : "getTenorLabel"
-          }
-        ]
-      }
-    },
-    {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap\",\"descriptor\":\"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
-      "methodGroup" : {
-        "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
-            "descriptor" : "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationSpecProviderSwap",
             "descriptor" : "()Ljava/lang/String;",
@@ -159824,14 +159758,9 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector\",\"descriptor\":\"(Ljava/util/Properties;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector",
-            "descriptor" : "(Ljava/util/Properties;)V",
-            "methodName" : "<init>"
-          },
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector",
             "descriptor" : "()Lorg/json/JSONObject;",
@@ -159841,18 +159770,13 @@
       }
     },
     {
-      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.limitation.ArrangeThrowsMessage\",\"constructingMethod\":{\"binaryClassName\":\"net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector\",\"descriptor\":\"(Ljava/util/Properties;)V\",\"methodName\":\"<init>\"},\"serializableCause\":null}",
+      "baseMessage" : "{\"__type\":\"com.diffblue.cover.message.internalexception.UnexpectedMessage\",\"reason\":\"TODO better message\",\"serializableCause\":null}",
       "methodGroup" : {
         "methods" : [
           {
             "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector",
             "descriptor" : "(Ljava/util/Properties;)V",
             "methodName" : "<init>"
-          },
-          {
-            "binaryClassName" : "net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector",
-            "descriptor" : "()Lorg/json/JSONObject;",
-            "methodName" : "getAuthJson"
           }
         ]
       }

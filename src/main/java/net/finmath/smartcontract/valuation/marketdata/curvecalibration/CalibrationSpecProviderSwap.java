@@ -11,25 +11,18 @@ import net.finmath.time.businessdaycalendar.BusinessdayCalendarExcludingTARGETHo
  * @author Luca Del Re
  * @author Peter Kohl-Landgraf
  * @author Christian Fries
+ *
+ * @param tenorLabel     The tenor label of the IBOR.
+ * @param frequencyLabel The frequency label for the floating leg (fixed leg is assumed to be annual).
+ * @param maturityLabel  The maturity label (like 1Y, 2Y).
+ * @param swapRate       The par swap rate (use 0.05 for 5%).
  */
-public class CalibrationSpecProviderSwap implements CalibrationSpecProvider {
-	private final String tenorLabel;
-	private final String frequencyLabel;
-	private final String maturityLabel;
-	private final double swapRate;
+public record CalibrationSpecProviderSwap(String tenorLabel, String frequencyLabel, String maturityLabel, double swapRate) implements CalibrationSpecProvider {
 
-	/**
-	 * @param tenorLabel     The tenor label of the IBOR.
-	 * @param frequencyLabel The frequency label for the floating leg (fixed leg is assumed to be annual).
-	 * @param maturityLabel  The maturity label (like 1Y, 2Y).
-	 * @param swapRate       The par swap rate (use 0.05 for 5%).
-	 */
-	public CalibrationSpecProviderSwap(final String tenorLabel, final String frequencyLabel, final String maturityLabel, final double swapRate) {
-		this.tenorLabel = tenorLabel;
-		this.frequencyLabel = frequencyLabel;
-		this.maturityLabel = maturityLabel;
-		this.swapRate = swapRate;
-	}
+	public String getTenorLabel() { return tenorLabel; }
+	public String getFrequencyLabel() { return frequencyLabel; }
+	public String getMaturityLabel() { return maturityLabel; }
+	public double getSwapRate() { return swapRate; }
 
 	@Override
 	public CalibratedCurves.CalibrationSpec getCalibrationSpec(final CalibrationContext ctx) {
@@ -40,21 +33,5 @@ public class CalibrationSpecProviderSwap implements CalibrationSpecProvider {
 		final String curveName = String.format("forward-EUR-%1$s", tenorLabel);
 
 		return new CalibratedCurves.CalibrationSpec("EUR-" + tenorLabel + maturityLabel, "Swap", scheduleInterfaceRec, curveName, 0.0, "discount-EUR-OIS", scheduleInterfacePay, "", swapRate, "discount-EUR-OIS", curveName, calibrationTime);
-	}
-
-	public String getTenorLabel() {
-		return tenorLabel;
-	}
-
-	public String getFrequencyLabel() {
-		return frequencyLabel;
-	}
-
-	public String getMaturityLabel() {
-		return maturityLabel;
-	}
-
-	public double getSwapRate() {
-		return swapRate;
 	}
 }

@@ -14,16 +14,11 @@ import static net.finmath.smartcontract.valuation.marketdata.curvecalibration.Ca
  * @author Peter Kohl-Landgraf
  * @author Christian Fries
  */
-public class CalibrationSpecProviderOis implements CalibrationSpecProvider {
-	private final String maturityLabel;
-	private final String frequency;
-	private final double swapRate;
+public record CalibrationSpecProviderOis(String maturityLabel, String frequency, double swapRate) implements CalibrationSpecProvider {
 
-	public CalibrationSpecProviderOis(final String maturityLabel, final String frequency, final double swapRate) {
-		this.maturityLabel = maturityLabel;
-		this.frequency = frequency;
-		this.swapRate = swapRate;
-	}
+	public String getMaturityLabel() { return maturityLabel; }
+	public String getFrequency() { return frequency; }
+	public double getSwapRate() { return swapRate; }
 
 	@Override
 	public CalibratedCurves.CalibrationSpec getCalibrationSpec(final CalibrationContext ctx) {
@@ -32,17 +27,5 @@ public class CalibrationSpecProviderOis implements CalibrationSpecProvider {
 		final double calibrationTime = scheduleInterfaceRec.getPayment(scheduleInterfaceRec.getNumberOfPeriods() - 1);
 
 		return new CalibratedCurves.CalibrationSpec(String.format("EUR-OIS-%1$s", maturityLabel), "Swap", scheduleInterfaceRec, "forward-EUR-OIS", 0.0, DISCOUNT_EUR_OIS, scheduleInterfacePay, "", swapRate, DISCOUNT_EUR_OIS, DISCOUNT_EUR_OIS, calibrationTime);
-	}
-
-	public String getMaturityLabel() {
-		return maturityLabel;
-	}
-
-	public String getFrequency() {
-		return frequency;
-	}
-
-	public double getSwapRate() {
-		return swapRate;
 	}
 }

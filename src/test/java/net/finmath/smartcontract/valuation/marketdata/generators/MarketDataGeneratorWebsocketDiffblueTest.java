@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.finmath.smartcontract.model.MarketDataList;
+import net.finmath.smartcontract.settlement.SettlementGeneratorDiffblueBase;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem.Spec;
 import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItemTestFactory;
@@ -183,19 +184,44 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   /**
    * Test {@link MarketDataGeneratorWebsocket#closeStreamsAndLogoff(WebSocket)}.
    *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#closeStreamsAndLogoff(WebSocket)}
+   */
+  @Test
+  @DisplayName("Test closeStreamsAndLogoff(WebSocket)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.closeStreamsAndLogoff(WebSocket)"})
+  void testCloseStreamsAndLogoff() {
+    // Arrange
+    String position = SettlementGeneratorDiffblueBase.createMinimalSmartDerivativeContractXml();
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(null, position, new ArrayList<>());
+
+    WebSocket webSocket = mock(WebSocket.class);
+    when(webSocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.closeStreamsAndLogoff(webSocket);
+
+    // Assert
+    verify(webSocket).sendText("{\"ID\":1, \"Type\": \"Close\", \"Domain\":\"Login\"}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#closeStreamsAndLogoff(WebSocket)}.
+   *
    * <ul>
-   *   <li>Given {@code null}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
    * <p>Method under test: {@link MarketDataGeneratorWebsocket#closeStreamsAndLogoff(WebSocket)}
    */
   @Test
-  @DisplayName("Test closeStreamsAndLogoff(WebSocket); given 'null'; then calls sendText(String)")
+  @DisplayName("Test closeStreamsAndLogoff(WebSocket); then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void MarketDataGeneratorWebsocket.closeStreamsAndLogoff(WebSocket)"})
-  void testCloseStreamsAndLogoff_givenNull_thenCallsSendText() {
+  void testCloseStreamsAndLogoff_thenCallsSendText() {
     // Arrange
     JSONObject authJson = new JSONObject();
     String position =
@@ -311,44 +337,6 @@ class MarketDataGeneratorWebsocketDiffblueTest {
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":[\"ESTR_Swap-Rate_5Y\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     assertTrue(marketDataGeneratorWebsocket.requestSent);
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
-   * websocket}, {@code message}.
-   *
-   * <ul>
-   *   <li>Then throw {@link RuntimeException}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test onTextMessage(WebSocket, String) with 'websocket', 'message'; then throw RuntimeException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
-  void testOnTextMessageWithWebsocketMessage_thenThrowRuntimeException() throws Exception {
-    // Arrange
-    Spec spec = mock(Spec.class);
-    when(spec.getKey()).thenThrow(new RuntimeException());
-
-    ArrayList<Spec> itemList = new ArrayList<>();
-    itemList.add(spec);
-    JSONObject authJson = new JSONObject();
-
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
-            itemList);
-
-    // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.onTextMessage(mock(WebSocket.class), "42"));
-    verify(spec).getKey();
   }
 
   /**
@@ -495,42 +483,6 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
-  }
-
-  /**
-   * Test {@link MarketDataGeneratorWebsocket#sendRICRequest(WebSocket)}.
-   *
-   * <ul>
-   *   <li>Then throw {@link RuntimeException}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendRICRequest(WebSocket)}
-   */
-  @Test
-  @DisplayName("Test sendRICRequest(WebSocket); then throw RuntimeException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.sendRICRequest(WebSocket)"})
-  void testSendRICRequest_thenThrowRuntimeException() {
-    // Arrange
-    Spec spec = mock(Spec.class);
-    when(spec.getKey()).thenThrow(new RuntimeException());
-
-    ArrayList<Spec> itemList = new ArrayList<>();
-    itemList.add(spec);
-    JSONObject authJson = new JSONObject();
-
-    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
-        new MarketDataGeneratorWebsocket(
-            authJson,
-            MarketDataGeneratorLauncherDiffblueBase.createMinimalSmartDerivativeContractXml(),
-            itemList);
-
-    // Act and Assert
-    assertThrows(
-        RuntimeException.class,
-        () -> marketDataGeneratorWebsocket.sendRICRequest(mock(WebSocket.class)));
-    verify(spec).getKey();
   }
 
   /**

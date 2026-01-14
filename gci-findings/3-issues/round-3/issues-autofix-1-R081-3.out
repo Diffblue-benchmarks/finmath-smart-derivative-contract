@@ -1,0 +1,110 @@
+INFO  Diffblue Cover 2026.01.01-SNAPSHOT-363c8f3-dev
+INFO  
+INFO  Command: issues
+INFO  Output a prioritized list of issues.
+INFO  
+INFO  Discovered modules:
+INFO  - net.finmath:finmath-smart-derivative-contract
+INFO  
+INFO  
+INFO  [1/1] Diagnosing issues for module: net.finmath:finmath-smart-derivative-contract
+INFO  =================================================================================
+INFO  
+INFO  Detected Java version 17.0.17
+INFO  Selected build system: maven due to custom configuration file being present
+INFO  Reading report file '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report.json'
+INFO  Copied report file to '/home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/reports/report-20260114T151512.json'
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>:()V
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>:()V
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.data.LocalDateTimeAdapter.<init>().
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  R081: Exception in arrange section
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>(Properties).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  Affected methods:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthJson:()Lorg/json/JSONObject;
+      
+INFO  To resolve the issue, use the following prompt with your AI assistant:
+      
+      Fix the following issue preventing test creation for:
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>:(Ljava/util/Properties;)V
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.getAuthJson:()Lorg/json/JSONObject;
+      
+      Diffblue Cover was unable to construct an instance of the class under test using
+      net.finmath.smartcontract.valuation.marketdata.generators.WebSocketConnector.<init>(Properties).
+      See https://diff.blue/R081 for further troubleshooting of this issue.
+      
+INFO  
+INFO  12 issues were found, numbers 11-12 were displayed
+INFO  Rerun without --prompts to summarise all the issues
+INFO  Actioning all 2 listed issues via agent
+INFO  Executing prompt with Claude Code agent...
+INFO  [Claude Code] ## Summary
+INFO  [Claude Code] 
+INFO  [Claude Code] I've analyzed the two R081 issues preventing test creation in Diffblue Cover. Here's what I found and what I've done:
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Issue 1: LocalDateTimeAdapter
+INFO  [Claude Code] 
+INFO  [Claude Code] **Analysis:**
+INFO  [Claude Code] - The class has a simple no-arg constructor that was added in a previous fix attempt
+INFO  [Claude Code] - Test factories (`LocalDateTimeAdapterTestFactory` and `LocalDateTimeAdapterDiffblueBase`) already exist
+INFO  [Claude Code] - The report shows `ArrangeThrowsMessage` with null `serializableCause`, meaning the constructor throws an exception but Cover can't determine what it is
+INFO  [Claude Code] - The marshal and unmarshal methods have F009 (internal error) issues
+INFO  [Claude Code] - Notably, `ZonedDateTimeAdapter` (an almost identical XmlAdapter subclass) has the exact same R081 issue
+INFO  [Claude Code] 
+INFO  [Claude Code] **Conclusion:**
+INFO  [Claude Code] This appears to be a limitation or bug in Diffblue Cover's handling of `XmlAdapter` subclasses. The F009 internal errors suggest Cover has fundamental issues understanding these classes. Since test factories and base classes are already in place, and the constructor is trivial, there's no code-level fix available.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Issue 2: WebSocketConnector
+INFO  [Claude Code] 
+INFO  [Claude Code] **Analysis:**
+INFO  [Claude Code] - In round 1, the issue was a sandboxing violation because the constructor called `Inet4Address.getLocalHost().getHostAddress()`
+INFO  [Claude Code] - This was fixed in the "1st pass" by moving network calls out of the constructor
+INFO  [Claude Code] - Test factories exist with proper Properties configuration
+INFO  [Claude Code] - However, the R081 error persists with `ArrangeThrowsMessage` and null `serializableCause`
+INFO  [Claude Code] 
+INFO  [Claude Code] **Fix Applied:**
+INFO  [Claude Code] I added null validation to the constructor (src/main/java/net/finmath/smartcontract/valuation/marketdata/generators/WebSocketConnector.java:67-74):
+INFO  [Claude Code] ```java
+INFO  [Claude Code] public WebSocketConnector(Properties connectionProperties) {
+INFO  [Claude Code]     if (connectionProperties == null) {
+INFO  [Claude Code]         throw new IllegalArgumentException("connectionProperties must not be null");
+INFO  [Claude Code]     }
+INFO  [Claude Code]     this.connectionProperties = connectionProperties;
+INFO  [Claude Code]     // ...
+INFO  [Claude Code] }
+INFO  [Claude Code] ```
+INFO  [Claude Code] 
+INFO  [Claude Code] I also added documentation to the `getAuthJson()` method to clarify that it returns null until `initAuthJson()` is called.
+INFO  [Claude Code] 
+INFO  [Claude Code] ### Next Steps
+INFO  [Claude Code] 
+INFO  [Claude Code] You'll need to run `mvn install -DskipTests -Dgpg.skip=true` to recompile the code with my changes. This will update the classpath so Diffblue Cover can analyze the updated code.
+INFO  [Claude Code] 
+INFO  [Claude Code] However, I should note that:
+INFO  [Claude Code] 1. **LocalDateTimeAdapter** may not be fixable without changes to Diffblue Cover itself, as it appears to be a tool limitation with XmlAdapter classes
+INFO  [Claude Code] 2. **WebSocketConnector** may improve with the null check, but the underlying issue (Cover throwing an exception we can't see) may persist
+INFO  [Claude Code] 
+INFO  [Claude Code] The changes I made are defensive improvements that make the code more robust, but they may not completely resolve the R081 errors if there are deeper issues with how Cover analyzes these specific classes.
+INFO  Claude Code agent completed successfully.
+INFO  
+INFO  Log file: /home/jbergqvist/diffblue/finmath-smart-derivative-contract/.diffblue/log/user-20260114T160051.log
+INFO  Finished in 5m 50s

@@ -216,6 +216,54 @@ class CalibratorDiffblueTest {
   /**
    * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
    *
+   * <p>Method under test: {@link Calibrator#calibrateModel(Stream, CalibrationContext)}
+   */
+  @Test
+  @DisplayName("Test calibrateModel(Stream, CalibrationContext)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Optional Calibrator.calibrateModel(Stream, CalibrationContext)"})
+  void testCalibrateModel4() throws CloneNotSupportedException {
+    // Arrange
+    ArrayList<CalibrationDataItem> fixings = new ArrayList<>();
+    fixings.add(CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+    fixings.add(CalibrationDataItemTestFactory.createCalibrationDataItemMonthlyMaturity());
+    CalibrationContextImpl ctx =
+        new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d);
+
+    Calibrator calibrator = new Calibrator(fixings, ctx);
+
+    ArrayList<CalibrationSpecProvider> calibrationSpecProviderList = new ArrayList<>();
+    Stream<CalibrationSpecProvider> providers = calibrationSpecProviderList.stream();
+
+    // Act and Assert
+    AnalyticModel calibratedModel =
+        calibrator
+            .calibrateModel(
+                providers,
+                new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d))
+            .get()
+            .getCalibratedModel();
+    assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
+    Map<String, Curve> curves = calibratedModel.getCurves();
+    assertEquals(5, curves.size());
+    Curve getResult = curves.get(Calibrator.DISCOUNT_EUR_OIS);
+    assertTrue(getResult instanceof DiscountCurveInterpolation);
+    Curve getResult2 = curves.get("forward-EUR-1M");
+    assertTrue(getResult2 instanceof ForwardCurveInterpolation);
+    Curve getResult3 = curves.get("forward-EUR-3M");
+    assertTrue(getResult3 instanceof ForwardCurveWithFixings);
+    assertArrayEquals(new double[] {}, getResult2.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult3.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, getResult.getParameter(), 0.0);
+    assertArrayEquals(new double[] {}, ((ForwardCurveInterpolation) getResult2).getTimes(), 0.0);
+    assertArrayEquals(
+        new double[] {0.0d}, ((DiscountCurveInterpolation) getResult).getTimes(), 0.0);
+  }
+
+  /**
+   * Test {@link Calibrator#calibrateModel(Stream, CalibrationContext)}.
+   *
    * <ul>
    *   <li>Given {@link ArrayList#ArrayList()} add createCalibrationDataItemEuribor6M.
    * </ul>

@@ -23,6 +23,9 @@ public class BigDecimalAdapter extends XmlAdapter<String, BigDecimal> {
 	@Override
 	public BigDecimal unmarshal(String s) throws Exception
 	{
-		return new BigDecimal(s);
+		if (s == null || s.trim().isEmpty()) {
+			return null;
+		}
+		return new BigDecimal(s.trim());
 	}
 }

@@ -82,4 +82,44 @@ class BigDecimalAdapterDiffblueTest {
     // Assert
     assertEquals(new BigDecimal("2.3"), actualUnmarshalResult);
   }
+
+  /**
+   * Test {@link BigDecimalAdapter#unmarshal(String)} with {@code String}.
+   *
+   * <ul>
+   *   <li>When empty string.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link BigDecimalAdapter#unmarshal(String)}
+   */
+  @Test
+  @DisplayName("Test unmarshal(String) with 'String'; when empty string; then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"BigDecimal BigDecimalAdapter.unmarshal(String)"})
+  void testUnmarshalWithString_whenEmptyString_thenReturnNull() throws Exception {
+    // Arrange, Act and Assert
+    assertNull(bigDecimalAdapter.unmarshal(""));
+  }
+
+  /**
+   * Test {@link BigDecimalAdapter#unmarshal(String)} with {@code String}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link BigDecimalAdapter#unmarshal(String)}
+   */
+  @Test
+  @DisplayName("Test unmarshal(String) with 'String'; when 'null'; then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"BigDecimal BigDecimalAdapter.unmarshal(String)"})
+  void testUnmarshalWithString_whenNull_thenReturnNull() throws Exception {
+    // Arrange, Act and Assert
+    assertNull(bigDecimalAdapter.unmarshal(null));
+  }
 }

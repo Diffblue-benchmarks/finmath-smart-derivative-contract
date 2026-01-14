@@ -58,7 +58,16 @@ public class WebSocketConnector {
 	public static WebSocket ws = null;
 
 
+	/**
+	 * Constructs a WebSocketConnector with the specified connection properties.
+	 *
+	 * @param connectionProperties the connection properties (must not be null)
+	 * @throws IllegalArgumentException if connectionProperties is null
+	 */
 	public WebSocketConnector(Properties connectionProperties) {
+		if (connectionProperties == null) {
+			throw new IllegalArgumentException("connectionProperties must not be null");
+		}
 		this.connectionProperties = connectionProperties;
 		// Delay initialization of position to avoid network calls in constructor
 		// This makes the class more testable and avoids sandbox violations in test generation tools
@@ -71,6 +80,13 @@ public class WebSocketConnector {
 		return ws;
 	}
 
+	/**
+	 * Returns the authentication JSON object.
+	 * Note: This will be null until initAuthJson() is called explicitly,
+	 * typically through getWebSocket().
+	 *
+	 * @return the authentication JSON object, or null if not yet initialized
+	 */
 	public JSONObject getAuthJson() {
 		return authJson;
 	}

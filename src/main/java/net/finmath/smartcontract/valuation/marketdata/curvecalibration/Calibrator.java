@@ -77,10 +77,10 @@ public class Calibrator {
 				.forEach(x -> {
 					double time = FloatingpointDate.getFloatingPointDateFromDate(
 							referenceDateTime,
-							x.dateTime);
+							x.getDateTime());
 					if (time < 0) {
 						fixingTimesList.add(time);
-						fixingValuesList.add(365.0 * Math.log(1 + x.quote / 360.0));
+						fixingValuesList.add(365.0 * Math.log(1 + x.getQuote() / 360.0));
 						//conversion from 1-day ESTR (ACT/360) to zero-rate (ACT/ACT)
 						//see https://quant.stackexchange.com/questions/73522/how-does-bloomberg-calculate-the-discount-rate-from-eur-estr-curve
 					}
@@ -118,7 +118,7 @@ public class Calibrator {
 	}
 
 	private ForwardCurve get3MForwardCurve(final CalibrationContext ctx) {
-		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor3M")).map(x -> x.dateTime)
+		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor3M")).map(x -> x.getDateTime())
 				.map(x -> FloatingpointDate.getFloatingPointDateFromDate(referenceDateTime, x))
 				.mapToDouble(Double::doubleValue).sorted().toArray();
 		if (fixingTimes.length == 0) { //if there are no fixings return empty curve
@@ -164,7 +164,7 @@ public class Calibrator {
 	}
 
 	private ForwardCurve get6MForwardCurve(final CalibrationContext ctx) {
-		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor6M")).map(x -> x.dateTime)
+		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor6M")).map(x -> x.getDateTime())
 				.map(x -> FloatingpointDate.getFloatingPointDateFromDate(referenceDateTime, x))
 				.mapToDouble(Double::doubleValue).sorted().toArray();
 		if (fixingTimes.length == 0) { //if there are no fixings return empty curve
@@ -210,7 +210,7 @@ public class Calibrator {
 	}
 
 	private ForwardCurve get1MForwardCurve(final CalibrationContext ctx) {
-		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor1M")).map(x -> x.dateTime)
+		double[] fixingTimes = fixings.stream().filter(x -> x.getCurveName().equals("Euribor1M")).map(x -> x.getDateTime())
 				.map(x -> FloatingpointDate.getFloatingPointDateFromDate(referenceDateTime, x))
 				.mapToDouble(Double::doubleValue).sorted().toArray();
 		if (fixingTimes.length == 0) { //if there are no fixings return empty curve
