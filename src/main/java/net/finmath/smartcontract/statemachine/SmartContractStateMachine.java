@@ -338,6 +338,10 @@ public class SmartContractStateMachine {
 			System.out.printf("Transitioned from %s to %s%n", from == null ?
 					"none" : from.getId(), to.getId());
 		}
+
+		public SmartContractStateMachine getThis$0() {
+			return SmartContractStateMachine.this;
+		}
 	}
 }
 

@@ -38,4 +38,16 @@ public class CalibrationSpecProviderDeposit implements CalibrationSpecProvider {
 
 		return new CalibratedCurves.CalibrationSpec("EUR-" + tenorLabel + maturityLabel, "Deposit", scheduleInterfaceRec, curveName, depositRate, "discount-EUR-OIS", null, "", 0.0, "discount-EUR-OIS", curveName, calibrationTime);
 	}
+
+	public String getTenorLabel() {
+		return tenorLabel;
+	}
+
+	public String getMaturityLabel() {
+		return maturityLabel;
+	}
+
+	public double getDepositRate() {
+		return depositRate;
+	}
 }

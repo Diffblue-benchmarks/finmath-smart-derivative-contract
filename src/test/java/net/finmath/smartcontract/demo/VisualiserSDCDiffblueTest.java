@@ -1,5 +1,7 @@
 package net.finmath.smartcontract.demo;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.finmath.plots.Plot2DBarFX;
+import net.finmath.plots.Plot2DFX;
 import net.finmath.plots.PlotableCategories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -18,12 +21,36 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(MockitoExtension.class)
 class VisualiserSDCDiffblueTest {
   @Mock private Plot2DBarFX plot2DBarFX;
 
   @InjectMocks private VisualiserSDC visualiserSDC;
+
+  /**
+   * Test {@link VisualiserSDC#start()}.
+   *
+   * <p>Method under test: {@link VisualiserSDC#start()}
+   */
+  @Test
+  @DisplayName("Test start()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void VisualiserSDC.start()"})
+  void testStart() {
+    // Arrange
+    VisualiserSDC visualiserSDC = new VisualiserSDC();
+
+    // Act
+    visualiserSDC.start();
+
+    // Assert
+    assertTrue(visualiserSDC.getSeriesMarketValues().isEmpty());
+  }
 
   /**
    * Test {@link VisualiserSDC#updateWithValue(LocalDateTime, double, double, Double, double)}.
@@ -45,10 +72,6 @@ class VisualiserSDCDiffblueTest {
     "void VisualiserSDC.updateWithValue(LocalDateTime, double, double, Double, double)"
   })
   void testUpdateWithValue_whenNull_thenCallsUpdate() throws InterruptedException {
-    //   Diffblue Cover was unable to create a Spring-specific test for this Spring method.
-    //   Run dcover create --keep-partial-tests to gain insights into why
-    //   a non-Spring test was created.
-
     // Arrange
     when(plot2DBarFX.update(Mockito.<List<PlotableCategories>>any())).thenReturn(new Plot2DBarFX());
 
@@ -58,5 +81,39 @@ class VisualiserSDCDiffblueTest {
 
     // Assert
     verify(plot2DBarFX).update(isA(List.class));
+  }
+
+  /**
+   * Test getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>default or parameterless constructor of {@link VisualiserSDC}
+   *   <li>{@link VisualiserSDC#getPlotMarginAccounts()}
+   *   <li>{@link VisualiserSDC#getPlotMarketValue()}
+   *   <li>{@link VisualiserSDC#getSeriesMarketValues()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void VisualiserSDC.<init>()",
+    "Plot2DBarFX VisualiserSDC.getPlotMarginAccounts()",
+    "Plot2DFX VisualiserSDC.getPlotMarketValue()",
+    "List VisualiserSDC.getSeriesMarketValues()"
+  })
+  void testGettersAndSetters() {
+    // Arrange and Act
+    VisualiserSDC actualVisualiserSDC = new VisualiserSDC();
+    Plot2DBarFX actualPlotMarginAccounts = actualVisualiserSDC.getPlotMarginAccounts();
+    Plot2DFX actualPlotMarketValue = actualVisualiserSDC.getPlotMarketValue();
+
+    // Assert
+    assertNull(actualVisualiserSDC.getSeriesMarketValues());
+    assertNull(actualPlotMarginAccounts);
+    assertNull(actualPlotMarketValue);
   }
 }

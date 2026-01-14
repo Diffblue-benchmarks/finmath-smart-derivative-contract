@@ -41,4 +41,20 @@ public class CalibrationSpecProviderSwap implements CalibrationSpecProvider {
 
 		return new CalibratedCurves.CalibrationSpec("EUR-" + tenorLabel + maturityLabel, "Swap", scheduleInterfaceRec, curveName, 0.0, "discount-EUR-OIS", scheduleInterfacePay, "", swapRate, "discount-EUR-OIS", curveName, calibrationTime);
 	}
+
+	public String getTenorLabel() {
+		return tenorLabel;
+	}
+
+	public String getFrequencyLabel() {
+		return frequencyLabel;
+	}
+
+	public String getMaturityLabel() {
+		return maturityLabel;
+	}
+
+	public double getSwapRate() {
+		return swapRate;
+	}
 }

@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.valuation.service.websocket.handler;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -129,5 +130,31 @@ class ValuationHandlerDiffblueTest {
   void testSupportsPartialMessages() {
     // Arrange, Act and Assert
     assertFalse(valuationHandler.supportsPartialMessages());
+  }
+
+  /**
+   * Test getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>default or parameterless constructor of {@link ValuationHandler}
+   *   <li>{@link ValuationHandler#getMarketDataWebSocketAdapter()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void ValuationHandler.<init>()",
+    "void ValuationHandler.afterConnectionClosed(WebSocketSession, org.springframework.web.socket.CloseStatus)",
+    "void ValuationHandler.afterConnectionEstablished(WebSocketSession)",
+    "net.finmath.smartcontract.valuation.marketdata.generators.MarketDataGeneratorWebsocket ValuationHandler.getMarketDataWebSocketAdapter()",
+    "void ValuationHandler.handleTransportError(WebSocketSession, java.lang.Throwable)"
+  })
+  void testGettersAndSetters() {
+    // Arrange, Act and Assert
+    assertNull(new ValuationHandler().getMarketDataWebSocketAdapter());
   }
 }

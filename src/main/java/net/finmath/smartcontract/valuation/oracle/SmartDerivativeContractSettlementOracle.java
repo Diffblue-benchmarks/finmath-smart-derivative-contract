@@ -52,4 +52,8 @@ public class SmartDerivativeContractSettlementOracle {
 
 		return margin;
 	}
+
+	public ValuationOracle getDerivativeValuationOracle() {
+		return derivativeValuationOracle;
+	}
 }

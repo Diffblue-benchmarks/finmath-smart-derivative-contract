@@ -112,4 +112,8 @@ public class SettlementGenerator {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public Settlement getSettlement() {
+		return settlement;
+	}
 }

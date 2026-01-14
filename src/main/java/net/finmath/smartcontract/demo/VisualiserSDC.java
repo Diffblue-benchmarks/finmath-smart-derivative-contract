@@ -233,4 +233,16 @@ public class VisualiserSDC {
 
 		Thread.sleep(500);
 	}
+
+	public List<Point2D> getSeriesMarketValues() {
+		return seriesMarketValues;
+	}
+
+	public Plot2DBarFX getPlotMarginAccounts() {
+		return plotMarginAccounts;
+	}
+
+	public Plot2DFX getPlotMarketValue() {
+		return plotMarketValue;
+	}
 }

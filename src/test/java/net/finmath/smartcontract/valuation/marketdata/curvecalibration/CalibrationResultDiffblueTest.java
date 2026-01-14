@@ -55,9 +55,10 @@ class CalibrationResultDiffblueTest {
             "3",
             "Calibration Curve Name",
             10.0d);
+    CalibrationSpec[] specs = new CalibrationSpec[] {calibrationSpec};
 
     // Act
-    CalibrationResult actualCalibrationResult = new CalibrationResult(c, calibrationSpec);
+    CalibrationResult actualCalibrationResult = new CalibrationResult(c, specs);
 
     // Assert
     AnalyticModel calibratedModel = actualCalibrationResult.getCalibratedModel();
@@ -65,6 +66,8 @@ class CalibrationResultDiffblueTest {
     assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
     assertTrue(calibratedModel.getCurves().isEmpty());
     assertTrue(calibratedModel.getVolatilitySurfaces().isEmpty());
+    assertSame(c, actualCalibrationResult.getCalibration());
+    assertSame(specs, actualCalibrationResult.getCalibrationSpecs());
   }
 
   /**
@@ -267,5 +270,51 @@ class CalibrationResultDiffblueTest {
     assertEquals(
         0.0d,
         new CalibrationResult(new CalibratedCurves(new ArrayList<>())).getSumOfSquaredErrors());
+  }
+
+  /**
+   * Test getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>{@link CalibrationResult#getCalibration()}
+   *   <li>{@link CalibrationResult#getCalibrationSpecs()}
+   *   <li>{@link CalibrationResult#getFreshness()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "CalibratedCurves CalibrationResult.getCalibration()",
+    "CalibratedCurves.CalibrationSpec[] CalibrationResult.getCalibrationSpecs()",
+    "java.time.LocalTime CalibrationResult.getFreshness()"
+  })
+  void testGettersAndSetters() throws CloneNotSupportedException, SolverException {
+    // Arrange
+    CalibratedCurves c = new CalibratedCurves(new ArrayList<>());
+    CalibrationSpec calibrationSpec =
+        new CalibrationSpec(
+            "Type",
+            new double[] {10.0d, 0.5d, 10.0d, 0.5d},
+            "Forward Curve Receiver Name",
+            10.0d,
+            "3",
+            "Calibration Curve Name",
+            10.0d);
+
+    CalibrationResult calibrationResult = new CalibrationResult(c, calibrationSpec);
+
+    // Act
+    CalibratedCurves actualCalibration = calibrationResult.getCalibration();
+    CalibrationSpec[] actualCalibrationSpecs = calibrationResult.getCalibrationSpecs();
+    calibrationResult.getFreshness();
+
+    // Assert
+    assertEquals(1, actualCalibrationSpecs.length);
+    assertSame(c, actualCalibration);
+    assertSame(calibrationSpec, actualCalibrationSpecs[0]);
   }
 }

@@ -88,4 +88,8 @@ public class ValuationHandler implements WebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 	}
 
+	public MarketDataGeneratorWebsocket getMarketDataWebSocketAdapter() {
+		return marketDataWebSocketAdapter;
+	}
+
 }

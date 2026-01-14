@@ -296,4 +296,8 @@ public class MarginCalculator {
 
 		return value;
 	}
+
+	public DoubleUnaryOperator getRounding() {
+		return rounding;
+	}
 }

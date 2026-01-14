@@ -32,4 +32,12 @@ public class CalibrationResult {
 	public LocalTime getFreshness() {
 		return freshness;
 	}
+
+	public CalibratedCurves getCalibration() {
+		return calibration;
+	}
+
+	public CalibratedCurves.CalibrationSpec[] getCalibrationSpecs() {
+		return calibrationSpecs;
+	}
 }

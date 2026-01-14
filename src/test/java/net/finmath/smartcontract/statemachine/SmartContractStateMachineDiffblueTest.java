@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import net.finmath.smartcontract.statemachine.SmartContractStateMachine.Events;
+import net.finmath.smartcontract.statemachine.SmartContractStateMachine.StateMachineListener;
 import net.finmath.smartcontract.statemachine.SmartContractStateMachine.States;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -306,5 +307,33 @@ class SmartContractStateMachineDiffblueTest {
     assertSame(actualSmartContractStateMachine, actualSetMaturedResult);
     assertSame(actualSmartContractStateMachine, actualSetPrefundedResult);
     assertSame(actualSmartContractStateMachine, actualSetSettlementSuccessfulResult);
+  }
+
+  /**
+   * Test StateMachineListener getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>{@link StateMachineListener#StateMachineListener(SmartContractStateMachine)}
+   *   <li>{@link StateMachineListener#getThis$0()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test StateMachineListener getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void StateMachineListener.<init>(SmartContractStateMachine)",
+    "SmartContractStateMachine StateMachineListener.getThis$0()"
+  })
+  void testStateMachineListenerGettersAndSetters() {
+    // Arrange
+    SmartContractStateMachine smartContractStateMachine = new SmartContractStateMachine();
+
+    // Act and Assert
+    assertSame(
+        smartContractStateMachine,
+        smartContractStateMachine.new StateMachineListener().getThis$0());
   }
 }

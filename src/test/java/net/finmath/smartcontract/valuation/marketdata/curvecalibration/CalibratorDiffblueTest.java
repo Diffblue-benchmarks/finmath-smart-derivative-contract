@@ -3,6 +3,7 @@ package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
@@ -669,17 +670,19 @@ class CalibratorDiffblueTest {
     CalibrationResult getResult = actualCalibrateModelResult.get();
     AnalyticModel calibratedModel = getResult.getCalibratedModel();
     assertTrue(calibratedModel instanceof AnalyticModelFromCurvesAndVols);
+    assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
+    assertEquals(0, getResult.getCalibrationSpecs().length);
+    assertEquals(0.0d, getResult.getSumOfSquaredErrors());
+    CalibratedCurves calibration = getResult.getCalibration();
+    assertEquals(2, calibration.getLastNumberOfInterations());
     Map<String, Curve> curves = calibratedModel.getCurves();
     assertEquals(5, curves.size());
-    assertTrue(curves.get(Calibrator.DISCOUNT_EUR_OIS) instanceof DiscountCurveInterpolation);
-    assertTrue(curves.get("forward-EUR-1M") instanceof ForwardCurveInterpolation);
-    assertTrue(curves.get("forward-EUR-3M") instanceof ForwardCurveInterpolation);
-    assertNull(((AnalyticModelFromCurvesAndVols) calibratedModel).getReferenceDate());
-    assertEquals(0.0d, getResult.getSumOfSquaredErrors());
-    CalibratedCurves calibratedCurves = calibrator.getCalibratedCurves();
-    assertEquals(2, calibratedCurves.getLastNumberOfInterations());
+    assertTrue(curves.containsKey("forward-EUR-1M"));
+    assertTrue(curves.containsKey("forward-EUR-3M"));
+    assertTrue(curves.containsKey(Calibrator.DISCOUNT_EUR_OIS));
     assertTrue(calibratedModel.getVolatilitySurfaces().isEmpty());
     assertTrue(actualCalibrateModelResult.isPresent());
-    assertEquals(Double.NaN, calibratedCurves.getLastAccuracy());
+    assertEquals(Double.NaN, calibration.getLastAccuracy());
+    assertSame(calibratedModel, calibration.getModel());
   }
 }

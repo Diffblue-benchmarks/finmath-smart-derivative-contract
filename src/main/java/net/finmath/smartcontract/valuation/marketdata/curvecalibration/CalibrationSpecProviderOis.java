@@ -33,4 +33,16 @@ public class CalibrationSpecProviderOis implements CalibrationSpecProvider {
 
 		return new CalibratedCurves.CalibrationSpec(String.format("EUR-OIS-%1$s", maturityLabel), "Swap", scheduleInterfaceRec, "forward-EUR-OIS", 0.0, DISCOUNT_EUR_OIS, scheduleInterfacePay, "", swapRate, DISCOUNT_EUR_OIS, DISCOUNT_EUR_OIS, calibrationTime);
 	}
+
+	public String getMaturityLabel() {
+		return maturityLabel;
+	}
+
+	public String getFrequency() {
+		return frequency;
+	}
+
+	public double getSwapRate() {
+		return swapRate;
+	}
 }

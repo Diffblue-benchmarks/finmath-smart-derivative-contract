@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
@@ -33,6 +34,40 @@ class SmartDerivativeContractSettlementOracleDiffblueTest {
   private SmartDerivativeContractSettlementOracle smartDerivativeContractSettlementOracle;
 
   @MockBean private ValuationOracle valuationOracle;
+
+  /**
+   * Test getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>{@link
+   *       SmartDerivativeContractSettlementOracle#SmartDerivativeContractSettlementOracle(ValuationOracle)}
+   *   <li>{@link SmartDerivativeContractSettlementOracle#getDerivativeValuationOracle()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void SmartDerivativeContractSettlementOracle.<init>(ValuationOracle)",
+    "ValuationOracle SmartDerivativeContractSettlementOracle.getDerivativeValuationOracle()"
+  })
+  void testGettersAndSetters() {
+    // Arrange
+    ValuationOracleSamplePath derivativeValuationOracle =
+        new ValuationOracleSamplePath(mock(StochasticValuationOracle.class), 1);
+
+    // Act
+    ValuationOracle actualDerivativeValuationOracle =
+        new SmartDerivativeContractSettlementOracle(derivativeValuationOracle)
+            .getDerivativeValuationOracle();
+
+    // Assert
+    assertTrue(actualDerivativeValuationOracle instanceof ValuationOracleSamplePath);
+    assertSame(derivativeValuationOracle, actualDerivativeValuationOracle);
+  }
 
   /**
    * Test {@link SmartDerivativeContractSettlementOracle#getMargin(LocalDateTime, LocalDateTime)}.

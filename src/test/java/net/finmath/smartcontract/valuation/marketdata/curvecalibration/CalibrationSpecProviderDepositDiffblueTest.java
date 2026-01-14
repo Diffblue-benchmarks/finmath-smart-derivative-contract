@@ -12,6 +12,42 @@ import org.junit.jupiter.api.Test;
 
 class CalibrationSpecProviderDepositDiffblueTest {
   /**
+   * Test getters and setters.
+   *
+   * <p>Methods under test:
+   *
+   * <ul>
+   *   <li>{@link CalibrationSpecProviderDeposit#CalibrationSpecProviderDeposit(String, String,
+   *       double)}
+   *   <li>{@link CalibrationSpecProviderDeposit#getDepositRate()}
+   *   <li>{@link CalibrationSpecProviderDeposit#getMaturityLabel()}
+   *   <li>{@link CalibrationSpecProviderDeposit#getTenorLabel()}
+   * </ul>
+   */
+  @Test
+  @DisplayName("Test getters and setters")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void CalibrationSpecProviderDeposit.<init>(String, String, double)",
+    "double CalibrationSpecProviderDeposit.getDepositRate()",
+    "String CalibrationSpecProviderDeposit.getMaturityLabel()",
+    "String CalibrationSpecProviderDeposit.getTenorLabel()"
+  })
+  void testGettersAndSetters() {
+    // Arrange and Act
+    CalibrationSpecProviderDeposit actualCalibrationSpecProviderDeposit =
+        new CalibrationSpecProviderDeposit("Tenor Label", "Maturity Label", 10.0d);
+    double actualDepositRate = actualCalibrationSpecProviderDeposit.getDepositRate();
+    String actualMaturityLabel = actualCalibrationSpecProviderDeposit.getMaturityLabel();
+
+    // Assert
+    assertEquals("Maturity Label", actualMaturityLabel);
+    assertEquals("Tenor Label", actualCalibrationSpecProviderDeposit.getTenorLabel());
+    assertEquals(10.0d, actualDepositRate);
+  }
+
+  /**
    * Test {@link CalibrationSpecProviderDeposit#getCalibrationSpec(CalibrationContext)}.
    *
    * <p>Method under test: {@link
@@ -22,7 +58,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec() {
     // Arrange
@@ -51,7 +87,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec2() {
     // Arrange
@@ -80,7 +116,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec3() {
     // Arrange
@@ -109,7 +145,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec4() {
     // Arrange
@@ -138,7 +174,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec5() {
     // Arrange
@@ -172,7 +208,7 @@ class CalibrationSpecProviderDepositDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
+    "CalibratedCurves.CalibrationSpec CalibrationSpecProviderDeposit.getCalibrationSpec(CalibrationContext)"
   })
   void testGetCalibrationSpec_whenLocalDateWith1970AndOneAndOneAtStartOfDay() {
     // Arrange

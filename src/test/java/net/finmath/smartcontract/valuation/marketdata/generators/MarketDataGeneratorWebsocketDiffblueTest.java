@@ -249,6 +249,31 @@ class MarketDataGeneratorWebsocketDiffblueTest {
   }
 
   /**
+   * Test {@link MarketDataGeneratorWebsocket#writeDataset(String, MarketDataList, boolean)}.
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#writeDataset(String, MarketDataList,
+   * boolean)}
+   */
+  @Test
+  @DisplayName("Test writeDataset(String, MarketDataList, boolean)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void MarketDataGeneratorWebsocket.writeDataset(String, MarketDataList, boolean)"
+  })
+  void testWriteDataset2() throws IOException {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "42", new ArrayList<>());
+
+    // Act and Assert
+    assertThrows(
+        RuntimeException.class,
+        () -> marketDataGeneratorWebsocket.writeDataset("\",", new MarketDataList(), true));
+  }
+
+  /**
    * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
    * websocket}, {@code message}.
    *
@@ -307,6 +332,39 @@ class MarketDataGeneratorWebsocketDiffblueTest {
     verify(websocket)
         .sendText(
             "{\"ID\":2,\"Key\":{\"Name\":[\"message: {}\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    assertTrue(marketDataGeneratorWebsocket.requestSent);
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)} with {@code
+   * websocket}, {@code message}.
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MarketDataGeneratorWebsocket.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage3() throws Exception {
+    // Arrange
+    ArrayList<Spec> itemList = new ArrayList<>();
+    Spec spec = new Spec("Key", "Curve Name", "Product Name", "Maturity");
+    itemList.add(spec);
+    itemList.addAll(new ArrayList<>());
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(new JSONObject(), "Position", itemList);
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.onTextMessage(websocket, "\"Key\":{\"Name\":[");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"Key\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
     assertTrue(marketDataGeneratorWebsocket.requestSent);
   }
 
@@ -518,6 +576,48 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
    *
    * <ul>
+   *   <li>Given {@link JSONObject#JSONObject()} empty string is {@code true}.
+   *   <li>When {@code false}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String,
+   * boolean)}
+   */
+  @Test
+  @DisplayName(
+      "Test sendLoginRequest(WebSocket, String, boolean); given JSONObject() empty string is 'true'; when 'false'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
+  })
+  void testSendLoginRequest_givenJSONObjectEmptyStringIsTrue_whenFalse() throws Exception {
+    // Arrange
+    JSONObject authJson = new JSONObject();
+    authJson.put("", true);
+    authJson.put(
+        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
+            + "\"},\"NameType\":\"AuthnToken\"}}",
+        1L);
+    MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
+        new MarketDataGeneratorWebsocket(authJson, "Position", new ArrayList<>());
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    marketDataGeneratorWebsocket.sendLoginRequest(websocket, "ABC123", false);
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"256\",\"Position\":\"Position\",\"AuthenticationToken\":\"ABC123\"},\"NameType\":\"AuthnToken\"},\"Refresh\":false}");
+  }
+
+  /**
+   * Test {@link MarketDataGeneratorWebsocket#sendLoginRequest(WebSocket, String, boolean)}.
+   *
+   * <ul>
    *   <li>Given {@code null}.
    *   <li>When {@code false}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
@@ -557,7 +657,7 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    *
    * <ul>
    *   <li>Given {@code null}.
-   *   <li>When {@link WebSocket} {@link WebSocket#sendText(String)} return {@code null}.
+   *   <li>When {@code true}.
    *   <li>Then calls {@link WebSocket#sendText(String)}.
    * </ul>
    *
@@ -566,14 +666,13 @@ class MarketDataGeneratorWebsocketDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when WebSocket sendText(String) return 'null'; then calls sendText(String)")
+      "Test sendLoginRequest(WebSocket, String, boolean); given 'null'; when 'true'; then calls sendText(String)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "void MarketDataGeneratorWebsocket.sendLoginRequest(WebSocket, String, boolean)"
   })
-  void testSendLoginRequest_givenNull_whenWebSocketSendTextReturnNull_thenCallsSendText()
-      throws Exception {
+  void testSendLoginRequest_givenNull_whenTrue_thenCallsSendText() throws Exception {
     // Arrange
     JSONObject authJson = new JSONObject();
     MarketDataGeneratorWebsocket marketDataGeneratorWebsocket =
