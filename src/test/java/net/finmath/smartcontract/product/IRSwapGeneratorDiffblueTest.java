@@ -407,6 +407,101 @@ class IRSwapGeneratorDiffblueTest {
    * boolean, String, String)}.
    *
    * <ul>
+   *   <li>When now.
+   * </ul>
+   *
+   * <p>Method under test: {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String,
+   * double, double, boolean, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String); when now")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
+  })
+  void testGenerateAnalyticSwapObject_whenNow() {
+    // Arrange and Act
+    Swap actualGenerateAnalyticSwapObjectResult =
+        IRSwapGenerator.generateAnalyticSwapObject(
+            LocalDate.now(), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+
+    // Assert
+    AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
+    assertTrue(legPayer instanceof SwapLeg);
+    AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
+    assertTrue(legReceiver instanceof SwapLeg);
+    InterestRateSwapProductDescriptor descriptor =
+        actualGenerateAnalyticSwapObjectResult.getDescriptor();
+    assertTrue(descriptor.getLegPayer() instanceof InterestRateSwapLegProductDescriptor);
+    assertTrue(descriptor.getLegReceiver() instanceof InterestRateSwapLegProductDescriptor);
+    assertTrue(((SwapLeg) legPayer).getSchedule() instanceof ScheduleFromPeriods);
+    assertTrue(((SwapLeg) legReceiver).getSchedule() instanceof ScheduleFromPeriods);
+    assertArrayEquals(new double[] {0.0d}, ((SwapLeg) legPayer).getSpreads(), 0.0);
+    assertArrayEquals(new double[] {10.0d}, ((SwapLeg) legReceiver).getSpreads(), 0.0);
+  }
+
+  /**
+   * Test {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String, double, double,
+   * boolean, String, String)}.
+   *
+   * <ul>
+   *   <li>When ofYearDay nineteen and one hundred.
+   * </ul>
+   *
+   * <p>Method under test: {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String,
+   * double, double, boolean, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String); when ofYearDay nineteen and one hundred")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
+  })
+  void testGenerateAnalyticSwapObject_whenOfYearDayNineteenAndOneHundred() {
+    // Arrange and Act
+    Swap actualGenerateAnalyticSwapObjectResult =
+        IRSwapGenerator.generateAnalyticSwapObject(
+            LocalDate.ofYearDay(19, 100), "42", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+
+    // Assert
+    AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
+    assertTrue(legPayer instanceof SwapLeg);
+    AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
+    assertTrue(legReceiver instanceof SwapLeg);
+    InterestRateSwapProductDescriptor descriptor =
+        actualGenerateAnalyticSwapObjectResult.getDescriptor();
+    assertTrue(descriptor.getLegPayer() instanceof InterestRateSwapLegProductDescriptor);
+    assertTrue(descriptor.getLegReceiver() instanceof InterestRateSwapLegProductDescriptor);
+    assertTrue(((SwapLeg) legPayer).getSchedule() instanceof ScheduleFromPeriods);
+    assertTrue(((SwapLeg) legReceiver).getSchedule() instanceof ScheduleFromPeriods);
+    assertArrayEquals(
+        new double[] {
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d,
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d,
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d
+        },
+        ((SwapLeg) legPayer).getSpreads(),
+        0.0);
+    assertArrayEquals(
+        new double[] {
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d
+        },
+        ((SwapLeg) legReceiver).getSpreads(),
+        0.0);
+  }
+
+  /**
+   * Test {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String, double, double,
+   * boolean, String, String)}.
+   *
+   * <ul>
    *   <li>When ofYearDay two and eight.
    * </ul>
    *
@@ -462,53 +557,6 @@ class IRSwapGeneratorDiffblueTest {
    * boolean, String, String)}.
    *
    * <ul>
-   *   <li>When ofYearDay two and eight.
-   * </ul>
-   *
-   * <p>Method under test: {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String,
-   * double, double, boolean, String, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String); when ofYearDay two and eight")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
-  })
-  void testGenerateAnalyticSwapObject_whenOfYearDayTwoAndEight2() {
-    // Arrange and Act
-    Swap actualGenerateAnalyticSwapObjectResult =
-        IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 8), "42", 10.0d, 10.0d, true, "3M", "3");
-
-    // Assert
-    AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
-    assertTrue(legPayer instanceof SwapLeg);
-    AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
-    assertTrue(legReceiver instanceof SwapLeg);
-    InterestRateSwapProductDescriptor descriptor =
-        actualGenerateAnalyticSwapObjectResult.getDescriptor();
-    assertTrue(descriptor.getLegPayer() instanceof InterestRateSwapLegProductDescriptor);
-    assertTrue(descriptor.getLegReceiver() instanceof InterestRateSwapLegProductDescriptor);
-    assertTrue(((SwapLeg) legPayer).getSchedule() instanceof ScheduleFromPeriods);
-    assertTrue(((SwapLeg) legReceiver).getSchedule() instanceof ScheduleFromPeriods);
-    assertArrayEquals(
-        new double[] {
-          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
-          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
-          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
-          10.0d, 10.0d, 10.0d
-        },
-        ((SwapLeg) legReceiver).getSpreads(),
-        0.0);
-  }
-
-  /**
-   * Test {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String, double, double,
-   * boolean, String, String)}.
-   *
-   * <ul>
    *   <li>When ofYearDay two and one hundred.
    * </ul>
    *
@@ -527,7 +575,7 @@ class IRSwapGeneratorDiffblueTest {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 100), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
+            LocalDate.ofYearDay(2, 100), "42", 10.0d, 10.0d, true, "Forward Curve Name", "3");
 
     // Assert
     AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
@@ -540,8 +588,23 @@ class IRSwapGeneratorDiffblueTest {
     assertTrue(descriptor.getLegReceiver() instanceof InterestRateSwapLegProductDescriptor);
     assertTrue(((SwapLeg) legPayer).getSchedule() instanceof ScheduleFromPeriods);
     assertTrue(((SwapLeg) legReceiver).getSchedule() instanceof ScheduleFromPeriods);
-    assertArrayEquals(new double[] {0.0d}, ((SwapLeg) legPayer).getSpreads(), 0.0);
-    assertArrayEquals(new double[] {10.0d}, ((SwapLeg) legReceiver).getSpreads(), 0.0);
+    assertArrayEquals(
+        new double[] {
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d,
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d,
+          0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d
+        },
+        ((SwapLeg) legPayer).getSpreads(),
+        0.0);
+    assertArrayEquals(
+        new double[] {
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d, 10.0d,
+          10.0d, 10.0d, 10.0d
+        },
+        ((SwapLeg) legReceiver).getSpreads(),
+        0.0);
   }
 
   /**
@@ -564,46 +627,6 @@ class IRSwapGeneratorDiffblueTest {
     "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
   })
   void testGenerateAnalyticSwapObject_whenOfYearDayTwoAndTwo() {
-    // Arrange and Act
-    Swap actualGenerateAnalyticSwapObjectResult =
-        IRSwapGenerator.generateAnalyticSwapObject(
-            LocalDate.ofYearDay(2, 2), "3M", 10.0d, 10.0d, true, "Forward Curve Name", "3");
-
-    // Assert
-    AnalyticProduct legPayer = actualGenerateAnalyticSwapObjectResult.getLegPayer();
-    assertTrue(legPayer instanceof SwapLeg);
-    AnalyticProduct legReceiver = actualGenerateAnalyticSwapObjectResult.getLegReceiver();
-    assertTrue(legReceiver instanceof SwapLeg);
-    InterestRateSwapProductDescriptor descriptor =
-        actualGenerateAnalyticSwapObjectResult.getDescriptor();
-    assertTrue(descriptor.getLegPayer() instanceof InterestRateSwapLegProductDescriptor);
-    assertTrue(descriptor.getLegReceiver() instanceof InterestRateSwapLegProductDescriptor);
-    assertTrue(((SwapLeg) legPayer).getSchedule() instanceof ScheduleFromPeriods);
-    assertTrue(((SwapLeg) legReceiver).getSchedule() instanceof ScheduleFromPeriods);
-    assertArrayEquals(new double[] {0.0d}, ((SwapLeg) legPayer).getSpreads(), 0.0);
-    assertArrayEquals(new double[] {10.0d}, ((SwapLeg) legReceiver).getSpreads(), 0.0);
-  }
-
-  /**
-   * Test {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String, double, double,
-   * boolean, String, String)}.
-   *
-   * <ul>
-   *   <li>When ofYearDay two and two.
-   * </ul>
-   *
-   * <p>Method under test: {@link IRSwapGenerator#generateAnalyticSwapObject(LocalDate, String,
-   * double, double, boolean, String, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String); when ofYearDay two and two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
-  })
-  void testGenerateAnalyticSwapObject_whenOfYearDayTwoAndTwo2() {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(
@@ -658,7 +681,7 @@ class IRSwapGeneratorDiffblueTest {
   @MethodsUnderTest({
     "Swap IRSwapGenerator.generateAnalyticSwapObject(LocalDate, String, double, double, boolean, String, String)"
   })
-  void testGenerateAnalyticSwapObject_whenOfYearDayTwoAndTwo3() {
+  void testGenerateAnalyticSwapObject_whenOfYearDayTwoAndTwo2() {
     // Arrange and Act
     Swap actualGenerateAnalyticSwapObjectResult =
         IRSwapGenerator.generateAnalyticSwapObject(

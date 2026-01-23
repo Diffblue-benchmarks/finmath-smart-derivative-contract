@@ -1,6 +1,9 @@
 package net.finmath.smartcontract.valuation.marketdata.curvecalibration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.time.LocalDate;
@@ -35,32 +38,27 @@ class CalibrationSpecProviderFRADiffblueTest {
   }
 
   /**
-   * Test {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}.
+   * Test {@link CalibrationSpecProviderFRA#CalibrationSpecProviderFRA(String, String, double)}.
    *
-   * <ul>
-   *   <li>Then return Symbol is {@code EUR-4242}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CalibrationSpecProviderFRA#getCalibrationSpec(CalibrationContext)}
+   * <p>Method under test: {@link CalibrationSpecProviderFRA#CalibrationSpecProviderFRA(String,
+   * String, double)}
    */
   @Test
-  @DisplayName("Test getCalibrationSpec(CalibrationContext); then return Symbol is 'EUR-4242'")
+  @DisplayName("Test new CalibrationSpecProviderFRA(String, String, double)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "CalibrationSpec CalibrationSpecProviderFRA.getCalibrationSpec(CalibrationContext)"
-  })
-  void testGetCalibrationSpec_thenReturnSymbolIsEur4242() {
-    // Arrange
-    CalibrationSpecProviderFRA calibrationSpecProviderFRA =
+  @MethodsUnderTest({"void CalibrationSpecProviderFRA.<init>(String, String, double)"})
+  void testNewCalibrationSpecProviderFRA2() {
+    // Arrange and Act
+    CalibrationSpecProviderFRA actualCalibrationSpecProviderFRA =
         new CalibrationSpecProviderFRA("42", "42", 10.0d);
-
-    // Act
+    CalibrationContext ctx = mock(CalibrationContext.class);
+    when(ctx.getReferenceDate()).thenReturn(LocalDate.now());
     CalibrationSpec actualCalibrationSpec =
-        calibrationSpecProviderFRA.getCalibrationSpec(
-            new CalibrationContextImpl(LocalDate.of(1970, 1, 1).atStartOfDay(), 10.0d));
+        actualCalibrationSpecProviderFRA.getCalibrationSpec(ctx);
 
     // Assert
+    verify(ctx).getReferenceDate();
     assertEquals("EUR-4242", actualCalibrationSpec.getSymbol());
   }
 }

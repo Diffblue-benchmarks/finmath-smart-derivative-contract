@@ -7,19 +7,23 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
-import jakarta.websocket.Endpoint;
+import jakarta.websocket.ClientEndpointConfig;
+import jakarta.websocket.ClientEndpointConfig.Builder;
+import jakarta.websocket.ClientEndpointConfig.Configurator;
 import jakarta.websocket.EndpointConfig;
 import jakarta.websocket.MessageHandler;
 import jakarta.websocket.Session;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import javax.net.ssl.SSLContext;
 import net.finmath.smartcontract.model.SDCException;
 import org.apache.tomcat.websocket.WsSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
 
 class WebSocketClientEndpointDiffblueTest {
   /**
@@ -104,7 +108,7 @@ class WebSocketClientEndpointDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void WebSocketClientEndpoint.onOpen(Session, EndpointConfig)"})
-  void testOnOpen_thenCallsAddMessageHandler() {
+  void testOnOpen_thenCallsAddMessageHandler() throws NoSuchAlgorithmException {
     // Arrange
     WebSocketClientEndpoint webSocketClientEndpoint =
         new WebSocketClientEndpoint(
@@ -114,10 +118,24 @@ class WebSocketClientEndpointDiffblueTest {
 
     WsSession session = mock(WsSession.class);
     doNothing().when(session).addMessageHandler(Mockito.<MessageHandler>any());
-    Class<Endpoint> endpointClass = Endpoint.class;
+
+    Builder createResult = Builder.create();
+
+    Builder configuratorResult = createResult.configurator(new Configurator());
+
+    Builder decodersResult = configuratorResult.decoders(new ArrayList<>());
+
+    Builder encodersResult = decodersResult.encoders(new ArrayList<>());
+
+    Builder extensionsResult = encodersResult.extensions(new ArrayList<>());
 
     // Act
-    webSocketClientEndpoint.onOpen(session, new ServerEndpointRegistration("Path", endpointClass));
+    webSocketClientEndpoint.onOpen(
+        session,
+        extensionsResult
+            .preferredSubprotocols(new ArrayList<>())
+            .sslContext(SSLContext.getDefault())
+            .build());
 
     // Assert
     verify(session).addMessageHandler(isA(MessageHandler.class));

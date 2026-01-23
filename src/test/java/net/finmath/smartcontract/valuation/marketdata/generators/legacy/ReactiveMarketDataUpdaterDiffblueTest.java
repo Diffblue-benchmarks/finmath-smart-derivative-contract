@@ -295,6 +295,40 @@ class ReactiveMarketDataUpdaterDiffblueTest {
   @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
   void testOnTextMessageWithWebsocketMessage2() {
     // Arrange
+    when(spec.getKey())
+        .thenReturn(
+            "JSON mapper is failing silently in order to skip message:{}{}{}as it is not a quote/fixing update.");
+
+    WebSocket websocket = mock(WebSocket.class);
+    when(websocket.sendText(Mockito.<String>any())).thenReturn(null);
+
+    // Act
+    reactiveMarketDataUpdater.onTextMessage(
+        websocket,
+        "{\"ID\":1,\"Domain\":\"Login\",\"Key\":{\"Elements\":{\"ApplicationId\":\"\",\"Position\":\"\",\"AuthenticationToken\":\""
+            + "\"},\"NameType\":\"AuthnToken\"}}");
+
+    // Assert
+    verify(websocket)
+        .sendText(
+            "{\"ID\":2,\"Key\":{\"Name\":[\"JSON mapper is failing silently in order to skip message:{}{}{}as it is not a quote/fixing update.\"]},\"View\":[\"MID\",\"BID\",\"ASK\",\"VALUE_DT1\",\"VALUE_TS1\"]}");
+    verify(spec).getKey();
+    assertTrue(reactiveMarketDataUpdater.requestSent);
+  }
+
+  /**
+   * Test {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)} with {@code websocket},
+   * {@code message}.
+   *
+   * <p>Method under test: {@link ReactiveMarketDataUpdater#onTextMessage(WebSocket, String)}
+   */
+  @Test
+  @DisplayName("Test onTextMessage(WebSocket, String) with 'websocket', 'message'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ReactiveMarketDataUpdater.onTextMessage(WebSocket, String)"})
+  void testOnTextMessageWithWebsocketMessage3() {
+    // Arrange
     JSONObject authJson = new JSONObject();
     ReactiveMarketDataUpdater reactiveMarketDataUpdater =
         new ReactiveMarketDataUpdater(authJson, "Position", new ArrayList<>());

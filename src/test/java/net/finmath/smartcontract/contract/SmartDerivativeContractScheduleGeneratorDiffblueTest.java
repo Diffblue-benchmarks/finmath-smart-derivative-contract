@@ -177,6 +177,46 @@ class SmartDerivativeContractScheduleGeneratorDiffblueTest {
   void
       testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedDuration3() {
     // Arrange
+    LocalDate startDate = LocalDate.now();
+
+    // Act
+    SmartDerivativeContractSchedule actualScheduleForBusinessDays =
+        SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(
+            "Calendar", startDate, LocalDate.now(), LocalTime.MIDNIGHT, Duration.ofSeconds(1L));
+    List<EventTimes> actualEventTimes = actualScheduleForBusinessDays.getEventTimes();
+
+    // Assert
+    List<EventTimes> eventTimes = actualScheduleForBusinessDays.getEventTimes();
+    assertEquals(1, eventTimes.size());
+    EventTimes getResult = eventTimes.get(0);
+    assertTrue(getResult instanceof EventTimesImpl);
+    assertTrue(actualScheduleForBusinessDays instanceof SimpleSchedule);
+    assertSame(eventTimes, actualEventTimes);
+    assertSame(startDate, getResult.getAccountAccessAllowedStart().toLocalDate());
+    assertSame(startDate, getResult.getMarginCheckTime().toLocalDate());
+    assertSame(startDate, getResult.getSettementTime().toLocalDate());
+  }
+
+  /**
+   * Test {@link SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String,
+   * LocalDate, LocalDate, LocalTime, Duration)} with {@code calendar}, {@code startDate}, {@code
+   * maturity}, {@code settlementTime}, {@code accountAccessAllowedDuration}.
+   *
+   * <p>Method under test: {@link
+   * SmartDerivativeContractScheduleGenerator#getScheduleForBusinessDays(String, LocalDate,
+   * LocalDate, LocalTime, Duration)}
+   */
+  @Test
+  @DisplayName(
+      "Test getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, Duration) with 'calendar', 'startDate', 'maturity', 'settlementTime', 'accountAccessAllowedDuration'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "SmartDerivativeContractSchedule SmartDerivativeContractScheduleGenerator.getScheduleForBusinessDays(String, LocalDate, LocalDate, LocalTime, Duration)"
+  })
+  void
+      testGetScheduleForBusinessDaysWithCalendarStartDateMaturitySettlementTimeAccountAccessAllowedDuration4() {
+    // Arrange
     LocalDate startDate = LocalDate.ofEpochDay(-1L);
 
     // Act
