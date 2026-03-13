@@ -43,6 +43,9 @@
         <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+        <pitest-maven.version>1.15.3</pitest-maven.version>
+        <pitest-junit5-plugin.version>1.2.1</pitest-junit5-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>
@@ -633,10 +636,80 @@
                 <configuration>
                     <forkCount>4C</forkCount>
                     <reuseForks>false</reuseForks>
-                    <argLine>-mx6G --add-opens java.base/java.time=ALL-UNNAMED --add-opens
+                    <argLine>@{argLine} -mx6G --add-opens java.base/java.time=ALL-UNNAMED --add-opens
                         java.base/java.util=ALL-UNNAMED --add-opens
                         net.finmath.smartderivativecontract/net.finmath.smartcontract.model=ALL-UNNAMED
                     </argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <!-- Auto generated classes -->
+                        <exclude>net/finmath/smartcontract/product/xml/*</exclude>
+                        <exclude>net/finmath/smartcontract/api/*</exclude>
+                        <exclude>net/finmath/smartcontract/model/*</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <executions>
+                    <execution>
+                        <id>pit-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>${pitest-junit5-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>net.finmath.smartcontract.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>net.finmath.smartcontract.*</param>
+                    </targetTests>
+                    <excludedClasses>
+                        <param>net.finmath.smartcontract.product.xml.*</param>
+                        <param>net.finmath.smartcontract.api.*</param>
+                        <param>net.finmath.smartcontract.model.*</param>
+                    </excludedClasses>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                    </outputFormats>
+                    <verbose>true</verbose>
+                    <timestampedReports>false</timestampedReports>
                 </configuration>
             </plugin>
 
@@ -1009,11 +1082,6 @@
             <id>gitlab</id>
             <url>https://gitlab.com/api/v4/projects/33978063/packages/maven</url>
         </repository>
-        -->
-        <snapshotRepository>
-            <id>gitlab</id>
-            <url>https://gitlab.com/api/v4/projects/33978063/packages/maven</url>
-        </snapshotRepository>
         -->
     </distributionManagement>
 
