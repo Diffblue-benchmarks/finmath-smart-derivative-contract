@@ -1,0 +1,4 @@
+<div class="updateSpinner" *ngIf="!isAuthed">
+    <mat-spinner></mat-spinner>
+  </div>
+<router-outlet *ngIf="isAuthed"> </router-outlet>
