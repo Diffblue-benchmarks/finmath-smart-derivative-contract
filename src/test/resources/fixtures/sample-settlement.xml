@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settlement>
+    <tradeId>TRADE-12345</tradeId>
+    <settlementType>REGULAR</settlementType>
+    <currency>EUR</currency>
+    <marginValue>1000.50</marginValue>
+    <marginLimits>500.00</marginLimits>
+    <marginLimits>500.00</marginLimits>
+    <settlementTime>20240315-100000+01:00</settlementTime>
+    <settlementNPV>5000.75</settlementNPV>
+    <settlementNPVPrevious>4800.25</settlementNPVPrevious>
+    <settlementTimeNext>20240316-100000+01:00</settlementTimeNext>
+    <settlementNPVNext>5200.00</settlementNPVNext>
+</settlement>

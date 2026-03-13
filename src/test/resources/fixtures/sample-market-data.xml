@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marketDataList>
+    <requestTimeStamp>20240315-100000</requestTimeStamp>
+    <item>
+        <id>EUR-SWAP-5Y</id>
+        <value>0.0235</value>
+        <timeStamp>20240315-100000</timeStamp>
+    </item>
+    <item>
+        <id>EUR-SWAP-10Y</id>
+        <value>0.0289</value>
+        <timeStamp>20240315-100000</timeStamp>
+    </item>
+    <item>
+        <id>EUR-OIS-1Y</id>
+        <value>0.0125</value>
+        <timeStamp>20240315-100000</timeStamp>
+    </item>
+</marketDataList>
