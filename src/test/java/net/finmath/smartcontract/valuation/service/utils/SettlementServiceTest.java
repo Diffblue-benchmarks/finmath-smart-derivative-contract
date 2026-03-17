@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.valuation.service.utils;
 
 import net.finmath.smartcontract.model.*;
+import net.finmath.smartcontract.valuation.service.config.RefinitivConfig;
 import net.finmath.smartcontract.valuation.service.config.ValuationConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -225,6 +226,80 @@ class SettlementServiceTest {
 		assertTrue(settlementString.contains("<id>EUB6FIX6M</id><value>0.0484</value><timeStamp>20080505-170000</timeStamp>"));
 		assertTrue(settlementString.contains("<settlementNPV>72349.58</settlementNPV>"));
 		assertTrue(settlementString.contains("<settlementType>REGULAR</settlementType>"));
+	}
+
+	@Test
+	void testConstructorWithValidConfigs() {
+		RefinitivConfig refinitivConfig = new RefinitivConfig();
+		refinitivConfig.setUser("testUser");
+		refinitivConfig.setPassword("testPassword");
+		refinitivConfig.setClientId("testClientId");
+		refinitivConfig.setHostName("testHost");
+		refinitivConfig.setPort(8080);
+		refinitivConfig.setAuthUrl("http://test.auth.url");
+		refinitivConfig.setUseProxy("false");
+		refinitivConfig.setProxyHost("proxyHost");
+		refinitivConfig.setProxyPort(3128);
+		refinitivConfig.setProxyUser("proxyUser");
+		refinitivConfig.setProxyPassword("proxyPass");
+
+		ValuationConfig valuationConfig = new ValuationConfig();
+		valuationConfig.setLiveMarketData(false);
+		valuationConfig.setSettlementCurrency("EUR");
+		valuationConfig.setLiveMarketDataProvider("refinitiv");
+		valuationConfig.setInternalMarketDataProvider("internal");
+
+		SettlementService settlementService = new SettlementService(refinitivConfig, valuationConfig);
+
+		assertNotNull(settlementService);
+	}
+
+	@Test
+	void testParseProductDataWithInvalidXml() {
+		String invalidXml = "not valid xml";
+
+		InitialSettlementRequest initialSettlementRequest = new InitialSettlementRequest().tradeData(invalidXml);
+
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+
+		assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(initialSettlementRequest));
+	}
+
+	@Test
+	void testRetrieveMarketDataWithUnsupportedProvider() throws IOException {
+		InputStream inputStream = SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml");
+		String productXml = new String(inputStream.readAllBytes());
+
+		InitialSettlementRequest initialSettlementRequest = new InitialSettlementRequest().tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("bloomberg");
+		when(valuationConfig.getInternalMarketDataProvider()).thenReturn("internal");
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+
+		assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(initialSettlementRequest));
+	}
+
+	@Test
+	void testIncludeFixingsOfLastSettlement_noFixingsFound() throws IOException {
+		String settlementLast = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/settlement_testset_initial.xml").readAllBytes(), StandardCharsets.UTF_8);
+
+		InputStream inputStream = SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_simulated_historical_marketdata.xml");
+		String productXml = new String(inputStream.readAllBytes());
+
+		RegularSettlementRequest regularSettlementRequest = new RegularSettlementRequest()
+				.settlementLast(settlementLast)
+				.tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("internal");
+		when(valuationConfig.getInternalMarketDataProvider()).thenReturn("internal");
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+		when(valuationConfig.getProductFixingType()).thenReturn("NonExistentType");
+
+		RegularSettlementResult regularSettlementResult = serviceUnderTest.generateRegularSettlementResult(regularSettlementRequest);
+		String settlementString = regularSettlementResult.getGeneratedRegularSettlement();
+
+		assertNotNull(settlementString);
+		assertTrue(settlementString.contains("REGULAR"));
 	}
 
 }
