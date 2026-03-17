@@ -23,6 +23,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -90,5 +94,51 @@ class SettlementControllerTest {
 				)
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString(mockSettlement)));
+	}
+
+	@Test
+	void testConstructor() {
+		SettlementService mockService = mock(SettlementService.class);
+		SettlementController controller = new SettlementController(mockService);
+		assertNotNull(controller);
+	}
+
+	@Test
+	void testGenerateRegularSettlementResultDirect() {
+		SettlementService mockService = mock(SettlementService.class);
+		SettlementController controller = new SettlementController(mockService);
+
+		RegularSettlementRequest request = new RegularSettlementRequest()
+				.settlementLast("settle")
+				.tradeData("tradeData");
+		RegularSettlementResult expectedResult = new RegularSettlementResult().generatedRegularSettlement("settlement");
+
+		when(mockService.generateRegularSettlementResult(request)).thenReturn(expectedResult);
+
+		var response = controller.generateRegularSettlementResult(request);
+
+		assertNotNull(response);
+		assertEquals(200, response.getStatusCodeValue());
+		assertEquals(expectedResult, response.getBody());
+		verify(mockService).generateRegularSettlementResult(request);
+	}
+
+	@Test
+	void testGenerateInitialSettlementResultDirect() {
+		SettlementService mockService = mock(SettlementService.class);
+		SettlementController controller = new SettlementController(mockService);
+
+		InitialSettlementRequest request = new InitialSettlementRequest()
+				.tradeData("tradeData");
+		InitialSettlementResult expectedResult = new InitialSettlementResult().generatedInitialSettlement("settlement");
+
+		when(mockService.generateInitialSettlementResult(request)).thenReturn(expectedResult);
+
+		var response = controller.generateInitialSettlementResult(request);
+
+		assertNotNull(response);
+		assertEquals(200, response.getStatusCodeValue());
+		assertEquals(expectedResult, response.getBody());
+		verify(mockService).generateInitialSettlementResult(request);
 	}
 }
