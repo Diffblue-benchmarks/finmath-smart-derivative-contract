@@ -83,6 +83,23 @@ class WebSocketClientEndpointTest {
 		assertTrue(session.getStoredMessageHandlers().get(0) instanceof MessageHandler.Whole);
 	}
 
+	@Test
+	void testSendTextMessage() throws Exception {
+		// Given
+		final WebSocketClientEndpoint endpoint = new WebSocketClientEndpoint(new URI("ws://localhost:8080/test"), "user", "pass");
+		final StubSessionWithRemote session = new StubSessionWithRemote();
+		final java.lang.reflect.Field sessionField = WebSocketClientEndpoint.class.getDeclaredField("userSession");
+		sessionField.setAccessible(true);
+		sessionField.set(endpoint, session);
+		final String testMessage = "test message";
+
+		// When
+		endpoint.sendTextMessage(testMessage);
+
+		// Then
+		assertEquals(testMessage, ((StubBasicRemote) session.getBasicRemote()).getSentText());
+	}
+
 	/**
 	 * Stub implementation of Session for testing
 	 */
@@ -127,6 +144,47 @@ class WebSocketClientEndpointTest {
 		@Override public void setMaxIdleTimeout(long milliseconds) {}
 		@Override public void setMaxTextMessageBufferSize(int length) {}
 		@Override public jakarta.websocket.WebSocketContainer getContainer() { return null; }
+	}
+
+	/**
+	 * Stub implementation of Session with BasicRemote for testing sendTextMessage
+	 */
+	private static class StubSessionWithRemote extends StubSession {
+		private final StubBasicRemote basicRemote = new StubBasicRemote();
+
+		@Override
+		public jakarta.websocket.RemoteEndpoint.Basic getBasicRemote() {
+			return basicRemote;
+		}
+	}
+
+	/**
+	 * Stub implementation of RemoteEndpoint.Basic for testing
+	 */
+	private static class StubBasicRemote implements jakarta.websocket.RemoteEndpoint.Basic {
+		private String sentText;
+
+		@Override
+		public void sendText(String text) {
+			this.sentText = text;
+		}
+
+		public String getSentText() {
+			return sentText;
+		}
+
+		// Minimal implementation of other required methods
+		@Override public void setBatchingAllowed(boolean allowed) {}
+		@Override public boolean getBatchingAllowed() { return false; }
+		@Override public void flushBatch() {}
+		@Override public void sendPing(java.nio.ByteBuffer applicationData) {}
+		@Override public void sendPong(java.nio.ByteBuffer applicationData) {}
+		@Override public void sendText(String partialMessage, boolean isLast) {}
+		@Override public void sendBinary(java.nio.ByteBuffer data) {}
+		@Override public void sendBinary(java.nio.ByteBuffer partialByte, boolean isLast) {}
+		@Override public java.io.OutputStream getSendStream() { return null; }
+		@Override public java.io.Writer getSendWriter() { return null; }
+		@Override public void sendObject(Object data) {}
 	}
 
 	/**
