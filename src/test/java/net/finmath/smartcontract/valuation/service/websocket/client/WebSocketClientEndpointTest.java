@@ -3,6 +3,7 @@ package net.finmath.smartcontract.valuation.service.websocket.client;
 import io.reactivex.rxjava3.core.Observable;
 import jakarta.websocket.CloseReason;
 import jakarta.websocket.EndpointConfig;
+import jakarta.websocket.MessageHandler;
 import jakarta.websocket.Session;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,5 +66,75 @@ class WebSocketClientEndpointTest {
 
 		// Then - verify no exceptions thrown
 		assertNotNull(endpoint);
+	}
+
+	@Test
+	void testOnOpen() throws Exception {
+		// Given
+		final WebSocketClientEndpoint endpoint = new WebSocketClientEndpoint(new URI("ws://localhost:8080/test"), "user", "pass");
+		final StubSession session = new StubSession();
+		final StubEndpointConfig config = new StubEndpointConfig();
+
+		// When
+		endpoint.onOpen(session, config);
+
+		// Then
+		assertEquals(1, session.getStoredMessageHandlers().size());
+		assertTrue(session.getStoredMessageHandlers().get(0) instanceof MessageHandler.Whole);
+	}
+
+	/**
+	 * Stub implementation of Session for testing
+	 */
+	private static class StubSession implements Session {
+		private final List<MessageHandler> storedMessageHandlers = new ArrayList<>();
+
+		@Override
+		public void addMessageHandler(MessageHandler handler) {
+			storedMessageHandlers.add(handler);
+		}
+
+		public List<MessageHandler> getStoredMessageHandlers() {
+			return storedMessageHandlers;
+		}
+
+		// Minimal implementation of other required methods
+		@Override public <T> void addMessageHandler(Class<T> clazz, MessageHandler.Partial<T> handler) {}
+		@Override public <T> void addMessageHandler(Class<T> clazz, MessageHandler.Whole<T> handler) {}
+		@Override public void close() {}
+		@Override public void close(CloseReason closeReason) {}
+		@Override public jakarta.websocket.RemoteEndpoint.Async getAsyncRemote() { return null; }
+		@Override public jakarta.websocket.RemoteEndpoint.Basic getBasicRemote() { return null; }
+		@Override public String getId() { return null; }
+		@Override public int getMaxBinaryMessageBufferSize() { return 0; }
+		@Override public long getMaxIdleTimeout() { return 0; }
+		@Override public int getMaxTextMessageBufferSize() { return 0; }
+		@Override public java.util.Set<MessageHandler> getMessageHandlers() { return new java.util.HashSet<>(storedMessageHandlers); }
+		@Override public java.util.List<jakarta.websocket.Extension> getNegotiatedExtensions() { return null; }
+		@Override public String getNegotiatedSubprotocol() { return null; }
+		@Override public java.util.Set<Session> getOpenSessions() { return null; }
+		@Override public java.util.Map<String, String> getPathParameters() { return null; }
+		@Override public String getProtocolVersion() { return null; }
+		@Override public String getQueryString() { return null; }
+		@Override public java.util.Map<String, java.util.List<String>> getRequestParameterMap() { return null; }
+		@Override public java.net.URI getRequestURI() { return null; }
+		@Override public java.security.Principal getUserPrincipal() { return null; }
+		@Override public java.util.Map<String, Object> getUserProperties() { return null; }
+		@Override public boolean isOpen() { return false; }
+		@Override public boolean isSecure() { return false; }
+		@Override public void removeMessageHandler(MessageHandler handler) {}
+		@Override public void setMaxBinaryMessageBufferSize(int length) {}
+		@Override public void setMaxIdleTimeout(long milliseconds) {}
+		@Override public void setMaxTextMessageBufferSize(int length) {}
+		@Override public jakarta.websocket.WebSocketContainer getContainer() { return null; }
+	}
+
+	/**
+	 * Stub implementation of EndpointConfig for testing
+	 */
+	private static class StubEndpointConfig implements EndpointConfig {
+		@Override public java.util.List<Class<? extends jakarta.websocket.Encoder>> getEncoders() { return null; }
+		@Override public java.util.List<Class<? extends jakarta.websocket.Decoder>> getDecoders() { return null; }
+		@Override public java.util.Map<String, Object> getUserProperties() { return null; }
 	}
 }
