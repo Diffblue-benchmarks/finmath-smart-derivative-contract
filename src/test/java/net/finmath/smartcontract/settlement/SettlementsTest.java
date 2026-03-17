@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SettlementsTest {
 
@@ -54,6 +55,44 @@ class SettlementsTest {
 
 		assertNotNull(list);
 		assertEquals(tradeId1, list.get(list.indexOf(s1)).getTradeId());
+	}
+
+	@Test
+	void setSettlements() {
+		List<Settlement> newList = new ArrayList<>();
+		Settlement newSettlement = new Settlement();
+		newSettlement.setTradeId("NEW_ID");
+		newList.add(newSettlement);
+
+		settlements.setSettlements(newList);
+
+		assertEquals(newList, settlements.getSettlements());
+		assertEquals(1, settlements.getSettlements().size());
+		assertEquals("NEW_ID", settlements.getSettlements().get(0).getTradeId());
+	}
+
+	@Test
+	void getPreviousForFirstElement() {
+		Optional<Settlement> optionalSettlement = settlements.getPrevious(s1);
+
+		assertTrue(optionalSettlement.isEmpty());
+	}
+
+	@Test
+	void getPreviousForNonExistingElement() {
+		Settlement nonExisting = new Settlement();
+		nonExisting.setTradeId("NON_EXISTING");
+
+		Optional<Settlement> optionalSettlement = settlements.getPrevious(nonExisting);
+
+		assertTrue(optionalSettlement.isEmpty());
+	}
+
+	@Test
+	void getNextForLastElement() {
+		Optional<Settlement> optionalSettlement = settlements.getNext(s4);
+
+		assertTrue(optionalSettlement.isEmpty());
 	}
 
 
