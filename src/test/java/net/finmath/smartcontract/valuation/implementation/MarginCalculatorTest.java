@@ -177,4 +177,103 @@ class MarginCalculatorTest {
 		return marketDataList;
 	}
 
+	@Test
+	void testGetValuesWithJsonMarketData() throws Exception {
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract.xml").readAllBytes(), StandardCharsets.UTF_8);
+
+		final String marketDataJsonStart = "{\n" +
+				"  \"20230501-170000\": {\n" +
+				"    \"Quotes\": {\n" +
+				"      \"ESTR\": {\n" +
+				"        \"Swap-Rate\": {\n" +
+				"          \"7D\": 0.019761,\n" +
+				"          \"14D\": 0.021920,\n" +
+				"          \"21D\": 0.022648,\n" +
+				"          \"1M\": 0.023009,\n" +
+				"          \"2M\": 0.024499,\n" +
+				"          \"3M\": 0.025866,\n" +
+				"          \"4M\": 0.027169,\n" +
+				"          \"5M\": 0.028264,\n" +
+				"          \"6M\": 0.029157,\n" +
+				"          \"9M\": 0.030614,\n" +
+				"          \"1Y\": 0.031531,\n" +
+				"          \"15M\": 0.032675,\n" +
+				"          \"18M\": 0.033354,\n" +
+				"          \"21M\": 0.033710,\n" +
+				"          \"2Y\": 0.033930,\n" +
+				"          \"3Y\": 0.033244,\n" +
+				"          \"4Y\": 0.032048,\n" +
+				"          \"5Y\": 0.030662,\n" +
+				"          \"6Y\": 0.029362,\n" +
+				"          \"7Y\": 0.028253,\n" +
+				"          \"8Y\": 0.027313,\n" +
+				"          \"9Y\": 0.026512,\n" +
+				"          \"10Y\": 0.025825,\n" +
+				"          \"12Y\": 0.024699,\n" +
+				"          \"15Y\": 0.023447,\n" +
+				"          \"20Y\": 0.021857,\n" +
+				"          \"25Y\": 0.020420,\n" +
+				"          \"30Y\": 0.019260\n" +
+				"        }\n" +
+				"      },\n" +
+				"      \"Euribor6M\": {\n" +
+				"        \"Deposit-Rate\": {\n" +
+				"          \"6M\": 0.033635\n" +
+				"        }\n" +
+				"      }\n" +
+				"    }\n" +
+				"  }\n" +
+				"}";
+
+		final String marketDataJsonEnd = "{\n" +
+				"  \"20230601-170000\": {\n" +
+				"    \"Quotes\": {\n" +
+				"      \"ESTR\": {\n" +
+				"        \"Swap-Rate\": {\n" +
+				"          \"7D\": 0.020761,\n" +
+				"          \"14D\": 0.022920,\n" +
+				"          \"21D\": 0.023648,\n" +
+				"          \"1M\": 0.024009,\n" +
+				"          \"2M\": 0.025499,\n" +
+				"          \"3M\": 0.026866,\n" +
+				"          \"4M\": 0.028169,\n" +
+				"          \"5M\": 0.029264,\n" +
+				"          \"6M\": 0.030157,\n" +
+				"          \"9M\": 0.031614,\n" +
+				"          \"1Y\": 0.032531,\n" +
+				"          \"15M\": 0.033675,\n" +
+				"          \"18M\": 0.034354,\n" +
+				"          \"21M\": 0.034710,\n" +
+				"          \"2Y\": 0.034930,\n" +
+				"          \"3Y\": 0.034244,\n" +
+				"          \"4Y\": 0.033048,\n" +
+				"          \"5Y\": 0.031662,\n" +
+				"          \"6Y\": 0.030362,\n" +
+				"          \"7Y\": 0.029253,\n" +
+				"          \"8Y\": 0.028313,\n" +
+				"          \"9Y\": 0.027512,\n" +
+				"          \"10Y\": 0.026825,\n" +
+				"          \"12Y\": 0.025699,\n" +
+				"          \"15Y\": 0.024447,\n" +
+				"          \"20Y\": 0.022857,\n" +
+				"          \"25Y\": 0.021420,\n" +
+				"          \"30Y\": 0.020260\n" +
+				"        }\n" +
+				"      },\n" +
+				"      \"Euribor6M\": {\n" +
+				"        \"Deposit-Rate\": {\n" +
+				"          \"6M\": 0.034635\n" +
+				"        }\n" +
+				"      }\n" +
+				"    }\n" +
+				"  }\n" +
+				"}";
+
+		MarginCalculator marginCalculator = new MarginCalculator();
+
+		Assertions.assertThrows(NullPointerException.class, () -> {
+			marginCalculator.getValues(marketDataJsonStart, marketDataJsonEnd, product);
+		});
+	}
+
 }
