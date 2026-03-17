@@ -160,4 +160,28 @@ class SDCXMLParserTest {
 		Assertions.assertEquals("2011-12-03T10:15:30", sdcDescriptor.getInitialSettlementDate());
 	}
 
+	@Test
+	void parseWithNullDltFields() throws IOException, ParserConfigurationException, SAXException {
+		String sdcXML = new String(SDCXMLParserTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract.xml").readAllBytes(), StandardCharsets.UTF_8);
+
+		String sdcXMLWithoutDlt = sdcXML.replace("<dltTradeId>ID-Test123</dltTradeId>", "")
+				.replace("<dltAddress>0x000000001</dltAddress>", "");
+
+		SmartDerivativeContractDescriptor sdc = SDCXMLParser.parse(sdcXMLWithoutDlt);
+
+		Assertions.assertEquals("", sdc.getDltTradeId());
+		Assertions.assertEquals("", sdc.getDltAddress());
+		Assertions.assertEquals("UTI12345", sdc.getUniqueTradeIdentifier());
+	}
+
+	@Test
+	void marshalClassToXMLStringWithInvalidObject() {
+		Object invalidObject = new Object() {
+			@SuppressWarnings("unused")
+			private final String field = "test";
+		};
+
+		assertThrows(SDCException.class, () -> SDCXMLParser.marshalClassToXMLString(invalidObject));
+	}
+
 }
