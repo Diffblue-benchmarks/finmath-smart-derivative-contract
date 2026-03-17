@@ -119,4 +119,52 @@ class WebSocketConnectorTest {
 		// Then
 		assertNull(authInfo);
 	}
+
+	@Test
+	void testInitWebSocketConnectionWithoutProxy() throws Exception {
+		// Given
+		Properties properties = new Properties();
+		properties.setProperty("AUTHURL", "https://api.refinitiv.com/auth/oauth2/v1/token");
+		properties.setProperty("HOSTNAME", "example.com");
+		properties.setProperty("PORT", "443");
+		properties.setProperty("CLIENTID", "testClient");
+		properties.setProperty("USER", "testUser");
+		properties.setProperty("PASSWORD", "testPassword");
+		properties.setProperty("USEPROXY", "FALSE");
+
+		WebSocketConnector connector = new WebSocketConnector(properties);
+
+		// When
+		WebSocket webSocket = connector.initWebSocketConnection();
+
+		// Then
+		assertNotNull(webSocket);
+		assertEquals("wss://example.com:443/WebSocket", connector.server);
+	}
+
+	@Test
+	void testInitWebSocketConnectionWithProxy() throws Exception {
+		// Given
+		Properties properties = new Properties();
+		properties.setProperty("AUTHURL", "https://api.refinitiv.com/auth/oauth2/v1/token");
+		properties.setProperty("HOSTNAME", "example.com");
+		properties.setProperty("PORT", "443");
+		properties.setProperty("CLIENTID", "testClient");
+		properties.setProperty("USER", "testUser");
+		properties.setProperty("PASSWORD", "testPassword");
+		properties.setProperty("USEPROXY", "TRUE");
+		properties.setProperty("PROXYHOST", "proxy.example.com");
+		properties.setProperty("PROXYPORT", "8080");
+		properties.setProperty("PROXYUSER", "proxyUser");
+		properties.setProperty("PROXYPASS", "proxyPass");
+
+		WebSocketConnector connector = new WebSocketConnector(properties);
+
+		// When
+		WebSocket webSocket = connector.initWebSocketConnection();
+
+		// Then
+		assertNotNull(webSocket);
+		assertEquals("wss://example.com:443/WebSocket", connector.server);
+	}
 }
