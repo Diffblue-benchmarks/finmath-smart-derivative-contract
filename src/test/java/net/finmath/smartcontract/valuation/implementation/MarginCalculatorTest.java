@@ -120,6 +120,26 @@ class MarginCalculatorTest {
 		Assertions.assertEquals(marketDataList.getRequestTimeStamp().toString(), result.getValuationDate());
 	}
 
+	@Test
+	void testGetValuesWithMarketDataList() throws Exception {
+		final String marketDataXmlStart = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/md_testset1.xml").readAllBytes(), StandardCharsets.UTF_8);
+		final String marketDataXmlEnd = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/md_testset2.xml").readAllBytes(), StandardCharsets.UTF_8);
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract.xml").readAllBytes(), StandardCharsets.UTF_8);
+
+		MarketDataList marketDataListStart = SDCXMLParser.unmarshalXml(marketDataXmlStart, MarketDataList.class);
+		MarketDataList marketDataListEnd = SDCXMLParser.unmarshalXml(marketDataXmlEnd, MarketDataList.class);
+
+		MarginCalculator marginCalculator = new MarginCalculator();
+		Map<String, BigDecimal> values = marginCalculator.getValues(marketDataListStart, marketDataListEnd, product);
+
+		Assertions.assertNotNull(values);
+		Assertions.assertTrue(values.containsKey("value"));
+		Assertions.assertNotNull(values.get("value"));
+		Assertions.assertTrue(values.containsKey("value.receiverLeg"));
+		Assertions.assertTrue(values.containsKey("value.payerLeg"));
+	}
+
+
 	private MarketDataList createTestMarketDataList(LocalDateTime timestamp) {
 		MarketDataList marketDataList = new MarketDataList();
 		marketDataList.setRequestTimeStamp(timestamp);
