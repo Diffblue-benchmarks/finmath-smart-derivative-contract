@@ -5,6 +5,7 @@ import jakarta.websocket.CloseReason;
 import jakarta.websocket.EndpointConfig;
 import jakarta.websocket.MessageHandler;
 import jakarta.websocket.Session;
+import net.finmath.smartcontract.model.SDCException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -194,5 +195,35 @@ class WebSocketClientEndpointTest {
 		@Override public java.util.List<Class<? extends jakarta.websocket.Encoder>> getEncoders() { return null; }
 		@Override public java.util.List<Class<? extends jakarta.websocket.Decoder>> getDecoders() { return null; }
 		@Override public java.util.Map<String, Object> getUserProperties() { return null; }
+	}
+
+	@Test
+	void testGetUserSessionTriggersInitSession() throws Exception {
+		// Given
+		final URI endpointURI = new URI("ws://localhost:9999/nonexistent");
+		final WebSocketClientEndpoint endpoint = new WebSocketClientEndpoint(endpointURI, "user", "pass");
+
+		// When/Then
+		assertThrows(SDCException.class, () -> endpoint.getUserSession());
+	}
+
+	@Test
+	void testAsObservableTriggersInitSession() throws Exception {
+		// Given
+		final URI endpointURI = new URI("ws://localhost:9999/nonexistent");
+		final WebSocketClientEndpoint endpoint = new WebSocketClientEndpoint(endpointURI, "user", "pass");
+
+		// When/Then
+		assertThrows(SDCException.class, () -> endpoint.asObservable());
+	}
+
+	@Test
+	void testSendTextMessageTriggersInitSession() throws Exception {
+		// Given
+		final URI endpointURI = new URI("ws://localhost:9999/nonexistent");
+		final WebSocketClientEndpoint endpoint = new WebSocketClientEndpoint(endpointURI, "user", "pass");
+
+		// When/Then
+		assertThrows(SDCException.class, () -> endpoint.sendTextMessage("test"));
 	}
 }
