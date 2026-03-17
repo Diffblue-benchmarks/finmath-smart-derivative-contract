@@ -3,6 +3,7 @@ package net.finmath.smartcontract.valuation.implementation;
 import net.finmath.smartcontract.model.MarginResult;
 import net.finmath.smartcontract.model.MarketDataList;
 import net.finmath.smartcontract.model.ValueResult;
+import net.finmath.smartcontract.product.xml.SDCXMLParser;
 import net.finmath.smartcontract.valuation.client.ValuationClient;
 import net.finmath.smartcontract.valuation.marketdata.data.MarketDataPoint;
 import org.junit.jupiter.api.Assertions;
@@ -100,6 +101,23 @@ class MarginCalculatorTest {
 		Assertions.assertNotNull(result.getValue());
 		Assertions.assertEquals("EUR", result.getCurrency());
 		Assertions.assertNotNull(result.getValuationDate());
+	}
+
+	@Test
+	void testGetValueWithMarketDataList() throws Exception {
+		final String marketDataXml = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/md_testset1.xml").readAllBytes(), StandardCharsets.UTF_8);
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract.xml").readAllBytes(), StandardCharsets.UTF_8);
+
+		MarketDataList marketDataList = SDCXMLParser.unmarshalXml(marketDataXml, MarketDataList.class);
+
+		MarginCalculator marginCalculator = new MarginCalculator();
+		ValueResult result = marginCalculator.getValue(marketDataList, product);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result.getValue());
+		Assertions.assertEquals("EUR", result.getCurrency());
+		Assertions.assertNotNull(result.getValuationDate());
+		Assertions.assertEquals(marketDataList.getRequestTimeStamp().toString(), result.getValuationDate());
 	}
 
 	private MarketDataList createTestMarketDataList(LocalDateTime timestamp) {
