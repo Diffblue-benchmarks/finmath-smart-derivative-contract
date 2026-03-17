@@ -63,4 +63,124 @@ class SettlementTests {
 		String xmlStr = writer.toString();
 		Assertions.assertFalse(xmlStr.isEmpty());
 	}
+
+	@Test
+	void testTradeIdGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final String tradeId = "TRADE123";
+
+		settlement.setTradeId(tradeId);
+
+		Assertions.assertEquals(tradeId, settlement.getTradeId());
+	}
+
+	@Test
+	void testSettlementTypeGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final Settlement.SettlementType settlementType = Settlement.SettlementType.INITIAL;
+
+		settlement.setSettlementType(settlementType);
+
+		Assertions.assertEquals(settlementType, settlement.getSettlementType());
+	}
+
+	@Test
+	void testCurrencyGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final String currency = "USD";
+
+		settlement.setCurrency(currency);
+
+		Assertions.assertEquals(currency, settlement.getCurrency());
+	}
+
+	@Test
+	void testMarginValueGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final BigDecimal marginValue = BigDecimal.valueOf(1000.50);
+
+		settlement.setMarginValue(marginValue);
+
+		Assertions.assertEquals(marginValue, settlement.getMarginValue());
+	}
+
+	@Test
+	void testMarginLimitsGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final List<BigDecimal> marginLimits = List.of(BigDecimal.valueOf(-1000), BigDecimal.valueOf(1000));
+
+		settlement.setMarginLimits(marginLimits);
+
+		Assertions.assertEquals(marginLimits, settlement.getMarginLimits());
+	}
+
+	@Test
+	void testSettlementTimeGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final ZonedDateTime settlementTime = ZonedDateTime.of(2024, 3, 15, 10, 30, 0, 0, ZoneId.of("UTC"));
+
+		settlement.setSettlementTime(settlementTime);
+
+		Assertions.assertEquals(settlementTime, settlement.getSettlementTime());
+	}
+
+	@Test
+	void testSettlementNPVGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final BigDecimal settlementNPV = BigDecimal.valueOf(50000);
+
+		settlement.setSettlementNPV(settlementNPV);
+
+		Assertions.assertEquals(settlementNPV, settlement.getSettlementNPV());
+	}
+
+	@Test
+	void testSettlementNPVPreviousGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final BigDecimal settlementNPVPrevious = BigDecimal.valueOf(48000);
+
+		settlement.setSettlementNPVPrevious(settlementNPVPrevious);
+
+		Assertions.assertEquals(settlementNPVPrevious, settlement.getSettlementNPVPrevious());
+	}
+
+	@Test
+	void testSettlementTimeNextGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final ZonedDateTime settlementTimeNext = ZonedDateTime.of(2024, 3, 16, 10, 30, 0, 0, ZoneId.of("UTC"));
+
+		settlement.setSettlementTimeNext(settlementTimeNext);
+
+		Assertions.assertEquals(settlementTimeNext, settlement.getSettlementTimeNext());
+	}
+
+	@Test
+	void testSettlementNPVNextGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final BigDecimal settlementNPVNext = BigDecimal.valueOf(51000);
+
+		settlement.setSettlementNPVNext(settlementNPVNext);
+
+		Assertions.assertEquals(settlementNPVNext, settlement.getSettlementNPVNext());
+	}
+
+	@Test
+	void testMarketDataGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final MarketDataList marketData = new MarketDataList();
+
+		settlement.setMarketData(marketData);
+
+		Assertions.assertEquals(marketData, settlement.getMarketData());
+	}
+
+	@Test
+	void testSettlementInfosGetterAndSetter() {
+		final Settlement settlement = new Settlement();
+		final List<SettlementInfo> settlementInfos = List.of(new SettlementInfo());
+
+		settlement.setSettlementInfos(settlementInfos);
+
+		Assertions.assertEquals(settlementInfos, settlement.getSettlementInfos());
+	}
 }
