@@ -13,6 +13,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,6 +47,35 @@ class SmartDerivativeContractScheduleGeneratorTest {
 			Assertions.assertTrue(accountAccessAllowedEnd.isAfter(accountAccessAllowedStart), "Account access");
 			Assertions.assertTrue(marginCheckTime.isAfter(accountAccessAllowedEnd), "Margin check after account access");
 		}
+	}
+
+	@Test
+	void testSimpleSchedule() {
+		// Given
+		final LocalDateTime settlementTime = LocalDateTime.of(2024, 1, 15, 17, 30);
+		final LocalDateTime accountAccessStart = LocalDateTime.of(2024, 1, 15, 17, 31);
+		final Duration accountAccessPeriod = Duration.ofMinutes(10);
+		final LocalDateTime marginCheckTime = LocalDateTime.of(2024, 1, 15, 17, 42);
+
+		final SmartDerivativeContractScheduleGenerator.EventTimesImpl eventTimes1 = new SmartDerivativeContractScheduleGenerator.EventTimesImpl(
+				settlementTime, accountAccessStart, accountAccessPeriod, marginCheckTime);
+
+		final SmartDerivativeContractScheduleGenerator.EventTimesImpl eventTimes2 = new SmartDerivativeContractScheduleGenerator.EventTimesImpl(
+				settlementTime.plusDays(1), accountAccessStart.plusDays(1), accountAccessPeriod, marginCheckTime.plusDays(1));
+
+		final List<SmartDerivativeContractSchedule.EventTimes> eventTimesList = new ArrayList<>();
+		eventTimesList.add(eventTimes1);
+		eventTimesList.add(eventTimes2);
+
+		// When
+		final SmartDerivativeContractScheduleGenerator.SimpleSchedule schedule = new SmartDerivativeContractScheduleGenerator.SimpleSchedule(eventTimesList);
+
+		// Then
+		final List<SmartDerivativeContractSchedule.EventTimes> result = schedule.getEventTimes();
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(2, result.size());
+		Assertions.assertEquals(eventTimes1, result.get(0));
+		Assertions.assertEquals(eventTimes2, result.get(1));
 	}
 
 }
