@@ -21,6 +21,23 @@ import java.time.LocalTime;
 class SmartDerivativeContractScheduleGeneratorTest {
 
 	@Test
+	void testEventTimesImplConstructorAndGetters() {
+		final LocalDateTime settlementTime = LocalDateTime.of(2024, 1, 15, 17, 30);
+		final LocalDateTime accountAccessAllowedStart = LocalDateTime.of(2024, 1, 15, 17, 31);
+		final Duration accountAccessAllowedPeriod = Duration.ofMinutes(10);
+		final LocalDateTime marginCheckTime = LocalDateTime.of(2024, 1, 15, 17, 42);
+
+		final SmartDerivativeContractScheduleGenerator.EventTimesImpl eventTimes =
+				new SmartDerivativeContractScheduleGenerator.EventTimesImpl(
+						settlementTime, accountAccessAllowedStart, accountAccessAllowedPeriod, marginCheckTime);
+
+		Assertions.assertEquals(settlementTime, eventTimes.getSettementTime());
+		Assertions.assertEquals(accountAccessAllowedStart, eventTimes.getAccountAccessAllowedStart());
+		Assertions.assertEquals(accountAccessAllowedPeriod, eventTimes.getAccountAccessAllowedPeriod());
+		Assertions.assertEquals(marginCheckTime, eventTimes.getMarginCheckTime());
+	}
+
+	@Test
 	void test() {
 		final LocalDate startDate = LocalDate.of(2018, 9, 15);
 		final LocalDate maturity = LocalDate.of(2028, 9, 15);
