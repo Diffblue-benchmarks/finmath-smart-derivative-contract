@@ -8,12 +8,16 @@ import net.finmath.smartcontract.valuation.client.ValuationClient;
 import net.finmath.smartcontract.valuation.service.config.BasicAuthWebSecurityConfiguration;
 import net.finmath.smartcontract.valuation.service.config.MockUserAuthConfig;
 import net.finmath.smartcontract.valuation.service.controllers.ValuationController;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -83,6 +87,49 @@ class ValuationControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/valuation/value").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json).characterEncoding("utf-8"))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithUserDetails("user1")
+	void getValueAtTime(@Autowired MockMvc mockMvc) throws Exception {
+
+		final String marketData = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/md_testset1.xml").readAllBytes(), StandardCharsets.UTF_8);
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream(productXMLFile).readAllBytes(), StandardCharsets.UTF_8);
+
+		final ValueRequest valueRequest = new ValueRequest().marketData(marketData).tradeData(product).valuationDate("20230131-143523");
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(valueRequest);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.post("/valuation/valueAtTime")
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON)
+						.content(json)
+						.characterEncoding("utf-8"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithUserDetails("user1")
+	void testProductValueEndpoint(@Autowired MockMvc mockMvc) throws Exception {
+
+		final byte[] productBytes = ValuationClient.class.getClassLoader().getResourceAsStream(productXMLFile).readAllBytes();
+		MockMultipartFile tradeDataFile = new MockMultipartFile("tradeData", "smartderivativecontract.xml", MediaType.APPLICATION_XML_VALUE, productBytes);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.multipart("/valuation/legacy/test/product")
+						.file(tradeDataFile)
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	void testConnectionEndpoint(@Autowired ValuationController valuationController) {
+		ResponseEntity<String> response = valuationController.test();
+
+		Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+		Assertions.assertEquals("Connect successful", response.getBody());
 	}
 
 }
