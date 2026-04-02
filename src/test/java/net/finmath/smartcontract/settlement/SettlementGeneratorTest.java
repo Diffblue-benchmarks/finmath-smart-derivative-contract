@@ -3,6 +3,7 @@ package net.finmath.smartcontract.settlement;
 import net.finmath.smartcontract.model.SDCException;
 import net.finmath.smartcontract.product.SmartDerivativeContractDescriptor;
 import net.finmath.smartcontract.product.xml.SDCXMLParser;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
@@ -105,6 +106,65 @@ class SettlementGeneratorTest {
 				.settlementNPVPrevious(BigDecimal.ZERO)
 				.settlementTimeNext(ZonedDateTime.now());
 				//.settlementNPVNext(BigDecimal.ZERO);
+
+		assertThrows(SDCException.class, generator::build);
+	}
+
+	@Test
+	void buildObject_completeSettlement_returnsSettlement() throws IOException, ParserConfigurationException, SAXException {
+		InputStream inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/historicalMarketData/marketdata_2008-05-02.xml");
+		String marketDataString = new String(inputStream.readAllBytes());
+
+		inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml");
+		String productString = new String(inputStream.readAllBytes());
+		SmartDerivativeContractDescriptor sdc = SDCXMLParser.parse(productString);
+
+		Settlement result = new SettlementGenerator().generateRegularSettlementXml(marketDataString, sdc, BigDecimal.ONE)
+				.marginLimits(List.of(BigDecimal.ONE, BigDecimal.ZERO))
+				.settlementNPV(BigDecimal.ZERO)
+				.settlementNPVPrevious(BigDecimal.ZERO)
+				.settlementTimeNext(ZonedDateTime.now())
+				.settlementNPVNext(BigDecimal.ZERO)
+				.settlementInfo(Map.of())
+				.buildObject();
+
+		assertNotNull(result);
+		assertEquals(Settlement.SettlementType.REGULAR, result.getSettlementType());
+	}
+
+	@Test
+	void buildObject_incompleteSettlement_throwsException() throws IOException, ParserConfigurationException, SAXException {
+		InputStream inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/historicalMarketData/marketdata_2008-05-02.xml");
+		String marketDataString = new String(inputStream.readAllBytes());
+
+		inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml");
+		String productString = new String(inputStream.readAllBytes());
+		SmartDerivativeContractDescriptor sdc = SDCXMLParser.parse(productString);
+
+		SettlementGenerator generator = new SettlementGenerator().generateRegularSettlementXml(marketDataString, sdc, BigDecimal.ONE)
+				.marginLimits(List.of(BigDecimal.ONE, BigDecimal.ZERO))
+				.settlementNPV(BigDecimal.ZERO)
+				.settlementNPVPrevious(BigDecimal.ZERO)
+				.settlementTimeNext(ZonedDateTime.now());
+				// missing settlementNPVNext and settlementInfo
+
+		assertThrows(SDCException.class, generator::buildObject);
+	}
+
+	@Test
+	void build_incompleteSettlement_throwsException() throws IOException, ParserConfigurationException, SAXException {
+		InputStream inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/historicalMarketData/marketdata_2008-05-02.xml");
+		String marketDataString = new String(inputStream.readAllBytes());
+
+		inputStream = SettlementGeneratorTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml");
+		String productString = new String(inputStream.readAllBytes());
+		SmartDerivativeContractDescriptor sdc = SDCXMLParser.parse(productString);
+
+		SettlementGenerator generator = new SettlementGenerator().generateRegularSettlementXml(marketDataString, sdc, BigDecimal.ONE)
+				.marginLimits(List.of(BigDecimal.ONE, BigDecimal.ZERO))
+				.settlementNPV(BigDecimal.ZERO)
+				.settlementNPVPrevious(BigDecimal.ZERO);
+				// missing settlementTimeNext, settlementNPVNext, and settlementInfo
 
 		assertThrows(SDCException.class, generator::build);
 	}
