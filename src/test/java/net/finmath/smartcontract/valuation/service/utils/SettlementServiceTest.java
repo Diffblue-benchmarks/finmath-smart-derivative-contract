@@ -185,6 +185,47 @@ class SettlementServiceTest {
 	}
 
 	@Test
+	void generateInitialSettlement_unknownMarketDataProvider() throws IOException {
+		String productXml = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_simulated_historical_marketdata.xml").readAllBytes());
+
+		InitialSettlementRequest initialSettlementRequest = new InitialSettlementRequest().tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("refinitiv");
+		when(valuationConfig.getInternalMarketDataProvider()).thenReturn("unknown_provider");
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+
+		SDCException exception = assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(initialSettlementRequest));
+		assertEquals(ExceptionId.SDC_WRONG_INPUT, exception.getId());
+	}
+
+	@Test
+	void generateRegularSettlement_unknownMarketDataProvider() throws IOException {
+		String settlementLast = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/settlement_testset_initial.xml").readAllBytes(), StandardCharsets.UTF_8);
+		String productXml = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_simulated_historical_marketdata.xml").readAllBytes());
+
+		RegularSettlementRequest regularSettlementRequest = new RegularSettlementRequest()
+				.settlementLast(settlementLast)
+				.tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("refinitiv");
+		when(valuationConfig.getInternalMarketDataProvider()).thenReturn("unknown_provider");
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+
+		SDCException exception = assertThrows(SDCException.class, () -> serviceUnderTest.generateRegularSettlementResult(regularSettlementRequest));
+		assertEquals(ExceptionId.SDC_WRONG_INPUT, exception.getId());
+	}
+
+	@Test
+	void generateInitialSettlement_emptyMarketData_throwsSDCException() throws IOException {
+		String productXml = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_simulated_historical_marketdata.xml").readAllBytes());
+		String emptyMarketData = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><marketDataList><requestTimeStamp>20230101-000000</requestTimeStamp></marketDataList>";
+
+		InitialSettlementRequest initialSettlementRequest = new InitialSettlementRequest().tradeData(productXml).newProvidedMarketData(emptyMarketData);
+
+		assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(initialSettlementRequest));
+	}
+
+	@Test
 	void generateRegularSettlement_includes_FixingOfLastSettlement_twice() throws IOException {
 		String settlementLast = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/settlement_testset_initial_historical.xml").readAllBytes(), StandardCharsets.UTF_8);
 
