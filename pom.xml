@@ -631,7 +631,7 @@
                 <configuration>
                     <forkCount>4C</forkCount>
                     <reuseForks>false</reuseForks>
-                    <argLine>-mx6G --add-opens java.base/java.time=ALL-UNNAMED --add-opens
+                    <argLine>${argLine} --add-opens java.base/java.time=ALL-UNNAMED --add-opens
                         java.base/java.util=ALL-UNNAMED --add-opens
                         net.finmath.smartderivativecontract/net.finmath.smartcontract.model=ALL-UNNAMED
                     </argLine>
@@ -917,6 +917,8 @@
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
                     </generateGitPropertiesFilename>
                     <format>java</format>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
                     <gitDescribe>
                         <skip>false</skip>
                         <always>false</always>
