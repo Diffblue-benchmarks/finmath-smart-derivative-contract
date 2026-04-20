@@ -20,8 +20,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.ErrorResponseException;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -227,6 +230,59 @@ class PlainSwapEditorControllerUnitTest {
 				mock(org.springframework.core.io.WritableResource.class);
 		when(resourceGovernor.getImportCandidateAsResourceInWriteMode()).thenReturn(writableResource);
 		when(writableResource.getOutputStream()).thenThrow(new IOException("write error"));
+
+		assertThrows(ErrorResponseException.class, () -> controller.uploadMarketData(multipartFile));
+	}
+
+	@Test
+	void testUploadMarketDataSuccess() throws IOException, SQLException {
+		org.springframework.web.multipart.MultipartFile multipartFile =
+				mock(org.springframework.web.multipart.MultipartFile.class);
+		when(multipartFile.getOriginalFilename()).thenReturn("test.json");
+		when(multipartFile.getBytes()).thenReturn("market data content".getBytes(StandardCharsets.UTF_8));
+
+		org.springframework.core.io.WritableResource importResource =
+				mock(org.springframework.core.io.WritableResource.class);
+		org.springframework.core.io.WritableResource userResource =
+				mock(org.springframework.core.io.WritableResource.class);
+		ByteArrayOutputStream importOut = new ByteArrayOutputStream();
+		ByteArrayOutputStream userOut = new ByteArrayOutputStream();
+
+		when(resourceGovernor.getImportCandidateAsResourceInWriteMode()).thenReturn(importResource);
+		when(importResource.getOutputStream()).thenReturn(importOut);
+		when(resourceGovernor.getWritableResource("testuser",
+				ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "test.json"))
+				.thenReturn(userResource);
+		when(userResource.getOutputStream()).thenReturn(userOut);
+
+		ResponseEntity<String> response = controller.uploadMarketData(multipartFile);
+
+		assertEquals(200, response.getStatusCode().value());
+		assertEquals("ok", response.getBody());
+		verify(databaseConnector).updateDatabase();
+		assertArrayEquals("market data content".getBytes(StandardCharsets.UTF_8), importOut.toByteArray());
+		assertArrayEquals("market data content".getBytes(StandardCharsets.UTF_8), userOut.toByteArray());
+	}
+
+	@Test
+	void testUploadMarketDataSqlException() throws IOException, SQLException {
+		org.springframework.web.multipart.MultipartFile multipartFile =
+				mock(org.springframework.web.multipart.MultipartFile.class);
+		when(multipartFile.getOriginalFilename()).thenReturn("test.json");
+		when(multipartFile.getBytes()).thenReturn("data".getBytes(StandardCharsets.UTF_8));
+
+		org.springframework.core.io.WritableResource importResource =
+				mock(org.springframework.core.io.WritableResource.class);
+		org.springframework.core.io.WritableResource userResource =
+				mock(org.springframework.core.io.WritableResource.class);
+
+		when(resourceGovernor.getImportCandidateAsResourceInWriteMode()).thenReturn(importResource);
+		when(importResource.getOutputStream()).thenReturn(new ByteArrayOutputStream());
+		when(resourceGovernor.getWritableResource("testuser",
+				ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "test.json"))
+				.thenReturn(userResource);
+		when(userResource.getOutputStream()).thenReturn(new ByteArrayOutputStream());
+		doThrow(new SQLException("db error")).when(databaseConnector).updateDatabase();
 
 		assertThrows(ErrorResponseException.class, () -> controller.uploadMarketData(multipartFile));
 	}
