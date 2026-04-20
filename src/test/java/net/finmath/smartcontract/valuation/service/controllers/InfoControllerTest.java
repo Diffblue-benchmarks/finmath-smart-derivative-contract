@@ -43,6 +43,16 @@ class InfoControllerTest {
 	}
 
 	@Test
+	void testInfoGitThrowsOnReadFailure() {
+		try (MockedConstruction<JavaPropsMapper> ignored = Mockito.mockConstruction(JavaPropsMapper.class,
+				(mock, context) -> Mockito.when(mock.readValue(any(InputStream.class), eq(com.fasterxml.jackson.databind.node.ObjectNode.class)))
+						.thenThrow(new RuntimeException("simulated read failure")))) {
+			SDCException thrown = assertThrows(SDCException.class, () -> controller.infoGit());
+			assertTrue(thrown.getMessage().contains("SDC_GIT_ERROR"));
+		}
+	}
+
+	@Test
 	void testInfoFinmathThrowsOnReadFailure() {
 		try (MockedConstruction<JavaPropsMapper> ignored = Mockito.mockConstruction(JavaPropsMapper.class,
 				(mock, context) -> Mockito.when(mock.readValue(any(InputStream.class), eq(com.fasterxml.jackson.databind.node.ObjectNode.class)))
