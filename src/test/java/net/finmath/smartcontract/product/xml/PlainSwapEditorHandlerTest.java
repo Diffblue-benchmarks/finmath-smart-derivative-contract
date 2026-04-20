@@ -3,17 +3,25 @@ package net.finmath.smartcontract.product.xml;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import net.finmath.marketdata.model.AnalyticModel;
+import net.finmath.marketdata.model.AnalyticModelFromCurvesAndVols;
+import net.finmath.marketdata.model.curves.ForwardCurveInterpolation;
 import net.finmath.smartcontract.model.*;
+import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -209,6 +217,63 @@ class PlainSwapEditorHandlerTest {
 		assertEquals("net.finmath", contract.getValuation().getArtefact().getGroupId());
 		assertEquals("finmath-smart-derivative-contract", contract.getValuation().getArtefact().getArtifactId());
 		assertEquals(PROJECT_VERSION, contract.getValuation().getArtefact().getVersion());
+	}
+
+	@Test
+	void testGetCurvePastFixings() throws java.lang.Exception {
+		PlainSwapOperationRequest request = buildBaseRequest();
+		request.setValuationSymbols(loadValuationSymbols());
+		request.setFixedPaymentFrequency(new PaymentFrequency().period("Y").periodMultiplier(1).fullName("Annual"));
+		request.setFloatingPaymentFrequency(new PaymentFrequency().period("M").periodMultiplier(6).fullName("Semiannual"));
+
+		PlainSwapEditorHandler handler = new PlainSwapEditorHandler(request, loadTemplateXml(), SCHEMA_PATH, PROJECT_VERSION);
+
+		LocalDate referenceDate = LocalDate.of(2022, 9, 5);
+		AnalyticModel model = new AnalyticModelFromCurvesAndVols(referenceDate);
+		String discountCurveName = "discountCurve-EUR";
+
+		Set<CalibrationDataItem> pastFixings = new LinkedHashSet<>();
+		CalibrationDataItem.Spec spec1 = new CalibrationDataItem.Spec("key1", "curve1", "product1", "6M");
+		CalibrationDataItem.Spec spec2 = new CalibrationDataItem.Spec("key2", "curve2", "product2", "6M");
+		pastFixings.add(new CalibrationDataItem(spec1, 0.025, LocalDateTime.of(2022, 3, 7, 11, 0)));
+		pastFixings.add(new CalibrationDataItem(spec2, 0.030, LocalDateTime.of(2022, 6, 7, 11, 0)));
+
+		Method method = PlainSwapEditorHandler.class.getDeclaredMethod(
+				"getCurvePastFixings", String.class, LocalDate.class, AnalyticModel.class, String.class, Set.class);
+		method.setAccessible(true);
+
+		ForwardCurveInterpolation result = (ForwardCurveInterpolation) method.invoke(
+				handler, "testCurve", referenceDate, model, discountCurveName, pastFixings);
+
+		assertNotNull(result);
+		assertEquals("testCurve", result.getName());
+	}
+
+	@Test
+	void testGetCurvePastFixingsWithSingleFixing() throws java.lang.Exception {
+		PlainSwapOperationRequest request = buildBaseRequest();
+		request.setValuationSymbols(loadValuationSymbols());
+		request.setFixedPaymentFrequency(new PaymentFrequency().period("Y").periodMultiplier(1).fullName("Annual"));
+		request.setFloatingPaymentFrequency(new PaymentFrequency().period("M").periodMultiplier(6).fullName("Semiannual"));
+
+		PlainSwapEditorHandler handler = new PlainSwapEditorHandler(request, loadTemplateXml(), SCHEMA_PATH, PROJECT_VERSION);
+
+		LocalDate referenceDate = LocalDate.of(2023, 1, 15);
+		AnalyticModel model = new AnalyticModelFromCurvesAndVols(referenceDate);
+
+		Set<CalibrationDataItem> pastFixings = new LinkedHashSet<>();
+		CalibrationDataItem.Spec spec = new CalibrationDataItem.Spec("key1", "curve1", "product1", "3M");
+		pastFixings.add(new CalibrationDataItem(spec, 0.015, LocalDateTime.of(2022, 10, 15, 11, 0)));
+
+		Method method = PlainSwapEditorHandler.class.getDeclaredMethod(
+				"getCurvePastFixings", String.class, LocalDate.class, AnalyticModel.class, String.class, Set.class);
+		method.setAccessible(true);
+
+		ForwardCurveInterpolation result = (ForwardCurveInterpolation) method.invoke(
+				handler, "singleFixingCurve", referenceDate, model, "discountCurve", pastFixings);
+
+		assertNotNull(result);
+		assertEquals("singleFixingCurve", result.getName());
 	}
 
 	@Test
