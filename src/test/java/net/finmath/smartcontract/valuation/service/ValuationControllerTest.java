@@ -23,9 +23,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import org.springframework.mock.web.MockMultipartFile;
+
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * Tests ValuationController / Valuation API Endpoint.
@@ -83,6 +89,50 @@ class ValuationControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/valuation/value").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json).characterEncoding("utf-8"))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithUserDetails("user1")
+	void getValueAtTime(@Autowired MockMvc mockMvc) throws Exception {
+
+		final String marketData = new String(ValuationClient.class.getClassLoader().getResourceAsStream("net/finmath/smartcontract/valuation/client/md_testset1.xml").readAllBytes(), StandardCharsets.UTF_8);
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream(productXMLFile).readAllBytes(), StandardCharsets.UTF_8);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+		String valuationDate = LocalDateTime.now().format(formatter);
+
+		final ValueRequest valueRequest = new ValueRequest().marketData(marketData).tradeData(product).valuationDate(valuationDate);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(valueRequest);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.post("/valuation/valueAtTime").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json).characterEncoding("utf-8"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithUserDetails("user1")
+	void getTestProductValue(@Autowired MockMvc mockMvc) throws Exception {
+
+		final String product = new String(ValuationClient.class.getClassLoader().getResourceAsStream(productXMLFile).readAllBytes(), StandardCharsets.UTF_8);
+
+		MockMultipartFile tradeDataFile = new MockMultipartFile("tradeData", "smartderivativecontract.xml", MediaType.APPLICATION_XML_VALUE, product.getBytes(StandardCharsets.UTF_8));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.multipart("/valuation/legacy/test/product")
+						.file(tradeDataFile)
+						.accept(MediaType.APPLICATION_JSON)
+						.characterEncoding("utf-8"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	void testTestMethod() {
+		ValuationController controller = new ValuationController();
+		org.springframework.http.ResponseEntity<String> response = controller.test();
+		assertEquals(200, response.getStatusCode().value());
+		assertEquals("Connect successful", response.getBody());
 	}
 
 }
