@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SettlementsTest {
 
@@ -56,6 +57,31 @@ class SettlementsTest {
 		assertEquals(tradeId1, list.get(list.indexOf(s1)).getTradeId());
 	}
 
+
+	@Test
+	void testGetPreviousOfFirstReturnsEmpty() {
+		Optional<Settlement> optionalSettlement = settlements.getPrevious(s1);
+		assertTrue(optionalSettlement.isEmpty());
+	}
+
+	@Test
+	void testGetNextOfLastReturnsEmpty() {
+		Optional<Settlement> optionalSettlement = settlements.getNext(s4);
+		assertTrue(optionalSettlement.isEmpty());
+	}
+
+	@Test
+	void testSetSettlementsReplacesList() {
+		List<Settlement> newList = new ArrayList<>();
+		Settlement s = new Settlement();
+		s.setTradeId("NEW_ID");
+		newList.add(s);
+
+		settlements.setSettlements(newList);
+
+		assertEquals(1, settlements.getSettlements().size());
+		assertEquals("NEW_ID", settlements.getSettlements().get(0).getTradeId());
+	}
 
 	private void generateSettlementList() {
 		tradeId1 = "ID_1";
