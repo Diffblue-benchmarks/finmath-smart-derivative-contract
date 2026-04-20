@@ -1,5 +1,6 @@
 package net.finmath.smartcontract.valuation.marketdata.generators;
 
+import io.reactivex.rxjava3.core.Observable;
 import net.finmath.smartcontract.model.MarketDataList;
 import net.finmath.smartcontract.model.SDCException;
 import net.finmath.smartcontract.product.xml.SDCXMLParser;
@@ -16,6 +17,12 @@ class MarketDataGeneratorScenarioListTest {
 	@BeforeAll
 	static void before(){
 		marketDataService = new MarketDataGeneratorScenarioList();
+	}
+
+	@Test
+	void testConstructorInitializesCounter() {
+		MarketDataGeneratorScenarioList generator = new MarketDataGeneratorScenarioList();
+		assertEquals(0, generator.getCounter());
 	}
 
 	@Test
@@ -60,7 +67,47 @@ class MarketDataGeneratorScenarioListTest {
 	}
 
 	@Test
+	void testAsObservableReturnsObservable() {
+		MarketDataGeneratorScenarioList generator = new MarketDataGeneratorScenarioList();
+		Observable<MarketDataList> observable = generator.asObservable();
+		assertNotNull(observable);
+	}
+
+	@Test
+	void testGetMarketDataStringReturnsContent() {
+		MarketDataGeneratorScenarioList generator = new MarketDataGeneratorScenarioList();
+		String result = generator.getMarketDataString("net/finmath/smartcontract/valuation/historicalMarketData/marketdata_2008-05-02.xml");
+		assertNotNull(result);
+		assertFalse(result.isEmpty());
+	}
+
+	@Test
 	void getMarketDataString_WrongFileNameSDCException(){
 		assertThrows(SDCException.class, () -> marketDataService.getMarketDataString("wrongFileName"));
+	}
+
+	@Test
+	void testGetCounterIncrementsAfterAsObservable() {
+		MarketDataGeneratorScenarioList generator = new MarketDataGeneratorScenarioList();
+		assertEquals(0, generator.getCounter());
+		generator.asObservable().subscribe(
+			data -> {},
+			throwable -> {},
+			() -> {}
+		);
+		assertEquals(1, generator.getCounter());
+	}
+
+	@Test
+	void testMultipleAsObservableCallsIncrementCounter() {
+		MarketDataGeneratorScenarioList generator = new MarketDataGeneratorScenarioList();
+		for (int i = 0; i < 3; i++) {
+			generator.asObservable().subscribe(
+				data -> {},
+				throwable -> {},
+				() -> {}
+			);
+		}
+		assertEquals(3, generator.getCounter());
 	}
 }
