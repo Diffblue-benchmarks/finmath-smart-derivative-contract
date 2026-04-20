@@ -4,7 +4,10 @@ import net.finmath.plots.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.MockedConstruction;
+import org.mockito.MockedStatic;
 
+import javax.swing.*;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -130,6 +133,46 @@ class VisualiserSDCTest {
 		assertEquals(1000.0, seriesMarketValues.get(0).getY(), 1E-10);
 		assertEquals(1.0, seriesMarketValues.get(1).getX(), 1E-10);
 		assertEquals(2000.0, seriesMarketValues.get(1).getY(), 1E-10);
+	}
+
+	@Test
+	void testStartInitializesFieldsAndConfiguresPlots() throws Exception {
+		VisualiserSDC sdc = new VisualiserSDC();
+
+		try (MockedConstruction<Plot2DBarFX> barConstruction = mockConstruction(Plot2DBarFX.class);
+			 MockedConstruction<Plot2DFX> fxConstruction = mockConstruction(Plot2DFX.class,
+					 (mock, context) -> {
+						 when(mock.setTitle(anyString())).thenReturn(mock);
+						 when(mock.setXAxisLabel(anyString())).thenReturn(mock);
+						 when(mock.setYAxisLabel(anyString())).thenReturn(mock);
+					 });
+			 MockedStatic<SwingUtilities> swingMock = mockStatic(SwingUtilities.class)) {
+
+			swingMock.when(() -> SwingUtilities.invokeLater(any(Runnable.class))).then(invocation -> null);
+
+			sdc.start();
+
+			// Verify Plot2DBarFX was constructed and configured
+			assertEquals(1, barConstruction.constructed().size());
+			Plot2DBarFX constructedBar = barConstruction.constructed().get(0);
+			verify(constructedBar).setIsSeriesStacked(true);
+
+			// Verify Plot2DFX was constructed and configured
+			assertEquals(1, fxConstruction.constructed().size());
+			Plot2DFX constructedFx = fxConstruction.constructed().get(0);
+			verify(constructedFx).setIsLegendVisible(false);
+			verify(constructedFx).setTitle("Market Value");
+			verify(constructedFx).setXAxisLabel("Date");
+			verify(constructedFx).setYAxisLabel("Market Value");
+
+			// Verify seriesMarketValues was initialized
+			List<Point2D> series = getField(sdc, "seriesMarketValues");
+			assertNotNull(series);
+			assertTrue(series.isEmpty());
+
+			// Verify SwingUtilities.invokeLater was called
+			swingMock.verify(() -> SwingUtilities.invokeLater(any(Runnable.class)));
+		}
 	}
 
 	@SuppressWarnings("unchecked")
