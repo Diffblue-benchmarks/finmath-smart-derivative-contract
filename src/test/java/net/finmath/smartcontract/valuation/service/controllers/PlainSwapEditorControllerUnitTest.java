@@ -579,6 +579,45 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testEvaluateFromPlainSwapEditorJaxbError() throws IOException {
+		Resource templateResource = mock(Resource.class);
+		when(valuationConfig1.getMarketDataProviderToTemplate())
+				.thenReturn(Map.of("refinitiv", "classpath:template.xml"));
+		when(resourceLoader.getResource("classpath:template.xml")).thenReturn(templateResource);
+		when(templateResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream("<invalid/>".getBytes(StandardCharsets.UTF_8)));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(ErrorResponseException.class, () -> controller.evaluateFromPlainSwapEditor(request));
+	}
+
+	@Test
+	void testEvaluateFromPlainSwapEditorTemplateLoadingFails() throws IOException {
+		Map<String, String> templateMap = Map.of("refinitiv", "classpath:missing-template.xml");
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(templateMap);
+		Resource mockResource = mock(Resource.class);
+		when(resourceLoader.getResource("classpath:missing-template.xml")).thenReturn(mockResource);
+		when(mockResource.getInputStream()).thenThrow(new IOException("template not found"));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(RuntimeException.class, () -> controller.evaluateFromPlainSwapEditor(request));
+	}
+
+	@Test
+	void testEvaluateFromPlainSwapEditorTemplateResolutionNpe() {
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(null);
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(NullPointerException.class, () -> controller.evaluateFromPlainSwapEditor(request));
+	}
+
+	@Test
 	void testUploadMarketDataSqlException() throws IOException, SQLException {
 		org.springframework.web.multipart.MultipartFile multipartFile =
 				mock(org.springframework.web.multipart.MultipartFile.class);
