@@ -93,6 +93,49 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testChangeDatasetSuccess() throws IOException {
+		Resource sourceResource = mock(Resource.class);
+		File sourceFile = File.createTempFile("changeDatasetSource", ".json");
+		sourceFile.deleteOnExit();
+		java.nio.file.Files.writeString(sourceFile.toPath(), "test market data");
+		when(resourceGovernor.getReadableResource("testuser",
+				ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "data.json"))
+				.thenReturn(sourceResource);
+		when(sourceResource.getFile()).thenReturn(sourceFile);
+
+		WritableResource destResource = mock(WritableResource.class);
+		File destFile = File.createTempFile("changeDatasetDest", ".json");
+		destFile.deleteOnExit();
+		when(resourceGovernor.getActiveDatasetAsResourceInWriteMode("testuser"))
+				.thenReturn(destResource);
+		when(destResource.getFile()).thenReturn(destFile);
+
+		ResponseEntity<String> response = controller.changeDataset("data.json");
+
+		assertEquals(200, response.getStatusCode().value());
+		assertEquals("ok", response.getBody());
+		assertEquals("test market data", java.nio.file.Files.readString(destFile.toPath()));
+	}
+
+	@Test
+	void testChangeDatasetDestinationIoException() throws IOException {
+		Resource sourceResource = mock(Resource.class);
+		File sourceFile = File.createTempFile("changeDatasetSrc2", ".json");
+		sourceFile.deleteOnExit();
+		when(resourceGovernor.getReadableResource("testuser",
+				ResourceGovernor.RoleFolders.MARKET_DATA_FOLDER, "data2.json"))
+				.thenReturn(sourceResource);
+		when(sourceResource.getFile()).thenReturn(sourceFile);
+
+		WritableResource destResource = mock(WritableResource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInWriteMode("testuser"))
+				.thenReturn(destResource);
+		when(destResource.getFile()).thenThrow(new IOException("destination error"));
+
+		assertThrows(ErrorResponseException.class, () -> controller.changeDataset("data2.json"));
+	}
+
+	@Test
 	void testChangeDatasetWithFileIoException() throws IOException {
 		Resource sourceResource = mock(Resource.class);
 		when(resourceGovernor.getReadableResource("testuser",
