@@ -229,6 +229,50 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testLoadContractSuccess() throws IOException {
+		PlainSwapOperationRequest expectedRequest = new PlainSwapOperationRequest();
+		expectedRequest.setTradeType("Payer");
+		String json = new ObjectMapper().writeValueAsString(expectedRequest);
+
+		Resource mockResource = mock(Resource.class);
+		when(mockResource.getFilename()).thenReturn("myContract.json");
+		when(mockResource.getContentAsString(StandardCharsets.UTF_8)).thenReturn(json);
+		when(resourceGovernor.listContentsOfUserFolder("testuser",
+				ResourceGovernor.RoleFolders.SAVED_CONTRACTS_FOLDER))
+				.thenReturn(new Resource[]{mockResource});
+
+		ResponseEntity<PlainSwapOperationRequest> response = controller.loadContract("myContract.json");
+
+		assertEquals(200, response.getStatusCode().value());
+		assertNotNull(response.getBody());
+		assertEquals("Payer", response.getBody().getTradeType());
+	}
+
+	@Test
+	void testLoadContractNotFound() throws IOException {
+		Resource mockResource = mock(Resource.class);
+		when(mockResource.getFilename()).thenReturn("otherContract.json");
+		when(resourceGovernor.listContentsOfUserFolder("testuser",
+				ResourceGovernor.RoleFolders.SAVED_CONTRACTS_FOLDER))
+				.thenReturn(new Resource[]{mockResource});
+
+		assertThrows(NullPointerException.class, () -> controller.loadContract("nonexistent.json"));
+	}
+
+	@Test
+	void testLoadContractReadIoException() throws IOException {
+		Resource mockResource = mock(Resource.class);
+		when(mockResource.getFilename()).thenReturn("badContract.json");
+		when(mockResource.getContentAsString(StandardCharsets.UTF_8))
+				.thenThrow(new IOException("read error"));
+		when(resourceGovernor.listContentsOfUserFolder("testuser",
+				ResourceGovernor.RoleFolders.SAVED_CONTRACTS_FOLDER))
+				.thenReturn(new Resource[]{mockResource});
+
+		assertThrows(ErrorResponseException.class, () -> controller.loadContract("badContract.json"));
+	}
+
+	@Test
 	void testGetFixedScheduleMarketDataIoException() throws IOException {
 		Resource activeDataset = mock(Resource.class);
 		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
