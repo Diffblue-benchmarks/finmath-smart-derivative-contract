@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.valuation.service.utils;
 
 import net.finmath.smartcontract.model.*;
+import net.finmath.smartcontract.valuation.service.config.RefinitivConfig;
 import net.finmath.smartcontract.valuation.service.config.ValuationConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,9 @@ class SettlementServiceTest {
 
 	@InjectMocks
 	private SettlementService serviceUnderTest;
+
+	@Mock
+	private RefinitivConfig refinitivConfig;
 
 	@Mock
 	private ValuationConfig valuationConfig;
@@ -208,6 +212,35 @@ class SettlementServiceTest {
 		assertTrue(settlementString.contains("<id>EUB6FIX6M</id><value>0.0521</value><timeStamp>20080917-170000</timeStamp>"));
 		assertTrue(settlementString.contains("<settlementNPV>-847.96</settlementNPV>"));
 		assertTrue(settlementString.contains("<settlementType>REGULAR</settlementType>"));
+	}
+
+	@Test
+	void testParseProductData_invalidXml() {
+		InitialSettlementRequest request = new InitialSettlementRequest().tradeData("<invalid>xml</invalid>");
+		assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(request));
+	}
+
+	@Test
+	void testRetrieveMarketData_unknownProvider() throws IOException {
+		String productXml = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml").readAllBytes());
+		InitialSettlementRequest request = new InitialSettlementRequest().tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("nonexistent");
+		when(valuationConfig.getInternalMarketDataProvider()).thenReturn("nonexistent");
+		when(valuationConfig.isLiveMarketData()).thenReturn(false);
+
+		SDCException exception = assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(request));
+		assertTrue(exception.getMessage().contains("not compatible"));
+	}
+
+	@Test
+	void testCheckMarketDataString_nonXmlInput() throws IOException {
+		String productXml = new String(SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_simulated_historical_marketdata.xml").readAllBytes());
+		InitialSettlementRequest request = new InitialSettlementRequest()
+				.tradeData(productXml)
+				.newProvidedMarketData("this is not xml");
+
+		assertThrows(Exception.class, () -> serviceUnderTest.generateInitialSettlementResult(request));
 	}
 
 	@Test
