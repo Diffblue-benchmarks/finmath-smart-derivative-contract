@@ -1,0 +1,50 @@
+package net.finmath.smartcontract.valuation.oracle;
+
+import net.finmath.smartcontract.valuation.oracle.simulated.GeometricBrownianMotionOracle;
+import org.junit.jupiter.api.Test;
+
+import javax.money.MonetaryAmount;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class ValuationOracleSamplePathTest {
+
+	private final LocalDateTime initialTime = LocalDateTime.of(2018, 8, 12, 12, 0);
+	private final LocalDateTime laterTime = LocalDateTime.of(2019, 8, 12, 12, 0);
+
+	@Test
+	void testGetValue() {
+		StochasticValuationOracle stochasticOracle = new GeometricBrownianMotionOracle(initialTime);
+		ValuationOracleSamplePath oracle = new ValuationOracleSamplePath(stochasticOracle, 0);
+
+		BigDecimal value = oracle.getValue(laterTime, laterTime);
+		assertNotNull(value);
+		assertTrue(value.doubleValue() > 0, "Value should be positive for GBM");
+	}
+
+	@Test
+	void testGetValues() {
+		StochasticValuationOracle stochasticOracle = new GeometricBrownianMotionOracle(initialTime);
+		ValuationOracleSamplePath oracle = new ValuationOracleSamplePath(stochasticOracle, 0);
+
+		Map<String, BigDecimal> values = oracle.getValues(laterTime, laterTime);
+		assertNotNull(values);
+		assertTrue(values.containsKey("value"));
+		assertNotNull(values.get("value"));
+	}
+
+	@Test
+	void testGetAmount() {
+		StochasticValuationOracle stochasticOracle = new GeometricBrownianMotionOracle(initialTime);
+		ValuationOracleSamplePath oracle = new ValuationOracleSamplePath(stochasticOracle, 0);
+
+		MonetaryAmount amount = oracle.getAmount(laterTime, laterTime);
+		assertNotNull(amount);
+		assertEquals("EUR", amount.getCurrency().getCurrencyCode());
+	}
+}
