@@ -1,6 +1,7 @@
 package net.finmath.smartcontract.valuation.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.finmath.smartcontract.model.MarketDataSet;
 import net.finmath.smartcontract.model.PlainSwapOperationRequest;
 import net.finmath.smartcontract.model.SaveContractRequest;
 import net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector;
@@ -244,6 +245,33 @@ class PlainSwapEditorControllerUnitTest {
 				.thenReturn(activeDataset);
 		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
 				.thenThrow(new IOException("read error"));
+
+		assertThrows(ErrorResponseException.class, () -> controller.grabMarketData());
+	}
+
+	@Test
+	void testGrabMarketDataSuccess() throws IOException {
+		String marketDataJson = "{\"values\":[]}";
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn(marketDataJson);
+
+		ResponseEntity<MarketDataSet> response = controller.grabMarketData();
+
+		assertEquals(200, response.getStatusCode().value());
+		assertNotNull(response.getBody());
+	}
+
+	@Test
+	void testGrabMarketDataJsonProcessingException() throws IOException {
+		String invalidJson = "not valid json {{{";
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn(invalidJson);
 
 		assertThrows(ErrorResponseException.class, () -> controller.grabMarketData());
 	}
