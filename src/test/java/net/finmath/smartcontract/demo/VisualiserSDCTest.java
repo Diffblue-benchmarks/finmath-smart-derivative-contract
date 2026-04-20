@@ -1,6 +1,13 @@
 package net.finmath.smartcontract.demo;
 
+import net.finmath.marketdata.products.Swap;
 import net.finmath.plots.*;
+import net.finmath.smartcontract.product.IRSwapGenerator;
+import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataItem;
+import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationDataset;
+import net.finmath.smartcontract.valuation.marketdata.curvecalibration.CalibrationParserDataItems;
+import net.finmath.smartcontract.valuation.oracle.SmartDerivativeContractSettlementOracle;
+import net.finmath.smartcontract.valuation.oracle.interestrates.ValuationOraclePlainSwap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -9,11 +16,15 @@ import org.mockito.MockedStatic;
 
 import javax.swing.*;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 class VisualiserSDCTest {
@@ -172,6 +183,47 @@ class VisualiserSDCTest {
 
 			// Verify SwingUtilities.invokeLater was called
 			swingMock.verify(() -> SwingUtilities.invokeLater(any(Runnable.class)));
+		}
+	}
+
+	@Test
+	void testMain() throws Exception {
+		CalibrationDataItem.Spec spec5Y = new CalibrationDataItem.Spec("key1", "Euribor6M", "Swap-Rate", "5Y");
+		CalibrationDataItem dataItem5Y = new CalibrationDataItem(spec5Y, 0.04, LocalDateTime.of(2008, 6, 1, 0, 0));
+
+		CalibrationDataset scenario1 = mock(CalibrationDataset.class);
+		when(scenario1.getDate()).thenReturn(LocalDateTime.of(2008, 6, 1, 0, 0));
+		when(scenario1.getDataPoints()).thenReturn(Set.of(dataItem5Y));
+
+		CalibrationDataset scenario2 = mock(CalibrationDataset.class);
+		when(scenario2.getDate()).thenReturn(LocalDateTime.of(2008, 7, 1, 0, 0));
+		when(scenario2.getDataPoints()).thenReturn(Set.of(dataItem5Y));
+
+		List<CalibrationDataset> scenarios = List.of(scenario1, scenario2);
+
+		Swap mockSwap = mock(Swap.class);
+
+		try (MockedStatic<CalibrationParserDataItems> parserMock = mockStatic(CalibrationParserDataItems.class);
+			 MockedStatic<IRSwapGenerator> swapGenMock = mockStatic(IRSwapGenerator.class);
+			 MockedConstruction<ValuationOraclePlainSwap> oracleConstruction = mockConstruction(ValuationOraclePlainSwap.class);
+			 MockedConstruction<SmartDerivativeContractSettlementOracle> marginConstruction = mockConstruction(
+					 SmartDerivativeContractSettlementOracle.class,
+					 (mock, context) -> when(mock.getMargin(any(), any())).thenReturn(Map.of("value", BigDecimal.valueOf(1000.0))));
+			 MockedConstruction<VisualiserSDC> sdcConstruction = mockConstruction(VisualiserSDC.class)) {
+
+			parserMock.when(() -> CalibrationParserDataItems.getScenariosFromJsonFile("timeseriesdatamap.json"))
+					.thenReturn(scenarios);
+			swapGenMock.when(() -> IRSwapGenerator.generateAnalyticSwapObject(
+							any(), eq("5Y"), eq(1.0E7), eq(0.04), eq(false), eq("forward-EUR-6M"), eq("discount-EUR-OIS")))
+					.thenReturn(mockSwap);
+
+			VisualiserSDC.main(new String[]{});
+
+			assertEquals(1, sdcConstruction.constructed().size());
+			VisualiserSDC constructedSDC = sdcConstruction.constructed().get(0);
+			verify(constructedSDC).start();
+			// Initial call + 2 iterations * 2 calls each = 5 total
+			verify(constructedSDC, times(5)).updateWithValue(any(), anyDouble(), anyDouble(), any(), anyDouble());
 		}
 	}
 
