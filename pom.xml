@@ -242,6 +242,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>io.projectreactor</groupId>
@@ -633,7 +639,7 @@
                 <configuration>
                     <forkCount>4C</forkCount>
                     <reuseForks>false</reuseForks>
-                    <argLine>-mx6G --add-opens java.base/java.time=ALL-UNNAMED --add-opens
+                    <argLine>@{argLine} -mx6G --add-opens java.base/java.time=ALL-UNNAMED --add-opens
                         java.base/java.util=ALL-UNNAMED --add-opens
                         net.finmath.smartderivativecontract/net.finmath.smartcontract.model=ALL-UNNAMED
                     </argLine>
@@ -1010,6 +1016,7 @@
             <url>https://gitlab.com/api/v4/projects/33978063/packages/maven</url>
         </repository>
         -->
+        <!--
         <snapshotRepository>
             <id>gitlab</id>
             <url>https://gitlab.com/api/v4/projects/33978063/packages/maven</url>
