@@ -1,11 +1,18 @@
 package net.finmath.smartcontract.valuation.service.config;
 
+import net.finmath.smartcontract.model.ExceptionId;
+import net.finmath.smartcontract.model.SDCException;
 import net.finmath.smartcontract.valuation.service.utils.ApplicationProperties;
 import net.finmath.smartcontract.valuation.service.utils.SDCUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.lang.reflect.Field;
@@ -14,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class BasicAuthWebSecurityConfigurationTest {
 
@@ -82,6 +91,41 @@ class BasicAuthWebSecurityConfigurationTest {
 		UserDetails adminDetails = manager.loadUserByUsername("admin");
 		assertTrue(adminDetails.getAuthorities().stream()
 				.anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	void testFilterChain() throws Exception {
+		HttpSecurity http = mock(HttpSecurity.class, RETURNS_SELF);
+		SecurityFilterChain mockChain = mock(SecurityFilterChain.class);
+		doReturn(mockChain).when(http).build();
+
+		SecurityFilterChain result = configuration.filterChain(http);
+
+		assertNotNull(result);
+		assertSame(mockChain, result);
+		verify(http).csrf(any());
+		verify(http).authorizeHttpRequests(any());
+		verify(http).cors();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	void testFilterChainAuthorizationCustomizerErrorHandling() throws Exception {
+		HttpSecurity http = mock(HttpSecurity.class, RETURNS_SELF);
+		doReturn(mock(SecurityFilterChain.class)).when(http).build();
+
+		configuration.filterChain(http);
+
+		ArgumentCaptor<Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>> captor =
+				ArgumentCaptor.forClass(Customizer.class);
+		verify(http).authorizeHttpRequests(captor.capture());
+
+		AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry =
+				mock(AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry.class, RETURNS_DEEP_STUBS);
+
+		SDCException thrown = assertThrows(SDCException.class, () -> captor.getValue().customize(registry));
+		assertEquals(ExceptionId.SDC_AUTH_ERROR, thrown.getId());
 	}
 
 	@Test
