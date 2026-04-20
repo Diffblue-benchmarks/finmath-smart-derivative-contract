@@ -215,6 +215,31 @@ class SettlementServiceTest {
 	}
 
 	@Test
+	void testInitConnectionProperties_happyPath() throws IOException {
+		InputStream inputStream = SettlementServiceTest.class.getClassLoader().getResourceAsStream("net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml");
+		String productXml = new String(inputStream.readAllBytes());
+
+		InitialSettlementRequest initialSettlementRequest = new InitialSettlementRequest().tradeData(productXml);
+
+		when(valuationConfig.getLiveMarketDataProvider()).thenReturn("refinitiv");
+		when(valuationConfig.isLiveMarketData()).thenReturn(true);
+
+		when(refinitivConfig.getUser()).thenReturn("testUser");
+		when(refinitivConfig.getPassword()).thenReturn("testPassword");
+		when(refinitivConfig.getClientId()).thenReturn("testClientId");
+		when(refinitivConfig.getHostName()).thenReturn("testHostName");
+		when(refinitivConfig.getPort()).thenReturn(443);
+		when(refinitivConfig.getAuthUrl()).thenReturn("https://auth.example.com");
+		when(refinitivConfig.getUseProxy()).thenReturn("false");
+		when(refinitivConfig.getProxyHost()).thenReturn("proxyHost");
+		when(refinitivConfig.getProxyPort()).thenReturn(8080);
+		when(refinitivConfig.getProxyUser()).thenReturn("proxyUser");
+		when(refinitivConfig.getProxyPassword()).thenReturn("proxyPass");
+
+		assertThrows(RuntimeException.class, () -> serviceUnderTest.generateInitialSettlementResult(initialSettlementRequest));
+	}
+
+	@Test
 	void testParseProductData_invalidXml() {
 		InitialSettlementRequest request = new InitialSettlementRequest().tradeData("<invalid>xml</invalid>");
 		assertThrows(SDCException.class, () -> serviceUnderTest.generateInitialSettlementResult(request));
