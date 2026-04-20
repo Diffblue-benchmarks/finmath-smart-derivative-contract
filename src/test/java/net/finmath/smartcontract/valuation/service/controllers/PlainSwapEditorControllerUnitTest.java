@@ -434,6 +434,45 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testRefreshMarketDataIoExceptionFromHandler() throws IOException {
+		Map<String, String> templateMap = Map.of("refinitiv", "classpath:template.xml");
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(templateMap);
+		Resource mockResource = mock(Resource.class);
+		when(resourceLoader.getResource("classpath:template.xml")).thenReturn(mockResource);
+		when(mockResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream("<template/>".getBytes(StandardCharsets.UTF_8)));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(ErrorResponseException.class, () -> controller.refreshMarketData(request));
+	}
+
+	@Test
+	void testRefreshMarketDataWhenTemplateResolutionFails() {
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(null);
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(NullPointerException.class, () -> controller.refreshMarketData(request));
+	}
+
+	@Test
+	void testRefreshMarketDataWhenTemplateLoadingThrowsIoException() throws IOException {
+		Map<String, String> templateMap = Map.of("refinitiv", "classpath:missing-template.xml");
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(templateMap);
+		Resource mockResource = mock(Resource.class);
+		when(resourceLoader.getResource("classpath:missing-template.xml")).thenReturn(mockResource);
+		when(mockResource.getInputStream()).thenThrow(new IOException("template not found"));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(RuntimeException.class, () -> controller.refreshMarketData(request));
+	}
+
+	@Test
 	void testUploadMarketDataSqlException() throws IOException, SQLException {
 		org.springframework.web.multipart.MultipartFile multipartFile =
 				mock(org.springframework.web.multipart.MultipartFile.class);
