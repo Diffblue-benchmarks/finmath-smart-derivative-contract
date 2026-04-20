@@ -501,6 +501,45 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testGetFloatingScheduleJaxbErrorFromHandler() throws IOException {
+		String marketDataJson = "{\"values\":[]}";
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn(marketDataJson);
+
+		Resource templateResource = mock(Resource.class);
+		when(valuationConfig1.getMarketDataProviderToTemplate())
+				.thenReturn(Map.of("refinitiv", "classpath:template.xml"));
+		when(resourceLoader.getResource("classpath:template.xml")).thenReturn(templateResource);
+		when(templateResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream("<invalid/>".getBytes(StandardCharsets.UTF_8)));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(ErrorResponseException.class, () -> controller.getFloatingSchedule(request));
+	}
+
+	@Test
+	void testGetFloatingScheduleTemplateResolutionNpe() throws IOException {
+		String marketDataJson = "{\"values\":[]}";
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn(marketDataJson);
+
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(null);
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(NullPointerException.class, () -> controller.getFloatingSchedule(request));
+	}
+
+	@Test
 	void testUploadMarketDataSqlException() throws IOException, SQLException {
 		org.springframework.web.multipart.MultipartFile multipartFile =
 				mock(org.springframework.web.multipart.MultipartFile.class);
