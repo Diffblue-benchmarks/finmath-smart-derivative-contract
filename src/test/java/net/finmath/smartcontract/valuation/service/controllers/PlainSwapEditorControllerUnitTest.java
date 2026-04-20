@@ -21,14 +21,19 @@ import org.springframework.web.ErrorResponseException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
 
+import org.springframework.core.io.WritableResource;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 class PlainSwapEditorControllerUnitTest {
@@ -107,6 +112,44 @@ class PlainSwapEditorControllerUnitTest {
 		ResponseEntity<String> response = controller.saveContract(request);
 		assertEquals(200, response.getStatusCode().value());
 		assertEquals("Request not fulfilled.", response.getBody());
+	}
+
+	@Test
+	void testSaveContractWithValidNameSuccess() throws IOException {
+		SaveContractRequest request = new SaveContractRequest();
+		request.setName("myContract123");
+		PlainSwapOperationRequest operationRequest = new PlainSwapOperationRequest();
+		request.setPlainSwapOperationRequest(operationRequest);
+
+		WritableResource writableResource = mock(WritableResource.class);
+		File tempFile = File.createTempFile("saveContractTest", ".json");
+		tempFile.deleteOnExit();
+		when(resourceGovernor.getWritableResource(eq("testuser"),
+				eq(ResourceGovernor.RoleFolders.SAVED_CONTRACTS_FOLDER),
+				contains("myContract123.json")))
+				.thenReturn(writableResource);
+		when(writableResource.getFile()).thenReturn(tempFile);
+
+		ResponseEntity<String> response = controller.saveContract(request);
+
+		assertEquals(200, response.getStatusCode().value());
+		assertTrue(response.getBody().endsWith("myContract123.json"));
+	}
+
+	@Test
+	void testSaveContractWithValidNameIoException() throws IOException {
+		SaveContractRequest request = new SaveContractRequest();
+		request.setName("validName");
+		request.setPlainSwapOperationRequest(new PlainSwapOperationRequest());
+
+		WritableResource writableResource = mock(WritableResource.class);
+		when(resourceGovernor.getWritableResource(eq("testuser"),
+				eq(ResourceGovernor.RoleFolders.SAVED_CONTRACTS_FOLDER),
+				contains("validName.json")))
+				.thenReturn(writableResource);
+		when(writableResource.getFile()).thenThrow(new IOException("storage error"));
+
+		assertThrows(ErrorResponseException.class, () -> controller.saveContract(request));
 	}
 
 	@Test
