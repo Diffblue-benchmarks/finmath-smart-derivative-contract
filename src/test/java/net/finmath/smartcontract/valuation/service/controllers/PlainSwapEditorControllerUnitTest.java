@@ -395,6 +395,45 @@ class PlainSwapEditorControllerUnitTest {
 	}
 
 	@Test
+	void testGetParRateValuationErrorInLambda() throws IOException {
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn("{\"some\":\"marketdata\"}");
+
+		Resource templateResource = mock(Resource.class);
+		when(valuationConfig1.getMarketDataProviderToTemplate())
+				.thenReturn(Map.of("refinitiv", "classpath:template.xml"));
+		when(resourceLoader.getResource("classpath:template.xml")).thenReturn(templateResource);
+		when(templateResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream("<invalid/>".getBytes(StandardCharsets.UTF_8)));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+		request.setFixedRate(0.01);
+		request.setNotionalAmount(1000000.0);
+
+		assertThrows(ErrorResponseException.class, () -> controller.getParRate(request));
+	}
+
+	@Test
+	void testGetParRateOuterCatchWhenTemplateResolutionFails() throws IOException {
+		Resource activeDataset = mock(Resource.class);
+		when(resourceGovernor.getActiveDatasetAsResourceInReadMode("testuser"))
+				.thenReturn(activeDataset);
+		when(activeDataset.getContentAsString(StandardCharsets.UTF_8))
+				.thenReturn("{\"some\":\"marketdata\"}");
+
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(null);
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		assertThrows(ErrorResponseException.class, () -> controller.getParRate(request));
+	}
+
+	@Test
 	void testUploadMarketDataSqlException() throws IOException, SQLException {
 		org.springframework.web.multipart.MultipartFile multipartFile =
 				mock(org.springframework.web.multipart.MultipartFile.class);
