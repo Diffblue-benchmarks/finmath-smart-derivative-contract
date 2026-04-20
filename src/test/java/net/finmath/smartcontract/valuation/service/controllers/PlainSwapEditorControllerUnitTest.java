@@ -1,7 +1,9 @@
 package net.finmath.smartcontract.valuation.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.finmath.smartcontract.model.Counterparty;
 import net.finmath.smartcontract.model.MarketDataSet;
+import net.finmath.smartcontract.model.PaymentFrequency;
 import net.finmath.smartcontract.model.PlainSwapOperationRequest;
 import net.finmath.smartcontract.model.SaveContractRequest;
 import net.finmath.smartcontract.valuation.marketdata.database.DatabaseConnector;
@@ -24,10 +26,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.Map;
 
@@ -615,6 +621,83 @@ class PlainSwapEditorControllerUnitTest {
 		request.setMarketDataProvider("refinitiv");
 
 		assertThrows(NullPointerException.class, () -> controller.evaluateFromPlainSwapEditor(request));
+	}
+
+	@Test
+	void testGeneratePlainSwapSdcmlSuccess() throws Exception {
+		when(valuationConfig.getFpmlSchemaPath()).thenReturn(
+				"net.finmath.smartcontract.product.xml/smartderivativecontract.xsd");
+		PlainSwapEditorController controllerWithRealSchema = new PlainSwapEditorController(
+				databaseConnector, resourceGovernor, objectMapper,
+				valuationConfig, valuationConfig1, buildProperties, resourceLoader);
+
+		String templateXml;
+		try (InputStream is = getClass().getClassLoader().getResourceAsStream(
+				"net.finmath.smartcontract.product.xml/smartderivativecontract_with_rics.xml")) {
+			templateXml = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+		}
+
+		Map<String, String> templateMap = Map.of("refinitiv", "classpath:rics-template.xml");
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(templateMap);
+		Resource templateResource = mock(Resource.class);
+		when(resourceLoader.getResource("classpath:rics-template.xml")).thenReturn(templateResource);
+		when(templateResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream(templateXml.getBytes(StandardCharsets.UTF_8)));
+
+		Counterparty first = new Counterparty().baseUrl("aaa").bicCode("ABCDXXXX")
+				.fullName("Party1").dltAddress("0x00001");
+		Counterparty second = new Counterparty().baseUrl("bbb").bicCode("EFDGXXXX")
+				.fullName("Party2").dltAddress("0x00002");
+		PaymentFrequency fixedFreq = new PaymentFrequency().period("Y").periodMultiplier(1)
+				.fullName("Annual");
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest()
+				.firstCounterparty(first)
+				.secondCounterparty(second)
+				.marginBufferAmount(30000.0)
+				.terminationFeeAmount(10000.0)
+				.currency("EUR")
+				.tradeType("SDCPledgedBalance")
+				.uniqueTradeIdentifier("TestUTI")
+				.tradeDate(OffsetDateTime.of(LocalDateTime.of(2023, 1, 31, 14, 35), ZoneOffset.UTC))
+				.effectiveDate(OffsetDateTime.of(LocalDateTime.of(2023, 2, 2, 14, 35), ZoneOffset.UTC))
+				.terminationDate(OffsetDateTime.of(LocalDateTime.of(2033, 2, 2, 14, 35), ZoneOffset.UTC))
+				.dailySettlementTime("12:00")
+				.fixedPayingParty(second)
+				.floatingPayingParty(first)
+				.fixedRate(2.8675)
+				.fixedDayCountFraction("30E/360")
+				.fixedPaymentFrequency(fixedFreq)
+				.floatingRateIndex("EURIBOR 6M")
+				.floatingDayCountFraction("ACT/360")
+				.floatingFixingDayOffset(-2)
+				.receiverPartyID("party2")
+				.fixPayerPartyID("party2")
+				.notionalAmount(1000000.00)
+				.marketDataProvider("refinitiv");
+
+		ResponseEntity<String> response = controllerWithRealSchema.generatePlainSwapSdcml(request);
+
+		assertEquals(200, response.getStatusCode().value());
+		assertNotNull(response.getBody());
+		assertTrue(response.getBody().contains("smartderivativecontract"));
+	}
+
+	@Test
+	void testGeneratePlainSwapSdcmlHandlerThrowsCaughtException() throws IOException {
+		Map<String, String> templateMap = Map.of("refinitiv", "classpath:template.xml");
+		when(valuationConfig1.getMarketDataProviderToTemplate()).thenReturn(templateMap);
+		Resource templateResource = mock(Resource.class);
+		when(resourceLoader.getResource("classpath:template.xml")).thenReturn(templateResource);
+		when(templateResource.getInputStream())
+				.thenReturn(new ByteArrayInputStream("<template/>".getBytes(StandardCharsets.UTF_8)));
+
+		PlainSwapOperationRequest request = new PlainSwapOperationRequest();
+		request.setMarketDataProvider("refinitiv");
+
+		ErrorResponseException ex = assertThrows(ErrorResponseException.class,
+				() -> controller.generatePlainSwapSdcml(request));
+		assertEquals(500, ex.getStatusCode().value());
 	}
 
 	@Test
